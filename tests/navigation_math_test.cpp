@@ -69,6 +69,28 @@ int main() {
   expectNear(robotForward, -1.0F, "field left at -90 degrees: forward");
   expectNear(robotLeft, 0.0F, "field left at -90 degrees: left");
 
+  // A left stick 15 degrees left of forward must retain both components.
+  const float forward15 = std::cos(15.0F * PI_F / 180.0F);
+  const float left15 = std::sin(15.0F * PI_F / 180.0F);
+  NavigationMath::fieldToRobot(forward15, left15, PI_F / 6.0F,
+                               robotForward, robotLeft);
+  expectNear(robotForward, forward15, "field-oriented analog vector: forward");
+  expectNear(robotLeft, -left15, "field-oriented analog vector: left");
+
+  float wheel[4] = {0.0F, 0.0F, 0.0F, 0.0F};
+  NavigationMath::mecanumMix(forward15, left15, 0.0F, wheel);
+  expectNear(wheel[0], 0.577350F, "15 degree translation: FL");
+  expectNear(wheel[1], 1.0F, "15 degree translation: FR");
+  expectNear(wheel[2], 1.0F, "15 degree translation: RL");
+  expectNear(wheel[3], 0.577350F, "15 degree translation: RR");
+
+  // Right-stick rotation remains mixed with the same two-axis translation.
+  NavigationMath::mecanumMix(forward15, left15, 0.30F, wheel);
+  expectNear(wheel[0], 0.266999F, "mixed translation and turn: FL");
+  expectNear(wheel[1], 1.0F, "mixed translation and turn: FR");
+  expectNear(wheel[2], 0.606491F, "mixed translation and turn: RL");
+  expectNear(wheel[3], 0.660508F, "mixed translation and turn: RR");
+
   std::cout << "navigation math tests passed\n";
   return 0;
 }

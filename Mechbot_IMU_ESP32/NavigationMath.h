@@ -65,4 +65,21 @@ inline void fieldToRobot(float fieldForward, float fieldLeft,
   robotLeft = -fieldForward * sine + fieldLeft * cosine;
 }
 
+inline void mecanumMix(float forward, float left, float ccw,
+                       float wheel[4]) {
+  // Preserve both translation components and mix rotation simultaneously.
+  wheel[0] = forward - left - ccw;  // FL
+  wheel[1] = forward + left + ccw;  // FR
+  wheel[2] = forward + left - ccw;  // RL
+  wheel[3] = forward - left + ccw;  // RR
+
+  float largest = 1.0F;
+  for (int i = 0; i < 4; ++i) {
+    largest = fmaxf(largest, fabsf(wheel[i]));
+  }
+  for (int i = 0; i < 4; ++i) {
+    wheel[i] /= largest;
+  }
+}
+
 }  // namespace NavigationMath

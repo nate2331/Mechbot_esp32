@@ -7,7 +7,7 @@ The navigation controls are implemented in
 
 Heading hold is always enabled. When a translation starts, the firmware captures
 the current BNO085 yaw. With no deliberate turn input, it adds a bounded
-proportional `ccw` correction to hold that yaw. A `ccw` input of at least `0.05`
+proportional `ccw` correction to hold that yaw. A `ccw` input of at least `0.01`
 always takes priority and continuously moves the target to the current yaw, so
 releasing the turn stick holds the new direction. Heading hold does not rotate an
 idle robot. If the quaternion is missing, invalid, more than 500 ms old, or still
@@ -54,7 +54,7 @@ The target is `0` until translation captures one.
 | Heading gain | `0.70` command/radian | Converts wrapped yaw error into turn command. |
 | Maximum correction | `0.30` | Prevents heading hold from commanding an excessive turn. |
 | Heading deadband | `1.5` degrees | Avoids hunting around the target. |
-| Manual-turn threshold | `0.05` | Distinguishes deliberate rotation from stick noise. |
+| Manual-turn threshold | `0.01` | Treats every motor-effective rotation command as deliberate. |
 | IMU stale timeout | `500` ms | Rejects old quaternion data. |
 | Minimum IMU status | `1` | Rejects an SH-2 heading still marked unreliable. |
 
@@ -81,6 +81,8 @@ center of mass, and motor matching all affect the correct signs and gains.
 7. Confirm `X` and the 300 ms command watchdog still stop every motor in all modes.
 
 The host-side test in `tests/navigation_math_test.cpp` covers quaternion-to-yaw,
-angle wraparound, bounded correction, and the field-to-robot transform. An actual
-ESP32/BNO085 build and the above physical tests are still required before relying
-on either feature at full speed.
+angle wraparound, bounded correction, the field-to-robot transform, continuous
+15-degree translation, and simultaneous translation/rotation mixing. See
+`GAMEPAD_INTEGRATION.md` for the continuous-axis contract and the missing deployed
+`pi_mecanum_gamepad.py` source. An actual ESP32/BNO085 build and the above physical
+tests are still required before relying on either feature at full speed.

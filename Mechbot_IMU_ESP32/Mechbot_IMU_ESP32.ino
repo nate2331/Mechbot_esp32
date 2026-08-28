@@ -56,7 +56,7 @@ constexpr float HEADING_HOLD_KP = 0.70F;              // turn command / radian
 constexpr float HEADING_HOLD_MAX_CORRECTION = 0.30F;  // normalized turn command
 constexpr float HEADING_HOLD_ERROR_DEADBAND_RAD =
     1.5F * NavigationMath::PI_F / 180.0F;
-constexpr float MANUAL_TURN_DEADBAND = 0.05F;
+constexpr float MANUAL_TURN_DEADBAND = 0.01F;
 constexpr float TRANSLATION_DEADBAND = 0.01F;
 
 enum MotorIndex : uint8_t {
@@ -313,20 +313,12 @@ void applyVelocity(float forward, float left, float ccw) {
 
   motionRequested = translationRequested || rotationRequested;
 
-  // Mecanum inverse kinematics matching the verified WASD/QE directions.
-  float wheel[MOTOR_COUNT] = {
-    forward - left - ccw,  // FL
-    forward + left + ccw,  // FR
-    forward + left - ccw,  // RL
-    forward - left + ccw   // RR
-  };
-
-  float largest = 1.0F;
+  // Preserve the full translation vector while mixing simultaneous rotation.
+  // The wheel order matches the verified WASD/QE directions.
+  float wheel[MOTOR_COUNT];
+  NavigationMath::mecanumMix(forward, left, ccw, wheel);
   for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
-    largest = max(largest, fabsf(wheel[i]));
-  }
-  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
-    setMotorCommand(i, wheel[i] / largest);
+    setMotorCommand(i, wheel[i]);
   }
 
   lastCommandMs = millis();
@@ -551,6 +543,7 @@ void sendTelemetry() {
 void printHelp() {
   Serial.println("Commands:");
   Serial.println("  V <forward> <left> <ccw>   each value -1.0 to +1.0");
+  Serial.println("    forward and left are simultaneous continuous components");
   Serial.println("  F <0|1>                    field-oriented control off/on");
   Serial.println("  Z                          re-zero field heading");
   Serial.println("  X                         immediate stop");

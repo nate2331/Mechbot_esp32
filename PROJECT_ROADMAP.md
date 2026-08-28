@@ -50,11 +50,12 @@ This document is the shared working plan for the Mechbot ESP32 project. Update i
 
 | Date | Test | Result | Next step |
 | --- | --- | --- | --- |
-| 2026-08-28 | Host C++ navigation-math test with warnings as errors | Passed wraparound, bounded correction, quaternion yaw, and field transform cases. | Compile for the ESP32 target and run the documented block tests. |
+| 2026-08-28 | Host C++ navigation-math test with warnings as errors | Passed wraparound, bounded correction, quaternion yaw, field transform, 15-degree continuous translation, and simultaneous turn cases. | Compile for the ESP32 target and run the documented block tests. |
 
 ## Backlog
 
 - [ ] Document the robot hardware and wiring.
+- [ ] Add the deployed `pi_mecanum_gamepad.py` and remove any dominant-axis quantization while preserving its deadman/watchdog behavior.
 - [ ] Define the navigation architecture and interfaces.
 - [ ] Add repeatable calibration and startup checks.
 - [ ] Add diagnostics for sensors and motor commands.
