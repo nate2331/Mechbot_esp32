@@ -1,0 +1,555 @@
+/*
+  ESP32-S3 mecanum USB controller with BNO085 IMU
+
+  Serial protocol at 115200 baud:
+    V <forward> <left> <ccw>   Values are normalized from -1.0 to +1.0
+    X                         Immediate stop
+    ?                         Print help
+
+  Telemetry:
+    T <ms> <FL> <FR> <RL> <RR>
+    I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>
+
+  Quaternion order matches ROS: x, y, z, w.
+  Gyroscope units are rad/s. Linear acceleration units are m/s^2.
+  IMU status is 0-3, where 3 is highest accuracy.
+
+  Safety:
+    - Motors start disabled.
+    - A valid V command must arrive at least every 300 ms.
+    - A timeout or malformed motion command stops all motors.
+    - An IMU failure is reported but does not disable motor control.
+*/
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_BNO08x.h>
+#include <esp_arduino_version.h>
+
+constexpr uint32_t SERIAL_BAUD = 115200;
+constexpr uint32_t PWM_FREQUENCY_HZ = 20000;
+constexpr uint8_t PWM_RESOLUTION_BITS = 8;
+constexpr uint32_t COMMAND_TIMEOUT_MS = 300;
+constexpr uint32_t TELEMETRY_INTERVAL_MS = 200;
+constexpr float ENCODER_COUNTS_PER_REV = 2500.0F;
+constexpr size_t RX_BUFFER_SIZE = 80;
+
+constexpr int IMU_SDA_PIN = 1;
+constexpr int IMU_SCL_PIN = 2;
+constexpr uint8_t IMU_I2C_ADDRESS = 0x4A;
+constexpr uint32_t IMU_I2C_FREQUENCY_HZ = 100000;
+constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz per report
+constexpr uint32_t IMU_STALE_MS = 500;
+constexpr uint32_t IMU_RETRY_INTERVAL_MS = 2000;
+constexpr uint32_t IMU_REPORT_RETRY_INTERVAL_MS = 1000;
+
+enum MotorIndex : uint8_t {
+  FRONT_LEFT = 0,
+  FRONT_RIGHT,
+  REAR_LEFT,
+  REAR_RIGHT,
+  MOTOR_COUNT
+};
+
+struct MotorConfig {
+  const char *name;
+  uint8_t dir1Pin;
+  uint8_t dir2Pin;
+  uint8_t pwmPin;
+  uint8_t encoderAPin;
+  uint8_t encoderBPin;
+  uint8_t matchedPwm;
+  int8_t motorPolarity;
+  int8_t encoderPolarity;
+};
+
+MotorConfig motors[MOTOR_COUNT] = {
+  {"FL", 12, 13, 38,  4,  5, 230, +1, +1},
+  {"FR", 14, 15, 39,  6,  7, 230, +1, +1},
+  {"RL", 16, 17, 40,  8,  9, 177, +1, +1},
+  {"RR", 18, 21, 41, 10, 11, 172, +1, -1}
+};
+
+volatile int32_t encoderCounts[MOTOR_COUNT] = {0, 0, 0, 0};
+volatile uint8_t previousEncoderState[MOTOR_COUNT] = {0, 0, 0, 0};
+portMUX_TYPE encoderMux = portMUX_INITIALIZER_UNLOCKED;
+
+DRAM_ATTR const int8_t quadratureDelta[16] = {
+   0, -1, +1,  0,
+  +1,  0,  0, -1,
+  -1,  0,  0, +1,
+   0, +1, -1,  0
+};
+
+#if ESP_ARDUINO_VERSION_MAJOR < 3
+constexpr uint8_t pwmChannels[MOTOR_COUNT] = {0, 1, 2, 3};
+#endif
+
+Adafruit_BNO08x bno08x(-1);
+sh2_SensorValue_t imuEvent;
+
+bool imuAvailable = false;
+bool imuQuaternionValid = false;
+bool imuGyroValid = false;
+bool imuAccelerationValid = false;
+uint8_t imuStatus = 0;
+uint32_t lastImuEventMs = 0;
+uint32_t lastImuInitAttemptMs = 0;
+uint32_t lastImuReportRetryMs = 0;
+
+float imuQx = 0.0F;
+float imuQy = 0.0F;
+float imuQz = 0.0F;
+float imuQw = 1.0F;
+float imuGx = 0.0F;
+float imuGy = 0.0F;
+float imuGz = 0.0F;
+float imuAx = 0.0F;
+float imuAy = 0.0F;
+float imuAz = 0.0F;
+
+char rxBuffer[RX_BUFFER_SIZE];
+size_t rxLength = 0;
+uint32_t lastCommandMs = 0;
+uint32_t lastTelemetryMs = 0;
+bool commandActive = false;
+bool motionRequested = false;
+bool watchdogReported = false;
+
+void IRAM_ATTR updateEncoder(uint8_t index) {
+  const uint8_t currentState =
+      (static_cast<uint8_t>(digitalRead(motors[index].encoderAPin)) << 1) |
+       static_cast<uint8_t>(digitalRead(motors[index].encoderBPin));
+  const uint8_t transition = (previousEncoderState[index] << 2) | currentState;
+  previousEncoderState[index] = currentState;
+
+  portENTER_CRITICAL_ISR(&encoderMux);
+  encoderCounts[index] += quadratureDelta[transition] * motors[index].encoderPolarity;
+  portEXIT_CRITICAL_ISR(&encoderMux);
+}
+
+void IRAM_ATTR frontLeftEncoderISR()  { updateEncoder(FRONT_LEFT); }
+void IRAM_ATTR frontRightEncoderISR() { updateEncoder(FRONT_RIGHT); }
+void IRAM_ATTR rearLeftEncoderISR()   { updateEncoder(REAR_LEFT); }
+void IRAM_ATTR rearRightEncoderISR()  { updateEncoder(REAR_RIGHT); }
+
+void writePwm(uint8_t index, uint8_t duty) {
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+  ledcWrite(motors[index].pwmPin, duty);
+#else
+  ledcWrite(pwmChannels[index], duty);
+#endif
+}
+
+bool attachPwm(uint8_t index) {
+#if ESP_ARDUINO_VERSION_MAJOR >= 3
+  return ledcAttach(motors[index].pwmPin, PWM_FREQUENCY_HZ,
+                    PWM_RESOLUTION_BITS);
+#else
+  ledcSetup(pwmChannels[index], PWM_FREQUENCY_HZ, PWM_RESOLUTION_BITS);
+  ledcAttachPin(motors[index].pwmPin, pwmChannels[index]);
+  return true;
+#endif
+}
+
+void stopMotor(uint8_t index) {
+  writePwm(index, 0);
+  digitalWrite(motors[index].dir1Pin, LOW);
+  digitalWrite(motors[index].dir2Pin, LOW);
+}
+
+void stopAllMotors() {
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    stopMotor(i);
+  }
+  commandActive = false;
+  motionRequested = false;
+}
+
+void setMotorCommand(uint8_t index, float normalizedCommand) {
+  normalizedCommand = constrain(normalizedCommand, -1.0F, 1.0F);
+  if (fabsf(normalizedCommand) < 0.01F) {
+    stopMotor(index);
+    return;
+  }
+
+  normalizedCommand *= motors[index].motorPolarity;
+  if (normalizedCommand > 0.0F) {
+    digitalWrite(motors[index].dir1Pin, HIGH);
+    digitalWrite(motors[index].dir2Pin, LOW);
+  } else {
+    digitalWrite(motors[index].dir1Pin, LOW);
+    digitalWrite(motors[index].dir2Pin, HIGH);
+  }
+
+  const uint8_t duty = static_cast<uint8_t>(
+      roundf(fabsf(normalizedCommand) * motors[index].matchedPwm));
+  writePwm(index, duty);
+}
+
+void applyVelocity(float forward, float left, float ccw) {
+  forward = constrain(forward, -1.0F, 1.0F);
+  left = constrain(left, -1.0F, 1.0F);
+  ccw = constrain(ccw, -1.0F, 1.0F);
+  motionRequested = fabsf(forward) >= 0.01F ||
+                    fabsf(left) >= 0.01F ||
+                    fabsf(ccw) >= 0.01F;
+
+  // Mecanum inverse kinematics matching the verified WASD/QE directions.
+  float wheel[MOTOR_COUNT] = {
+    forward - left - ccw,  // FL
+    forward + left + ccw,  // FR
+    forward + left - ccw,  // RL
+    forward - left + ccw   // RR
+  };
+
+  float largest = 1.0F;
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    largest = max(largest, fabsf(wheel[i]));
+  }
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    setMotorCommand(i, wheel[i] / largest);
+  }
+
+  lastCommandMs = millis();
+  commandActive = true;
+  watchdogReported = false;
+}
+
+int32_t getEncoderCount(uint8_t index) {
+  portENTER_CRITICAL(&encoderMux);
+  const int32_t count = encoderCounts[index];
+  portEXIT_CRITICAL(&encoderMux);
+  return count;
+}
+
+bool enableImuReports() {
+  bool ok = true;
+
+  if (!bno08x.enableReport(SH2_ROTATION_VECTOR,
+                            IMU_REPORT_INTERVAL_US)) {
+    Serial.println("WARN IMU rotation vector unavailable");
+    ok = false;
+  }
+  delay(10);
+  if (!bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED,
+                            IMU_REPORT_INTERVAL_US)) {
+    Serial.println("WARN IMU calibrated gyroscope unavailable");
+    ok = false;
+  }
+  delay(10);
+  if (!bno08x.enableReport(SH2_LINEAR_ACCELERATION,
+                            IMU_REPORT_INTERVAL_US)) {
+    Serial.println("WARN IMU linear acceleration unavailable");
+    ok = false;
+  }
+  delay(10);
+
+  lastImuReportRetryMs = millis();
+
+  return ok;
+}
+
+void retryMissingImuReports() {
+  const bool allReportsValid = imuQuaternionValid &&
+                               imuGyroValid &&
+                               imuAccelerationValid;
+  const uint32_t nowMs = millis();
+  if (!imuAvailable || allReportsValid || motionRequested ||
+      nowMs - lastImuReportRetryMs < IMU_REPORT_RETRY_INTERVAL_MS) {
+    return;
+  }
+
+  lastImuReportRetryMs = nowMs;
+  Serial.printf("WARN IMU reports missing; retrying Q%u G%u A%u\n",
+                imuQuaternionValid ? 0U : 1U,
+                imuGyroValid ? 0U : 1U,
+                imuAccelerationValid ? 0U : 1U);
+
+  if (!imuQuaternionValid) {
+    bno08x.enableReport(SH2_ROTATION_VECTOR, IMU_REPORT_INTERVAL_US);
+    delay(10);
+  }
+  if (!imuGyroValid) {
+    bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED,
+                         IMU_REPORT_INTERVAL_US);
+    delay(10);
+  }
+  if (!imuAccelerationValid) {
+    bno08x.enableReport(SH2_LINEAR_ACCELERATION,
+                         IMU_REPORT_INTERVAL_US);
+    delay(10);
+  }
+}
+
+void initializeImu() {
+  lastImuInitAttemptMs = millis();
+  Wire.begin(IMU_SDA_PIN, IMU_SCL_PIN);
+  Wire.setClock(IMU_I2C_FREQUENCY_HZ);
+  delay(100);
+
+  if (!bno08x.begin_I2C(IMU_I2C_ADDRESS, &Wire)) {
+    imuAvailable = false;
+    Serial.println("WARN IMU not detected; motor control remains available");
+    return;
+  }
+
+  imuAvailable = true;
+  imuQuaternionValid = false;
+  imuGyroValid = false;
+  imuAccelerationValid = false;
+  lastImuEventMs = 0;
+  if (enableImuReports()) {
+    Serial.println("IMU READY BNO085 ROTATION_VECTOR GYRO LINEAR_ACCEL");
+  } else {
+    Serial.println("WARN IMU detected but one or more reports failed");
+  }
+}
+
+void pollImu() {
+  if (!imuAvailable) {
+    const uint32_t nowMs = millis();
+    if (!motionRequested &&
+        nowMs - lastImuInitAttemptMs >= IMU_RETRY_INTERVAL_MS) {
+      Serial.println("WARN IMU offline; retrying initialization");
+      initializeImu();
+    }
+    return;
+  }
+
+  if (bno08x.wasReset()) {
+    imuQuaternionValid = false;
+    imuGyroValid = false;
+    imuAccelerationValid = false;
+    Serial.println("WARN IMU reset; restarting reports");
+    enableImuReports();
+  }
+
+  // Bound the work per loop so IMU traffic cannot starve serial commands.
+  for (uint8_t eventsRead = 0; eventsRead < 12; ++eventsRead) {
+    if (!bno08x.getSensorEvent(&imuEvent)) {
+      break;
+    }
+
+    switch (imuEvent.sensorId) {
+      case SH2_ROTATION_VECTOR:
+        imuQx = imuEvent.un.rotationVector.i;
+        imuQy = imuEvent.un.rotationVector.j;
+        imuQz = imuEvent.un.rotationVector.k;
+        imuQw = imuEvent.un.rotationVector.real;
+        imuQuaternionValid = true;
+        imuStatus = imuEvent.status;
+        lastImuEventMs = millis();
+        break;
+
+      case SH2_GYROSCOPE_CALIBRATED:
+        imuGx = imuEvent.un.gyroscope.x;
+        imuGy = imuEvent.un.gyroscope.y;
+        imuGz = imuEvent.un.gyroscope.z;
+        imuGyroValid = true;
+        lastImuEventMs = millis();
+        break;
+
+      case SH2_LINEAR_ACCELERATION:
+        imuAx = imuEvent.un.linearAcceleration.x;
+        imuAy = imuEvent.un.linearAcceleration.y;
+        imuAz = imuEvent.un.linearAcceleration.z;
+        imuAccelerationValid = true;
+        lastImuEventMs = millis();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  retryMissingImuReports();
+}
+
+void sendEncoderTelemetry() {
+  Serial.printf("T %lu %ld %ld %ld %ld\n",
+                static_cast<unsigned long>(millis()),
+                static_cast<long>(getEncoderCount(FRONT_LEFT)),
+                static_cast<long>(getEncoderCount(FRONT_RIGHT)),
+                static_cast<long>(getEncoderCount(REAR_LEFT)),
+                static_cast<long>(getEncoderCount(REAR_RIGHT)));
+}
+
+void sendImuTelemetry() {
+  const uint32_t nowMs = millis();
+
+  if (!imuAvailable) {
+    Serial.printf("I %lu OFFLINE\n", static_cast<unsigned long>(nowMs));
+    return;
+  }
+
+  if (!imuQuaternionValid || !imuGyroValid || !imuAccelerationValid) {
+    Serial.printf("I %lu WAIT Q%u G%u A%u\n",
+                  static_cast<unsigned long>(nowMs),
+                  imuQuaternionValid ? 1U : 0U,
+                  imuGyroValid ? 1U : 0U,
+                  imuAccelerationValid ? 1U : 0U);
+    return;
+  }
+
+  if (nowMs - lastImuEventMs > IMU_STALE_MS) {
+    Serial.printf("I %lu STALE\n", static_cast<unsigned long>(nowMs));
+    return;
+  }
+
+  Serial.printf(
+      "I %lu %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %u\n",
+      static_cast<unsigned long>(nowMs),
+      imuQx, imuQy, imuQz, imuQw,
+      imuGx, imuGy, imuGz,
+      imuAx, imuAy, imuAz,
+      static_cast<unsigned int>(imuStatus));
+}
+
+void sendTelemetry() {
+  sendEncoderTelemetry();
+  sendImuTelemetry();
+}
+
+void printHelp() {
+  Serial.println("Commands:");
+  Serial.println("  V <forward> <left> <ccw>   each value -1.0 to +1.0");
+  Serial.println("  X                         immediate stop");
+  Serial.println("  ?                         help");
+  Serial.println("Watchdog: 300 ms");
+  Serial.println("Encoder: T <ms> <FL> <FR> <RL> <RR>");
+  Serial.println("IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>");
+}
+
+void processCommand(char *line) {
+  while (*line == ' ' || *line == '\t') {
+    ++line;
+  }
+
+  if (line[0] == 'X' && line[1] == '\0') {
+    stopAllMotors();
+    watchdogReported = false;
+    Serial.println("OK STOP");
+    return;
+  }
+
+  if (line[0] == '?' && line[1] == '\0') {
+    printHelp();
+    return;
+  }
+
+  float forward = 0.0F;
+  float left = 0.0F;
+  float ccw = 0.0F;
+  char extra = '\0';
+  const int fields = sscanf(line, "V %f %f %f %c",
+                            &forward, &left, &ccw, &extra);
+  if (fields == 3) {
+    applyVelocity(forward, left, ccw);
+    return;
+  }
+
+  // Unknown or malformed motion input fails safe.
+  stopAllMotors();
+  Serial.println("ERR malformed command; motors stopped");
+}
+
+void receiveSerialCommands() {
+  while (Serial.available() > 0) {
+    const char incoming = static_cast<char>(Serial.read());
+
+    if (incoming == '\n' || incoming == '\r') {
+      if (rxLength > 0) {
+        rxBuffer[rxLength] = '\0';
+        processCommand(rxBuffer);
+        rxLength = 0;
+      }
+      continue;
+    }
+
+    if (rxLength < RX_BUFFER_SIZE - 1) {
+      rxBuffer[rxLength++] = incoming;
+    } else {
+      rxLength = 0;
+      stopAllMotors();
+      Serial.println("ERR command too long; motors stopped");
+    }
+  }
+}
+
+void setup() {
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    pinMode(motors[i].dir1Pin, OUTPUT);
+    pinMode(motors[i].dir2Pin, OUTPUT);
+    pinMode(motors[i].pwmPin, OUTPUT);
+    digitalWrite(motors[i].dir1Pin, LOW);
+    digitalWrite(motors[i].dir2Pin, LOW);
+    digitalWrite(motors[i].pwmPin, LOW);
+  }
+
+  Serial.begin(SERIAL_BAUD);
+  delay(500);
+
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    if (!attachPwm(i)) {
+      stopAllMotors();
+      Serial.printf("FATAL PWM attach failed for %s\n", motors[i].name);
+      while (true) {
+        delay(1000);
+      }
+    }
+    writePwm(i, 0);
+
+    pinMode(motors[i].encoderAPin, INPUT_PULLUP);
+    pinMode(motors[i].encoderBPin, INPUT_PULLUP);
+    previousEncoderState[i] =
+        (static_cast<uint8_t>(digitalRead(motors[i].encoderAPin)) << 1) |
+         static_cast<uint8_t>(digitalRead(motors[i].encoderBPin));
+  }
+
+  attachInterrupt(digitalPinToInterrupt(motors[FRONT_LEFT].encoderAPin),
+                  frontLeftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[FRONT_LEFT].encoderBPin),
+                  frontLeftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[FRONT_RIGHT].encoderAPin),
+                  frontRightEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[FRONT_RIGHT].encoderBPin),
+                  frontRightEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[REAR_LEFT].encoderAPin),
+                  rearLeftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[REAR_LEFT].encoderBPin),
+                  rearLeftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[REAR_RIGHT].encoderAPin),
+                  rearRightEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(motors[REAR_RIGHT].encoderBPin),
+                  rearRightEncoderISR, CHANGE);
+
+  stopAllMotors();
+  initializeImu();
+
+  lastCommandMs = millis();
+  lastTelemetryMs = millis();
+  Serial.println("READY ESP32_MECANUM_USB_IMU_V2_4");
+  printHelp();
+}
+
+void loop() {
+  receiveSerialCommands();
+  pollImu();
+
+  const uint32_t nowMs = millis();
+  if (commandActive && nowMs - lastCommandMs > COMMAND_TIMEOUT_MS) {
+    stopAllMotors();
+    if (!watchdogReported) {
+      Serial.println("FAULT WATCHDOG; motors stopped");
+      watchdogReported = true;
+    }
+  }
+
+  if (nowMs - lastTelemetryMs >= TELEMETRY_INTERVAL_MS) {
+    sendTelemetry();
+    lastTelemetryMs = nowMs;
+  }
+
+  delay(1);
+}
