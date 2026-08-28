@@ -8,11 +8,11 @@ This document is the shared working plan for the Mechbot ESP32 project. Update i
 
 ### Planned work
 
-- [ ] Confirm the IMU is initialized, calibrated, and producing stable heading data.
-- [ ] Define the desired heading when manual drive begins or when heading-hold is enabled.
-- [ ] Measure heading error between the desired and current heading.
-- [ ] Apply a bounded proportional steering correction to the motor-control command.
-- [ ] Add safeguards for sensor dropouts, heading wraparound, and deliberate turns by the operator.
+- [ ] Confirm on hardware that the IMU is calibrated and producing stable heading data.
+- [x] Define the desired heading when manual translation begins.
+- [x] Measure wrapped heading error between the desired and current heading.
+- [x] Apply a bounded proportional steering correction to the motor-control command.
+- [x] Add safeguards for sensor dropouts, heading wraparound, and deliberate turns by the operator.
 - [ ] Tune and test the control response at low speed before higher-speed trials.
 - [ ] Record test results and parameter changes below.
 
@@ -22,12 +22,12 @@ This document is the shared working plan for the Mechbot ESP32 project. Update i
 
 ### Planned work
 
-- [ ] Define the operator-facing field reference and startup orientation.
-- [ ] Convert gamepad forward and sideways commands into field-relative movement commands.
-- [ ] Rotate those commands into the robot frame using the current IMU heading.
-- [ ] Verify correct behavior at several robot headings, including heading wraparound.
-- [ ] Provide a simple way to reset or re-zero the field reference when needed.
-- [ ] Test field-oriented control together with heading hold and document the interaction.
+- [x] Define the operator-facing field reference and startup orientation.
+- [x] Convert gamepad forward and sideways commands into field-relative movement commands.
+- [x] Rotate those commands into the robot frame using the current IMU heading.
+- [ ] Verify correct behavior on hardware at several robot headings, including heading wraparound.
+- [x] Provide a simple way to reset or re-zero the field reference when needed.
+- [ ] Test field-oriented control together with heading hold on hardware.
 
 ## Near-Term Milestones
 
@@ -42,14 +42,15 @@ This document is the shared working plan for the Mechbot ESP32 project. Update i
 
 | Date | Decision or observation | Owner | Follow-up |
 | --- | --- | --- | --- |
-|  | Start with IMU-based heading hold on the ESP32. |  |  |
-|  | Add field-oriented control so gamepad directions are independent of the robot's orientation. |  |  |
+| 2026-08-28 | Heading hold is enabled by default and has no routine disable command. | Nate | Tune conservative starting values on hardware. |
+| 2026-08-28 | Field-oriented control remains independently toggleable and captures field zero when enabled. | Nate | Validate IMU mounting sign and operator reference. |
+| 2026-08-28 | Field-oriented translation stops if its required heading is stale or invalid. | Codex | Exercise IMU reset/dropout during block testing. |
 
 ## Test Log
 
 | Date | Test | Result | Next step |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| 2026-08-28 | Host C++ navigation-math test with warnings as errors | Passed wraparound, bounded correction, quaternion yaw, and field transform cases. | Compile for the ESP32 target and run the documented block tests. |
 
 ## Backlog
 
