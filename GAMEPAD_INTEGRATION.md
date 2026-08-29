@@ -2,71 +2,48 @@
 
 ## Active control path
 
-`pi_mecanum_gamepad.py` is the Xbox gamepad sender used for automatic control. It
-opens `/dev/input/js0`, uses the left bumper as a deadman, sends velocity commands
-at 20 Hz, and parses the ESP32 encoder and IMU telemetry. `pi_mecanum_teleop.py`
-is the separate interactive keyboard utility; its WASD/QE mapping is intentional
-and was not changed.
+`pi_mecanum_gamepad.py` is the Xbox gamepad sender used by the Raspberry Pi.
+It opens `/dev/input/js0`, uses the left bumper as a deadman, sends commands at
+20 Hz, and parses encoder and IMU telemetry.
 
-The ESP32 serial protocol accepts three independent normalized components:
+The ESP32 serial protocol remains:
 
 ```text
 V <forward> <left> <ccw>
 ```
 
-The active gamepad sender maps left-stick Y to `forward`, left-stick X to `left`,
-and right-stick X to `ccw`, with the signs established by its Xbox-compatible
-`jstest` mapping.
+## Current full-power cardinal mode
 
-## Continuous translation and rotation
+The robot's current mixed motors do not respond consistently to fractional
+open-loop PWM. The gamepad therefore selects the dominant stick axis and sends
+one full-scale cardinal command, matching the previously proven WASD/QE behavior:
 
-The previous `full_scale_motion()` selected the single largest axis and emitted a
-full-scale cardinal command. The active sender now preserves both normalized
-left-stick components and its proportional magnitude. The existing `0.35`
-translation deadzone is applied to the vector magnitude, not separately to each
-axis, so filtering does not collapse or distort the stick angle.
+- Left-stick Y: full-speed forward or reverse
+- Left-stick X: full-speed strafe left or right
+- Right-stick X: full-speed rotate counter-clockwise or clockwise
 
-For a full-scale stick 15 degrees left of forward, the logical command is:
+Only the dominant direction is sent. Diagonal/360-degree proportional motion and
+simultaneous translation/rotation are intentionally disabled until per-wheel
+closed-loop speed control or minimum-PWM compensation is implemented.
 
-```text
-V 0.965926 0.258819 0
-```
+## IMU heading hold
 
-A simultaneous 0.30 counter-clockwise right-stick command retains the same
-translation:
+Heading hold remains implemented in
+`Mechbot_IMU_ESP32/Mechbot_IMU_ESP32.ino`. During translation, the firmware
+uses BNO085 yaw to correct unintended rotation. Deliberate rotation commands take
+priority and establish a new held heading when released.
 
-```text
-V 0.965926 0.258819 0.30
-```
-
-Right-stick X has the same `0.35` center threshold but is evaluated independently
-from translation. In the IMU firmware, every motor-effective nonzero rotation
-command yields heading hold; releasing the right stick lets heading hold capture
-and maintain the new orientation.
-
-## Safety and telemetry
+## Safety
 
 - Releasing the left-bumper deadman immediately sends zero velocity and `X`.
-- A missing joystick path or short joystick event is treated as a disconnect;
-  the sender's `finally` block requests the same clean stop.
-- Commands continue at 20 Hz while connected, comfortably inside the ESP32's
-  300 ms command watchdog.
-- Center noise produces zero motion, and movement is never synthesized while the
-  deadman is released.
-- Existing nonblocking `T` encoder and `I` IMU telemetry parsing is unchanged.
-
-The repository does not contain the Pi's service definition. Its existing
-auto-start command should continue to execute `pi_mecanum_gamepad.py`; no service
-or deployment path change is required for this update.
+- A disconnected joystick requests a clean stop.
+- Commands are sent at 20 Hz inside the ESP32's 300 ms watchdog.
+- Center noise below the 0.35 threshold produces no motion.
 
 ## Host verification
 
-Run the gamepad tests with:
+Run:
 
 ```bash
 python3 -m unittest discover -s tests -p "test_*.py" -v
 ```
-
-The tests cover cardinal translation, the 15-degree vector, partial magnitude,
-simultaneous right-stick rotation, radial/rotation deadzones, deadman release,
-disconnect/stop behavior, and existing telemetry parsing.
