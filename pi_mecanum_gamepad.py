@@ -45,23 +45,26 @@ def normalized_axis(raw_value):
 
 
 def gamepad_motion(axes):
-    """Return continuous left-stick translation and right-stick rotation.
+    """Convert the dominant stick direction to a proven full-scale command.
 
-    Apply the existing threshold radially to the left stick so small center
-    noise is removed without collapsing or distorting the translation angle.
-    Values outside the deadzone retain their proportional axis magnitudes.
+    The current mixed motors have very little useful open-loop range below
+    their calibrated PWM. Treat the sticks like W/A/S/D/Q/E direction
+    switches until closed-loop wheel-speed control is added.
     """
-    forward = -normalized_axis(axes[AXIS_FORWARD])
-    left = -normalized_axis(axes[AXIS_STRAFE])
-    if math.hypot(forward, left) < DIRECTION_THRESHOLD:
-        forward = left = 0.0
+    candidates = [
+        (abs(normalized_axis(axes[AXIS_FORWARD])), "forward"),
+        (abs(normalized_axis(axes[AXIS_STRAFE])), "strafe"),
+        (abs(normalized_axis(axes[AXIS_ROTATION])), "rotation"),
+    ]
+    magnitude, direction = max(candidates, key=lambda item: item[0])
+    if magnitude < DIRECTION_THRESHOLD:
+        return 0.0, 0.0, 0.0
 
-    rotation = -normalized_axis(axes[AXIS_ROTATION])
-    if abs(rotation) < DIRECTION_THRESHOLD:
-        rotation = 0.0
-
-    return forward, left, rotation
-
+    if direction == "forward":
+        return -1.0 if axes[AXIS_FORWARD] > 0 else 1.0, 0.0, 0.0
+    if direction == "strafe":
+        return 0.0, -1.0 if axes[AXIS_STRAFE] > 0 else 1.0, 0.0
+    return 0.0, 0.0, -1.0 if axes[AXIS_ROTATION] > 0 else 1.0
 
 def commanded_motion(axes, deadman_pressed):
     if not deadman_pressed:
@@ -231,7 +234,7 @@ def main():
     print(f"Joystick: {args.joystick}")
     print(f"ESP32:    {serial_port}")
     print("Hold LEFT BUMPER to drive. Left stick moves; right stick X rotates.")
-    print("Left-stick direction and magnitude are continuous through 360 degrees.")
+    print("Full-power cardinal mode: dominant stick direction acts like WASD/QE.")
     print("Release LEFT BUMPER for an immediate stop. Ctrl-C exits.")
 
     with open(args.joystick, "rb", buffering=0) as joystick, serial.Serial(
