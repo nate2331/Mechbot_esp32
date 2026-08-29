@@ -45,10 +45,10 @@ constexpr int IMU_SDA_PIN = 1;
 constexpr int IMU_SCL_PIN = 2;
 constexpr uint8_t IMU_I2C_ADDRESS = 0x4A;
 constexpr uint32_t IMU_I2C_FREQUENCY_HZ = 100000;
-constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz per report
+constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz
 constexpr uint32_t IMU_STALE_MS = 500;
 constexpr uint32_t IMU_RETRY_INTERVAL_MS = 2000;
-constexpr uint32_t IMU_REPORT_RETRY_INTERVAL_MS = 1000;
+constexpr uint32_t IMU_FULL_REINIT_MS = 2000;
 // Relative heading hold only needs a fresh quaternion; SH-2 can report useful
 // short-term yaw while its absolute accuracy status is still 0. Field-oriented
 // control retains the stricter calibrated-heading requirement.
@@ -110,13 +110,9 @@ sh2_SensorValue_t imuEvent;
 
 bool imuAvailable = false;
 bool imuQuaternionValid = false;
-bool imuGyroValid = false;
-bool imuAccelerationValid = false;
 uint8_t imuStatus = 0;
-uint32_t lastImuEventMs = 0;
 uint32_t lastImuQuaternionMs = 0;
 uint32_t lastImuInitAttemptMs = 0;
-uint32_t lastImuReportRetryMs = 0;
 
 float imuQx = 0.0F;
 float imuQy = 0.0F;
@@ -341,63 +337,29 @@ int32_t getEncoderCount(uint8_t index) {
   return count;
 }
 
-bool enableImuReports() {
-  bool ok = true;
+void initializeImu();
 
+bool enableImuReports() {
   if (!bno08x.enableReport(SH2_ROTATION_VECTOR,
                             IMU_REPORT_INTERVAL_US)) {
     Serial.println("WARN IMU rotation vector unavailable");
-    ok = false;
+    return false;
   }
   delay(10);
-  if (!bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED,
-                            IMU_REPORT_INTERVAL_US)) {
-    Serial.println("WARN IMU calibrated gyroscope unavailable");
-    ok = false;
-  }
-  delay(10);
-  if (!bno08x.enableReport(SH2_LINEAR_ACCELERATION,
-                            IMU_REPORT_INTERVAL_US)) {
-    Serial.println("WARN IMU linear acceleration unavailable");
-    ok = false;
-  }
-  delay(10);
-
-  lastImuReportRetryMs = millis();
-
-  return ok;
+  return true;
 }
 
-void retryMissingImuReports() {
-  const bool allReportsValid = imuQuaternionValid &&
-                               imuGyroValid &&
-                               imuAccelerationValid;
+void reinitializeStaleImu() {
   const uint32_t nowMs = millis();
-  if (!imuAvailable || allReportsValid || motionRequested ||
-      nowMs - lastImuReportRetryMs < IMU_REPORT_RETRY_INTERVAL_MS) {
+  const bool quaternionStale =
+      !imuQuaternionValid || nowMs - lastImuQuaternionMs > IMU_FULL_REINIT_MS;
+  if (!imuAvailable || !quaternionStale || motionRequested ||
+      nowMs - lastImuInitAttemptMs < IMU_RETRY_INTERVAL_MS) {
     return;
   }
 
-  lastImuReportRetryMs = nowMs;
-  Serial.printf("WARN IMU reports missing; retrying Q%u G%u A%u\n",
-                imuQuaternionValid ? 0U : 1U,
-                imuGyroValid ? 0U : 1U,
-                imuAccelerationValid ? 0U : 1U);
-
-  if (!imuQuaternionValid) {
-    bno08x.enableReport(SH2_ROTATION_VECTOR, IMU_REPORT_INTERVAL_US);
-    delay(10);
-  }
-  if (!imuGyroValid) {
-    bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED,
-                         IMU_REPORT_INTERVAL_US);
-    delay(10);
-  }
-  if (!imuAccelerationValid) {
-    bno08x.enableReport(SH2_LINEAR_ACCELERATION,
-                         IMU_REPORT_INTERVAL_US);
-    delay(10);
-  }
+  Serial.println("WARN IMU rotation vector stale; full reinitialization");
+  initializeImu();
 }
 
 void initializeImu() {
@@ -414,14 +376,11 @@ void initializeImu() {
 
   imuAvailable = true;
   imuQuaternionValid = false;
-  imuGyroValid = false;
-  imuAccelerationValid = false;
-  lastImuEventMs = 0;
   lastImuQuaternionMs = 0;
   if (enableImuReports()) {
-    Serial.println("IMU READY BNO085 ROTATION_VECTOR GYRO LINEAR_ACCEL");
+    Serial.println("IMU READY BNO085 ROTATION_VECTOR");
   } else {
-    Serial.println("WARN IMU detected but one or more reports failed");
+    Serial.println("WARN IMU detected but rotation vector report failed");
   }
 }
 
@@ -438,9 +397,8 @@ void pollImu() {
 
   if (bno08x.wasReset()) {
     imuQuaternionValid = false;
-    imuGyroValid = false;
-    imuAccelerationValid = false;
     lastImuQuaternionMs = 0;
+    lastImuInitAttemptMs = millis();
     invalidateNavigationReferences("IMU reset");
     Serial.println("WARN IMU reset; restarting reports");
     enableImuReports();
@@ -460,24 +418,7 @@ void pollImu() {
         imuQw = imuEvent.un.rotationVector.real;
         imuQuaternionValid = true;
         imuStatus = imuEvent.status;
-        lastImuEventMs = millis();
-        lastImuQuaternionMs = lastImuEventMs;
-        break;
-
-      case SH2_GYROSCOPE_CALIBRATED:
-        imuGx = imuEvent.un.gyroscope.x;
-        imuGy = imuEvent.un.gyroscope.y;
-        imuGz = imuEvent.un.gyroscope.z;
-        imuGyroValid = true;
-        lastImuEventMs = millis();
-        break;
-
-      case SH2_LINEAR_ACCELERATION:
-        imuAx = imuEvent.un.linearAcceleration.x;
-        imuAy = imuEvent.un.linearAcceleration.y;
-        imuAz = imuEvent.un.linearAcceleration.z;
-        imuAccelerationValid = true;
-        lastImuEventMs = millis();
+        lastImuQuaternionMs = millis();
         break;
 
       default:
@@ -485,7 +426,7 @@ void pollImu() {
     }
   }
 
-  retryMissingImuReports();
+  reinitializeStaleImu();
 }
 
 void sendEncoderTelemetry() {
@@ -505,16 +446,14 @@ void sendImuTelemetry() {
     return;
   }
 
-  if (!imuQuaternionValid || !imuGyroValid || !imuAccelerationValid) {
-    Serial.printf("I %lu WAIT Q%u G%u A%u\n",
+  if (!imuQuaternionValid) {
+    Serial.printf("I %lu WAIT Q%u\n",
                   static_cast<unsigned long>(nowMs),
-                  imuQuaternionValid ? 1U : 0U,
-                  imuGyroValid ? 1U : 0U,
-                  imuAccelerationValid ? 1U : 0U);
+                  imuQuaternionValid ? 1U : 0U);
     return;
   }
 
-  if (nowMs - lastImuEventMs > IMU_STALE_MS) {
+  if (nowMs - lastImuQuaternionMs > IMU_STALE_MS) {
     Serial.printf("I %lu STALE\n", static_cast<unsigned long>(nowMs));
     return;
   }
