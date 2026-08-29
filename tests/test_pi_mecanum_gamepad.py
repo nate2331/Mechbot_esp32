@@ -1,6 +1,5 @@
 import importlib.util
 import io
-import math
 from pathlib import Path
 import sys
 import types
@@ -45,57 +44,48 @@ class GamepadMotionTest(unittest.TestCase):
         axes[GAMEPAD.AXIS_ROTATION] = raw_axis(-rotation)
         return axes
 
-    def assert_motion_close(self, actual, expected, places=4):
-        for actual_value, expected_value in zip(actual, expected):
-            self.assertAlmostEqual(actual_value, expected_value, places=places)
-
-    def test_cardinal_translation(self):
-        self.assert_motion_close(
-            GAMEPAD.gamepad_motion(self.axes_for_motion(forward=1.0)),
+    def test_cardinal_translation_is_full_scale(self):
+        self.assertEqual(
+            GAMEPAD.gamepad_motion(self.axes_for_motion(forward=0.60)),
             (1.0, 0.0, 0.0),
         )
-        self.assert_motion_close(
-            GAMEPAD.gamepad_motion(self.axes_for_motion(left=1.0)),
-            (0.0, 1.0, 0.0),
+        self.assertEqual(
+            GAMEPAD.gamepad_motion(self.axes_for_motion(left=-0.70)),
+            (0.0, -1.0, 0.0),
         )
 
-    def test_diagonal_translation_preserves_both_axes(self):
-        magnitude = 1.0
-        angle = math.radians(15.0)
-        expected = (magnitude * math.cos(angle), magnitude * math.sin(angle), 0.0)
-        actual = GAMEPAD.gamepad_motion(
-            self.axes_for_motion(forward=expected[0], left=expected[1])
+    def test_dominant_translation_axis_wins(self):
+        self.assertEqual(
+            GAMEPAD.gamepad_motion(
+                self.axes_for_motion(forward=0.80, left=0.55)
+            ),
+            (1.0, 0.0, 0.0),
         )
-        self.assert_motion_close(actual, expected)
-        self.assertAlmostEqual(math.atan2(actual[1], actual[0]), angle, places=4)
 
-    def test_partial_magnitude_is_not_promoted_to_full_scale(self):
-        magnitude = 0.60
-        angle = math.radians(30.0)
-        expected = (magnitude * math.cos(angle), magnitude * math.sin(angle), 0.0)
-        actual = GAMEPAD.gamepad_motion(
-            self.axes_for_motion(forward=expected[0], left=expected[1])
+    def test_dominant_rotation_axis_wins(self):
+        self.assertEqual(
+            GAMEPAD.gamepad_motion(
+                self.axes_for_motion(forward=0.50, rotation=-0.90)
+            ),
+            (0.0, 0.0, -1.0),
         )
-        self.assert_motion_close(actual, expected)
-        self.assertAlmostEqual(math.hypot(actual[0], actual[1]), magnitude, places=4)
 
-    def test_right_stick_rotation_mixes_with_translation(self):
-        expected = (0.80, 0.30, 0.50)
-        actual = GAMEPAD.gamepad_motion(
-            self.axes_for_motion(
-                forward=expected[0], left=expected[1], rotation=expected[2]
-            )
+    def test_deadzone_stops_motion(self):
+        self.assertEqual(
+            GAMEPAD.gamepad_motion(
+                self.axes_for_motion(forward=0.20, left=0.20, rotation=0.34)
+            ),
+            (0.0, 0.0, 0.0),
         )
-        self.assert_motion_close(actual, expected)
 
-    def test_radial_translation_and_rotation_deadzone(self):
-        axes = self.axes_for_motion(forward=0.20, left=0.20, rotation=0.34)
-        self.assertEqual(GAMEPAD.gamepad_motion(axes), (0.0, 0.0, 0.0))
-
-    def test_deadman_release_commands_zero(self):
-        axes = self.axes_for_motion(forward=1.0, left=0.25, rotation=0.50)
-        self.assertEqual(GAMEPAD.commanded_motion(axes, False), (0.0, 0.0, 0.0))
-        self.assertNotEqual(GAMEPAD.commanded_motion(axes, True), (0.0, 0.0, 0.0))
+    def test_deadman_release_commands_zero_and_stop(self):
+        axes = self.axes_for_motion(forward=1.0)
+        self.assertEqual(
+            GAMEPAD.commanded_motion(axes, False), (0.0, 0.0, 0.0)
+        )
+        self.assertEqual(
+            GAMEPAD.commanded_motion(axes, True), (1.0, 0.0, 0.0)
+        )
 
         serial_port = FakeSerial()
         GAMEPAD.handle_deadman_transition(serial_port, True, False)
@@ -104,7 +94,7 @@ class GamepadMotionTest(unittest.TestCase):
             [b"V 0.000 0.000 0.000\n", b"X\n"],
         )
 
-    def test_disconnect_event_and_stop_sequence(self):
+    def test_disconnect_and_stop_sequence(self):
         with self.assertRaisesRegex(RuntimeError, "Gamepad disconnected"):
             GAMEPAD.read_joystick_event(io.BytesIO(b""))
 
