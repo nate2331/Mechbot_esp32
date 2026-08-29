@@ -83,6 +83,7 @@ center of mass, and motor matching all affect the correct signs and gains.
 The host-side test in `tests/navigation_math_test.cpp` covers quaternion-to-yaw,
 angle wraparound, bounded correction, the field-to-robot transform, continuous
 15-degree translation, and simultaneous translation/rotation mixing. See
-`GAMEPAD_INTEGRATION.md` for the continuous-axis contract and the missing deployed
-`pi_mecanum_gamepad.py` source. An actual ESP32/BNO085 build and the above physical
-tests are still required before relying on either feature at full speed.
+`GAMEPAD_INTEGRATION.md` for the active Raspberry Pi sender, continuous-axis
+mapping, safety behavior, and Python tests. An actual ESP32/BNO085 build and the
+above physical tests are still required before relying on either feature at full
+speed.

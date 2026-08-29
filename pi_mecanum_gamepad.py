@@ -44,31 +44,51 @@ def normalized_axis(raw_value):
     return max(-1.0, min(1.0, raw_value / 32767.0))
 
 
-def full_scale_motion(axes):
-    """Convert the dominant stick direction to a proven full-scale command.
+def gamepad_motion(axes):
+    """Return continuous left-stick translation and right-stick rotation.
 
-    The temporary mixed motors have almost no useful open-loop range below
-    their calibrated PWM. Until per-wheel minimum-PWM control exists in the
-    ESP32 firmware, treat the sticks like W/A/S/D/Q/E direction switches.
+    Apply the existing threshold radially to the left stick so small center
+    noise is removed without collapsing or distorting the translation angle.
+    Values outside the deadzone retain their proportional axis magnitudes.
     """
-    candidates = [
-        (abs(normalized_axis(axes[AXIS_FORWARD])), "forward"),
-        (abs(normalized_axis(axes[AXIS_STRAFE])), "strafe"),
-        (abs(normalized_axis(axes[AXIS_ROTATION])), "rotation"),
-    ]
-    magnitude, direction = max(candidates)
-    if magnitude < DIRECTION_THRESHOLD:
-        return 0.0, 0.0, 0.0
+    forward = -normalized_axis(axes[AXIS_FORWARD])
+    left = -normalized_axis(axes[AXIS_STRAFE])
+    if math.hypot(forward, left) < DIRECTION_THRESHOLD:
+        forward = left = 0.0
 
-    if direction == "forward":
-        return -1.0 if axes[AXIS_FORWARD] > 0 else 1.0, 0.0, 0.0
-    if direction == "strafe":
-        return 0.0, -1.0 if axes[AXIS_STRAFE] > 0 else 1.0, 0.0
-    return 0.0, 0.0, -1.0 if axes[AXIS_ROTATION] > 0 else 1.0
+    rotation = -normalized_axis(axes[AXIS_ROTATION])
+    if abs(rotation) < DIRECTION_THRESHOLD:
+        rotation = 0.0
+
+    return forward, left, rotation
+
+
+def commanded_motion(axes, deadman_pressed):
+    if not deadman_pressed:
+        return 0.0, 0.0, 0.0
+    return gamepad_motion(axes)
 
 
 def send_velocity(ser, forward, strafe, rotation):
     ser.write(f"V {forward:.3f} {strafe:.3f} {rotation:.3f}\n".encode("ascii"))
+
+
+def send_stop(ser):
+    send_velocity(ser, 0.0, 0.0, 0.0)
+    ser.write(b"X\n")
+    ser.flush()
+
+
+def handle_deadman_transition(ser, was_pressed, is_pressed):
+    if was_pressed and not is_pressed:
+        send_stop(ser)
+
+
+def read_joystick_event(joystick):
+    event = joystick.read(JS_EVENT_SIZE)
+    if len(event) != JS_EVENT_SIZE:
+        raise RuntimeError("Gamepad disconnected")
+    return struct.unpack(JS_EVENT_FORMAT, event)
 
 
 def quaternion_to_euler(qx, qy, qz, qw):
@@ -211,7 +231,7 @@ def main():
     print(f"Joystick: {args.joystick}")
     print(f"ESP32:    {serial_port}")
     print("Hold LEFT BUMPER to drive. Left stick moves; right stick X rotates.")
-    print("Temporary full-scale mode: the dominant stick direction acts like WASD/QE.")
+    print("Left-stick direction and magnitude are continuous through 360 degrees.")
     print("Release LEFT BUMPER for an immediate stop. Ctrl-C exits.")
 
     with open(args.joystick, "rb", buffering=0) as joystick, serial.Serial(
@@ -224,6 +244,7 @@ def main():
         telemetry = {}
         next_send = time.monotonic()
         next_telemetry_print = next_send
+        deadman_was_pressed = False
 
         try:
             while True:
@@ -231,25 +252,26 @@ def main():
                     raise RuntimeError("Gamepad disconnected")
                 readable, _, _ = select.select([joystick], [], [], 0.01)
                 if readable:
-                    event = joystick.read(JS_EVENT_SIZE)
-                    if len(event) != JS_EVENT_SIZE:
-                        raise RuntimeError("Gamepad disconnected")
-                    _, value, event_type, number = struct.unpack(JS_EVENT_FORMAT, event)
+                    _, value, event_type, number = read_joystick_event(joystick)
                     event_type &= ~JS_EVENT_INIT
                     if event_type == JS_EVENT_AXIS and number < len(axes):
                         axes[number] = value
                     elif event_type == JS_EVENT_BUTTON and number < len(buttons):
                         buttons[number] = value
 
+                deadman_pressed = bool(buttons[BUTTON_DEADMAN])
+                handle_deadman_transition(
+                    ser, deadman_was_pressed, deadman_pressed
+                )
+                deadman_was_pressed = deadman_pressed
+
                 receive_serial_telemetry(ser, serial_rx, telemetry)
 
                 now = time.monotonic()
                 if now >= next_send:
-                    if buttons[BUTTON_DEADMAN]:
-                        forward, strafe, rotation = full_scale_motion(axes)
-                    else:
-                        forward = strafe = rotation = 0.0
-
+                    forward, strafe, rotation = commanded_motion(
+                        axes, deadman_pressed
+                    )
                     send_velocity(ser, forward, strafe, rotation)
                     next_send = now + (1.0 / SEND_HZ)
 
@@ -262,9 +284,7 @@ def main():
         finally:
             # The ESP32 watchdog is the backstop; also request a clean stop here.
             try:
-                send_velocity(ser, 0.0, 0.0, 0.0)
-                ser.write(b"X\n")
-                ser.flush()
+                send_stop(ser)
             except (OSError, serial.SerialException):
                 pass
             print("Stopped.")

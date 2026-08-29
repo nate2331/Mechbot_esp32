@@ -45,17 +45,19 @@ This document is the shared working plan for the Mechbot ESP32 project. Update i
 | 2026-08-28 | Heading hold is enabled by default and has no routine disable command. | Nate | Tune conservative starting values on hardware. |
 | 2026-08-28 | Field-oriented control remains independently toggleable and captures field zero when enabled. | Nate | Validate IMU mounting sign and operator reference. |
 | 2026-08-28 | Field-oriented translation stops if its required heading is stale or invalid. | Codex | Exercise IMU reset/dropout during block testing. |
+| 2026-08-29 | `pi_mecanum_gamepad.py` is the active Xbox sender; preserve two-axis translation instead of dominant-axis quantization. | Nate | Deploy through the existing Pi auto-start configuration and validate on blocks. |
 
 ## Test Log
 
 | Date | Test | Result | Next step |
 | --- | --- | --- | --- |
 | 2026-08-28 | Host C++ navigation-math test with warnings as errors | Passed wraparound, bounded correction, quaternion yaw, field transform, 15-degree continuous translation, and simultaneous turn cases. | Compile for the ESP32 target and run the documented block tests. |
+| 2026-08-29 | Python gamepad sender unit tests | Passed 8 cases covering cardinal/diagonal/partial translation, mixed turn, deadzone, deadman, disconnect/stop, and telemetry parsing. | Validate the deployed controller mapping and motor response on hardware. |
 
 ## Backlog
 
 - [ ] Document the robot hardware and wiring.
-- [ ] Add the deployed `pi_mecanum_gamepad.py` and remove any dominant-axis quantization while preserving its deadman/watchdog behavior.
+- [x] Update the active `pi_mecanum_gamepad.py` to preserve continuous two-axis translation and its deadman/watchdog behavior.
 - [ ] Define the navigation architecture and interfaces.
 - [ ] Add repeatable calibration and startup checks.
 - [ ] Add diagnostics for sensors and motor commands.
