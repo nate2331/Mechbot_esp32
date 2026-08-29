@@ -49,7 +49,11 @@ constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz per report
 constexpr uint32_t IMU_STALE_MS = 500;
 constexpr uint32_t IMU_RETRY_INTERVAL_MS = 2000;
 constexpr uint32_t IMU_REPORT_RETRY_INTERVAL_MS = 1000;
-constexpr uint8_t IMU_MIN_NAVIGATION_STATUS = 1;  // SH-2 low accuracy or better
+// Relative heading hold only needs a fresh quaternion; SH-2 can report useful
+// short-term yaw while its absolute accuracy status is still 0. Field-oriented
+// control retains the stricter calibrated-heading requirement.
+constexpr uint8_t IMU_MIN_HEADING_HOLD_STATUS = 0;
+constexpr uint8_t IMU_MIN_FIELD_ORIENTED_STATUS = 1;
 
 // Starting values only. Tune on blocks at low speed before unrestricted use.
 constexpr float HEADING_HOLD_KP = 0.70F;              // turn command / radian
@@ -216,10 +220,12 @@ void setMotorCommand(uint8_t index, float normalizedCommand) {
   writePwm(index, duty);
 }
 
-bool readCurrentYaw(float &yaw) {
+bool readCurrentYaw(
+    float &yaw,
+    uint8_t minimumStatus = IMU_MIN_HEADING_HOLD_STATUS) {
   const uint32_t nowMs = millis();
   if (!imuAvailable || !imuQuaternionValid ||
-      imuStatus < IMU_MIN_NAVIGATION_STATUS ||
+      imuStatus < minimumStatus ||
       nowMs - lastImuQuaternionMs > IMU_STALE_MS) {
     return false;
   }
@@ -252,9 +258,11 @@ void applyVelocity(float forward, float left, float ccw) {
   const bool manualTurnRequested = fabsf(ccw) >= MANUAL_TURN_DEADBAND;
   float currentYaw = 0.0F;
   const bool headingAvailable = readCurrentYaw(currentYaw);
+  const bool fieldHeadingAvailable =
+      headingAvailable && imuStatus >= IMU_MIN_FIELD_ORIENTED_STATUS;
 
   if (fieldOrientedEnabled && translationRequested) {
-    if (!headingAvailable || !fieldReferenceValid) {
+    if (!fieldHeadingAvailable || !fieldReferenceValid) {
       stopAllMotors();
       if (!navigationImuFaultReported) {
         Serial.println("FAULT field-oriented heading unavailable; motors stopped");
@@ -574,7 +582,7 @@ void processCommand(char *line) {
 
   if (line[0] == 'Z' && line[1] == '\0') {
     float currentYaw = 0.0F;
-    if (!readCurrentYaw(currentYaw)) {
+    if (!readCurrentYaw(currentYaw, IMU_MIN_FIELD_ORIENTED_STATUS)) {
       stopAllMotors();
       Serial.println("ERR field zero requires a fresh IMU heading; motors stopped");
       return;
@@ -599,7 +607,7 @@ void processCommand(char *line) {
     }
     if (fields == 1 && enabled == 1) {
       float currentYaw = 0.0F;
-      if (!readCurrentYaw(currentYaw)) {
+      if (!readCurrentYaw(currentYaw, IMU_MIN_FIELD_ORIENTED_STATUS)) {
         stopAllMotors();
         Serial.println("ERR field mode requires a fresh IMU heading; motors stopped");
         return;
