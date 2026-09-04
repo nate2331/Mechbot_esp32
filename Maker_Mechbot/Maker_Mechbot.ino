@@ -1,5 +1,10 @@
 /*
-  ESP32-S3 mecanum USB controller with BNO085 IMU
+  Maker ESP32 Pro mecanum controller with four encoders and four-wire BNO085
+  M2=FL, M3=FR, M1=RL, M0=RR. ESP32 Dev Module; Arduino ESP32 core 3.x.
+  Game rotation vector: relative yaw, not magnetic north. RST/INT not wired.
+  Fresh defaults: all PWM ceilings 177; heading correction and field mode OFF.
+  Encoders are diagnostic/open-loop feedback, not wheel-speed PID.
+  Keep wheels raised for initial combined tests; no current/stall protection.
 
   Serial protocol at 115200 baud:
     V <forward> <left> <ccw>   Values are normalized from -1.0 to +1.0
@@ -21,7 +26,7 @@
     - A valid V command must arrive at least every 300 ms.
     - A timeout or malformed motion command stops all motors.
     - An IMU failure is reported but does not disable motor control.
-    - Heading hold is enabled by default and yields to deliberate turn input.
+    - Heading hold is disabled by default and yields to deliberate turn input.
     - Field-oriented control defaults to disabled.
     - Field-oriented motion stops if its required heading becomes unavailable.
 */
@@ -33,27 +38,35 @@
 #include <esp_arduino_version.h>
 
 #include "NavigationMath.h"
+#include "MotorSafety.h"
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
+
+#if !defined(CONFIG_IDF_TARGET_ESP32) || ESP_ARDUINO_VERSION_MAJOR < 3
+#error "Select ESP32 Dev Module and Espressif Arduino core 3.x or newer."
+#endif
 
 constexpr uint32_t SERIAL_BAUD = 115200;
 constexpr uint32_t PWM_FREQUENCY_HZ = 20000;
 constexpr uint8_t PWM_RESOLUTION_BITS = 8;
 constexpr uint32_t COMMAND_TIMEOUT_MS = 300;
+static_assert(COMMAND_TIMEOUT_MS == MotorSafety::TIMEOUT_MS, "Watchdog deadlines must match");
 constexpr uint32_t TELEMETRY_INTERVAL_MS = 200;
-constexpr float ENCODER_COUNTS_PER_REV = 2500.0F;
+// Encoder CPR intentionally uncalibrated; report raw x4 counts only.
 constexpr size_t RX_BUFFER_SIZE = 128;
 
-constexpr int IMU_SDA_PIN = 1;
-constexpr int IMU_SCL_PIN = 2;
-constexpr int IMU_RESET_PIN = 42;
+constexpr int IMU_SDA_PIN = 21;
+constexpr int IMU_SCL_PIN = 22;
+constexpr int IMU_RESET_PIN = -1;
 constexpr uint8_t IMU_I2C_ADDRESS = 0x4A;
 constexpr uint32_t IMU_I2C_FREQUENCY_HZ = 100000;
 constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz
 constexpr uint32_t IMU_STALE_MS = 500;
 constexpr uint32_t IMU_RETRY_INTERVAL_MS = 2000;
 constexpr uint32_t IMU_REPORT_RETRY_INTERVAL_MS = 1000;
-// Relative heading hold only needs a fresh quaternion; SH-2 can report useful
-// short-term yaw while its absolute accuracy status is still 0. Field-oriented
-// control retains the stricter calibrated-heading requirement.
+// Game rotation vector provides relative yaw, not magnetic north. Report status
+// is only a quality gate; field mode is relative to the user-captured zero.
 constexpr uint8_t IMU_MIN_HEADING_HOLD_STATUS = 0;
 constexpr uint8_t IMU_MIN_FIELD_ORIENTED_STATUS = 1;
 
@@ -77,7 +90,6 @@ struct MotorConfig {
   const char *name;
   uint8_t dir1Pin;
   uint8_t dir2Pin;
-  uint8_t pwmPin;
   uint8_t encoderAPin;
   uint8_t encoderBPin;
   uint8_t matchedPwm;
@@ -86,14 +98,17 @@ struct MotorConfig {
 };
 
 MotorConfig motors[MOTOR_COUNT] = {
-  {"FL", 12, 13, 38, 10, 11, 230, +1, +1},
-  {"FR", 14, 15, 39,  6,  7, 230, +1, +1},
-  {"RL", 16, 17, 40,  8,  9, 177, +1, +1},
-  {"RR", 18, 21, 41,  4,  5, 143, +1, +1}
+  {"FL", 17, 12, 35, 36, 177, +1, +1},
+  {"FR", 14, 15, 34, 39, 177, +1, -1},
+  {"RL",  4,  2,  5, 23, 177, +1, +1},
+  {"RR", 27, 13, 18, 19, 177, -1, -1}
 };
 
-volatile int32_t encoderCounts[MOTOR_COUNT] = {0, 0, 0, 0};
+volatile int64_t encoderCounts[MOTOR_COUNT] = {0, 0, 0, 0};
 volatile uint8_t previousEncoderState[MOTOR_COUNT] = {0, 0, 0, 0};
+volatile uint32_t encoderAEdges[MOTOR_COUNT] = {};
+volatile uint32_t encoderBEdges[MOTOR_COUNT] = {};
+volatile uint32_t encoderInvalid[MOTOR_COUNT] = {};
 portMUX_TYPE encoderMux = portMUX_INITIALIZER_UNLOCKED;
 
 DRAM_ATTR const int8_t quadratureDelta[16] = {
@@ -103,9 +118,7 @@ DRAM_ATTR const int8_t quadratureDelta[16] = {
    0, +1, -1,  0
 };
 
-#if ESP_ARDUINO_VERSION_MAJOR < 3
-constexpr uint8_t pwmChannels[MOTOR_COUNT] = {0, 1, 2, 3};
-#endif
+
 
 Adafruit_BNO08x bno08x(IMU_RESET_PIN);
 Preferences preferences;
@@ -120,9 +133,9 @@ struct RuntimeSettings {
   bool headingEnabled;
 };
 
-RuntimeSettings settings = {{230, 230, 177, 143},
+RuntimeSettings settings = {{177, 177, 177, 177},
   DEFAULT_HEADING_HOLD_KP, DEFAULT_HEADING_HOLD_MAX_CORRECTION,
-  DEFAULT_HEADING_HOLD_ERROR_DEADBAND_RAD, +1, true};
+  DEFAULT_HEADING_HOLD_ERROR_DEADBAND_RAD, +1, false};
 
 bool imuAvailable = false;
 bool imuQuaternionValid = false;
@@ -132,6 +145,8 @@ bool imuInitializationAttempted = false;
 uint8_t imuStatus = 0;
 uint32_t lastImuEventMs = 0;
 uint32_t lastImuQuaternionMs = 0;
+uint32_t lastImuGyroMs = 0;
+uint32_t lastImuAccelerationMs = 0;
 uint32_t lastImuInitAttemptMs = 0;
 uint32_t lastImuReportRetryMs = 0;
 uint32_t imuResetCount = 0;
@@ -150,6 +165,7 @@ float imuAz = 0.0F;
 
 char rxBuffer[RX_BUFFER_SIZE];
 size_t rxLength = 0;
+bool rxDiscardLine = false;
 uint32_t lastCommandMs = 0;
 uint32_t lastTelemetryMs = 0;
 bool commandActive = false;
@@ -170,19 +186,19 @@ void applySettingsToMotors() {
 }
 
 void resetSettingsToDefaults() {
-  const uint8_t defaults[MOTOR_COUNT] = {230, 230, 177, 143};
+  const uint8_t defaults[MOTOR_COUNT] = {177, 177, 177, 177};
   for (uint8_t i = 0; i < MOTOR_COUNT; ++i) settings.pwm[i] = defaults[i];
   settings.headingKp = DEFAULT_HEADING_HOLD_KP;
   settings.headingMax = DEFAULT_HEADING_HOLD_MAX_CORRECTION;
   settings.headingDeadbandRad = DEFAULT_HEADING_HOLD_ERROR_DEADBAND_RAD;
   settings.headingSign = +1;
-  settings.headingEnabled = true;
+  settings.headingEnabled = false;
   applySettingsToMotors();
 }
 
 void loadSettings() {
   resetSettingsToDefaults();
-  if (!preferences.begin("mechbot", true)) return;
+  if (!preferences.begin("maker_v1", true)) return;
   settings.pwm[0] = preferences.getUChar("pwm_fl", settings.pwm[0]);
   settings.pwm[1] = preferences.getUChar("pwm_fr", settings.pwm[1]);
   settings.pwm[2] = preferences.getUChar("pwm_rl", settings.pwm[2]);
@@ -193,9 +209,10 @@ void loadSettings() {
   settings.headingSign = preferences.getChar("head_sign", settings.headingSign);
   settings.headingEnabled = preferences.getBool("head_on", settings.headingEnabled);
   preferences.end();
-  if (settings.headingKp < 0 || settings.headingKp > 5 || settings.headingMax < 0 ||
+  if (!isfinite(settings.headingKp) || !isfinite(settings.headingMax) ||
+      !isfinite(settings.headingDeadbandRad) || settings.headingKp < 0 || settings.headingKp > 5 || settings.headingMax < 0 ||
       settings.headingMax > 1 || settings.headingDeadbandRad < 0 ||
-      settings.headingDeadbandRad > 0.5F ||
+      settings.headingDeadbandRad > NavigationMath::PI_F / 6.0F ||
       (settings.headingSign != -1 && settings.headingSign != 1)) {
     Serial.println("WARN invalid saved settings; defaults restored");
     resetSettingsToDefaults();
@@ -204,7 +221,7 @@ void loadSettings() {
 }
 
 bool saveSettings() {
-  if (!preferences.begin("mechbot", false)) return false;
+  if (!preferences.begin("maker_v1", false)) return false;
   bool ok = true;
   ok &= preferences.putUChar("pwm_fl", settings.pwm[0]) == 1;
   ok &= preferences.putUChar("pwm_fr", settings.pwm[1]) == 1;
@@ -229,13 +246,17 @@ void printSettings() {
 }
 
 void IRAM_ATTR updateEncoder(uint8_t index) {
+  portENTER_CRITICAL_ISR(&encoderMux);
   const uint8_t currentState =
       (static_cast<uint8_t>(digitalRead(motors[index].encoderAPin)) << 1) |
        static_cast<uint8_t>(digitalRead(motors[index].encoderBPin));
+  const uint8_t changed = previousEncoderState[index] ^ currentState;
+  if (changed & 2) ++encoderAEdges[index];
+  if (changed & 1) ++encoderBEdges[index];
+  if (changed == 3) ++encoderInvalid[index];
   const uint8_t transition = (previousEncoderState[index] << 2) | currentState;
   previousEncoderState[index] = currentState;
 
-  portENTER_CRITICAL_ISR(&encoderMux);
   encoderCounts[index] += quadratureDelta[transition] * motors[index].encoderPolarity;
   portEXIT_CRITICAL_ISR(&encoderMux);
 }
@@ -245,35 +266,59 @@ void IRAM_ATTR frontRightEncoderISR() { updateEncoder(FRONT_RIGHT); }
 void IRAM_ATTR rearLeftEncoderISR()   { updateEncoder(REAR_LEFT); }
 void IRAM_ATTR rearRightEncoderISR()  { updateEncoder(REAR_RIGHT); }
 
-void writePwm(uint8_t index, uint8_t duty) {
-#if ESP_ARDUINO_VERSION_MAJOR >= 3
-  ledcWrite(motors[index].pwmPin, duty);
-#else
-  ledcWrite(pwmChannels[index], duty);
-#endif
+// Only the output task and immediate stop write PWM. Mutex never spans I2C/Serial.
+SemaphoreHandle_t motorMutex = nullptr;
+MotorSafety::Controller outputController;
+bool motorAttached[MOTOR_COUNT][2] = {};
+float pendingMotorCommands[MOTOR_COUNT] = {};
+bool motorWatchdogTripped = false;
+
+void writeMotorDuty(uint8_t index, float command) {
+  const float electrical = command * motors[index].motorPolarity;
+  const uint8_t duty = static_cast<uint8_t>(lroundf(fabsf(electrical)));
+  if (electrical > 0) {
+    ledcWrite(motors[index].dir2Pin, 0);
+    ledcWrite(motors[index].dir1Pin, duty);
+  } else {
+    ledcWrite(motors[index].dir1Pin, 0);
+    ledcWrite(motors[index].dir2Pin, duty);
+  }
+}
+
+void zeroMotorOutputs() {
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    if (motorAttached[i][0]) ledcWrite(motors[i].dir1Pin, 0);
+    else digitalWrite(motors[i].dir1Pin, LOW);
+    if (motorAttached[i][1]) ledcWrite(motors[i].dir2Pin, 0);
+    else digitalWrite(motors[i].dir2Pin, LOW);
+  }
+}
+
+void motorOutputTask(void *) {
+  TickType_t wake = xTaskGetTickCount();
+  while (true) {
+    xSemaphoreTake(motorMutex, portMAX_DELAY);
+    if (outputController.tick(millis())) motorWatchdogTripped = true;
+    for (uint8_t i = 0; i < MOTOR_COUNT; ++i)
+      writeMotorDuty(i, outputController.wheels[i].applied);
+    xSemaphoreGive(motorMutex);
+    vTaskDelayUntil(&wake, pdMS_TO_TICKS(5));
+  }
 }
 
 bool attachPwm(uint8_t index) {
-#if ESP_ARDUINO_VERSION_MAJOR >= 3
-  return ledcAttach(motors[index].pwmPin, PWM_FREQUENCY_HZ,
-                    PWM_RESOLUTION_BITS);
-#else
-  ledcSetup(pwmChannels[index], PWM_FREQUENCY_HZ, PWM_RESOLUTION_BITS);
-  ledcAttachPin(motors[index].pwmPin, pwmChannels[index]);
-  return true;
-#endif
-}
-
-void stopMotor(uint8_t index) {
-  writePwm(index, 0);
-  digitalWrite(motors[index].dir1Pin, LOW);
-  digitalWrite(motors[index].dir2Pin, LOW);
+  motorAttached[index][0] = ledcAttach(motors[index].dir1Pin, PWM_FREQUENCY_HZ, PWM_RESOLUTION_BITS);
+  motorAttached[index][1] = ledcAttach(motors[index].dir2Pin, PWM_FREQUENCY_HZ, PWM_RESOLUTION_BITS);
+  zeroMotorOutputs();
+  return motorAttached[index][0] && motorAttached[index][1];
 }
 
 void stopAllMotors() {
-  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
-    stopMotor(i);
-  }
+  if (motorMutex) xSemaphoreTake(motorMutex, portMAX_DELAY);
+  outputController.stop(millis());
+  zeroMotorOutputs();
+  if (motorMutex) xSemaphoreGive(motorMutex);
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) pendingMotorCommands[i] = 0;
   commandActive = false;
   motionRequested = false;
   headingTargetValid = false;
@@ -283,23 +328,15 @@ void stopAllMotors() {
 
 void setMotorCommand(uint8_t index, float normalizedCommand) {
   normalizedCommand = constrain(normalizedCommand, -1.0F, 1.0F);
-  if (fabsf(normalizedCommand) < 0.01F) {
-    stopMotor(index);
-    return;
-  }
+  pendingMotorCommands[index] = fabsf(normalizedCommand) < 0.01F
+      ? 0.0F : normalizedCommand * motors[index].matchedPwm;
+}
 
-  normalizedCommand *= motors[index].motorPolarity;
-  if (normalizedCommand > 0.0F) {
-    digitalWrite(motors[index].dir1Pin, HIGH);
-    digitalWrite(motors[index].dir2Pin, LOW);
-  } else {
-    digitalWrite(motors[index].dir1Pin, LOW);
-    digitalWrite(motors[index].dir2Pin, HIGH);
-  }
-
-  const uint8_t duty = static_cast<uint8_t>(
-      roundf(fabsf(normalizedCommand) * motors[index].matchedPwm));
-  writePwm(index, duty);
+void publishMotorCommands() {
+  xSemaphoreTake(motorMutex, portMAX_DELAY);
+  outputController.publish(pendingMotorCommands, millis());
+  motorWatchdogTripped = false;
+  xSemaphoreGive(motorMutex);
 }
 
 bool readCurrentYaw(
@@ -405,7 +442,7 @@ void applyVelocity(float forward, float left, float ccw) {
   motionRequested = translationRequested || rotationRequested;
 
   // Preserve the full translation vector while mixing simultaneous rotation.
-  // The wheel order matches the verified WASD/QE directions.
+  // Standard mecanum mix; individual directions verified, combined moves pending.
   float wheel[MOTOR_COUNT];
   NavigationMath::mecanumMix(forward, left, ccw, wheel);
   for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
@@ -413,13 +450,14 @@ void applyVelocity(float forward, float left, float ccw) {
   }
 
   lastCommandMs = millis();
+  publishMotorCommands();
   commandActive = true;
   watchdogReported = false;
 }
 
-int32_t getEncoderCount(uint8_t index) {
+int64_t getEncoderCount(uint8_t index) {
   portENTER_CRITICAL(&encoderMux);
-  const int32_t count = encoderCounts[index];
+  const int64_t count = encoderCounts[index];
   portEXIT_CRITICAL(&encoderMux);
   return count;
 }
@@ -440,7 +478,7 @@ void scanImuBus() {
 
 bool enableImuReports() {
   bool ok = true;
-  if (!bno08x.enableReport(SH2_ROTATION_VECTOR,
+  if (!bno08x.enableReport(SH2_GAME_ROTATION_VECTOR,
                             IMU_REPORT_INTERVAL_US)) {
     Serial.println("WARN IMU rotation vector unavailable");
     ok = false;
@@ -472,7 +510,7 @@ void retryMissingImuReports() {
   Serial.printf("WARN IMU reports missing; retrying Q%u G%u A%u\n",
                 imuQuaternionValid ? 0U : 1U, imuGyroValid ? 0U : 1U,
                 imuAccelerationValid ? 0U : 1U);
-  if (!imuQuaternionValid) bno08x.enableReport(SH2_ROTATION_VECTOR, IMU_REPORT_INTERVAL_US);
+  if (!imuQuaternionValid) bno08x.enableReport(SH2_GAME_ROTATION_VECTOR, IMU_REPORT_INTERVAL_US);
   delay(10);
   if (!imuGyroValid) bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED, IMU_REPORT_INTERVAL_US);
   delay(10);
@@ -481,6 +519,8 @@ void retryMissingImuReports() {
 }
 
 void initializeImu() {
+  stopAllMotors();
+  invalidateNavigationReferences("IMU initialization");
   lastImuInitAttemptMs = millis();
   ++imuReinitCount;
   if (imuInitializationAttempted) {
@@ -493,6 +533,7 @@ void initializeImu() {
   imuInitializationAttempted = true;
   Wire.begin(IMU_SDA_PIN, IMU_SCL_PIN);
   Wire.setClock(IMU_I2C_FREQUENCY_HZ);
+  Wire.setTimeOut(20);
   delay(500);
 
   if (!bno08x.begin_I2C(IMU_I2C_ADDRESS, &Wire)) {
@@ -509,7 +550,7 @@ void initializeImu() {
   lastImuEventMs = 0;
   lastImuQuaternionMs = 0;
   if (enableImuReports()) {
-    Serial.println("IMU READY BNO085 ROTATION_VECTOR GYRO LINEAR_ACCEL");
+    Serial.println("IMU READY BNO085 GAME_ROTATION_VECTOR GYRO LINEAR_ACCEL");
   } else {
     Serial.println("WARN IMU detected but one or more reports failed");
   }
@@ -527,6 +568,7 @@ void pollImu() {
   }
 
   if (bno08x.wasReset()) {
+    stopAllMotors(); // Stop before report reconfiguration can block.
     ++imuResetCount;
     imuQuaternionValid = false;
     imuGyroValid = false;
@@ -544,29 +586,33 @@ void pollImu() {
     }
 
     switch (imuEvent.sensorId) {
-      case SH2_ROTATION_VECTOR:
-        imuQx = imuEvent.un.rotationVector.i;
-        imuQy = imuEvent.un.rotationVector.j;
-        imuQz = imuEvent.un.rotationVector.k;
-        imuQw = imuEvent.un.rotationVector.real;
-        imuQuaternionValid = true;
+      case SH2_GAME_ROTATION_VECTOR: {
+        imuQx = imuEvent.un.gameRotationVector.i;
+        imuQy = imuEvent.un.gameRotationVector.j;
+        imuQz = imuEvent.un.gameRotationVector.k;
+        imuQw = imuEvent.un.gameRotationVector.real;
+        float checkedYaw = 0;
+        imuQuaternionValid = NavigationMath::quaternionToYaw(imuQx, imuQy, imuQz, imuQw, checkedYaw);
         imuStatus = imuEvent.status;
         lastImuEventMs = millis();
         lastImuQuaternionMs = lastImuEventMs;
         break;
+      }
       case SH2_GYROSCOPE_CALIBRATED:
         imuGx = imuEvent.un.gyroscope.x;
         imuGy = imuEvent.un.gyroscope.y;
         imuGz = imuEvent.un.gyroscope.z;
-        imuGyroValid = true;
+        imuGyroValid = isfinite(imuGx) && isfinite(imuGy) && isfinite(imuGz);
         lastImuEventMs = millis();
+        lastImuGyroMs = lastImuEventMs;
         break;
       case SH2_LINEAR_ACCELERATION:
         imuAx = imuEvent.un.linearAcceleration.x;
         imuAy = imuEvent.un.linearAcceleration.y;
         imuAz = imuEvent.un.linearAcceleration.z;
-        imuAccelerationValid = true;
+        imuAccelerationValid = isfinite(imuAx) && isfinite(imuAy) && isfinite(imuAz);
         lastImuEventMs = millis();
+        lastImuAccelerationMs = lastImuEventMs;
         break;
 
       default:
@@ -578,12 +624,12 @@ void pollImu() {
 }
 
 void sendEncoderTelemetry() {
-  Serial.printf("T %lu %ld %ld %ld %ld\n",
+  Serial.printf("T %lu %lld %lld %lld %lld\n",
                 static_cast<unsigned long>(millis()),
-                static_cast<long>(getEncoderCount(FRONT_LEFT)),
-                static_cast<long>(getEncoderCount(FRONT_RIGHT)),
-                static_cast<long>(getEncoderCount(REAR_LEFT)),
-                static_cast<long>(getEncoderCount(REAR_RIGHT)));
+                static_cast<long long>(getEncoderCount(FRONT_LEFT)),
+                static_cast<long long>(getEncoderCount(FRONT_RIGHT)),
+                static_cast<long long>(getEncoderCount(REAR_LEFT)),
+                static_cast<long long>(getEncoderCount(REAR_RIGHT)));
 }
 
 void sendImuTelemetry() {
@@ -603,7 +649,8 @@ void sendImuTelemetry() {
     return;
   }
 
-  if (nowMs - lastImuEventMs > IMU_STALE_MS) {
+  if (nowMs - lastImuQuaternionMs > IMU_STALE_MS ||
+      nowMs - lastImuGyroMs > IMU_STALE_MS || nowMs - lastImuAccelerationMs > IMU_STALE_MS) {
     Serial.printf("I %lu STALE\n", static_cast<unsigned long>(nowMs));
     return;
   }
@@ -621,14 +668,30 @@ void sendNavigationTelemetry() {
   const uint32_t nowMs = millis();
   float currentYaw = 0.0F;
   const bool headingAvailable = readCurrentYaw(currentYaw);
-  Serial.printf("N %lu %.6f %.6f %.6f %.4f 1 %u %u\n",
+  Serial.printf("N %lu %.6f %.6f %.6f %.4f %u %u %u\n",
                 static_cast<unsigned long>(nowMs),
                 headingAvailable ? currentYaw : 0.0F,
                 headingTargetValid ? headingTargetYaw : 0.0F,
                 lastHeadingError,
                 lastHeadingCorrection,
+                settings.headingEnabled ? 1U : 0U,
                 fieldOrientedEnabled ? 1U : 0U,
                 headingAvailable ? 1U : 0U);
+}
+
+
+void sendDiagnostics() {
+  float outputs[MOTOR_COUNT];
+  xSemaphoreTake(motorMutex, portMAX_DELAY);
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) outputs[i] = outputController.wheels[i].applied;
+  xSemaphoreGive(motorMutex);
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
+    portENTER_CRITICAL(&encoderMux);
+    const uint32_t a = encoderAEdges[i], b = encoderBEdges[i], bad = encoderInvalid[i];
+    portEXIT_CRITICAL(&encoderMux);
+    Serial.printf("D %s PWM %.1f A %lu B %lu INVALID %lu\n", motors[i].name, outputs[i],
+      static_cast<unsigned long>(a), static_cast<unsigned long>(b), static_cast<unsigned long>(bad));
+  }
 }
 
 void sendTelemetry() {
@@ -652,7 +715,12 @@ void printHelp() {
   Serial.println("  CFG GET|SAVE|RESET        runtime settings");
   Serial.println("  CFG SET <key> <value>     validated update while stopped");
   Serial.println("  ?                         help");
-  Serial.println("Heading hold: ON (automatic; manual turn input takes priority)");
+  Serial.printf("Heading hold: %s (verify sensor axes before enabling)\n", settings.headingEnabled ? "ON" : "OFF");
+  Serial.println("Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive");
+  Serial.println("IMU: SDA21 SCL22, no reset wire; relative yaw, NOT compass north");
+  Serial.println("Default PWM=177 all wheels; independent output watchdog, ramped drive");
+  Serial.println("  DIAG                      encoder edges/errors and applied PWM");
+  Serial.println("  IMU RETRY                 stopped reinitialization");
   Serial.println("Watchdog: 300 ms");
   Serial.println("Encoder: T <ms> <FL> <FR> <RL> <RR>");
   Serial.println("IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>");
@@ -675,6 +743,9 @@ void processCommand(char *line) {
     printHelp();
     return;
   }
+
+  if (strcmp(line, "DIAG") == 0) { sendDiagnostics(); return; }
+  if (strcmp(line, "IMU RETRY") == 0) { initializeImu(); return; }
 
   if (strcmp(line, "CFG GET") == 0) { printSettings(); return; }
   if (strcmp(line, "CFG SAVE") == 0) {
@@ -759,7 +830,7 @@ void processCommand(char *line) {
   char extra = '\0';
   const int fields = sscanf(line, "V %f %f %f %c",
                             &forward, &left, &ccw, &extra);
-  if (fields == 3) {
+  if (fields == 3 && isfinite(forward) && isfinite(left) && isfinite(ccw)) {
     applyVelocity(forward, left, ccw);
     return;
   }
@@ -770,10 +841,11 @@ void processCommand(char *line) {
 }
 
 void receiveSerialCommands() {
-  while (Serial.available() > 0) {
+  for (uint8_t budget = 0; budget < 64 && Serial.available() > 0; ++budget) {
     const char incoming = static_cast<char>(Serial.read());
 
     if (incoming == '\n' || incoming == '\r') {
+      if (rxDiscardLine) { rxDiscardLine = false; rxLength = 0; continue; }
       if (rxLength > 0) {
         rxBuffer[rxLength] = '\0';
         processCommand(rxBuffer);
@@ -782,11 +854,14 @@ void receiveSerialCommands() {
       continue;
     }
 
+    if (rxDiscardLine) continue;
+    if (incoming == '\0') { rxDiscardLine = true; rxLength = 0; stopAllMotors(); continue; }
     if (rxLength < RX_BUFFER_SIZE - 1) {
       rxBuffer[rxLength++] = incoming;
     } else {
       rxLength = 0;
       stopAllMotors();
+      rxDiscardLine = true;
       Serial.println("ERR command too long; motors stopped");
     }
   }
@@ -796,10 +871,8 @@ void setup() {
   for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
     pinMode(motors[i].dir1Pin, OUTPUT);
     pinMode(motors[i].dir2Pin, OUTPUT);
-    pinMode(motors[i].pwmPin, OUTPUT);
     digitalWrite(motors[i].dir1Pin, LOW);
     digitalWrite(motors[i].dir2Pin, LOW);
-    digitalWrite(motors[i].pwmPin, LOW);
   }
 
   Serial.begin(SERIAL_BAUD);
@@ -813,10 +886,10 @@ void setup() {
         delay(1000);
       }
     }
-    writePwm(i, 0);
+    zeroMotorOutputs();
 
-    pinMode(motors[i].encoderAPin, INPUT_PULLUP);
-    pinMode(motors[i].encoderBPin, INPUT_PULLUP);
+    pinMode(motors[i].encoderAPin, motors[i].encoderAPin >= 34 ? INPUT : INPUT_PULLUP);
+    pinMode(motors[i].encoderBPin, motors[i].encoderBPin >= 34 ? INPUT : INPUT_PULLUP);
     previousEncoderState[i] =
         (static_cast<uint8_t>(digitalRead(motors[i].encoderAPin)) << 1) |
          static_cast<uint8_t>(digitalRead(motors[i].encoderBPin));
@@ -840,16 +913,30 @@ void setup() {
                   rearRightEncoderISR, CHANGE);
 
   stopAllMotors();
+  motorMutex = xSemaphoreCreateMutex();
+  if (!motorMutex || xTaskCreate(motorOutputTask, "motor-safety", 3072, nullptr, 3, nullptr) != pdPASS) {
+    stopAllMotors();
+    Serial.println("FATAL motor safety task unavailable; motion disabled");
+    while (true) delay(1000);
+  }
   loadSettings();
   initializeImu();
 
   lastCommandMs = millis();
   lastTelemetryMs = millis();
-  Serial.println("READY ESP32_MECANUM_USB_IMU_NAV_V4");
+  Serial.println("READY ESP32_MAKER_MECANUM_IMU_V1");
   printHelp();
 }
 
 void loop() {
+  xSemaphoreTake(motorMutex, portMAX_DELAY);
+  const bool expired = motorWatchdogTripped;
+  motorWatchdogTripped = false;
+  xSemaphoreGive(motorMutex);
+  if (expired) {
+    stopAllMotors();
+    Serial.println("FAULT WATCHDOG; motors stopped by independent output task");
+  }
   receiveSerialCommands();
   pollImu();
 

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e12">
+  <title>Blackbot Two PWM Tuning</title>
+  <link rel="stylesheet" href="/app.css">
+  <link rel="stylesheet" href="/calibration.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">BLACKBOT TWO</p>
+      <h1>PWM tuning console</h1>
+    </div>
+    <div class="header-actions">
+      <span id="freshness" class="muted">Connecting…</span>
+      <button id="stop" class="stop">STOP MOTORS</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero panel">
+      <div>
+        <p class="eyebrow">RECOMMENDED NEXT ACTION</p>
+        <h2 id="nextTitle">Check robot readiness</h2>
+        <p id="nextCopy" class="panel-copy">Reading the ESP32 and rear encoders…</p>
+      </div>
+      <button id="nextAction" disabled>Start</button>
+    </section>
+
+    <section class="status-grid">
+      <article class="status-card">
+        <span>ESP32</span><strong id="serialState">Checking</strong><small id="firmware">—</small>
+      </article>
+      <article class="status-card">
+        <span>REAR ENCODERS</span><strong id="encoderState">Checking</strong><small>RL/RR rate and repeatability</small>
+      </article>
+      <article class="status-card">
+        <span>IMU</span><strong id="imuState">Checking</strong><small id="imuDetail">Freshness unknown</small>
+      </article>
+      <article class="status-card">
+        <span>TUNING SESSION</span><strong id="sessionState">None</strong><small id="sessionDetail">Safe settings retained</small>
+      </article>
+    </section>
+
+    <section class="truth panel">
+      <strong>How feedback works with two rear encoders</strong>
+      <p>RL and RR are each compared with their own previous runs, so you can see whether a PWM change actually increased or reduced that wheel’s response. Because their tick scales are not yet proven equal, the console never ratio-matches RL against RR. Whole-robot heading and path feedback supplies the missing information and produces a small, reversible PWM trim using the mecanum wheel geometry.</p>
+    </section>
+
+    <section class="workflow-grid">
+      <article class="panel workflow featured">
+        <p class="eyebrow">BEST CURRENT METHOD</p>
+        <h2>Guided floor PWM tuning</h2>
+        <p>Adjust PWM inside the session, run a repeatable low-power move, describe heading and path error, then apply or reject a specific four-wheel trim.</p>
+        <button data-workflow="floor">Start guided tuning</button>
+      </article>
+      <article class="panel workflow">
+        <p class="eyebrow">WHEELS OFF THE FLOOR</p>
+        <h2>Rear encoder response check</h2>
+        <p>Verify direction, find a reliable motion threshold, and compare each rear encoder only with itself across PWM and power changes.</p>
+        <button data-workflow="bench" class="secondary">Open bench check</button>
+      </article>
+      <article class="panel workflow">
+        <p class="eyebrow">AFTER MOTOR BALANCE</p>
+        <h2>Heading-hold tuning</h2>
+        <p>Once open-loop PWM is repeatable, use fresh IMU yaw to tune heading correction. Motor tests keep heading correction disabled.</p>
+        <button class="secondary" disabled>Balance PWM first</button>
+      </article>
+      <article class="panel workflow future">
+        <p class="eyebrow">FUTURE HARDWARE</p>
+        <h2>Four-encoder speed control</h2>
+        <p>With normalized encoders on all wheels, the robot can build wheel-speed curves and close the loop without relying on visual feedback.</p>
+        <button disabled>Requires four encoders</button>
+      </article>
+    </section>
+
+    <section class="panel baseline">
+      <div>
+        <p class="eyebrow">PHYSICALLY PROVEN STARTING POINT</p>
+        <h2>230 / 230 front · 200 / 200 rear</h2>
+        <p class="panel-copy">A floor-observed baseline, not a value inferred from the RL/RR tick ratio.</p>
+      </div>
+      <div>
+        <button id="applyBaseline">Use baseline live</button>
+        <button id="revert" class="secondary">Revert session changes</button>
+      </div>
+    </section>
+
+    <details class="panel diagnostics">
+      <summary>Diagnostics &amp; maintenance</summary>
+      <div class="workspace">
+        <article>
+          <h2>Live configuration</h2>
+          <div class="motor-grid">
+            <label>Front left PWM<input id="pwm-fl" type="number" min="0" max="255"></label>
+            <label>Front right PWM<input id="pwm-fr" type="number" min="0" max="255"></label>
+            <label>Rear left PWM<input id="pwm-rl" type="number" min="0" max="255"></label>
+            <label>Rear right PWM<input id="pwm-rr" type="number" min="0" max="255"></label>
+          </div>
+          <div class="tuning-grid">
+            <label>Heading Kp<input id="heading-kp" type="number" step=".05"></label>
+            <label>Max correction<input id="heading-max" type="number" step=".01"></label>
+            <label>Deadband °<input id="heading-deadband-deg" type="number" step=".1"></label>
+            <label>Heading sign<select id="heading-sign"><option value="1">+1</option><option value="-1">−1</option></select></label>
+          </div>
+          <label class="toggle"><input id="heading-enabled" type="checkbox">Heading correction enabled</label>
+          <div class="form-actions">
+            <button id="apply">Apply live</button>
+            <button id="save" class="secondary">Save to ESP32</button>
+            <button id="reload" class="ghost">Reload</button>
+          </div>
+          <p id="message" class="message" aria-live="polite"></p>
+        </article>
+        <aside>
+          <h2>Encoder totals</h2>
+          <div id="encoders" class="encoder-grid"></div>
+          <h2>Recent serial events</h2>
+          <pre id="events">Waiting…</pre>
+          <h2>Firmware updater</h2>
+          <button id="updateFirmware" class="secondary">Compile &amp; flash V4</button>
+          <span id="firmwareJobState" class="job-state">IDLE</span>
+          <pre id="firmwareLog">No update running.</pre>
+        </aside>
+      </div>
+    </details>
+  </main>
+
+  <div id="sessionModal" class="modal" hidden>
+    <div class="modal-backdrop"></div>
+    <section class="cal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header>
+        <div>
+          <p class="eyebrow">GUIDED PWM SESSION</p>
+          <h2 id="modalTitle">Prepare</h2>
+        </div>
+        <button id="closeSession" class="ghost" aria-label="Close session">✕</button>
+      </header>
+      <div class="cal-progress"><i id="sessionProgress"></i></div>
+      <div id="sessionBody" class="cal-body"></div>
+      <footer>
+        <button id="sessionStop" class="stop">STOP NOW</button>
+        <span id="sessionMessage" class="muted" aria-live="polite"></span>
+        <div class="session-footer-actions">
+          <button id="sessionSecondary" class="secondary" hidden>Back</button>
+          <button id="sessionPrimary">Continue</button>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
