@@ -1,0 +1,620 @@
+{"host_time": 2506.34286432, "direction": "tx", "raw": "X\n"}
+{"host_time": 2506.345378247, "direction": "rx", "raw": " 9535\n"}
+{"host_time": 2506.357425025, "direction": "rx", "raw": "I 49350 -0.002075 0.001343 0.000000 1.000000 0.000000 0.000000 0.000000 -0.015625 0.000000 -0.007812 3\n"}
+{"host_time": 2506.362045332, "direction": "rx", "raw": "N 49350 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2506.364541239, "direction": "rx", "raw": "H 49362 IMU 1 49349 2 2\n"}
+{"host_time": 2506.365487008, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2506.548202036, "direction": "rx", "raw": "T 49550 2589 2109 7141 9535\n"}
+{"host_time": 2506.560223762, "direction": "rx", "raw": "I 49550 -0.002075 0.001343 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 0.039062 3\n"}
+{"host_time": 2506.564941256, "direction": "rx", "raw": "N 49550 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2506.567215134, "direction": "rx", "raw": "H 49561 IMU 1 49546 2 2\n"}
+{"host_time": 2506.749273139, "direction": "rx", "raw": "T 49751 2589 2109 7141 9535\n"}
+{"host_time": 2506.762359852, "direction": "rx", "raw": "I 49751 -0.002075 0.001404 0.000000 1.000000 0.000000 0.000000 0.000000 0.023438 0.000000 0.000000 3\n"}
+{"host_time": 2506.766841619, "direction": "rx", "raw": "N 49751 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2506.769257423, "direction": "rx", "raw": "H 49762 IMU 1 49745 2 2\n"}
+{"host_time": 2506.950227889, "direction": "rx", "raw": "T 49951 2589 2109 7141 9535\n"}
+{"host_time": 2506.962861691, "direction": "rx", "raw": "I 49952 -0.002075 0.001343 0.000000 1.000000 0.000000 0.000000 0.000000 0.023438 0.000000 0.000000 3\n"}
+{"host_time": 2506.967052577, "direction": "rx", "raw": "N 49952 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2506.969253956, "direction": "rx", "raw": "H 49963 IMU 1 49945 2 2\n"}
+{"host_time": 2507.149430526, "direction": "rx", "raw": "T 50151 2589 2109 7141 9535\n"}
+{"host_time": 2507.164571328, "direction": "rx", "raw": "I 50152 -0.002075 0.001343 0.000061 1.000000 0.000000 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2507.168700078, "direction": "rx", "raw": "N 50152 0.000116 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2507.170772709, "direction": "rx", "raw": "H 50163 IMU 1 50144 2 2\n"}
+{"host_time": 2507.349023678, "direction": "rx", "raw": "T 50351 2589 2109 7141 9535\n"}
+{"host_time": 2507.361371858, "direction": "rx", "raw": "I 50352 -0.002075 0.001343 0.000061 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 0.000000 3\n"}
+{"host_time": 2507.365367746, "direction": "rx", "raw": "N 50352 0.000116 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2507.367422304, "direction": "rx", "raw": "H 50363 IMU 1 50344 2 2\n"}
+{"host_time": 2507.548578237, "direction": "rx", "raw": "T 50551 2589 2109 7141 9535\n"}
+{"host_time": 2507.561859531, "direction": "rx", "raw": "I 50552 -0.002075 0.001404 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 0.000000 3\n"}
+{"host_time": 2507.566231873, "direction": "rx", "raw": "N 50552 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2507.56860851, "direction": "rx", "raw": "H 50563 IMU 1 50544 2 2\n"}
+{"host_time": 2507.756186707, "direction": "rx", "raw": "T 50759 2589 2109 7141 9535\n"}
+{"host_time": 2507.768455201, "direction": "rx", "raw": "I 50759 -0.002075 0.001404 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 0.000000 3\n"}
+{"host_time": 2507.772528848, "direction": "rx", "raw": "N 50759 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2507.774630541, "direction": "rx", "raw": "H 50770 IMU 1 50744 2 2\n"}
+{"host_time": 2507.956689692, "direction": "rx", "raw": "T 50959 2589 2109 7141 9535\n"}
+{"host_time": 2507.968368297, "direction": "rx", "raw": "I 50959 -0.002075 0.001465 0.000000 1.000000 0.000000 0.000000 0.000000 0.031250 0.000000 0.000000 3\n"}
+{"host_time": 2507.972860585, "direction": "rx", "raw": "N 50959 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2507.975077537, "direction": "rx", "raw": "H 50970 IMU 1 50944 2 2\n"}
+{"host_time": 2508.157707566, "direction": "rx", "raw": "T 51159 2589 2109 7141 9535\n"}
+{"host_time": 2508.169448358, "direction": "rx", "raw": "I 51159 -0.002075 0.001404 0.000000 1.000000 0.000000 0.000000 0.000000 -0.015625 0.039062 0.000000 3\n"}
+{"host_time": 2508.173961896, "direction": "rx", "raw": "N 51160 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2508.176065047, "direction": "rx", "raw": "H 51171 IMU 1 51142 2 2\n"}
+{"host_time": 2508.352232865, "direction": "tx", "raw": "X\n"}
+{"host_time": 2508.358136438, "direction": "rx", "raw": "T 51359 2589 2109 7141 9535\n"}
+{"host_time": 2508.370249569, "direction": "rx", "raw": "I 51359 -0.002014 0.001404 0.000000 1.000000 0.000000 0.000000 0.000000 0.023438 0.000000 0.000000 3\n"}
+{"host_time": 2508.374290092, "direction": "rx", "raw": "N 51360 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2508.376433867, "direction": "rx", "raw": "H 51371 IMU 1 51342 2 2\n"}
+{"host_time": 2508.377271044, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2508.377535728, "direction": "tx", "raw": "?\n"}
+{"host_time": 2508.382152338, "direction": "rx", "raw": "Commands:\r\n"}
+{"host_time": 2508.387042642, "direction": "rx", "raw": "  V <forward> <left> <ccw>   each value -1.0 to +1.0\r\n"}
+{"host_time": 2508.393331783, "direction": "rx", "raw": "    forward and left are simultaneous continuous components\r\n"}
+{"host_time": 2508.399628059, "direction": "rx", "raw": "  F <0|1>                    field-oriented control off/on\r\n"}
+{"host_time": 2508.404038108, "direction": "rx", "raw": "  Z                          re-zero field heading\r\n"}
+{"host_time": 2508.40767572, "direction": "rx", "raw": "  X                         immediate stop\r\n"}
+{"host_time": 2508.411479891, "direction": "rx", "raw": "  CFG GET|SAVE|RESET        runtime settings\r\n"}
+{"host_time": 2508.416415455, "direction": "rx", "raw": "  CFG SET <key> <value>     validated update while stopped\r\n"}
+{"host_time": 2508.419263597, "direction": "rx", "raw": "  ?                         help\r\n"}
+{"host_time": 2508.423826561, "direction": "rx", "raw": "Heading hold: OFF (verify sensor axes before enabling)\n"}
+{"host_time": 2508.429809039, "direction": "rx", "raw": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive\r\n"}
+{"host_time": 2508.435289388, "direction": "rx", "raw": "IMU: SDA21 SCL22, no reset wire; relative yaw, NOT compass north\r\n"}
+{"host_time": 2508.441082858, "direction": "rx", "raw": "Default PWM=177 all wheels; independent output watchdog, ramped drive\r\n"}
+{"host_time": 2508.446521436, "direction": "rx", "raw": "  DIAG                      encoder edges/errors and applied PWM\r\n"}
+{"host_time": 2508.450994037, "direction": "rx", "raw": "  IMU RETRY                 stopped reinitialization\r\n"}
+{"host_time": 2508.452622402, "direction": "rx", "raw": "Watchdog: 300 ms\r\n"}
+{"host_time": 2508.452938544, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 2508.456057725, "direction": "rx", "raw": "Encoder: T <ms> <FL> <FR> <RL> <RR>\r\n"}
+{"host_time": 2508.461939162, "direction": "rx", "raw": "IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>\r\n"}
+{"host_time": 2508.468841681, "direction": "rx", "raw": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>\r\n"}
+{"host_time": 2508.470226299, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 2508.471557064, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 2508.472949182, "direction": "rx", "raw": "CFG pwm-rl 177\n"}
+{"host_time": 2508.47426802, "direction": "rx", "raw": "CFG pwm-rr 177\n"}
+{"host_time": 2508.476172736, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 2508.47823995, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 2508.480875125, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 2508.482550573, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 2508.484448414, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 2508.485610848, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 2508.557624643, "direction": "rx", "raw": "T 51559 2589 2109 7141 9535\n"}
+{"host_time": 2508.568810859, "direction": "rx", "raw": "I 51559 -0.002014 0.001343 0.000000 1.000000 0.000000 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2508.573256325, "direction": "rx", "raw": "N 51560 -0.000005 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2508.575359215, "direction": "rx", "raw": "H 51571 IMU 1 51542 2 2\n"}
+{"host_time": 2508.759752713, "direction": "rx", "raw": "T 51763 2589 2109 7141 9535\n"}
+{"host_time": 2508.771505692, "direction": "rx", "raw": "I 51763 -0.002014 0.001404 0.000000 1.000000 0.000000 0.000000 0.000000 0.031250 0.000000 0.000000 3\n"}
+{"host_time": 2508.776125478, "direction": "rx", "raw": "N 51763 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2508.778217484, "direction": "rx", "raw": "H 51774 IMU 1 51761 2 2\n"}
+{"host_time": 2508.960702202, "direction": "rx", "raw": "T 51963 2589 2109 7141 9535\n"}
+{"host_time": 2508.972412162, "direction": "rx", "raw": "I 51963 -0.002014 0.001465 0.000000 1.000000 0.000000 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2508.97691346, "direction": "rx", "raw": "N 51963 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2508.979116506, "direction": "rx", "raw": "H 51974 IMU 1 51961 2 2\n"}
+{"host_time": 2509.160771078, "direction": "rx", "raw": "T 52163 2589 2109 7141 9535\n"}
+{"host_time": 2509.173936019, "direction": "rx", "raw": "I 52163 -0.002075 0.001465 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 -0.007812 3\n"}
+{"host_time": 2509.178004354, "direction": "rx", "raw": "N 52163 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2509.180169692, "direction": "rx", "raw": "H 52174 IMU 1 52161 2 2\n"}
+{"host_time": 2509.362598995, "direction": "rx", "raw": "T 52364 2589 2109 7141 9535\n"}
+{"host_time": 2509.375343837, "direction": "rx", "raw": "I 52364 -0.002075 0.001465 0.000000 1.000000 0.000000 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2509.379416755, "direction": "rx", "raw": "N 52364 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2509.381570843, "direction": "rx", "raw": "H 52375 IMU 1 52360 2 2\n"}
+{"host_time": 2509.561314346, "direction": "rx", "raw": "T 52564 2589 2109 7141 9535\n"}
+{"host_time": 2509.574309914, "direction": "rx", "raw": "I 52564 -0.002075 0.001465 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 0.000000 3\n"}
+{"host_time": 2509.57835851, "direction": "rx", "raw": "N 52564 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2509.580502233, "direction": "rx", "raw": "H 52575 IMU 1 52561 2 2\n"}
+{"host_time": 2509.761927121, "direction": "rx", "raw": "T 52764 2589 2109 7141 9535\n"}
+{"host_time": 2509.775000345, "direction": "rx", "raw": "I 52764 -0.002014 0.001526 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 -0.007812 0.000000 3\n"}
+{"host_time": 2509.779091961, "direction": "rx", "raw": "N 52764 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2509.78124183, "direction": "rx", "raw": "H 52775 IMU 1 52761 2 2\n"}
+{"host_time": 2509.963122441, "direction": "rx", "raw": "T 52965 2589 2109 7141 9535\n"}
+{"host_time": 2509.975372029, "direction": "rx", "raw": "I 52965 -0.002014 0.001526 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 -0.007812 3\n"}
+{"host_time": 2509.979824891, "direction": "rx", "raw": "N 52965 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2509.982226059, "direction": "rx", "raw": "H 52976 IMU 1 52959 2 2\n"}
+{"host_time": 2510.163225848, "direction": "rx", "raw": "T 53165 2589 2109 7141 9535\n"}
+{"host_time": 2510.175799859, "direction": "rx", "raw": "I 53165 -0.002014 0.001587 0.000000 1.000000 0.000000 0.000000 0.000000 -0.007812 0.000000 -0.007812 3\n"}
+{"host_time": 2510.180280012, "direction": "rx", "raw": "N 53166 -0.000006 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2510.182527901, "direction": "rx", "raw": "H 53177 IMU 1 53159 2 2\n"}
+{"host_time": 2510.363944976, "direction": "rx", "raw": "T 53365 2589 2109 7141 9535\n"}
+{"host_time": 2510.376510862, "direction": "rx", "raw": "I 53365 -0.002014 0.001587 0.000061 1.000000 0.001953 0.000000 0.000000 0.031250 0.000000 -0.007812 3\n"}
+{"host_time": 2510.380573625, "direction": "rx", "raw": "N 53366 0.000116 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2510.382633703, "direction": "rx", "raw": "H 53377 IMU 1 53359 2 2\n"}
+{"host_time": 2510.496142818, "direction": "tx", "raw": "CFG SET heading-enabled 0\n"}
+{"host_time": 2510.513419323, "direction": "rx", "raw": "OK CFG SET heading-enabled\n"}
+{"host_time": 2510.562949543, "direction": "rx", "raw": "T 53565 2589 2109 7141 9535\n"}
+{"host_time": 2510.574692678, "direction": "rx", "raw": "I 53565 -0.002014 0.001587 0.000061 1.000000 0.001953 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2510.57904226, "direction": "rx", "raw": "N 53565 0.000116 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2510.579404183, "direction": "tx", "raw": "X\n"}
+{"host_time": 2510.581478324, "direction": "rx", "raw": "H 53577 IMU 1 53539 2 2\n"}
+{"host_time": 2510.584421777, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2510.762720662, "direction": "rx", "raw": "T 53765 2589 2109 7141 9535\n"}
+{"host_time": 2510.775757375, "direction": "rx", "raw": "I 53765 -0.002014 0.001587 0.000061 1.000000 0.001953 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2510.779758888, "direction": "rx", "raw": "N 53765 0.000116 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2510.781870008, "direction": "rx", "raw": "H 53777 IMU 1 53539 2 2\n"}
+{"host_time": 2510.963018754, "direction": "rx", "raw": "T 53965 2589 2109 7141 9535\n"}
+{"host_time": 2510.975704742, "direction": "rx", "raw": "I 53965 -0.002014 0.001587 0.000061 1.000000 0.001953 0.000000 0.000000 -0.015625 0.000000 0.000000 3\n"}
+{"host_time": 2510.979717089, "direction": "rx", "raw": "N 53965 0.000116 0.000000 0.000000 0.0000 0 0 1\n"}
+{"host_time": 2510.981875395, "direction": "rx", "raw": "H 53977 IMU 1 53539 2 2\n"}
+{"host_time": 2511.16286982, "direction": "rx", "raw": "T 54165 2589 2109 7141 9535\n"}
+{"host_time": 2511.166200508, "direction": "rx", "raw": "I 54165 STALE\n"}
+{"host_time": 2511.172596106, "direction": "rx", "raw": "N 54165 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2511.174708632, "direction": "rx", "raw": "H 54165 IMU 1 53539 2 2\n"}
+{"host_time": 2511.363770925, "direction": "rx", "raw": "T 54365 2589 2109 7141 9535\n"}
+{"host_time": 2511.366205218, "direction": "rx", "raw": "I 54365 STALE\n"}
+{"host_time": 2511.371767753, "direction": "rx", "raw": "N 54365 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2511.374689852, "direction": "rx", "raw": "H 54365 IMU 1 53539 2 2\n"}
+{"host_time": 2511.562903407, "direction": "rx", "raw": "T 54565 2589 2109 7141 9535\n"}
+{"host_time": 2511.56593415, "direction": "rx", "raw": "I 54565 STALE\n"}
+{"host_time": 2511.572943178, "direction": "rx", "raw": "N 54565 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2511.575435126, "direction": "rx", "raw": "H 54565 IMU 1 53539 2 2\n"}
+{"host_time": 2511.763322487, "direction": "rx", "raw": "T 54765 2589 2109 7141 9535\n"}
+{"host_time": 2511.7643006, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2511.766154431, "direction": "rx", "raw": "I 54765 STALE\n"}
+{"host_time": 2511.771665977, "direction": "rx", "raw": "N 54765 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2511.774594222, "direction": "rx", "raw": "H 54765 IMU 1 53539 2 2\n"}
+{"host_time": 2511.778608131, "direction": "rx", "raw": "D FL PWM 0.0 A 1298 B 1301 INVALID 0\n"}
+{"host_time": 2511.78175981, "direction": "rx", "raw": "D FR PWM 0.0 A 1087 B 1070 INVALID 0\n"}
+{"host_time": 2511.784855709, "direction": "rx", "raw": "D RL PWM 0.0 A 3581 B 3580 INVALID 1\n"}
+{"host_time": 2511.787926609, "direction": "rx", "raw": "D RR PWM 0.0 A 4779 B 4792 INVALID 1\n"}
+{"host_time": 2511.802726894, "direction": "tx", "raw": "X\n"}
+{"host_time": 2511.807667823, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2511.963576777, "direction": "rx", "raw": "T 54965 2589 2109 7141 9535\n"}
+{"host_time": 2511.965981435, "direction": "rx", "raw": "I 54965 STALE\n"}
+{"host_time": 2511.971573449, "direction": "rx", "raw": "N 54965 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2511.97447659, "direction": "rx", "raw": "H 54965 IMU 1 53539 2 2\n"}
+{"host_time": 2512.157550104, "direction": "rx", "raw": "WARN IMU reset; restarting reports\r\n"}
+{"host_time": 2512.192482171, "direction": "rx", "raw": "T 55194 2589 2109 7141 9535\n"}
+{"host_time": 2512.196422695, "direction": "rx", "raw": "I 55194 WAIT Q0 G0 A0\n"}
+{"host_time": 2512.20283673, "direction": "rx", "raw": "N 55194 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2512.204768685, "direction": "rx", "raw": "H 55195 IMU 1 0 3 2\n"}
+{"host_time": 2512.393094946, "direction": "rx", "raw": "T 55394 2589 2109 7141 9535\n"}
+{"host_time": 2512.396235897, "direction": "rx", "raw": "I 55394 WAIT Q0 G0 A0\n"}
+{"host_time": 2512.401783276, "direction": "rx", "raw": "N 55394 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2512.404431837, "direction": "rx", "raw": "H 55395 IMU 1 0 3 2\n"}
+{"host_time": 2512.591826027, "direction": "rx", "raw": "T 55594 2589 2109 7141 9535\n"}
+{"host_time": 2512.595453221, "direction": "rx", "raw": "I 55594 WAIT Q0 G0 A0\n"}
+{"host_time": 2512.601088672, "direction": "rx", "raw": "N 55594 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2512.603551506, "direction": "rx", "raw": "H 55595 IMU 1 0 3 2\n"}
+{"host_time": 2512.792199482, "direction": "rx", "raw": "T 55794 2589 2109 7141 9535\n"}
+{"host_time": 2512.795841625, "direction": "rx", "raw": "I 55794 WAIT Q0 G0 A0\n"}
+{"host_time": 2512.802734664, "direction": "rx", "raw": "N 55794 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2512.80460412, "direction": "rx", "raw": "H 55795 IMU 1 0 3 2\n"}
+{"host_time": 2512.992881528, "direction": "rx", "raw": "T 55994 2589 2109 7141 9535\n"}
+{"host_time": 2512.993814121, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2512.996834448, "direction": "rx", "raw": "I 55994 WAIT Q0 G0 A0\n"}
+{"host_time": 2513.00296182, "direction": "rx", "raw": "N 55994 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2513.005120387, "direction": "rx", "raw": "H 55995 IMU 1 0 3 2\n"}
+{"host_time": 2513.008287171, "direction": "rx", "raw": "D FL PWM 0.0 A 1298 B 1301 INVALID 0\n"}
+{"host_time": 2513.011360518, "direction": "rx", "raw": "D FR PWM 0.0 A 1087 B 1070 INVALID 0\n"}
+{"host_time": 2513.014450115, "direction": "rx", "raw": "D RL PWM 0.0 A 3581 B 3580 INVALID 1\n"}
+{"host_time": 2513.017649659, "direction": "rx", "raw": "D RR PWM 0.0 A 4779 B 4792 INVALID 1\n"}
+{"host_time": 2513.018070851, "direction": "tx", "raw": "CFG SET pwm-fl 177\n"}
+{"host_time": 2513.026822878, "direction": "rx", "raw": "OK CFG SET pwm-fl\n"}
+{"host_time": 2513.027313966, "direction": "tx", "raw": "CFG SET pwm-fr 177\n"}
+{"host_time": 2513.036806869, "direction": "rx", "raw": "OK CFG SET pwm-fr\n"}
+{"host_time": 2513.037353581, "direction": "tx", "raw": "CFG SET pwm-rl 160\n"}
+{"host_time": 2513.046074567, "direction": "rx", "raw": "OK CFG SET pwm-rl\n"}
+{"host_time": 2513.046805443, "direction": "tx", "raw": "CFG SET pwm-rr 150\n"}
+{"host_time": 2513.055827884, "direction": "rx", "raw": "OK CFG SET pwm-rr\n"}
+{"host_time": 2513.05637246, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 2513.062908994, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 2513.065165997, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 2513.067307221, "direction": "rx", "raw": "CFG pwm-rl 160\n"}
+{"host_time": 2513.069549328, "direction": "rx", "raw": "CFG pwm-rr 150\n"}
+{"host_time": 2513.072138567, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 2513.074637078, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 2513.077966568, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 2513.080219977, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 2513.082612292, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 2513.083798267, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 2513.084261698, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2513.09215535, "direction": "rx", "raw": "D FL PWM 0.0 A 1298 B 1301 INVALID 0\n"}
+{"host_time": 2513.096107333, "direction": "rx", "raw": "D FR PWM 0.0 A 1087 B 1070 INVALID 0\n"}
+{"host_time": 2513.100119419, "direction": "rx", "raw": "D RL PWM 0.0 A 3581 B 3580 INVALID 1\n"}
+{"host_time": 2513.104297804, "direction": "rx", "raw": "D RR PWM 0.0 A 4779 B 4792 INVALID 1\n"}
+{"host_time": 2513.104819204, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.114435283, "direction": "rx", "raw": "WARN heading hold bypassed: heading unavailable\r\n"}
+{"host_time": 2513.156239973, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.192695824, "direction": "rx", "raw": "T 56194 2589 2109 7141 9535\n"}
+{"host_time": 2513.197540035, "direction": "rx", "raw": "I 56194 WAIT Q0 G0 A0\n"}
+{"host_time": 2513.204247712, "direction": "rx", "raw": "N 56194 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2513.206028888, "direction": "rx", "raw": "H 56195 IMU 1 0 3 2\n"}
+{"host_time": 2513.206312062, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.258339334, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.310848788, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.363282409, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.391493987, "direction": "rx", "raw": "T 56394 2613 2142 7216 9611\n"}
+{"host_time": 2513.395636227, "direction": "rx", "raw": "I 56394 WAIT Q0 G0 A0\n"}
+{"host_time": 2513.401176731, "direction": "rx", "raw": "N 56394 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2513.403244414, "direction": "rx", "raw": "H 56395 IMU 1 0 3 2\n"}
+{"host_time": 2513.413823241, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.455614026, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2513.467151123, "direction": "rx", "raw": "D FL PWM 177.0 A 1326 B 1328 INVALID 0\n"}
+{"host_time": 2513.467811948, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.471928043, "direction": "rx", "raw": "D FR PWM 177.0 A 1113 B 1106 INVALID 0\n"}
+{"host_time": 2513.476280593, "direction": "rx", "raw": "D RL PWM 160.0 A 3681 B 3674 INVALID 1\n"}
+{"host_time": 2513.480025651, "direction": "rx", "raw": "D RR PWM 150.0 A 4875 B 4881 INVALID 1\n"}
+{"host_time": 2513.52190784, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.574350889, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.591417136, "direction": "rx", "raw": "T 56594 2715 2201 7572 9940\n"}
+{"host_time": 2513.595561147, "direction": "rx", "raw": "I 56594 WAIT Q0 G0 A0\n"}
+{"host_time": 2513.601278576, "direction": "rx", "raw": "N 56595 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2513.603411049, "direction": "rx", "raw": "H 56595 IMU 1 0 3 2\n"}
+{"host_time": 2513.624429122, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.676746131, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.729114857, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.781469834, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.792583134, "direction": "rx", "raw": "T 56795 2848 2297 7994 10384\n"}
+{"host_time": 2513.795794448, "direction": "rx", "raw": "I 56795 WAIT Q0 G0 A0\n"}
+{"host_time": 2513.801377816, "direction": "rx", "raw": "N 56795 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2513.803831275, "direction": "rx", "raw": "H 56795 IMU 1 0 3 2\n"}
+{"host_time": 2513.835268438, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.887753621, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.940138858, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.994059857, "direction": "rx", "raw": "T 56995 3002 2395 8446 10888\n"}
+{"host_time": 2513.994724901, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2513.997694708, "direction": "rx", "raw": "I 56995 WAIT Q0 G0 A0\n"}
+{"host_time": 2514.00383859, "direction": "rx", "raw": "N 56995 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2514.006708086, "direction": "rx", "raw": "H 56996 IMU 1 0 3 2\n"}
+{"host_time": 2514.048449287, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.100716036, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.153090908, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.193923475, "direction": "rx", "raw": "T 57195 3168 2506 8908 11426\n"}
+{"host_time": 2514.198249359, "direction": "rx", "raw": "I 57195 WAIT Q0 G0 A0\n"}
+{"host_time": 2514.202892166, "direction": "rx", "raw": "N 57195 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2514.203271693, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.205258543, "direction": "rx", "raw": "H 57196 IMU 1 0 3 2\n"}
+{"host_time": 2514.257157848, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.309695479, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.362117798, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.393586054, "direction": "rx", "raw": "T 57395 3347 2630 9377 11984\n"}
+{"host_time": 2514.396568309, "direction": "rx", "raw": "I 57395 WAIT Q0 G0 A0\n"}
+{"host_time": 2514.401694287, "direction": "rx", "raw": "N 57395 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2514.403946968, "direction": "rx", "raw": "H 57396 IMU 1 0 3 2\n"}
+{"host_time": 2514.41466996, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.466946969, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.519240904, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.571830357, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.592587079, "direction": "rx", "raw": "T 57595 3537 2769 9851 12555\n"}
+{"host_time": 2514.596369637, "direction": "rx", "raw": "I 57595 WAIT Q0 G0 A0\n"}
+{"host_time": 2514.601960401, "direction": "rx", "raw": "N 57595 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2514.604639326, "direction": "rx", "raw": "H 57596 IMU 1 0 3 2\n"}
+{"host_time": 2514.625665628, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.678182738, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.730869117, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.783339873, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.794673379, "direction": "rx", "raw": "T 57796 3739 2920 10330 13135\n"}
+{"host_time": 2514.797574436, "direction": "rx", "raw": "I 57796 WAIT Q0 G0 A0\n"}
+{"host_time": 2514.802646926, "direction": "rx", "raw": "N 57796 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2514.805044656, "direction": "rx", "raw": "H 57796 IMU 1 0 3 2\n"}
+{"host_time": 2514.836609161, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.88918976, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.94170312, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.994414238, "direction": "rx", "raw": "T 57996 3955 3079 10813 13722\n"}
+{"host_time": 2514.995471881, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2514.998327992, "direction": "rx", "raw": "I 57997 WAIT Q0 G0 A0\n"}
+{"host_time": 2515.003857767, "direction": "rx", "raw": "N 57997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2515.00643185, "direction": "rx", "raw": "H 57997 IMU 1 0 3 2\n"}
+{"host_time": 2515.048457579, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.101068803, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.153492112, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.195170398, "direction": "rx", "raw": "T 58196 4180 3249 11294 14310\n"}
+{"host_time": 2515.198963944, "direction": "rx", "raw": "I 58197 WAIT Q0 G0 A0\n"}
+{"host_time": 2515.204029194, "direction": "rx", "raw": "N 58197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2515.20443721, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.206608589, "direction": "rx", "raw": "H 58197 IMU 1 0 3 2\n"}
+{"host_time": 2515.258916743, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.311703017, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.364368823, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.394009341, "direction": "rx", "raw": "T 58396 4415 3426 11779 14900\n"}
+{"host_time": 2515.398035073, "direction": "rx", "raw": "I 58397 WAIT Q0 G0 A0\n"}
+{"host_time": 2515.402704129, "direction": "rx", "raw": "N 58397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2515.40482478, "direction": "rx", "raw": "H 58397 IMU 1 0 3 2\n"}
+{"host_time": 2515.41533715, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.467450515, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2515.509638013, "direction": "tx", "raw": "X\n"}
+{"host_time": 2515.511523771, "direction": "tx", "raw": "X\n"}
+{"host_time": 2515.515491795, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2515.523265501, "direction": "rx", "raw": "WARN IMU reports missing; retrying Q1 G1 A1\n"}
+{"host_time": 2515.553659447, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2515.595085705, "direction": "rx", "raw": "T 58596 4642 3603 12243 15478\n"}
+{"host_time": 2515.598810294, "direction": "rx", "raw": "I 58597 WAIT Q0 G0 A0\n"}
+{"host_time": 2515.603897783, "direction": "rx", "raw": "N 58597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2515.606159005, "direction": "rx", "raw": "H 58597 IMU 1 0 3 2\n"}
+{"host_time": 2515.794616515, "direction": "rx", "raw": "T 58796 4750 3683 12489 15918\n"}
+{"host_time": 2515.797892412, "direction": "rx", "raw": "I 58797 WAIT Q0 G0 A0\n"}
+{"host_time": 2515.804301395, "direction": "rx", "raw": "N 58797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2515.806829072, "direction": "rx", "raw": "H 58797 IMU 1 0 3 2\n"}
+{"host_time": 2515.994581695, "direction": "rx", "raw": "T 58996 4760 3686 12529 16203\n"}
+{"host_time": 2515.998290086, "direction": "rx", "raw": "I 58997 WAIT Q0 G0 A0\n"}
+{"host_time": 2516.003895642, "direction": "rx", "raw": "N 58997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2516.006369049, "direction": "rx", "raw": "H 58997 IMU 1 0 3 2\n"}
+{"host_time": 2516.194850048, "direction": "rx", "raw": "T 59196 4760 3686 12529 16356\n"}
+{"host_time": 2516.198376358, "direction": "rx", "raw": "I 59197 WAIT Q0 G0 A0\n"}
+{"host_time": 2516.204848414, "direction": "rx", "raw": "N 59197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2516.207114792, "direction": "rx", "raw": "H 59197 IMU 1 0 3 2\n"}
+{"host_time": 2516.395646832, "direction": "rx", "raw": "T 59396 4760 3686 12529 16392\n"}
+{"host_time": 2516.398846636, "direction": "rx", "raw": "I 59396 WAIT Q0 G0 A0\n"}
+{"host_time": 2516.404424275, "direction": "rx", "raw": "N 59397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2516.406895755, "direction": "rx", "raw": "H 59397 IMU 1 0 3 2\n"}
+{"host_time": 2516.523088431, "direction": "rx", "raw": "WARN IMU reports missing; retrying Q1 G1 A1\n"}
+{"host_time": 2516.595583887, "direction": "rx", "raw": "T 59596 4760 3686 12529 16392\n"}
+{"host_time": 2516.598567809, "direction": "rx", "raw": "I 59597 WAIT Q0 G0 A0\n"}
+{"host_time": 2516.60360108, "direction": "rx", "raw": "N 59597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2516.605824698, "direction": "rx", "raw": "H 59597 IMU 1 0 3 2\n"}
+{"host_time": 2516.794850065, "direction": "rx", "raw": "T 59796 4760 3686 12529 16392\n"}
+{"host_time": 2516.798526113, "direction": "rx", "raw": "I 59796 WAIT Q0 G0 A0\n"}
+{"host_time": 2516.805717326, "direction": "rx", "raw": "N 59797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2516.807684906, "direction": "rx", "raw": "H 59797 IMU 1 0 3 2\n"}
+{"host_time": 2516.995489247, "direction": "rx", "raw": "T 59996 4760 3686 12529 16392\n"}
+{"host_time": 2516.998603844, "direction": "rx", "raw": "I 59996 WAIT Q0 G0 A0\n"}
+{"host_time": 2517.004192421, "direction": "rx", "raw": "N 59997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2517.006636922, "direction": "rx", "raw": "H 59997 IMU 1 0 3 2\n"}
+{"host_time": 2517.195177399, "direction": "rx", "raw": "T 60196 4760 3686 12529 16392\n"}
+{"host_time": 2517.196375561, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2517.199866091, "direction": "rx", "raw": "I 60196 WAIT Q0 G0 A0\n"}
+{"host_time": 2517.206936628, "direction": "rx", "raw": "N 60197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2517.208824261, "direction": "rx", "raw": "H 60197 IMU 1 0 3 2\n"}
+{"host_time": 2517.211877765, "direction": "rx", "raw": "D FL PWM 0.0 A 2390 B 2392 INVALID 0\n"}
+{"host_time": 2517.215239078, "direction": "rx", "raw": "D FR PWM 0.0 A 1905 B 1883 INVALID 0\n"}
+{"host_time": 2517.218640286, "direction": "rx", "raw": "D RL PWM 0.0 A 6289 B 6294 INVALID 1\n"}
+{"host_time": 2517.222007536, "direction": "rx", "raw": "D RR PWM 0.0 A 8263 B 8269 INVALID 1\n"}
+{"host_time": 2517.222526592, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2517.230166445, "direction": "rx", "raw": "D FL PWM 0.0 A 2390 B 2392 INVALID 0\n"}
+{"host_time": 2517.233998377, "direction": "rx", "raw": "D FR PWM 0.0 A 1905 B 1883 INVALID 0\n"}
+{"host_time": 2517.237687289, "direction": "rx", "raw": "D RL PWM 0.0 A 6289 B 6294 INVALID 1\n"}
+{"host_time": 2517.241443597, "direction": "rx", "raw": "D RR PWM 0.0 A 8263 B 8269 INVALID 1\n"}
+{"host_time": 2517.256137061, "direction": "tx", "raw": "X\n"}
+{"host_time": 2517.261479807, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2517.395097059, "direction": "rx", "raw": "T 60396 4760 3686 12529 16392\n"}
+{"host_time": 2517.398934667, "direction": "rx", "raw": "I 60396 WAIT Q0 G0 A0\n"}
+{"host_time": 2517.403997938, "direction": "rx", "raw": "N 60397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2517.406267754, "direction": "rx", "raw": "H 60397 IMU 1 0 3 2\n"}
+{"host_time": 2517.522799227, "direction": "rx", "raw": "WARN IMU reports missing; retrying Q1 G1 A1\n"}
+{"host_time": 2517.593594653, "direction": "rx", "raw": "T 60596 4760 3686 12529 16392\n"}
+{"host_time": 2517.597556218, "direction": "rx", "raw": "I 60597 WAIT Q0 G0 A0\n"}
+{"host_time": 2517.602896412, "direction": "rx", "raw": "N 60597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2517.605226696, "direction": "rx", "raw": "H 60597 IMU 1 0 3 2\n"}
+{"host_time": 2517.794492581, "direction": "rx", "raw": "T 60796 4760 3686 12529 16392\n"}
+{"host_time": 2517.797749103, "direction": "rx", "raw": "I 60796 WAIT Q0 G0 A0\n"}
+{"host_time": 2517.80417142, "direction": "rx", "raw": "N 60797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2517.806698628, "direction": "rx", "raw": "H 60797 IMU 1 0 3 2\n"}
+{"host_time": 2517.99461052, "direction": "rx", "raw": "T 60996 4760 3686 12529 16392\n"}
+{"host_time": 2517.998308234, "direction": "rx", "raw": "I 60996 WAIT Q0 G0 A0\n"}
+{"host_time": 2518.004555188, "direction": "rx", "raw": "N 60997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2518.007285988, "direction": "rx", "raw": "H 60997 IMU 1 0 3 2\n"}
+{"host_time": 2518.195458085, "direction": "rx", "raw": "T 61196 4760 3686 12529 16392\n"}
+{"host_time": 2518.198567421, "direction": "rx", "raw": "I 61196 WAIT Q0 G0 A0\n"}
+{"host_time": 2518.204153966, "direction": "rx", "raw": "N 61197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2518.206683623, "direction": "rx", "raw": "H 61197 IMU 1 0 3 2\n"}
+{"host_time": 2518.394233019, "direction": "rx", "raw": "T 61396 4760 3686 12529 16392\n"}
+{"host_time": 2518.395263371, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2518.398233803, "direction": "rx", "raw": "I 61396 WAIT Q0 G0 A0\n"}
+{"host_time": 2518.403812848, "direction": "rx", "raw": "N 61397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2518.406350681, "direction": "rx", "raw": "H 61397 IMU 1 0 3 2\n"}
+{"host_time": 2518.409968293, "direction": "rx", "raw": "D FL PWM 0.0 A 2390 B 2392 INVALID 0\n"}
+{"host_time": 2518.413096691, "direction": "rx", "raw": "D FR PWM 0.0 A 1905 B 1883 INVALID 0\n"}
+{"host_time": 2518.416179674, "direction": "rx", "raw": "D RL PWM 0.0 A 6289 B 6294 INVALID 1\n"}
+{"host_time": 2518.419207657, "direction": "rx", "raw": "D RR PWM 0.0 A 8263 B 8269 INVALID 1\n"}
+{"host_time": 2518.419536091, "direction": "tx", "raw": "CFG SET pwm-fl 177\n"}
+{"host_time": 2518.428325357, "direction": "rx", "raw": "OK CFG SET pwm-fl\n"}
+{"host_time": 2518.428759987, "direction": "tx", "raw": "CFG SET pwm-fr 177\n"}
+{"host_time": 2518.437743626, "direction": "rx", "raw": "OK CFG SET pwm-fr\n"}
+{"host_time": 2518.438360649, "direction": "tx", "raw": "CFG SET pwm-rl 160\n"}
+{"host_time": 2518.447358663, "direction": "rx", "raw": "OK CFG SET pwm-rl\n"}
+{"host_time": 2518.448253183, "direction": "tx", "raw": "CFG SET pwm-rr 150\n"}
+{"host_time": 2518.456839691, "direction": "rx", "raw": "OK CFG SET pwm-rr\n"}
+{"host_time": 2518.457281405, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 2518.463815647, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 2518.466349782, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 2518.468748711, "direction": "rx", "raw": "CFG pwm-rl 160\n"}
+{"host_time": 2518.471144098, "direction": "rx", "raw": "CFG pwm-rr 150\n"}
+{"host_time": 2518.47473098, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 2518.476953974, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 2518.479599357, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 2518.481337669, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 2518.483365925, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 2518.484621066, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 2518.485035019, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2518.493311688, "direction": "rx", "raw": "D FL PWM 0.0 A 2390 B 2392 INVALID 0\n"}
+{"host_time": 2518.496510086, "direction": "rx", "raw": "D FR PWM 0.0 A 1905 B 1883 INVALID 0\n"}
+{"host_time": 2518.500909666, "direction": "rx", "raw": "D RL PWM 0.0 A 6289 B 6294 INVALID 1\n"}
+{"host_time": 2518.505358466, "direction": "rx", "raw": "D RR PWM 0.0 A 8263 B 8269 INVALID 1\n"}
+{"host_time": 2518.505880855, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.558096667, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.59439205, "direction": "rx", "raw": "T 61596 4760 3686 12529 16392\n"}
+{"host_time": 2518.598592467, "direction": "rx", "raw": "I 61597 WAIT Q0 G0 A0\n"}
+{"host_time": 2518.604485311, "direction": "rx", "raw": "N 61597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2518.606283934, "direction": "rx", "raw": "H 61597 IMU 1 0 3 2\n"}
+{"host_time": 2518.616824585, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.669383309, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.721946252, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.774481539, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.794100202, "direction": "rx", "raw": "T 61796 4780 3710 12592 16476\n"}
+{"host_time": 2518.798156871, "direction": "rx", "raw": "I 61797 WAIT Q0 G0 A0\n"}
+{"host_time": 2518.803229308, "direction": "rx", "raw": "N 61797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2518.805503394, "direction": "rx", "raw": "H 61797 IMU 1 0 3 2\n"}
+{"host_time": 2518.826520738, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.858320449, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2518.869002244, "direction": "rx", "raw": "D FL PWM 177.0 A 2419 B 2422 INVALID 0\n"}
+{"host_time": 2518.873459324, "direction": "rx", "raw": "D FR PWM 177.0 A 1924 B 1905 INVALID 0\n"}
+{"host_time": 2518.877770625, "direction": "rx", "raw": "D RL PWM 160.0 A 6379 B 6382 INVALID 1\n"}
+{"host_time": 2518.878304472, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.881954844, "direction": "rx", "raw": "D RR PWM 150.0 A 8360 B 8371 INVALID 1\n"}
+{"host_time": 2518.934068729, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.986579433, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2518.994272776, "direction": "rx", "raw": "T 61996 4889 3760 12949 16813\n"}
+{"host_time": 2518.998186477, "direction": "rx", "raw": "I 61997 WAIT Q0 G0 A0\n"}
+{"host_time": 2519.003025688, "direction": "rx", "raw": "N 61997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2519.005230452, "direction": "rx", "raw": "H 61997 IMU 1 0 3 2\n"}
+{"host_time": 2519.036725792, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.089380817, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.142166673, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.195058154, "direction": "rx", "raw": "T 62196 5028 3850 13385 17263\n"}
+{"host_time": 2519.195970955, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.198462747, "direction": "rx", "raw": "I 62197 WAIT Q0 G0 A0\n"}
+{"host_time": 2519.203519611, "direction": "rx", "raw": "N 62197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2519.205779427, "direction": "rx", "raw": "H 62197 IMU 1 0 3 2\n"}
+{"host_time": 2519.247953592, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.30037461, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.3528162, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.393755277, "direction": "rx", "raw": "T 62396 5190 3955 13843 17772\n"}
+{"host_time": 2519.397396221, "direction": "rx", "raw": "I 62397 WAIT Q0 G0 A0\n"}
+{"host_time": 2519.402530793, "direction": "rx", "raw": "N 62397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2519.402970267, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.405187583, "direction": "rx", "raw": "H 62397 IMU 1 0 3 2\n"}
+{"host_time": 2519.457363968, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.509865193, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.562394542, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.595433612, "direction": "rx", "raw": "T 62596 5365 4073 14315 18318\n"}
+{"host_time": 2519.598367066, "direction": "rx", "raw": "I 62597 WAIT Q0 G0 A0\n"}
+{"host_time": 2519.604202723, "direction": "rx", "raw": "N 62597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2519.606649307, "direction": "rx", "raw": "H 62597 IMU 1 0 3 2\n"}
+{"host_time": 2519.617199541, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.669423946, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.721520645, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.773910725, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.794405107, "direction": "rx", "raw": "T 62796 5550 4210 14791 18884\n"}
+{"host_time": 2519.797647827, "direction": "rx", "raw": "I 62797 WAIT Q0 G0 A0\n"}
+{"host_time": 2519.802720316, "direction": "rx", "raw": "N 62797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2519.804983309, "direction": "rx", "raw": "H 62797 IMU 1 0 3 2\n"}
+{"host_time": 2519.826148933, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.878580887, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.93089899, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.983436204, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2519.994138988, "direction": "rx", "raw": "T 62996 5751 4361 15271 19462\n"}
+{"host_time": 2519.997069889, "direction": "rx", "raw": "I 62996 WAIT Q0 G0 A0\n"}
+{"host_time": 2520.00210941, "direction": "rx", "raw": "N 62996 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2520.00449188, "direction": "rx", "raw": "H 62996 IMU 1 0 3 2\n"}
+{"host_time": 2520.036072583, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.088511465, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.140897483, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.194931345, "direction": "rx", "raw": "T 63196 5973 4528 15755 20052\n"}
+{"host_time": 2520.195795761, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.198538644, "direction": "rx", "raw": "I 63197 WAIT Q0 G0 A0\n"}
+{"host_time": 2520.204060294, "direction": "rx", "raw": "N 63197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2520.206570993, "direction": "rx", "raw": "H 63197 IMU 1 0 3 2\n"}
+{"host_time": 2520.248568493, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.301283101, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.353763649, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.395442872, "direction": "rx", "raw": "T 63396 6208 4707 16239 20645\n"}
+{"host_time": 2520.398405075, "direction": "rx", "raw": "I 63397 WAIT Q0 G0 A0\n"}
+{"host_time": 2520.403624646, "direction": "rx", "raw": "N 63397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2520.404095422, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.406289249, "direction": "rx", "raw": "H 63397 IMU 1 0 3 2\n"}
+{"host_time": 2520.458243397, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.510687852, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.563055849, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.595296335, "direction": "rx", "raw": "T 63596 6451 4893 16729 21241\n"}
+{"host_time": 2520.598439525, "direction": "rx", "raw": "I 63597 WAIT Q0 G0 A0\n"}
+{"host_time": 2520.603999821, "direction": "rx", "raw": "N 63597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2520.606519894, "direction": "rx", "raw": "H 63597 IMU 1 0 3 2\n"}
+{"host_time": 2520.617146065, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.66931771, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.721877216, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.774244015, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.79415606, "direction": "rx", "raw": "T 63796 6702 5085 17227 21840\n"}
+{"host_time": 2520.798264499, "direction": "rx", "raw": "I 63797 WAIT Q0 G0 A0\n"}
+{"host_time": 2520.803354853, "direction": "rx", "raw": "N 63797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2520.805632741, "direction": "rx", "raw": "H 63797 IMU 1 0 3 2\n"}
+{"host_time": 2520.826593211, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.878926156, "direction": "tx", "raw": "V 1 0 0\n"}
+{"host_time": 2520.910769825, "direction": "tx", "raw": "X\n"}
+{"host_time": 2520.912564802, "direction": "tx", "raw": "X\n"}
+{"host_time": 2520.916466629, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2520.923381387, "direction": "rx", "raw": "WARN IMU reports missing; retrying Q1 G1 A1\n"}
+{"host_time": 2520.954824123, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2520.994942584, "direction": "rx", "raw": "T 63996 6950 5273 17705 22428\n"}
+{"host_time": 2520.998077962, "direction": "rx", "raw": "I 63997 WAIT Q0 G0 A0\n"}
+{"host_time": 2521.004185387, "direction": "rx", "raw": "N 63997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2521.006679262, "direction": "rx", "raw": "H 63997 IMU 1 0 3 2\n"}
+{"host_time": 2521.194506051, "direction": "rx", "raw": "T 64196 7078 5362 17969 22877\n"}
+{"host_time": 2521.197752261, "direction": "rx", "raw": "I 64197 WAIT Q0 G0 A0\n"}
+{"host_time": 2521.203897601, "direction": "rx", "raw": "N 64197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2521.20660439, "direction": "rx", "raw": "H 64197 IMU 1 0 3 2\n"}
+{"host_time": 2521.394689353, "direction": "rx", "raw": "T 64396 7094 5367 18017 23173\n"}
+{"host_time": 2521.398396703, "direction": "rx", "raw": "I 64397 WAIT Q0 G0 A0\n"}
+{"host_time": 2521.40397179, "direction": "rx", "raw": "N 64397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2521.406417333, "direction": "rx", "raw": "H 64397 IMU 1 0 3 2\n"}
+{"host_time": 2521.594452765, "direction": "rx", "raw": "T 64596 7094 5367 18017 23336\n"}
+{"host_time": 2521.598095584, "direction": "rx", "raw": "I 64596 WAIT Q0 G0 A0\n"}
+{"host_time": 2521.605306849, "direction": "rx", "raw": "N 64597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2521.607470781, "direction": "rx", "raw": "H 64597 IMU 1 0 3 2\n"}
+{"host_time": 2521.795443089, "direction": "rx", "raw": "T 64796 7094 5367 18017 23382\n"}
+{"host_time": 2521.798594716, "direction": "rx", "raw": "I 64796 WAIT Q0 G0 A0\n"}
+{"host_time": 2521.804224751, "direction": "rx", "raw": "N 64797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2521.806684772, "direction": "rx", "raw": "H 64797 IMU 1 0 3 2\n"}
+{"host_time": 2521.923527232, "direction": "rx", "raw": "WARN IMU reports missing; retrying Q1 G1 A1\n"}
+{"host_time": 2521.995549361, "direction": "rx", "raw": "T 64996 7094 5367 18017 23380\n"}
+{"host_time": 2521.99878656, "direction": "rx", "raw": "I 64997 WAIT Q0 G0 A0\n"}
+{"host_time": 2522.00396009, "direction": "rx", "raw": "N 64997 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2522.006196156, "direction": "rx", "raw": "H 64997 IMU 1 0 3 2\n"}
+{"host_time": 2522.194325754, "direction": "rx", "raw": "T 65196 7094 5367 18017 23380\n"}
+{"host_time": 2522.197397955, "direction": "rx", "raw": "I 65196 WAIT Q0 G0 A0\n"}
+{"host_time": 2522.204727396, "direction": "rx", "raw": "N 65197 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2522.20689539, "direction": "rx", "raw": "H 65197 IMU 1 0 3 2\n"}
+{"host_time": 2522.394104009, "direction": "rx", "raw": "T 65396 7094 5367 18017 23380\n"}
+{"host_time": 2522.397494384, "direction": "rx", "raw": "I 65396 WAIT Q0 G0 A0\n"}
+{"host_time": 2522.403067388, "direction": "rx", "raw": "N 65397 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2522.405555326, "direction": "rx", "raw": "H 65397 IMU 1 0 3 2\n"}
+{"host_time": 2522.594712307, "direction": "rx", "raw": "T 65596 7094 5367 18017 23380\n"}
+{"host_time": 2522.597934454, "direction": "rx", "raw": "I 65596 WAIT Q0 G0 A0\n"}
+{"host_time": 2522.604267605, "direction": "rx", "raw": "N 65597 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2522.606748355, "direction": "rx", "raw": "H 65597 IMU 1 0 3 2\n"}
+{"host_time": 2522.794745298, "direction": "rx", "raw": "T 65796 7094 5367 18017 23380\n"}
+{"host_time": 2522.795532424, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2522.798566293, "direction": "rx", "raw": "I 65796 WAIT Q0 G0 A0\n"}
+{"host_time": 2522.804767674, "direction": "rx", "raw": "N 65797 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 2522.806855982, "direction": "rx", "raw": "H 65797 IMU 1 0 3 2\n"}
+{"host_time": 2522.809946569, "direction": "rx", "raw": "D FL PWM 0.0 A 3561 B 3565 INVALID 0\n"}
+{"host_time": 2522.813325068, "direction": "rx", "raw": "D FR PWM 0.0 A 2778 B 2751 INVALID 0\n"}
+{"host_time": 2522.816623048, "direction": "rx", "raw": "D RL PWM 0.0 A 9046 B 9055 INVALID 2\n"}
+{"host_time": 2522.819866862, "direction": "rx", "raw": "D RR PWM 0.0 A 11801 B 11801 INVALID 1\n"}
+{"host_time": 2522.820252066, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2522.827908117, "direction": "rx", "raw": "D FL PWM 0.0 A 3561 B 3565 INVALID 0\n"}
+{"host_time": 2522.832088794, "direction": "rx", "raw": "D FR PWM 0.0 A 2778 B 2751 INVALID 0\n"}
+{"host_time": 2522.83614114, "direction": "rx", "raw": "D RL PWM 0.0 A 9046 B 9055 INVALID 2\n"}
+{"host_time": 2522.840432181, "direction": "rx", "raw": "D RR PWM 0.0 A 11801 B 11801 INVALID 1\n"}
+{"host_time": 2522.841028319, "direction": "tx", "raw": "X\n"}
+{"host_time": 2522.841383159, "direction": "tx", "raw": "X\n"}
+{"host_time": 2522.845977893, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2522.846332785, "direction": "tx", "raw": "CFG SET pwm-fl 177\n"}
+{"host_time": 2522.84716267, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2522.854094095, "direction": "rx", "raw": "OK CFG SET pwm-fl\n"}
+{"host_time": 2522.854731847, "direction": "tx", "raw": "CFG SET pwm-fr 177\n"}
+{"host_time": 2522.863946577, "direction": "rx", "raw": "OK CFG SET pwm-fr\n"}
+{"host_time": 2522.864671308, "direction": "tx", "raw": "CFG SET pwm-rl 177\n"}
+{"host_time": 2522.874235668, "direction": "rx", "raw": "OK CFG SET pwm-rl\n"}
+{"host_time": 2522.874696913, "direction": "tx", "raw": "CFG SET pwm-rr 177\n"}
+{"host_time": 2522.883624719, "direction": "rx", "raw": "OK CFG SET pwm-rr\n"}
+{"host_time": 2522.88418617, "direction": "tx", "raw": "CFG SET heading-enabled 0\n"}
+{"host_time": 2522.896491591, "direction": "rx", "raw": "OK CFG SET heading-enabled\n"}
+{"host_time": 2522.897056636, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 2522.904412951, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 2522.906529539, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 2522.908428891, "direction": "rx", "raw": "CFG pwm-rl 177\n"}
+{"host_time": 2522.910172098, "direction": "rx", "raw": "CFG pwm-rr 177\n"}
+{"host_time": 2522.912641807, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 2522.915260265, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 2522.918483246, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 2522.920215412, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 2522.922122159, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 2522.92321902, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 2522.923640109, "direction": "tx", "raw": "X\n"}
+{"host_time": 2522.927215429, "direction": "rx", "raw": "WARN IMU reports missing; retrying Q1 G1 A1\n"}
+{"host_time": 2522.954533789, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 2522.955263155, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 2522.96271775, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 2522.965173032, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 2522.967583888, "direction": "rx", "raw": "CFG pwm-rl 177\n"}
+{"host_time": 2522.969942869, "direction": "rx", "raw": "CFG pwm-rr 177\n"}
+{"host_time": 2522.973087882, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 2522.975081295, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 2522.977669648, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 2522.979317596, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 2522.981166532, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 2522.982260529, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 2522.982590212, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 2522.989792519, "direction": "rx", "raw": "D FL PWM 0.0 A 3561 B 3565 INVALID 0\n"}
+{"host_time": 2522.993326433, "direction": "rx", "raw": "D FR PWM 0.0 A 2778 B 2751 INVALID 0\n"}
+{"host_time": 2522.996636549, "direction": "rx", "raw": "D RL PWM 0.0 A 9046 B 9055 INVALID 2\n"}
+{"host_time": 2523.000827018, "direction": "rx", "raw": "D RR PWM 0.0 A 11801 B 11801 INVALID 1\n"}
+{"host_time": 2523.00143576, "direction": "tx", "raw": "X\n"}

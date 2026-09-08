@@ -1,0 +1,139 @@
+BEGIN #7 b ACCEL50_GYRO50 I2C=100000
+RESET commanded low20ms released400ms RST=1 P0=0 bus=1
+ACK 0x4A rc=0
+ACK 0x4B rc=2
+BOOT init=1 open_rc=0 id_rc=0 reset_events=1 clock=100000
+PRE ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+SET id=0x01 interval_us=20000 rc=0
+SET id=0x02 interval_us=20000 rc=0
+PRE CFG id=0x01 rc=0 want_us=20000 got_us=0 time_ms=5
+PRE CFG id=0x02 rc=0 want_us=20000 got_us=0 time_ms=4
+RUN #7 b ACCEL50_GYRO50 t=1000ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=5 new=5 age=867 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=2001ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=1868 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=3002ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=2869 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=4003ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=3870 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=5004ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=4871 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=6005ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=5872 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=7006ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=6873 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=8007ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=7874 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=9008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=8875 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=10009ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=9876 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=11010ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=10877 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=12011ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=11878 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=13012ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=12879 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=14013ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=13880 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=15014ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=14881 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=16015ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=15882 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=17016ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=16883 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=18017ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=17884 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=19018ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=18885 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=20019ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=19886 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=21020ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=20887 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=22021ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=21888 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=23022ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=22889 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=24023ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=23890 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=25024ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=24891 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=26025ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=25892 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=27026ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=26893 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=28027ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=27894 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=29028ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=28895 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=30029ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=29896 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=31030ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=30897 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=32031ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=31898 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=33032ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=32899 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #7 b ACCEL50_GYRO50 t=34033ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=33900 gap=0 dup=0
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RESULT reason=35_SECONDS boot_resets=1
+FINAL #7 b ACCEL50_GYRO50 t=35000ms reset=0 decode=0 transport=0 INT=1
+ 0x01 STALE n=5 new=0 age=34867 gap=0 dup=0 first=77 last=133 status=2 v=0.2305,-0.1133,9.5000,0.0000
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+POST CFG id=0x01 rc=0 want_us=20000 got_us=16000 time_ms=3
+POST CFG id=0x02 rc=0 want_us=20000 got_us=0 time_ms=3
+POST ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+POST ERR rc=-6 captured=8 complete=0 time_ms=1001
+ ERR0 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR1 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR2 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR3 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR4 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR5 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR6 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR7 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+OFF id=0x01 rc=0
+OFF id=0x02 rc=0
+END #7; s=reprint result, next command starts fresh reset

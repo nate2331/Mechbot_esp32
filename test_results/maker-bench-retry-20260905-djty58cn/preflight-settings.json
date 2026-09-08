@@ -1,0 +1,18 @@
+{
+  "lines": [
+    "CFG pwm-fl 177",
+    "CFG pwm-fr 177",
+    "CFG pwm-rl 177",
+    "CFG pwm-rr 177",
+    "CFG heading-kp 0.7000",
+    "CFG heading-max 0.3000",
+    "CFG heading-deadband-deg 1.500",
+    "CFG heading-sign 1",
+    "CFG heading-enabled 0",
+    "OK CFG GET",
+    "T 2548854 18608 21007 66782 47420",
+    "I 2548854 -0.010132 -0.007812 0.000000 0.999939 0.000000 0.000000 0.000000 0.003906 -0.003906 -0.031250 3",
+    "N 2548866 0.000158 0.000000 0.000000 0.0000 0 0 1",
+    "H 2548866 IMU 1 2548847 3 1"
+  ]
+}

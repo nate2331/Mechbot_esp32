@@ -1,0 +1,13 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0xb (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x10cc
+load:0x403c8700,len:0xc2c
+load:0x403cb700,len:0x30b0
+entry 0x403c88b8
+IMU_RVC_TEST V1 CUSTOM | RX8 RST4 P0=5 | no UART TX pin
+Automatic one 35-second trial; x=stop and restore I2C; r=repeat when idle; s=snapshot
+BEGIN RVC #1 RX8=IMU_SDA_TX baud=115200 8N1 frame=19 P0=1 RSTlow20ms
+RUN #1 t=1000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=832

@@ -12,6 +12,7 @@
   <header class="topbar">
     <div>
       <p class="eyebrow">BLACKBOT TWO</p>
+      <a href="/">← Operations</a>
       <h1>PWM tuning console</h1>
     </div>
     <div class="header-actions">
@@ -35,7 +36,7 @@
         <span>ESP32</span><strong id="serialState">Checking</strong><small id="firmware">—</small>
       </article>
       <article class="status-card">
-        <span>REAR ENCODERS</span><strong id="encoderState">Checking</strong><small>RL/RR rate and repeatability</small>
+        <span id="encoderLabel">ENCODERS</span><strong id="encoderState">Checking</strong><small id="encoderDetail">Waiting for board identity</small>
       </article>
       <article class="status-card">
         <span>IMU</span><strong id="imuState">Checking</strong><small id="imuDetail">Freshness unknown</small>
@@ -46,8 +47,8 @@
     </section>
 
     <section class="truth panel">
-      <strong>How feedback works with two rear encoders</strong>
-      <p>RL and RR are each compared with their own previous runs, so you can see whether a PWM change actually increased or reduced that wheel’s response. Because their tick scales are not yet proven equal, the console never ratio-matches RL against RR. Whole-robot heading and path feedback supplies the missing information and produces a small, reversible PWM trim using the mecanum wheel geometry.</p>
+      <strong id="feedbackTitle">Encoder feedback</strong>
+      <p id="feedbackCopy">Reading the connected board’s capabilities…</p>
     </section>
 
     <section class="workflow-grid">
@@ -59,8 +60,8 @@
       </article>
       <article class="panel workflow">
         <p class="eyebrow">WHEELS OFF THE FLOOR</p>
-        <h2>Rear encoder response check</h2>
-        <p>Verify direction, find a reliable motion threshold, and compare each rear encoder only with itself across PWM and power changes.</p>
+        <h2>Encoder response check</h2>
+        <p>Verify direction and compare each installed encoder with its own prior response at the same output and duration.</p>
         <button data-workflow="bench" class="secondary">Open bench check</button>
       </article>
       <article class="panel workflow">
@@ -70,21 +71,21 @@
         <button class="secondary" disabled>Balance PWM first</button>
       </article>
       <article class="panel workflow future">
-        <p class="eyebrow">FUTURE HARDWARE</p>
+        <p class="eyebrow">NEXT CONTROL MILESTONE</p>
         <h2>Four-encoder speed control</h2>
         <p>With normalized encoders on all wheels, the robot can build wheel-speed curves and close the loop without relying on visual feedback.</p>
-        <button disabled>Requires four encoders</button>
+        <button id="speedControlStatus" disabled>Requires characterization and firmware integration</button>
       </article>
     </section>
 
     <section class="panel baseline">
       <div>
-        <p class="eyebrow">PHYSICALLY PROVEN STARTING POINT</p>
-        <h2>230 / 230 front · 200 / 200 rear</h2>
-        <p class="panel-copy">A floor-observed baseline, not a value inferred from the RL/RR tick ratio.</p>
+        <p class="eyebrow">BOARD STARTING SETTINGS</p>
+        <h2 id="baselineTitle">Identify the controller</h2>
+        <p id="baselineNote" class="panel-copy">Waiting for firmware identity.</p>
       </div>
       <div>
-        <button id="applyBaseline">Use baseline live</button>
+        <button id="applyBaseline" disabled>Use starting settings live</button>
         <button id="revert" class="secondary">Revert session changes</button>
       </div>
     </section>
@@ -117,10 +118,15 @@
         <aside>
           <h2>Encoder totals</h2>
           <div id="encoders" class="encoder-grid"></div>
+          <h2>Wheel diagnostics</h2>
+          <pre id="wheelDiagnostics">Waiting for controller identity.</pre>
+          <h2>Export tuning session</h2>
+          <p><a href="/api/tuning/export.json" download>Download JSON</a> · <a href="/api/tuning/export.csv" download>Download CSV</a></p>
+          <p class="muted">Response rates include startup. Use the supervised bench tool for steady-speed RPM and starting thresholds.</p>
           <h2>Recent serial events</h2>
           <pre id="events">Waiting…</pre>
           <h2>Firmware updater</h2>
-          <button id="updateFirmware" class="secondary">Compile &amp; flash V4</button>
+          <button id="updateFirmware" class="secondary" disabled>Identify controller before updating</button>
           <span id="firmwareJobState" class="job-state">IDLE</span>
           <pre id="firmwareLog">No update running.</pre>
         </aside>

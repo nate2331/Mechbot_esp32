@@ -1,0 +1,96 @@
+BEGIN #8 a ACCEL50 I2C=100000
+RESET commanded low20ms released400ms RST=1 P0=0 bus=1
+ACK 0x4A rc=0
+ACK 0x4B rc=2
+BOOT init=1 open_rc=0 id_rc=0 reset_events=1 clock=100000
+PRE ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+SET id=0x01 interval_us=20000 rc=0
+PRE CFG id=0x01 rc=0 want_us=20000 got_us=0 time_ms=5
+RUN #8 a ACCEL50 t=1001ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=60 new=60 age=7 gap=0 dup=0
+RUN #8 a ACCEL50 t=2002ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=124 new=64 age=9 gap=0 dup=0
+RUN #8 a ACCEL50 t=3002ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=188 new=64 age=11 gap=0 dup=0
+RUN #8 a ACCEL50 t=4002ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=252 new=64 age=10 gap=0 dup=0
+RUN #8 a ACCEL50 t=5006ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=317 new=65 age=0 gap=0 dup=0
+RUN #8 a ACCEL50 t=6006ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=381 new=64 age=0 gap=0 dup=0
+RUN #8 a ACCEL50 t=7006ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=445 new=64 age=1 gap=0 dup=0
+RUN #8 a ACCEL50 t=8007ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=509 new=64 age=3 gap=0 dup=0
+RUN #8 a ACCEL50 t=9008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=573 new=64 age=5 gap=0 dup=0
+RUN #8 a ACCEL50 t=10008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=637 new=64 age=6 gap=0 dup=0
+RUN #8 a ACCEL50 t=11008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=701 new=64 age=6 gap=0 dup=0
+RUN #8 a ACCEL50 t=12008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=765 new=64 age=7 gap=0 dup=0
+RUN #8 a ACCEL50 t=13008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=828 new=63 age=8 gap=0 dup=0
+RUN #8 a ACCEL50 t=14008ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=892 new=64 age=9 gap=0 dup=0
+RUN #8 a ACCEL50 t=15009ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=956 new=64 age=10 gap=0 dup=0
+RUN #8 a ACCEL50 t=16010ms reset=0 decode=0 transport=0 INT=0
+ 0x01 LIVE n=1020 new=64 age=12 gap=0 dup=0
+RUN #8 a ACCEL50 t=17014ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1085 new=65 age=0 gap=0 dup=0
+RUN #8 a ACCEL50 t=18014ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1149 new=64 age=1 gap=0 dup=0
+RUN #8 a ACCEL50 t=19015ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1213 new=64 age=3 gap=0 dup=0
+RUN #8 a ACCEL50 t=20016ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1277 new=64 age=4 gap=0 dup=0
+RUN #8 a ACCEL50 t=21017ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1341 new=64 age=6 gap=0 dup=0
+RUN #8 a ACCEL50 t=22018ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1405 new=64 age=7 gap=0 dup=0
+RUN #8 a ACCEL50 t=23018ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1469 new=64 age=8 gap=0 dup=0
+RUN #8 a ACCEL50 t=24018ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1533 new=64 age=8 gap=0 dup=0
+RUN #8 a ACCEL50 t=25019ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1597 new=64 age=10 gap=0 dup=0
+RUN #8 a ACCEL50 t=26020ms reset=0 decode=0 transport=0 INT=0
+ 0x01 LIVE n=1660 new=63 age=11 gap=0 dup=0
+RUN #8 a ACCEL50 t=27024ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1725 new=65 age=0 gap=0 dup=0
+RUN #8 a ACCEL50 t=28024ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1789 new=64 age=1 gap=0 dup=0
+RUN #8 a ACCEL50 t=29025ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1853 new=64 age=2 gap=0 dup=0
+RUN #8 a ACCEL50 t=30026ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1917 new=64 age=3 gap=0 dup=0
+RUN #8 a ACCEL50 t=31027ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=1981 new=64 age=4 gap=0 dup=0
+RUN #8 a ACCEL50 t=32027ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=2045 new=64 age=6 gap=0 dup=0
+RUN #8 a ACCEL50 t=33027ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=2109 new=64 age=5 gap=0 dup=0
+RUN #8 a ACCEL50 t=34028ms reset=0 decode=0 transport=0 INT=1
+ 0x01 LIVE n=2173 new=64 age=8 gap=0 dup=0
+RESULT reason=35_SECONDS boot_resets=1
+FINAL #8 a ACCEL50 t=35000ms reset=0 decode=0 transport=0 INT=0
+ 0x01 LIVE n=2235 new=62 age=11 gap=0 dup=0 first=77 last=34989 status=2 v=0.2695,-0.1133,9.5430,0.0000
+POST CFG id=0x01 rc=0 want_us=20000 got_us=16000 time_ms=9
+POST ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+POST ERR rc=0 captured=4 complete=1 time_ms=33
+ ERR0 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR1 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR2 sev=4 seq=0 src=4 err=22 module=13 code=0 hex=04 00 04 16 0D 00
+ ERR3 sev=4 seq=0 src=4 err=22 module=13 code=0 hex=04 00 04 16 0D 00
+OFF id=0x01 rc=0
+END #8; s=reprint result, next command starts fresh reset

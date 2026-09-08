@@ -1,0 +1,322 @@
+[
+  {
+    "name": "Front forward",
+    "run": "maker-paired-motors-3rjugqx0",
+    "status": "passed",
+    "error": null,
+    "reconstructed_observation": {
+      "pwm": [
+        177,
+        177,
+        0,
+        0
+      ],
+      "direction": 1,
+      "rpm": [
+        88.58554763447829,
+        89.16487702094898,
+        0.0,
+        0.0
+      ],
+      "sustained": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "start_delay_bounds_ms": [
+        [
+          87.2,
+          287.0
+        ],
+        [
+          87.2,
+          287.0
+        ],
+        null,
+        null
+      ],
+      "sample_gap_ms": 200.0
+    }
+  },
+  {
+    "name": "Front reverse",
+    "run": "maker-paired-motors-3rjugqx0",
+    "status": "running",
+    "error": "Encoder invalid transitions increased during the pulse",
+    "reconstructed_observation": {
+      "pwm": [
+        177,
+        177,
+        0,
+        0
+      ],
+      "direction": -1,
+      "rpm": [
+        88.28175631885937,
+        90.50204627416021,
+        0.0,
+        0.0
+      ],
+      "sustained": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "start_delay_bounds_ms": [
+        [
+          91.5,
+          290.4
+        ],
+        [
+          91.5,
+          290.4
+        ],
+        null,
+        null
+      ],
+      "sample_gap_ms": 200.0
+    }
+  },
+  {
+    "name": "Rear reverse",
+    "run": "maker-paired-motors-a2a38530",
+    "status": "passed",
+    "error": null,
+    "reconstructed_observation": {
+      "pwm": [
+        0,
+        0,
+        177,
+        177
+      ],
+      "direction": -1,
+      "rpm": [
+        0.0,
+        0.0,
+        71.55852031534263,
+        86.72767025670095
+      ],
+      "sustained": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "start_delay_bounds_ms": [
+        null,
+        null,
+        [
+          87.1,
+          288.4
+        ],
+        [
+          87.1,
+          288.4
+        ]
+      ],
+      "sample_gap_ms": 200.0
+    }
+  },
+  {
+    "name": "Right forward",
+    "run": "maker-paired-motors-gf_3omzk",
+    "status": "passed",
+    "error": null,
+    "reconstructed_observation": {
+      "pwm": [
+        0,
+        177,
+        0,
+        177
+      ],
+      "direction": 1,
+      "rpm": [
+        0.0,
+        88.25317071194132,
+        0.0,
+        87.39574054579317
+      ],
+      "sustained": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "start_delay_bounds_ms": [
+        null,
+        [
+          91.1,
+          290.6
+        ],
+        null,
+        [
+          91.1,
+          290.6
+        ]
+      ],
+      "sample_gap_ms": 200.0
+    }
+  },
+  {
+    "name": "Right reverse",
+    "run": "maker-paired-motors-gf_3omzk",
+    "status": "passed",
+    "error": null,
+    "reconstructed_observation": {
+      "pwm": [
+        0,
+        177,
+        0,
+        177
+      ],
+      "direction": -1,
+      "rpm": [
+        0.0,
+        90.74516795656226,
+        0.0,
+        88.3067454854644
+      ],
+      "sustained": [
+        false,
+        true,
+        false,
+        true
+      ],
+      "start_delay_bounds_ms": [
+        null,
+        [
+          89.8,
+          288.8
+        ],
+        null,
+        [
+          89.8,
+          288.8
+        ]
+      ],
+      "sample_gap_ms": 200.0
+    }
+  },
+  {
+    "name": "Rear forward",
+    "run": "maker-paired-motors-soxjlit8",
+    "status": "running",
+    "error": "Encoder invalid transitions increased during the pulse",
+    "reconstructed_observation": {
+      "pwm": [
+        0,
+        0,
+        177,
+        177
+      ],
+      "direction": 1,
+      "rpm": [
+        0.0,
+        0.0,
+        74.34808975136447,
+        88.06381083488542
+      ],
+      "sustained": [
+        false,
+        false,
+        true,
+        true
+      ],
+      "start_delay_bounds_ms": [
+        null,
+        null,
+        [
+          88.6,
+          288.2
+        ],
+        [
+          88.6,
+          288.2
+        ]
+      ],
+      "sample_gap_ms": 200.0
+    }
+  },
+  {
+    "name": "Left forward",
+    "run": "maker-paired-motors-tb7l324h",
+    "status": "passed",
+    "error": null,
+    "reconstructed_observation": {
+      "pwm": [
+        177,
+        0,
+        177,
+        0
+      ],
+      "direction": 1,
+      "rpm": [
+        87.39492810423714,
+        0.0,
+        71.92449440377226,
+        0.0
+      ],
+      "sustained": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "start_delay_bounds_ms": [
+        [
+          62.2,
+          261.0
+        ],
+        null,
+        [
+          62.2,
+          261.0
+        ],
+        null
+      ],
+      "sample_gap_ms": 201.0
+    }
+  },
+  {
+    "name": "Left reverse",
+    "run": "maker-paired-motors-tb7l324h",
+    "status": "passed",
+    "error": null,
+    "reconstructed_observation": {
+      "pwm": [
+        177,
+        0,
+        177,
+        0
+      ],
+      "direction": -1,
+      "rpm": [
+        87.91720674011665,
+        0.0,
+        72.04366282595512,
+        0.0
+      ],
+      "sustained": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "start_delay_bounds_ms": [
+        [
+          85.8,
+          285.7
+        ],
+        null,
+        [
+          85.8,
+          285.7
+        ],
+        null
+      ],
+      "sample_gap_ms": 200.0
+    }
+  }
+]

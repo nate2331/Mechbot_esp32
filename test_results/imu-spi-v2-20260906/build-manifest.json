@@ -1,0 +1,88 @@
+{
+  "date": "2026-09-06",
+  "identity": "MAKER_SPI_V2_STALE_RECOVERY",
+  "status": "ESP32 compilation and four host test programs passed; V2 has not been uploaded or hardware verified",
+  "fqbn": "esp32:esp32:esp32",
+  "core": "3.3.11",
+  "libraries": {
+    "Adafruit_BNO08x": "1.2.7",
+    "Adafruit_BusIO": "1.17.4",
+    "Adafruit_Unified_Sensor": "1.1.15"
+  },
+  "implementation": "Adafruit/CEVA SH-2 decoder with local MakerBnoSpi transport; STRDC SDK reviewed as a reference",
+  "transport": "SPI",
+  "clock_hz": 1000000,
+  "spi_mode": 3,
+  "pins": {
+    "sck": 22,
+    "miso": 21,
+    "mosi": 32,
+    "cs": 33,
+    "int": 26,
+    "rst": 25,
+    "wake_p0": 16,
+    "p1": "3.3 V",
+    "vdc": "3.3 V",
+    "gnd": "common ground"
+  },
+  "flash": {
+    "chip": "ESP32",
+    "mode": "DIO",
+    "frequency": "80 MHz",
+    "size": "4 MB",
+    "erase_all": false,
+    "nvs_range": "0x9000..0xdfff",
+    "files": [
+      {
+        "file": "bin/Maker_Mechbot.ino.bootloader.bin",
+        "address": "0x1000",
+        "bytes": 24992,
+        "sha256": "427f96e10c620c4f062dab15da54fc45494d897e8397ae6f3aecc98c42d7e379"
+      },
+      {
+        "file": "bin/Maker_Mechbot.ino.partitions.bin",
+        "address": "0x8000",
+        "bytes": 3072,
+        "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+      },
+      {
+        "file": "bin/boot_app0.bin",
+        "address": "0xe000",
+        "bytes": 8192,
+        "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+      },
+      {
+        "file": "bin/Maker_Mechbot.ino.bin",
+        "address": "0x10000",
+        "bytes": 366832,
+        "sha256": "2d1baf3dff80f1df822d6df6daaa5a3d290e2906c5e6ee91d91d6a46470baa39"
+      }
+    ]
+  },
+  "source_sha256": {
+    "Maker_Mechbot.ino": "2114d457b5f09d47ec10e19cc894666834b0d8e73e8d59dfc5e805764c301048",
+    "MakerBnoSpi.h": "93515b36e1a1f7b360c89f5c8d15c8bc66efcb405ed0fb90ac44907d88cb762a",
+    "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+    "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+    "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+  },
+  "compiled_headers_match_source_excluding_generated_line_directive": true,
+  "compiled_sketch_contains_all_source_lines_in_order": true,
+  "compile": {
+    "program_bytes": 366679,
+    "global_bytes": 31920,
+    "log_sha256": "768d58de124b309b158f9ead98a3f0b7910c0bb8fa5eb0b99a66f2849cfd5d6e"
+  },
+  "host_tests": {
+    "navigation_math": "passed",
+    "maker_motor_safety": "passed",
+    "maker_firmware": "passed",
+    "maker_bno_spi": "passed",
+    "flags": "-std=c++17 -Wall -Wextra -Werror",
+    "log_sha256": "d9e8a5f8e509dddabf854ab38e9b8d917db40f7b60f52c64182c3cea4b0c8710"
+  },
+  "freshness_note": "Decoded reports retain callback-time milliseconds while queued; raw packets receive event freshness timestamps when decoded.",
+  "uploaded_by_agent": false,
+  "hardware_spi_verified": false,
+  "last_known_user_upload": "SPI V1; user logs show brief reports followed by STALE"
+}

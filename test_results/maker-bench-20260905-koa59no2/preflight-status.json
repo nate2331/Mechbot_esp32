@@ -1,0 +1,119 @@
+{
+  "serial_connected": true,
+  "gamepad_connected": false,
+  "deadman": false,
+  "updated": 1788570429.4608476,
+  "serial_port": "/dev/ttyUSB0",
+  "last_line": "H 1251210 IMU 1 1251191 3 1",
+  "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+  "firmware_received": 1788569180.7550771,
+  "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+  "encoders": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "encoder_updated": 1788570429.4492366,
+  "imu": "I 1251198 -0.010132 -0.007324 0.000000 0.999939 0.000000 0.000000 0.000000 -0.027344 0.003906 0.000000 3",
+  "imu_valid": true,
+  "imu_updated": 1788570429.4606042,
+  "navigation": "N 1251199 0.000148 0.000000 0.000000 0.0000 0 0 1",
+  "health": "H 1251210 IMU 1 1251191 3 1",
+  "wheel_diagnostics": {
+    "FL": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788570429.3615332
+    },
+    "FR": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788570429.3616617
+    },
+    "RL": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788570429.3725913
+    },
+    "RR": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788570429.3727486
+    }
+  },
+  "maintenance": false,
+  "board": {
+    "id": "maker",
+    "name": "Maker ESP32 Pro",
+    "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+    "fqbn": "esp32:esp32:esp32",
+    "sketch": "Maker_Mechbot",
+    "encoder_wheels": [
+      "FL",
+      "FR",
+      "RL",
+      "RR"
+    ],
+    "diagnostics": true,
+    "baseline": {
+      "pwm-fl": 177,
+      "pwm-fr": 177,
+      "pwm-rl": 177,
+      "pwm-rr": 177
+    },
+    "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+    "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+    "counts_per_revolution": {
+      "FL": 2468.8,
+      "FR": 2467.9,
+      "RL": 2473.5,
+      "RR": 2469.8
+    },
+    "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+    "closed_loop": false,
+    "identity_source": "ready"
+  },
+  "rearm_required": true,
+  "calibration_active": false,
+  "recent_lines": [
+    "D RL PWM 0.0 A 0 B 0 INVALID 0",
+    "D RR PWM 0.0 A 0 B 0 INVALID 0",
+    "T 1250198 0 0 0 0",
+    "I 1250198 -0.009949 -0.007446 -0.000061 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 -0.007812 3",
+    "N 1250199 0.000026 0.000000 0.000000 0.0000 0 0 1",
+    "H 1250210 IMU 1 1250193 3 1",
+    "T 1250398 0 0 0 0",
+    "I 1250398 -0.010010 -0.007446 -0.000061 0.999939 0.000000 0.000000 0.000000 -0.019531 0.003906 0.000000 3",
+    "N 1250399 0.000027 0.000000 0.000000 0.0000 0 0 1",
+    "H 1250410 IMU 1 1250392 3 1",
+    "T 1250598 0 0 0 0",
+    "I 1250598 -0.010071 -0.007324 0.000000 0.999939 0.000000 0.000000 0.000000 0.019531 0.003906 0.000000 3",
+    "N 1250599 0.000148 0.000000 0.000000 0.0000 0 0 1",
+    "H 1250610 IMU 1 1250592 3 1",
+    "T 1250798 0 0 0 0",
+    "I 1250798 -0.010132 -0.007324 0.000000 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 0.000000 3",
+    "N 1250799 0.000148 0.000000 0.000000 0.0000 0 0 1",
+    "H 1250810 IMU 1 1250792 3 1",
+    "T 1250998 0 0 0 0",
+    "I 1250998 -0.010132 -0.007324 0.000000 0.999939 0.000000 0.000000 0.000000 -0.027344 -0.003906 0.000000 3",
+    "N 1250999 0.000148 0.000000 0.000000 0.0000 0 0 1",
+    "H 1251010 IMU 1 1250990 3 1",
+    "D FL PWM 0.0 A 0 B 0 INVALID 0",
+    "D FR PWM 0.0 A 0 B 0 INVALID 0",
+    "D RL PWM 0.0 A 0 B 0 INVALID 0",
+    "D RR PWM 0.0 A 0 B 0 INVALID 0",
+    "T 1251198 0 0 0 0",
+    "I 1251198 -0.010132 -0.007324 0.000000 0.999939 0.000000 0.000000 0.000000 -0.027344 0.003906 0.000000 3",
+    "N 1251199 0.000148 0.000000 0.000000 0.0000 0 0 1",
+    "H 1251210 IMU 1 1251191 3 1"
+  ]
+}

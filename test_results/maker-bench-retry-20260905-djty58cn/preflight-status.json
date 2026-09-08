@@ -1,0 +1,117 @@
+{
+  "serial_connected": true,
+  "gamepad_connected": false,
+  "deadman": false,
+  "updated": 1788571726.917916,
+  "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "last_line": "T 2548654 18608 21007 66782 47420",
+  "encoders": [
+    18608,
+    21007,
+    66782,
+    47420
+  ],
+  "encoder_updated": 1788571726.917916,
+  "imu": "I 2548454 -0.010071 -0.007874 0.000061 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 -0.039062 3",
+  "imu_valid": true,
+  "imu_updated": 1788571726.7230558,
+  "navigation": "N 2548465 0.000281 0.000000 0.000000 0.0000 0 0 1",
+  "health": "H 2548466 IMU 1 2548449 3 1",
+  "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+  "wheel_diagnostics": {
+    "FL": {
+      "pwm": 0.0,
+      "a_edges": 9326,
+      "b_edges": 9338,
+      "invalid_transitions": 0,
+      "updated": 1788571726.4846709
+    },
+    "FR": {
+      "pwm": 0.0,
+      "a_edges": 10575,
+      "b_edges": 10560,
+      "invalid_transitions": 0,
+      "updated": 1788571726.4848557
+    },
+    "RL": {
+      "pwm": 0.0,
+      "a_edges": 33529,
+      "b_edges": 33403,
+      "invalid_transitions": 2,
+      "updated": 1788571726.4958322
+    },
+    "RR": {
+      "pwm": 0.0,
+      "a_edges": 23734,
+      "b_edges": 23724,
+      "invalid_transitions": 0,
+      "updated": 1788571726.4959695
+    }
+  },
+  "maintenance": false,
+  "board": {
+    "id": "maker",
+    "name": "Maker ESP32 Pro",
+    "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+    "fqbn": "esp32:esp32:esp32",
+    "sketch": "Maker_Mechbot",
+    "encoder_wheels": [
+      "FL",
+      "FR",
+      "RL",
+      "RR"
+    ],
+    "diagnostics": true,
+    "baseline": {
+      "pwm-fl": 177,
+      "pwm-fr": 177,
+      "pwm-rl": 177,
+      "pwm-rr": 177
+    },
+    "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+    "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+    "counts_per_revolution": {
+      "FL": 2468.8,
+      "FR": 2467.9,
+      "RL": 2473.5,
+      "RR": 2469.8
+    },
+    "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+    "closed_loop": false,
+    "identity_source": "maker-help"
+  },
+  "rearm_required": true,
+  "calibration_active": false,
+  "recent_lines": [
+    "H 2547259 IMU 1 2547242 3 1",
+    "T 2547447 18608 21007 66782 47420",
+    "I 2547447 -0.010132 -0.007874 0.000061 0.999939 0.000000 0.000000 0.000000 -0.035156 0.003906 -0.039062 3",
+    "N 2547459 0.000282 0.000000 0.000000 0.0000 0 0 1",
+    "H 2547459 IMU 1 2547430 3 1",
+    "T 2547647 18608 21007 66782 47420",
+    "I 2547647 -0.010132 -0.007812 0.000061 0.999939 0.000000 0.000000 0.000000 0.003906 -0.003906 0.000000 3",
+    "N 2547659 0.000280 0.000000 0.000000 0.0000 0 0 1",
+    "H 2547659 IMU 1 2547630 3 1",
+    "T 2547851 18608 21007 66782 47420",
+    "I 2547851 -0.010132 -0.007812 0.000061 0.999939 0.000000 0.000000 0.000000 0.003906 -0.003906 0.000000 3",
+    "N 2547862 0.000280 0.000000 0.000000 0.0000 0 0 1",
+    "H 2547862 IMU 1 2547849 3 1",
+    "T 2548052 18608 21007 66782 47420",
+    "I 2548052 -0.010132 -0.007874 0.000061 0.999939 0.000000 0.000000 0.000000 0.003906 -0.003906 0.000000 3",
+    "N 2548063 0.000282 0.000000 0.000000 0.0000 0 0 1",
+    "H 2548064 IMU 1 2548049 3 1",
+    "D FL PWM 0.0 A 9326 B 9338 INVALID 0",
+    "D FR PWM 0.0 A 10575 B 10560 INVALID 0",
+    "D RL PWM 0.0 A 33529 B 33403 INVALID 2",
+    "D RR PWM 0.0 A 23734 B 23724 INVALID 0",
+    "T 2548253 18608 21007 66782 47420",
+    "I 2548253 -0.010071 -0.007935 0.000061 0.999939 0.000000 0.000000 0.000000 -0.003906 -0.003906 0.000000 3",
+    "N 2548264 0.000282 0.000000 0.000000 0.0000 0 0 1",
+    "H 2548264 IMU 1 2548250 3 1",
+    "T 2548454 18608 21007 66782 47420",
+    "I 2548454 -0.010071 -0.007874 0.000061 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 -0.039062 3",
+    "N 2548465 0.000281 0.000000 0.000000 0.0000 0 0 1",
+    "H 2548466 IMU 1 2548449 3 1",
+    "T 2548654 18608 21007 66782 47420"
+  ]
+}

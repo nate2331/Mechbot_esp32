@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-06",
+  "method": "Arduino IDE 2.3.10 via computer-use",
+  "port": "COM8",
+  "board": "ESP32 Dev Module",
+  "core": "3.3.11",
+  "upload_baud": 115200,
+  "full_chip_erase": false,
+  "application": {
+    "path": "C:\\Users\\nate2\\AppData\\Local\\arduino\\sketches\\1DC509DD3A04285C2FD80D2622E10D16\\Maker_Mechbot.ino.bin",
+    "bytes": 360848,
+    "sha256": "3dfb175963d729db389a48d8637966c26401df5b491b1aec1abcc4a02f9d0358"
+  },
+  "uploader_result": "Wrote 360848 bytes (214197 compressed) at 0x00010000 in 19.2 seconds; Hash of data verified; Hard resetting via RTS pin",
+  "fresh_boot_ready_captured": false,
+  "serial_commands": [
+    "X",
+    "?",
+    "CFG GET",
+    "DIAG"
+  ],
+  "running_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+  "running_imu_wiring": "IMU: SDA21 SCL22 RST25; relative yaw, NOT compass north",
+  "stop_ack": "OK STOP",
+  "diag_pwm": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "pin_duties": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "encoder_counts": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "imu_observation": "WAIT Q0 G0 A0; H IMU 1 0 1 1; no valid sensor reports",
+  "physical_setup_user_statement": "IMU not hooked up; RST on 25",
+  "motion_commands_sent": false,
+  "hardware_reset_recovery_verified": false,
+  "nvs_readback_compared": false
+}

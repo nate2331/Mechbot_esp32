@@ -1,0 +1,132 @@
+"""Audit a Maker_PWM_Frequency_Test serial log without third-party packages."""
+import argparse, csv, hashlib, io, json, math, re, statistics
+from pathlib import Path
+from collections import defaultdict, Counter
+
+parser = argparse.ArgumentParser()
+parser.add_argument("log")
+parser.add_argument("output")
+args = parser.parse_args()
+src = Path(args.log)
+out = Path(args.output)
+out.mkdir(parents=True, exist_ok=True)
+raw = src.read_bytes()
+text = raw.decode("utf-8-sig")
+summaries, samples, plans = [], defaultdict(list), {}
+headers = {}
+for line_number, line in enumerate(text.splitlines(), 1):
+    line = line.strip()
+    if line.startswith("# PLAN "):
+        kv = dict(re.findall(r"(\w+)=([^\s]+)", line))
+        plans[int(kv["sequence"])] = kv
+    if not line.startswith(("summary,", "sample,")):
+        continue
+    fields = next(csv.reader([line]))
+    kind = fields[0]
+    if fields[1] == "sequence":
+        if kind in headers:
+            assert headers[kind] == fields, ("header changed", line_number)
+        headers[kind] = fields
+        continue
+    assert len(fields) == len(headers[kind]), ("column mismatch", line_number)
+    row = dict(zip(headers[kind], fields))
+    row["_line"] = line_number
+    if kind == "summary":
+        summaries.append(row)
+    else:
+        samples[(int(row["sequence"]), int(row["trial"]))].append(
+            {k:int(v) for k,v in row.items() if k not in ("sample",)}
+        )
+
+keys = [(int(r["sequence"]),int(r["trial"])) for r in summaries]
+assert len(keys) == len(set(keys)), "duplicate trial summaries"
+assert set(keys) == set(samples), "sample/summary trial mismatch"
+metrics = []
+for r in summaries:
+    seq, trial = int(r["sequence"]), int(r["trial"])
+    pts = samples[(seq,trial)]
+    cpr = float(plans[seq]["cpr"])
+    assert len(pts) == 81, (seq,trial,"unexpected sample count",len(pts))
+    assert pts[0]["t_us"] == 0 and pts[0]["ticks"] == 0
+    assert all(b["t_us"]>a["t_us"] for a,b in zip(pts,pts[1:]))
+    assert all(b["valid_edges"]>=a["valid_edges"] and b["invalid"]>=a["invalid"]
+               for a,b in zip(pts,pts[1:]))
+    last = pts[-1]
+    assert last["ticks"] == int(r["ticks"])
+    assert last["valid_edges"] == int(r["valid_edges"])
+    assert last["invalid"] == int(r["invalid"])
+    assert last["t_us"] == int(r["elapsed_us"])
+    five = next(p for p in pts if p["t_us"]>=5_000_000)
+    full = last["ticks"]*60_000_000/(cpr*last["t_us"])
+    early = five["ticks"]*60_000_000/(cpr*five["t_us"])
+    tail = (last["ticks"]-five["ticks"])*60_000_000/(cpr*(last["t_us"]-five["t_us"]))
+    for key, expected in [("full_rpm",full),("first5_rpm",early),("tail_rpm",tail)]:
+        assert abs(float(r[key])-expected)<=0.00000051, (seq,trial,key)
+    assert r["hz_requested"] == r["hz_readback"]
+    assert last["valid_edges"] == abs(last["ticks"]), "direction changes/encoder chatter"
+    assert last["ticks"]*int(r["dir"])>0
+    def window(a,b):
+        start = next(p for p in pts if p["t_us"]>=a*1_000_000)
+        stop = next(p for p in pts if p["t_us"]>=b*1_000_000)
+        return abs(stop["ticks"]-start["ticks"])*60_000_000/(cpr*(stop["t_us"]-start["t_us"]))
+    item = {k:r[k] for k in headers["summary"]}
+    item.update({
+        "rpm_1_to_2":window(1,2), "rpm_5_to_6":window(5,6), "rpm_7_to_8":window(7,8),
+        "sample_count":len(pts), "source_line":r["_line"],
+        "max_sample_gap_us":max(b["t_us"]-a["t_us"] for a,b in zip(pts,pts[1:]))
+    })
+    metrics.append(item)
+
+sweep = [r for r in metrics if int(r["sequence"])==2]
+assert len(sweep)==int(plans[2]["trials"])==24
+conditions = Counter((int(r["block"]),int(r["hz_requested"]),int(r["dir"])) for r in sweep)
+assert len(conditions)==24 and set(conditions.values())=={1}
+assert {int(r["block"]) for r in sweep}=={1,2,3}
+assert all(r["wheel"]=="fl" and r["profile"]=="history" and r["bits"]=="8" and
+           r["duty_counts"]=="175" and r["duty_denominator"]=="256" for r in sweep)
+groups = []
+for hz in [248,1000,5000,20000]:
+    for direction in [1,-1]:
+        rows=[r for r in sweep if int(r["hz_requested"])==hz and int(r["dir"])==direction]
+        v=[abs(float(r["tail_rpm"])) for r in rows]
+        groups.append(dict(hz=hz,direction=direction,n=len(v),tail_mean=statistics.mean(v),
+          tail_sd=statistics.stdev(v),tail_min=min(v),tail_max=max(v),
+          first5_mean=statistics.mean(abs(float(r["first5_rpm"])) for r in rows),
+          tail_rise_5_6_to_7_8=statistics.mean(r["rpm_7_to_8"]-r["rpm_5_to_6"] for r in rows),
+          tail_by_block=v))
+means = {hz:statistics.mean(abs(float(r["tail_rpm"])) for r in sweep if int(r["hz_requested"])==hz)
+         for hz in [248,1000,5000,20000]}
+paired = []
+for low, high in [(248,20000),(248,1000),(20000,5000),(1000,20000)]:
+    differences=[]
+    for block in [1,2,3]:
+        for direction in [1,-1]:
+            a=next(r for r in sweep if int(r["hz_requested"])==low and int(r["block"])==block and int(r["dir"])==direction)
+            b=next(r for r in sweep if int(r["hz_requested"])==high and int(r["block"])==block and int(r["dir"])==direction)
+            differences.append(abs(float(a["tail_rpm"]))-abs(float(b["tail_rpm"])))
+    paired.append(dict(a_hz=low,b_hz=high,mean_difference=statistics.mean(differences),
+                       min_difference=min(differences),max_difference=max(differences)))
+audit = dict(source=str(src),sha256=hashlib.sha256(raw).hexdigest(),
+             summaries=len(summaries),sweep_trials=len(sweep),total_samples=sum(map(len,samples.values())),
+             status_counts=dict(Counter(r["reason"] for r in summaries)),
+             invalid_total=sum(int(r["invalid"]) for r in summaries),
+             sample_counts=sorted({len(v) for v in samples.values()}),
+             powered_us_range=[min(int(r["elapsed_us"]) for r in sweep),max(int(r["elapsed_us"]) for r in sweep)],
+             off_us_range=[min(int(r["off_before_us"]) for r in sweep),max(int(r["off_before_us"]) for r in sweep)],
+             first_observed_edge_us_range=[min(int(r["first_edge_observed_us"]) for r in sweep),max(int(r["first_edge_observed_us"]) for r in sweep)],
+             maximum_5_6_to_7_8_rise=max(r["rpm_7_to_8"]-r["rpm_5_to_6"] for r in sweep),
+             balanced_complete_blocks=True,raw_summary_recalculation="all match to printed rounding",
+             groups=groups,pooled_tail_means=means,paired_comparisons=paired,
+             percent_248_above_20k=(means[248]/means[20000]-1)*100,
+             percent_5k_below_20k=(1-means[5000]/means[20000])*100,
+             percent_248_above_1k=(means[248]/means[1000]-1)*100)
+(out/"analysis.json").write_text(json.dumps(audit,indent=2),encoding="utf-8")
+with (out/"trials.csv").open("w",newline="",encoding="utf-8") as f:
+    w=csv.DictWriter(f,fieldnames=list(metrics[0])); w.writeheader();w.writerows(metrics)
+with (out/"samples.csv").open("w",newline="",encoding="utf-8") as f:
+    w=csv.writer(f);w.writerow(["sequence","trial","t_us","ticks","valid_edges","invalid"])
+    for (seq,trial),pts in samples.items():
+        for p in pts: w.writerow([seq,trial,p["t_us"],p["ticks"],p["valid_edges"],p["invalid"]])
+(out/"source-log.txt").write_bytes(raw)
+print(json.dumps(audit,indent=2))
+

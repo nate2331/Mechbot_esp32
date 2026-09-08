@@ -1,0 +1,54 @@
+{
+  "settings_unchanged": true,
+  "settings": [
+    "CFG heading-deadband-deg 1.500",
+    "CFG heading-enabled 0",
+    "CFG heading-kp 0.7000",
+    "CFG heading-max 0.3000",
+    "CFG heading-sign 1",
+    "CFG pwm-fl 177",
+    "CFG pwm-fr 177",
+    "CFG pwm-rl 177",
+    "CFG pwm-rr 177"
+  ],
+  "serial_connected": true,
+  "board": "maker",
+  "firmware": null,
+  "maintenance": false,
+  "rearm_required": true,
+  "gamepad_connected": false,
+  "imu": "I 82543 OFFLINE",
+  "health": "H 82543 IMU 0 0 0 42",
+  "outputs": {
+    "FL": {
+      "pwm": 0.0,
+      "a_edges": 1,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788712626.9163911
+    },
+    "FR": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788712626.9170156
+    },
+    "RL": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 0,
+      "invalid_transitions": 0,
+      "updated": 1788712626.917461
+    },
+    "RR": {
+      "pwm": 0.0,
+      "a_edges": 0,
+      "b_edges": 1,
+      "invalid_transitions": 0,
+      "updated": 1788712626.9297514
+    }
+  },
+  "user_confirmed_imu_connected": true,
+  "physical_power_voltage_verified": false
+}

@@ -2,13 +2,17 @@
 """Persistent MechBot serial/gamepad bridge and local tuning API."""
 
 import argparse
+import copy
+import csv
 import glob
+import io
 import json
 import math
 import os
 import select
 import struct
 import subprocess
+import sys
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -16,6 +20,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import serial
+from mechbot_profiles import MAKER_HELP_IDENTITY, profile_for_firmware, require_profile
+from mechbot_operations import OperationsService
+from mechbot_http import handle_get, handle_post, read_json_body, validate_origin
 
 SEND_HZ = 20.0
 AXIS_STRAFE, AXIS_FORWARD, AXIS_ROTATION = 0, 1, 3
@@ -41,7 +48,6 @@ DEFAULT_TEST_MAGNITUDE = 0.45
 DASHBOARD_DIR = Path(__file__).with_name("dashboard")
 SESSION_FILE = Path(os.environ.get("MECHBOT_SESSION_FILE", Path(__file__).with_name("tuning-session.json")))
 SESSION_TIMEOUT_SECONDS = 30 * 60
-PROVEN_BASELINE = {"pwm-fl": 230, "pwm-fr": 230, "pwm-rl": 200, "pwm-rr": 200}
 
 
 def normalized(value):
@@ -63,7 +69,7 @@ def gamepad_motion(axes):
 
 
 class Bridge:
-    def __init__(self, port=None, joystick="/dev/input/js0"):
+    def __init__(self, port=None, joystick="/dev/input/js0", operations=None):
         self.requested_port = port
         self.joystick_path = joystick
         self.lock = threading.RLock()
@@ -72,6 +78,8 @@ class Bridge:
         self.axes = [0] * 9
         self.buttons = [0] * 16
         self.lines = []
+        self._line_sequence = 0
+        self._responses = []
         self.telemetry = {"serial_connected": False, "gamepad_connected": False,
                           "deadman": False, "last_line": None, "updated": None}
         self.running = True
@@ -88,6 +96,28 @@ class Bridge:
         self.session_file = SESSION_FILE
         self.tuning_session = self._load_session()
         self._restore_pending = bool(self.tuning_session.get("active"))
+        self.rearm_required = True
+        self._next_diagnostics = 0.0
+        self._next_identity_query = 0.0
+        self.operations_error = None
+        self.operations = operations if operations is not None else OperationsService(
+            recording_dir=os.environ.get('MECHBOT_RECORDING_DIR', Path(__file__).with_name('recordings')),
+            report_dir=os.environ.get('MECHBOT_REPORT_DIR', Path(__file__).with_name('test_results')),
+            geometry_file=os.environ.get('MECHBOT_GEOMETRY_FILE', Path(__file__).with_name('measured-geometry.json')))
+
+    def board_profile(self):
+        return profile_for_firmware(self.telemetry.get("firmware"), self.telemetry.get("help_identity"))
+
+    def _require_board(self):
+        if not self.serial or not self.telemetry.get("serial_connected"):
+            raise RuntimeError("ESP32 is disconnected")
+        return require_profile(self.telemetry.get("firmware"), self.telemetry.get("help_identity"))
+
+    def _require_session_board(self):
+        board = self._require_board()
+        if self.tuning_session.get("board_id") != board["id"]:
+            raise RuntimeError("session belongs to another or unidentified board; original settings were not applied")
+        return board
 
     def _empty_session(self):
         return {"active": False, "workflow": None, "started": None, "updated": None,
@@ -110,12 +140,48 @@ class Bridge:
 
     def tuning_status(self):
         with self.lock:
-            return dict(self.tuning_session, proven_baseline=PROVEN_BASELINE,
+            board = self.board_profile()
+            return copy.deepcopy(dict(self.tuning_session, proven_baseline=board["baseline"],
+                        board=board,
                         calibration=dict(self.calibration), pwm_keys=PWM_KEYS,
                         test_limits={"magnitude_min": MIN_TEST_MAGNITUDE,
                                      "magnitude_max": MAX_TEST_MAGNITUDE,
                                      "duration_min_ms": 500,
-                                     "duration_max_ms": 3000})
+                                     "duration_max_ms": 3000}))
+
+    def export_tuning(self, format):
+        """Read-only snapshot; rates are pulse averages, not steady wheel speeds."""
+        with self.lock:
+            data = copy.deepcopy(self.tuning_session)
+        if format == "json":
+            return json.dumps({"schema": 1, "session": data}, indent=2, allow_nan=False)
+        if format != "csv":
+            raise ValueError("export format must be json or csv")
+        output = io.StringIO(newline="")
+        fields = ["board_id", "firmware", "test_id", "timestamp", "direction",
+                  "duration_ms", "magnitude", "wheel", "pwm", "requested_duty",
+                  "delta_ticks", "pulse_average_ticks_s", "score", "heading", "path", "notes"]
+        writer = csv.DictWriter(output, fieldnames=fields)
+        writer.writeheader()
+        for test in data.get("tests", []):
+            for index, wheel in enumerate(MOTOR_NAMES):
+                key = PWM_KEYS[index]
+                row = dict(board_id=data.get("board_id"), firmware=data.get("firmware"),
+                           test_id=test["id"], timestamp=test.get("timestamp"),
+                           direction=test.get("command"), duration_ms=test.get("duration_ms"),
+                           magnitude=test.get("magnitude"), wheel=wheel,
+                           pwm=test.get("settings", {}).get(key),
+                           requested_duty=test.get("actual_duty", {}).get(key),
+                           delta_ticks=(test.get("deltas") or [None]*4)[index],
+                           pulse_average_ticks_s=test.get("encoder_rates", {}).get(wheel),
+                           score=test.get("score"), heading=test.get("heading"),
+                           path=test.get("path"), notes=test.get("notes", ""))
+                # Keep user notes literal when opened in spreadsheet software.
+                for name, value in row.items():
+                    if isinstance(value, str) and value.lstrip().startswith(("=", "+", "-", "@")):
+                        row[name] = "'" + value
+                writer.writerow(row)
+        return output.getvalue()
 
     def _read_settings(self):
         lines = self.command("CFG GET")
@@ -123,7 +189,9 @@ class Bridge:
         for line in lines:
             parts = line.split(maxsplit=2)
             if len(parts) == 3 and parts[0] == "CFG" and parts[1] in ALLOWED_SETTINGS:
-                try: values[parts[1]] = float(parts[2])
+                try:
+                    value = float(parts[2])
+                    if math.isfinite(value): values[parts[1]] = value
                 except ValueError: pass
         return values
 
@@ -133,21 +201,38 @@ class Bridge:
         required_confirmation = "WHEELS_UP" if workflow == "bench" else "AREA_CLEAR"
         if confirmation != required_confirmation:
             raise ValueError("safety confirmation required")
+        with self.lock:
+            board = self._require_board()
+            if self.maintenance or self.firmware_job["state"] in ("starting", "running"):
+                raise RuntimeError("firmware maintenance is active")
+            if self._restore_pending:
+                raise RuntimeError("wait for session recovery")
         original = self._read_settings()
         with self.lock:
+            if self.maintenance or self.firmware_job["state"] in ("starting", "running"):
+                raise RuntimeError("firmware maintenance is active")
+            if self._require_board()["id"] != board["id"]:
+                raise RuntimeError("controller changed during settings read")
             if self.tuning_session.get("active"):
+                self._require_session_board()
                 return self.tuning_status()
+            if set(original) != ALLOWED_SETTINGS:
+                raise RuntimeError("complete live settings are required before tuning")
             if not self.serial:
                 raise RuntimeError("ESP32 is disconnected")
             self.stop(); self.disconnect_gamepad()
             self.write("CFG SET heading-enabled 0")
             now = time.time()
             self.tuning_session = {**self._empty_session(), "active": True,
+                "board_id": board["id"], "firmware": self.telemetry.get("firmware"),
+                "identity_source": board["identity_source"],
+                "board": board,
                 "workflow": workflow, "started": now, "updated": now,
-                "original_settings": original, "live_settings": dict(original),
-                "saved_settings": dict(original), "phase": "ready"}
+                "original_settings": original,
+                "live_settings": dict(original, **{"heading-enabled": 0}),
+                "saved_settings": {}, "phase": "ready"}
             self.calibration.update(active=True, running=False, phase="ready",
-                                    encoder_profile="rear", error=None, aborted=False,
+                                    encoder_profile="four" if board["id"] == "maker" else "rear", error=None, aborted=False,
                                     magnitude=DEFAULT_TEST_MAGNITUDE, elapsed_ms=0,
                                     live_deltas=None)
             self._persist_session()
@@ -182,11 +267,11 @@ class Bridge:
     def _build_recommendation(self, test, heading, path, quality, step):
         current = {key: int(round(test.get("settings", {}).get(
             key, self.tuning_session.get("live_settings", {}).get(
-                key, PROVEN_BASELINE[key])))) for key in PWM_KEYS}
+                key, self.board_profile()["baseline"][key])))) for key in PWM_KEYS}
         if self.tuning_session.get("workflow") == "bench":
             return {"kind": "hold",
-                    "summary": "Use the rear rates to find repeatable response, then adjust PWM or test output manually and repeat the identical setup.",
-                    "basis": "A wheels-up run cannot reveal chassis heading or path error. RL and RR are each compared only with their own earlier runs.",
+                    "summary": "Use each wheel's response to check repeatability, then adjust PWM or test output manually and repeat the identical setup.",
+                    "basis": "A wheels-up run cannot reveal chassis heading or path error. Each installed encoder is compared only with its own earlier runs.",
                     "step": step, "deltas": {key: 0 for key in PWM_KEYS},
                     "suggested_settings": current}
         if quality != "normal" or test["command"] in ("ccw", "cw"):
@@ -197,7 +282,7 @@ class Bridge:
             else:
                 summary = "Rotation checks do not produce a translation trim. Balance forward, reverse, and strafe first."
             return {"kind": "hold", "summary": summary,
-                    "basis": "A directional PWM trim needs a stable translation observation. Rear ticks alone cannot establish the missing chassis error.",
+                    "basis": "A directional PWM trim needs a stable translation observation. Wheel ticks alone cannot establish chassis heading or path error.",
                     "step": step, "deltas": {key: 0 for key in PWM_KEYS},
                     "suggested_settings": current}
         wheel = self._wheel_commands(test["command"])
@@ -237,7 +322,7 @@ class Bridge:
             else:
                 summary = "No automatic PWM change is justified by this observation. Adjust manually or repeat."
             return {"kind": "hold", "summary": summary, "basis":
-                    "Rear encoder rates are shown per motor for repeatability; RL and RR raw counts are not ratio-matched.",
+                    "Encoder response is shown per motor for repeatability; short pulse totals are not used for automatic speed matching.",
                     "step": step, "deltas": {key: 0 for key in PWM_KEYS},
                     "suggested_settings": current}
 
@@ -252,7 +337,7 @@ class Bridge:
         readable_reasons = " and ".join(reasons)
         return {"kind": "pwm-vector",
                 "summary": f"Correct for {readable_reasons} with a balanced {step}-count PWM trim, then repeat the identical test.",
-                "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+                "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Pulse response includes startup; these rates are never compared as steady-speed measurements.",
                 "step": step, "deltas": deltas, "suggested_settings": suggested}
 
     def record_observation(self, test_id, observation, score, notes="", heading=None,
@@ -260,6 +345,7 @@ class Bridge:
         with self.lock:
             if not self.tuning_session.get("active"):
                 raise RuntimeError("no active tuning session")
+            self._require_session_board()
             if (not isinstance(score, int) or isinstance(score, bool) or
                     not 1 <= score <= 5):
                 raise ValueError("score must be an integer from 1 to 5")
@@ -302,13 +388,14 @@ class Bridge:
         with self.lock:
             if not self.tuning_session.get("active"):
                 raise RuntimeError("no active tuning session")
+            board = self._require_session_board()
             if self.calibration.get("running"):
                 raise RuntimeError("wait for the active test to stop before changing PWM")
             if not self.serial:
                 raise RuntimeError("ESP32 is disconnected")
             clean = self._validate_pwm_updates(settings)
             before = {key: int(round(self.tuning_session.get("live_settings", {}).get(
-                key, PROVEN_BASELINE[key]))) for key in PWM_KEYS}
+                key, board["baseline"][key]))) for key in PWM_KEYS}
             self.stop()
             for key, value in clean.items():
                 self.write(f"CFG SET {key} {value}")
@@ -339,7 +426,7 @@ class Bridge:
             return self.tuning_status()
 
     def apply_baseline(self):
-        return self.apply_tuning_settings(PROVEN_BASELINE, "proven-baseline")
+        return self.apply_tuning_settings(self._require_board()["baseline"], "board-baseline")
 
     def note_live_setting(self, key, value):
         with self.lock:
@@ -355,23 +442,27 @@ class Bridge:
                 self._persist_session()
 
     def _restore_session_settings(self):
+        self._require_session_board()
         for key, value in self.tuning_session.get("original_settings", {}).items():
             if key in ALLOWED_SETTINGS: self.write(f"CFG SET {key} {value}")
         self.stop()
 
     def end_tuning(self, keep_live=False, save=False):
         with self.lock:
+            self._require_session_board()
             if save and not keep_live:
                 raise ValueError("saving requires keep_live")
             self.calibration_abort.set(); self.stop()
             if not keep_live:
                 self._restore_session_settings()
+                self.tuning_session["live_settings"] = dict(self.tuning_session["original_settings"])
             else:
                 original_heading = self.tuning_session.get("original_settings", {}).get("heading-enabled")
                 if save and original_heading is None:
                     raise RuntimeError("cannot safely save because the original heading state is unknown")
                 if original_heading is not None:
                     self.write(f"CFG SET heading-enabled {original_heading}")
+                    self.tuning_session["live_settings"]["heading-enabled"] = original_heading
                 if save:
                     self.write("CFG SAVE")
                     self.tuning_session["saved_settings"] = dict(
@@ -390,12 +481,25 @@ class Bridge:
         ports = stable or sorted(glob.glob("/dev/ttyACM*") + glob.glob("/dev/ttyUSB*"))
         return ports[0] if ports else None
 
+    def _observe(self, method, *args):
+        """Passive failures must not change transport, stop, or legacy telemetry behavior."""
+        try:
+            return getattr(self.operations, method)(*args)
+        except Exception as exc:
+            try:
+                message = str(exc)
+            except Exception:
+                message = type(exc).__name__
+            self.operations_error = {'method': method, 'error': message[:255]}
+            return None
+
     def write(self, command):
         with self.lock:
             if not self.serial:
                 raise RuntimeError("ESP32 is disconnected")
             self.serial.write((command.rstrip() + "\n").encode("ascii"))
             self.serial.flush()
+            self._observe('transmit', command.rstrip())
 
     def stop(self):
         try:
@@ -406,38 +510,46 @@ class Bridge:
 
     def emergency_stop(self):
         self.calibration_abort.set()
+        self.rearm_required = True
         self.stop()
 
     def command(self, command, wait=0.35):
         with self.lock:
+            marker = self._line_sequence
             self.write(command)
         time.sleep(wait)
         with self.lock:
-            # The ring buffer stays capped, so an absolute list index cannot be
-            # used as a sequence number once it is full.
-            return self.lines[-50:]
+            return [line for sequence, line in self._responses if sequence > marker]
 
     def snapshot(self):
         with self.lock:
-            return dict(self.telemetry, maintenance=self.maintenance,
+            return copy.deepcopy(dict(self.telemetry, simulated=self.telemetry.get('simulated', False), maintenance=self.maintenance,
+                        operations_error=self.operations_error,
+                        board=self.board_profile(),
+                        rearm_required=self.rearm_required,
                         calibration_active=self.calibration["active"],
-                        recent_lines=self.lines[-30:])
+                        recent_lines=self.lines[-30:]))
 
     def calibration_status(self):
         with self.lock:
             return dict(self.calibration)
 
-    def start_calibration(self, confirmation, encoder_profile="four"):
+    def start_calibration(self, confirmation, encoder_profile=None):
         with self.lock:
             if confirmation != "WHEELS_UP":
                 raise ValueError("wheels-up confirmation required")
+            board = self._require_board()
+            expected_profile = "four" if board["id"] == "maker" else "rear"
+            encoder_profile = encoder_profile or expected_profile
             if encoder_profile not in ("rear", "four"):
                 raise ValueError("encoder_profile must be rear or four")
+            if encoder_profile != expected_profile:
+                raise ValueError("encoder profile does not match the connected board")
             if not self.serial or not self.telemetry.get("serial_connected"):
                 raise RuntimeError("ESP32 is disconnected")
             if self.maintenance:
                 raise RuntimeError("maintenance mode is active")
-            if self.firmware_process and self.firmware_process.poll() is None:
+            if self.firmware_job["state"] in ("starting", "running"):
                 raise RuntimeError("firmware update is running")
             self.stop()
             self.disconnect_gamepad()
@@ -478,13 +590,16 @@ class Bridge:
                 raise RuntimeError("a calibration pulse is already running")
             if not self.serial:
                 raise RuntimeError("ESP32 is disconnected")
+            self._require_board()
+            if self.tuning_session.get("active"):
+                self._require_session_board()
             tests = self.tuning_session.get("tests", [])
             if (self.tuning_session.get("active") and tests and
                     tests[-1].get("score") is None):
                 raise RuntimeError("record the previous test observation before running again")
             encoder_updated = self.telemetry.get("encoder_updated")
             if encoder_updated is None or time.time() - encoder_updated > 1.0:
-                raise RuntimeError("rear encoder telemetry is unavailable or stale")
+                raise RuntimeError("encoder telemetry is unavailable or stale")
             before = list(self.telemetry.get("encoders", []))
             if len(before) != 4:
                 raise RuntimeError("encoder telemetry is unavailable")
@@ -503,8 +618,14 @@ class Bridge:
         started = time.monotonic()
         deadline = started + duration_ms / 1000.0
         error = None
+        after = list(self.calibration["before"] or [0, 0, 0, 0])
+        board_id = self.board_profile()["id"]
         try:
             while time.monotonic() < deadline and not self.calibration_abort.is_set():
+                if self.board_profile()["id"] != board_id:
+                    raise RuntimeError("controller changed during test")
+                if time.time() - (self.telemetry.get("encoder_updated") or 0) > 1:
+                    raise RuntimeError("encoder telemetry became stale during test")
                 self.write("V %.3f %.3f %.3f" % motion)
                 with self.lock:
                     current = list(self.telemetry.get("encoders", [0, 0, 0, 0]))
@@ -517,11 +638,13 @@ class Bridge:
         except Exception as exc:
             error = str(exc)
         finally:
+            # Capture powered response before STOP; exclude the coast-down wait.
+            with self.lock:
+                after = list(self.telemetry.get("encoders", after))
             self.stop()
         aborted = self.calibration_abort.is_set()
         time.sleep(0.35)
         with self.lock:
-            after = list(self.telemetry.get("encoders", [0, 0, 0, 0]))
             before = self.calibration["before"] or [0, 0, 0, 0]
             deltas = [after[i] - before[i] for i in range(4)]
             phase = "aborted" if aborted else ("error" if error else "complete")
@@ -530,7 +653,7 @@ class Bridge:
                                     error=error, aborted=aborted)
             if self.tuning_session.get("active") and not error and not aborted:
                 live = dict(self.tuning_session.get("live_settings", {}))
-                settings = {key: int(round(live.get(key, PROVEN_BASELINE[key])))
+                settings = {key: int(round(live.get(key, self.board_profile()["baseline"][key])))
                             for key in PWM_KEYS}
                 actual_duty = {key: int(round(settings[key] * magnitude))
                                for key in PWM_KEYS}
@@ -543,20 +666,24 @@ class Bridge:
                     comparable = (abs(float(prior.get("magnitude", 1.0)) - magnitude) < 0.001
                                   and int(prior.get("duration_ms", 0)) == duration_ms)
                     comparison = {"test_id": prior["id"], "comparable": comparable,
-                                  "rear": {}}
+                                  "rear": {}, "wheels": {}}
                     if not comparable:
                         comparison["reason"] = "test output or duration changed"
                     else:
-                        for index, key in ((2, "pwm-rl"), (3, "pwm-rr")):
+                        for index, key in enumerate(PWM_KEYS):
                             name = MOTOR_NAMES[index]
+                            if name not in self.board_profile()["encoder_wheels"]:
+                                continue
                             previous_rate = abs(float(prior.get("encoder_rates", {}).get(name, 0)))
                             current_rate = abs(rates[name])
                             rate_change = None if previous_rate == 0 else round(
                                 (current_rate - previous_rate) * 100.0 / previous_rate, 1)
-                            comparison["rear"][name] = {
+                            comparison["wheels"][name] = {
                                 "previous_rate": previous_rate, "rate_change_percent": rate_change,
                                 "pwm_change": settings[key] - int(round(
                                     prior.get("settings", {}).get(key, settings[key])))}
+                        comparison["rear"] = {name: value for name, value in comparison["wheels"].items()
+                                              if name in ("RL", "RR")}
                 self.tuning_session["tests"].append({
                     "id": len(self.tuning_session["tests"]) + 1,
                     "timestamp": time.time(), "command": direction,
@@ -571,6 +698,9 @@ class Bridge:
 
     def set_maintenance(self, enabled):
         with self.lock:
+            if enabled and (self.calibration["active"] or self.tuning_session.get("active")):
+                raise RuntimeError("finish tuning before firmware maintenance")
+            self.rearm_required = True
             self.stop()
             self.maintenance = bool(enabled)
             if enabled:
@@ -587,19 +717,23 @@ class Bridge:
 
     def start_firmware_update(self):
         with self.lock:
-            if self.firmware_process and self.firmware_process.poll() is None:
+            board = self._require_board()
+            if self.firmware_job["state"] in ("starting", "running"):
                 raise RuntimeError("firmware update already running")
+            if self.calibration["active"] or self.tuning_session.get("active") or self.maintenance:
+                raise RuntimeError("finish tuning and maintenance before updating firmware")
             if self.telemetry.get("gamepad_connected") or self.telemetry.get("deadman"):
                 raise RuntimeError("disconnect the controller before updating firmware")
             self.stop()
             self.firmware_job = {"state": "starting", "started": time.time(),
-                                 "finished": None, "returncode": None, "lines": []}
-        threading.Thread(target=self._run_firmware_update, daemon=True).start()
+                                 "finished": None, "returncode": None, "lines": [],
+                                 "board_id": board["id"]}
+        threading.Thread(target=self._run_firmware_update, args=(board["id"],), daemon=True).start()
 
-    def _run_firmware_update(self):
+    def _run_firmware_update(self, board_id):
         updater = str(Path(__file__).with_name("mechbot_firmware_update.py"))
         try:
-            process = subprocess.Popen([updater], stdout=subprocess.PIPE,
+            process = subprocess.Popen([sys.executable, "-u", updater, "--board", board_id], stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT, text=True, bufsize=1)
             with self.lock:
                 self.firmware_process = process
@@ -620,8 +754,12 @@ class Bridge:
     def parse_line(self, line):
         now = time.time()
         with self.lock:
+            self._observe('feed', line)
             self.lines.append(line)
             del self.lines[:-300]
+            self._line_sequence += 1
+            self._responses.append((self._line_sequence, line))
+            del self._responses[:-300]
             self.telemetry["last_line"] = line
             self.telemetry["updated"] = now
             parts = line.split()
@@ -633,37 +771,78 @@ class Bridge:
                     self.telemetry["encoder_updated"] = now
                 elif parts[:1] == ["I"]:
                     self.telemetry["imu"] = line
+                    valid = len(parts) == 13 and all(math.isfinite(float(value)) for value in parts[2:])
+                    self.telemetry["imu_valid"] = valid
+                    self.telemetry["imu_updated"] = now if valid else None
                 elif parts[:1] == ["N"]:
                     self.telemetry["navigation"] = line
                 elif parts[:1] == ["H"]:
                     self.telemetry["health"] = line
                 elif parts[:1] == ["READY"]:
+                    if self.calibration.get("running"):
+                        self.calibration_abort.set()
                     self.telemetry["firmware"] = " ".join(parts[1:])
+                    self.telemetry["firmware_received"] = now
+                    self.rearm_required = True
+                elif line == MAKER_HELP_IDENTITY:
+                    self.telemetry["help_identity"] = line
+                elif parts[:1] == ["D"] and len(parts) == 10:
+                    if (parts[1] in MOTOR_NAMES and parts[2::2] == ["PWM", "A", "B", "INVALID"]):
+                        pwm = float(parts[3])
+                        a, b, invalid = (int(parts[i]) for i in (5, 7, 9))
+                        if math.isfinite(pwm) and abs(pwm) <= 255 and min(a, b, invalid) >= 0:
+                            self.telemetry.setdefault("wheel_diagnostics", {})[parts[1]] = {
+                                "pwm": pwm, "a_edges": a, "b_edges": b,
+                                "invalid_transitions": invalid, "updated": now}
             except ValueError:
-                pass
+                if parts[:1] == ["I"]:
+                    self.telemetry["imu_valid"] = False
+                    self.telemetry["imu_updated"] = None
+
+    def poll_identity(self, now):
+        """Recover a missed startup help reply without resetting the controller."""
+        with self.lock:
+            if (not self.serial or self.maintenance or self.calibration["active"]
+                    or self.firmware_job["state"] in ("starting", "running")
+                    or self.telemetry.get("firmware") is not None
+                    or self.board_profile()["id"] != "unknown"
+                    or now < self._next_identity_query):
+                return
+            self._next_identity_query = now + 2.0
+            self.write("?")
 
     def connect_serial(self):
         port = self.find_port()
         if not port:
             return
-        self.serial = serial.Serial(port, 115200, timeout=0, write_timeout=0.2)
+        self.serial = serial.Serial(port, 115200, timeout=0, write_timeout=0.2, exclusive=True)
+        self.rearm_required = True
         # Preserve boot output: READY is the firmware-update verification token.
         time.sleep(2.0)
         self.telemetry["serial_connected"] = True
         self.telemetry["serial_port"] = port
+        self.write("?")  # Recognize deployed Maker even when serial open does not reset it.
+        self._next_identity_query = time.monotonic() + 2.0
         print(f"ESP32 connected: {port}", flush=True)
 
     def disconnect_serial(self):
+        self._next_identity_query = 0.0
+        self._observe('boundary', 'disconnect')
         if self.serial:
             try: self.serial.close()
             except Exception: pass
         self.serial = None
         self.telemetry["serial_connected"] = False
+        self.rearm_required = True
+        for key in ("firmware", "firmware_received", "help_identity", "imu", "imu_valid", "imu_updated",
+                    "navigation", "health", "encoders", "encoder_updated", "wheel_diagnostics"):
+            self.telemetry.pop(key, None)
         if self.tuning_session.get("active"):
             self._restore_pending = True
 
     def connect_gamepad(self):
         if os.path.exists(self.joystick_path):
+            self.rearm_required = True
             self.joystick = open(self.joystick_path, "rb", buffering=0)
             self.axes = [0] * 9
             self.buttons = [0] * 16
@@ -671,6 +850,7 @@ class Bridge:
             print(f"Gamepad connected: {self.joystick_path}", flush=True)
 
     def disconnect_gamepad(self):
+        self.rearm_required = True
         self.stop()
         if self.joystick:
             try: self.joystick.close()
@@ -690,18 +870,12 @@ class Bridge:
                     continue
                 if not self.serial:
                     self.connect_serial()
-                if self.serial and self._restore_pending:
-                    try:
-                        self._restore_session_settings()
-                        self.tuning_session.update(active=False, phase="recovered-after-restart")
-                        self._persist_session(); self._restore_pending = False
-                    except Exception:
-                        pass
                 if (self.tuning_session.get("active") and self.tuning_session.get("updated") and
                         time.time() - self.tuning_session["updated"] > SESSION_TIMEOUT_SECONDS):
                     try: self.end_tuning(False)
                     except Exception: pass
-                if not self.calibration["active"] and not self.joystick:
+                if (not self.calibration["active"] and not self.joystick and
+                        self.firmware_job["state"] not in ("starting", "running")):
                     self.connect_gamepad()
                 if self.calibration["active"] and self.joystick:
                     self.disconnect_gamepad()
@@ -710,6 +884,16 @@ class Bridge:
                     while b"\n" in rx:
                         raw, _, rx = rx.partition(b"\n")
                         self.parse_line(raw.decode("ascii", "replace").strip())
+                if self.serial and self._restore_pending and self.board_profile()["id"] != "unknown":
+                    try:
+                        self._restore_session_settings()
+                        self.tuning_session.update(active=False, phase="recovered-after-restart")
+                    except RuntimeError as exc:
+                        self.stop()
+                        self.tuning_session.update(active=False, phase="recovery-blocked", error=str(exc))
+                    self._persist_session()
+                    self._restore_pending = False
+                    self.calibration["active"] = False
                 if self.joystick:
                     if not os.path.exists(self.joystick_path):
                         self.disconnect_gamepad()
@@ -723,14 +907,24 @@ class Bridge:
                                 _, value, kind, number = struct.unpack(JS_EVENT_FORMAT, data)
                                 kind &= ~JS_EVENT_INIT
                                 if kind == JS_EVENT_AXIS and number < len(self.axes): self.axes[number] = value
-                                elif kind == JS_EVENT_BUTTON and number < len(self.buttons): self.buttons[number] = value
+                                elif kind == JS_EVENT_BUTTON and number < len(self.buttons):
+                                    self.buttons[number] = value
+                                    if number == BUTTON_DEADMAN and value == 0:
+                                        self.rearm_required = False
                 now = time.monotonic()
+                self.poll_identity(now)
                 if self.serial and not self.calibration["active"] and now >= next_send:
-                    deadman = bool(self.joystick and self.buttons[BUTTON_DEADMAN])
+                    deadman = bool(self.joystick and self.buttons[BUTTON_DEADMAN] and
+                                   not self.rearm_required and not self._restore_pending and
+                                   self.board_profile()["id"] != "unknown" and
+                                   self.firmware_job["state"] not in ("starting", "running"))
                     self.telemetry["deadman"] = deadman
                     motion = gamepad_motion(self.axes) if deadman else (0.0, 0.0, 0.0)
                     self.write("V %.3f %.3f %.3f" % motion)
                     next_send = now + 1.0 / SEND_HZ
+                if self.serial and self.board_profile()["diagnostics"] and now >= self._next_diagnostics:
+                    self.write("DIAG")
+                    self._next_diagnostics = now + 1.0
             except (OSError, RuntimeError, serial.SerialException) as exc:
                 print(f"Device disconnected: {exc}", flush=True)
                 self.disconnect_gamepad(); self.disconnect_serial()
@@ -743,20 +937,33 @@ class Handler(BaseHTTPRequestHandler):
     def reply(self, code, payload):
         body = json.dumps(payload).encode()
         self.send_response(code); self.send_header("Content-Type", "application/json")
-        self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
     def do_OPTIONS(self):
-        self.send_response(204); self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-        self.send_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS"); self.end_headers()
+        try: validate_origin(self)
+        except ValueError as exc: self.reply(403, {"error": str(exc)}); return
+        self.send_response(204); self.end_headers()
     def do_GET(self):
         path = urlparse(self.path).path
+        if handle_get(self, path): return
         if path == "/api/status": self.reply(200, self.bridge.snapshot())
         elif path == "/api/settings": self.reply(200, {"lines": self.bridge.command("CFG GET")})
         elif path == "/api/firmware": self.reply(200, self.bridge.firmware_status())
         elif path == "/api/calibration": self.reply(200, self.bridge.calibration_status())
         elif path == "/api/tuning": self.reply(200, self.bridge.tuning_status())
-        elif path == "/": self.serve_file("index.html", "text/html; charset=utf-8")
+        elif path in ("/api/tuning/export.json", "/api/tuning/export.csv"):
+            format = path.rsplit(".", 1)[-1]
+            body = self.bridge.export_tuning(format).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json" if format == "json" else "text/csv; charset=utf-8")
+            self.send_header("Content-Disposition", f'attachment; filename="mechbot-tuning.{format}"')
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers(); self.wfile.write(body)
+        elif path == "/": self.serve_file("ops.html", "text/html; charset=utf-8")
+        elif path == "/tuning": self.serve_file("index.html", "text/html; charset=utf-8")
+        elif path == "/ops.css": self.serve_file("ops.css", "text/css; charset=utf-8")
+        elif path == "/ops.js": self.serve_file("ops.js", "text/javascript; charset=utf-8")
+        elif path in ("/ops-live.js", "/ops-sessions.js", "/ops-evidence.js", "/ops-encoder-math.js", "/ops-encoder.js"):
+            self.serve_file(path[1:], "text/javascript; charset=utf-8")
         elif path == "/app.css": self.serve_file("app.css", "text/css; charset=utf-8")
         elif path == "/calibration.css": self.serve_file("calibration.css", "text/css; charset=utf-8")
         elif path == "/app.js": self.serve_file("app.js", "text/javascript; charset=utf-8")
@@ -770,8 +977,18 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control", "no-cache")
         self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
     def do_POST(self):
-        length = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(length) or b"{}")
         try:
+            validate_origin(self)
+            data = read_json_body(self)
+            if handle_post(self, urlparse(self.path).path, data): return
+            if self.path.startswith("/api/settings"):
+                board = self.bridge._require_board()
+                if data.get("board_id", board["id"]) != board["id"]:
+                    raise RuntimeError("controller changed; reload settings")
+                if self.bridge.calibration["active"] or self.bridge.maintenance:
+                    raise RuntimeError("finish tuning and maintenance before editing settings")
+                if self.bridge.firmware_job["state"] in ("starting", "running"):
+                    raise RuntimeError("firmware update is running")
             if self.path == "/api/stop": self.bridge.emergency_stop(); result = {"ok": True}
             elif self.path == "/api/maintenance":
                 self.bridge.set_maintenance(bool(data.get("enabled")))
@@ -791,7 +1008,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.bridge.start_firmware_update(); result = self.bridge.firmware_status()
             elif self.path == "/api/calibration/start":
                 result = self.bridge.start_calibration(
-                    data.get("confirmation"), data.get("encoder_profile", "four"))
+                    data.get("confirmation"), data.get("encoder_profile"))
             elif self.path == "/api/calibration/pulse":
                 result = self.bridge.start_calibration_pulse(
                     data.get("direction"), data.get("duration_ms"),
@@ -826,6 +1043,9 @@ def main():
     threading.Thread(target=bridge.loop, daemon=True).start()
     print(f"MechBot bridge API: http://{args.listen}:{args.http_port}", flush=True)
     try: ThreadingHTTPServer((args.listen, args.http_port), Handler).serve_forever()
-    finally: bridge.running = False; bridge.stop()
+    finally:
+        bridge.running = False
+        bridge.stop()
+        bridge.operations.capture.stop()
 
 if __name__ == "__main__": main()

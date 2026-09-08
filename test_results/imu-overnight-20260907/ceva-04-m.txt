@@ -1,0 +1,94 @@
+BEGIN #4 m GEOMAG_RV20 I2C=100000
+RESET commanded low20ms released400ms RST=1 P0=0 bus=1
+ACK 0x4A rc=0
+ACK 0x4B rc=2
+BOOT init=1 open_rc=0 id_rc=0 reset_events=1 clock=100000
+PRE ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+SET id=0x09 interval_us=50000 rc=0
+PRE CFG id=0x09 rc=0 want_us=50000 got_us=0 time_ms=5
+RUN #4 m GEOMAG_RV20 t=1000ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=17 new=17 age=22 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=2000ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=37 new=20 age=22 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=3001ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=57 new=20 age=22 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=4001ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=77 new=20 age=24 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=5002ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=97 new=20 age=24 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=6003ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=117 new=20 age=26 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=7004ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=137 new=20 age=26 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=8005ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=157 new=20 age=28 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=9006ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=177 new=20 age=30 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=10006ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=197 new=20 age=30 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=11007ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=217 new=20 age=30 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=12007ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=237 new=20 age=33 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=13007ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=257 new=20 age=32 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=14007ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=277 new=20 age=32 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=15007ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=297 new=20 age=32 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=16008ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=317 new=20 age=34 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=17008ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=337 new=20 age=34 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=18009ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=357 new=20 age=36 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=19009ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=377 new=20 age=36 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=20010ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=397 new=20 age=36 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=21011ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=417 new=20 age=39 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=22011ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=437 new=20 age=39 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=23011ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=457 new=20 age=38 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=24012ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=477 new=20 age=40 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=25013ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=497 new=20 age=40 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=26014ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=517 new=20 age=42 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=27014ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=537 new=20 age=42 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=28015ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=557 new=20 age=44 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=29015ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=577 new=20 age=44 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=30015ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=597 new=20 age=44 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=31020ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=618 new=21 age=0 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=32020ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=638 new=20 age=0 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=33020ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=658 new=20 age=0 gap=0 dup=0
+RUN #4 m GEOMAG_RV20 t=34020ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=678 new=20 age=0 gap=0 dup=0
+RESULT reason=35_SECONDS boot_resets=1
+FINAL #4 m GEOMAG_RV20 t=35001ms reset=0 decode=0 transport=0 INT=1
+ 0x09 LIVE n=697 new=19 age=32 gap=0 dup=0 first=183 last=34969 status=3 v=0.2793,-0.0134,0.0027,-0.9601
+POST CFG id=0x09 rc=0 want_us=50000 got_us=50000 time_ms=4
+POST ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+POST ERR rc=0 captured=2 complete=1 time_ms=14
+ ERR0 sev=4 seq=0 src=4 err=22 module=13 code=0 hex=04 00 04 16 0D 00
+ ERR1 sev=4 seq=0 src=4 err=22 module=13 code=0 hex=04 00 04 16 0D 00
+OFF id=0x09 rc=0
+END #4; s=reprint result, next command starts fresh reset

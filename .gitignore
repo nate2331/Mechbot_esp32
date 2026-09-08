@@ -1,2 +1,22 @@
 __pycache__/
 *.py[cod]
+tuning-session.json
+tuning-session.tmp
+maker-tuning-*.json
+recordings/
+measured-geometry.json
+local-demo/
+browser-qa-output/
+.venv/
+
+# Reproducible local build products; retain source, manifests, and test logs.
+build/
+*.bin
+*.elf
+*.map
+*.exe
+*.o
+*.obj
+/firmware/*.zip
+# Vendor reference: use the original schematic link in the diagnostic notes.
+/test_results/imu-spi-v2-20260906/BNO085_BOB-R1_V1_Schematic.pdf

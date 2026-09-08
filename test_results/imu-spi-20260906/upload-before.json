@@ -1,0 +1,1113 @@
+{
+  "captured_utc": "2026-09-06T21:02:09.3369920Z",
+  "status": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "last_line": "H 280081 IMU 0 0 0 129",
+    "updated": 1788728527.8674488,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788728527.8541424,
+    "imu": "I 280081 OFFLINE",
+    "imu_valid": false,
+    "imu_updated": null,
+    "navigation": "N 280081 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 280081 IMU 0 0 0 129",
+    "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 2,
+        "b_edges": 4,
+        "invalid_transitions": 0,
+        "updated": 1788728527.3608024
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788728527.361588
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788728527.3735037
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788728527.3741343
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings · 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-help"
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 279281 0 0 0 0",
+      "I 279281 OFFLINE",
+      "N 279281 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 279281 IMU 0 0 0 129",
+      "T 279481 0 0 0 0",
+      "I 279481 OFFLINE",
+      "N 279481 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 279481 IMU 0 0 0 129",
+      "D FL PWM 0.0 A 2 B 4 INVALID 0",
+      "D FR PWM 0.0 A 0 B 0 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 279681 0 0 0 0",
+      "I 279681 OFFLINE",
+      "N 279681 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 279681 IMU 0 0 0 129",
+      "T 279881 0 0 0 0",
+      "I 279881 OFFLINE",
+      "N 279881 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 279881 IMU 0 0 0 129",
+      "T 280081 0 0 0 0",
+      "I 280081 OFFLINE",
+      "N 280081 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 280081 IMU 0 0 0 129"
+    ]
+  },
+  "settings": {
+    "lines": [
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "WARN IMU offline; retrying initialization"
+    ]
+  },
+  "tuning": {
+    "active": false,
+    "workflow": "floor",
+    "started": 1788111491.0364146,
+    "updated": 1788112672.8442438,
+    "original_settings": {
+      "pwm-fl": 230.0,
+      "pwm-fr": 230.0,
+      "pwm-rl": 205.0,
+      "pwm-rr": 205.0,
+      "heading-kp": 0.7,
+      "heading-max": 0.3,
+      "heading-deadband-deg": 1.5,
+      "heading-sign": 1.0,
+      "heading-enabled": 0.0
+    },
+    "live_settings": {
+      "pwm-fl": 230,
+      "pwm-fr": 230,
+      "pwm-rl": 205,
+      "pwm-rr": 205,
+      "heading-kp": 0.7,
+      "heading-max": 0.3,
+      "heading-deadband-deg": 1.5,
+      "heading-sign": 1.0,
+      "heading-enabled": 0.0
+    },
+    "saved_settings": {
+      "pwm-fl": 230,
+      "pwm-fr": 230,
+      "pwm-rl": 205,
+      "pwm-rr": 205,
+      "heading-kp": 0.7,
+      "heading-max": 0.3,
+      "heading-deadband-deg": 1.5,
+      "heading-sign": 1.0,
+      "heading-enabled": 0.0
+    },
+    "tests": [
+      {
+        "id": 1,
+        "timestamp": 1788111559.5738974,
+        "command": "reverse",
+        "duration_ms": 1000,
+        "magnitude": 0.45,
+        "deltas": [
+          0,
+          0,
+          0,
+          -4
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": 0.0,
+          "RR": -4.0
+        },
+        "actual_duty": {
+          "pwm-fl": 104,
+          "pwm-fr": 104,
+          "pwm-rl": 92,
+          "pwm-rr": 92
+        },
+        "comparison": null,
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "none",
+        "quality": "no-motion",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "hold",
+          "summary": "No directional trim is safe yet. Raise test output one level and retry.",
+          "basis": "A directional PWM trim needs a stable translation observation. Rear ticks alone cannot establish the missing chassis error.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 0,
+            "pwm-fr": 0,
+            "pwm-rl": 0,
+            "pwm-rr": 0
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 205,
+            "pwm-rr": 205
+          }
+        },
+        "recommendation_applied": false,
+        "prior_best_id": null
+      },
+      {
+        "id": 2,
+        "timestamp": 1788111616.887226,
+        "command": "reverse",
+        "duration_ms": 1000,
+        "magnitude": 0.75,
+        "deltas": [
+          0,
+          0,
+          -595,
+          -762
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": -595.0,
+          "RR": -762.0
+        },
+        "actual_duty": {
+          "pwm-fl": 172,
+          "pwm-fr": 172,
+          "pwm-rl": 154,
+          "pwm-rr": 154
+        },
+        "comparison": {
+          "test_id": 1,
+          "comparable": false,
+          "rear": {},
+          "reason": "test output or duration changed"
+        },
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "none",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "hold",
+          "summary": "Keep these PWM values and repeat the same test to confirm the result.",
+          "basis": "Rear encoder rates are shown per motor for repeatability; RL and RR raw counts are not ratio-matched.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 0,
+            "pwm-fr": 0,
+            "pwm-rl": 0,
+            "pwm-rr": 0
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 205,
+            "pwm-rr": 205
+          }
+        },
+        "recommendation_applied": false,
+        "prior_best_id": null
+      },
+      {
+        "id": 3,
+        "timestamp": 1788111663.3747518,
+        "command": "reverse",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          -5320,
+          -6397
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": -2660.0,
+          "RR": -3198.5
+        },
+        "actual_duty": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "comparison": {
+          "test_id": 2,
+          "comparable": false,
+          "rear": {},
+          "reason": "test output or duration changed"
+        },
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "drift-left",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "pwm-vector",
+          "summary": "Correct for left path drift with a balanced 3-count PWM trim, then repeat the identical test.",
+          "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": -3,
+            "pwm-fr": 3,
+            "pwm-rl": 3,
+            "pwm-rr": -3
+          },
+          "suggested_settings": {
+            "pwm-fl": 227,
+            "pwm-fr": 233,
+            "pwm-rl": 208,
+            "pwm-rr": 202
+          }
+        },
+        "recommendation_applied": true,
+        "prior_best_id": null
+      },
+      {
+        "id": 4,
+        "timestamp": 1788111708.2757237,
+        "command": "forward",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          5321,
+          5956
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": 2660.5,
+          "RR": 2978.0
+        },
+        "actual_duty": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 208,
+          "pwm-rr": 202
+        },
+        "comparison": null,
+        "settings": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 208,
+          "pwm-rr": 202
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "drift-left",
+        "quality": "normal",
+        "score": 4,
+        "notes": "",
+        "recommendation": {
+          "kind": "pwm-vector",
+          "summary": "Correct for left path drift with a balanced 3-count PWM trim, then repeat the identical test.",
+          "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 3,
+            "pwm-fr": -3,
+            "pwm-rl": -3,
+            "pwm-rr": 3
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 205,
+            "pwm-rr": 205
+          }
+        },
+        "recommendation_applied": true,
+        "prior_best_id": null
+      },
+      {
+        "id": 5,
+        "timestamp": 1788111742.1913528,
+        "command": "reverse",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          -5190,
+          -6008
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": -2595.0,
+          "RR": -3004.0
+        },
+        "actual_duty": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "comparison": {
+          "test_id": 3,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2660.0,
+              "rate_change_percent": -2.4,
+              "pwm_change": 0
+            },
+            "RR": {
+              "previous_rate": 3198.5,
+              "rate_change_percent": -6.1,
+              "pwm_change": 0
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "observation": "yaw-left",
+        "heading": "yaw-left",
+        "path": "none",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "pwm-vector",
+          "summary": "Correct for counterclockwise heading drift with a balanced 3-count PWM trim, then repeat the identical test.",
+          "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": -3,
+            "pwm-fr": 3,
+            "pwm-rl": -3,
+            "pwm-rr": 3
+          },
+          "suggested_settings": {
+            "pwm-fl": 227,
+            "pwm-fr": 233,
+            "pwm-rl": 202,
+            "pwm-rr": 208
+          }
+        },
+        "recommendation_applied": true,
+        "prior_best_id": 3
+      },
+      {
+        "id": 6,
+        "timestamp": 1788111769.1862993,
+        "command": "forward",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          5089,
+          6157
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": 2544.5,
+          "RR": 3078.5
+        },
+        "actual_duty": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "comparison": {
+          "test_id": 4,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2660.5,
+              "rate_change_percent": -4.4,
+              "pwm_change": -6
+            },
+            "RR": {
+              "previous_rate": 2978.0,
+              "rate_change_percent": 3.4,
+              "pwm_change": 6
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "drift-left",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "pwm-vector",
+          "summary": "Correct for left path drift with a balanced 3-count PWM trim, then repeat the identical test.",
+          "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 3,
+            "pwm-fr": -3,
+            "pwm-rl": -3,
+            "pwm-rr": 3
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 199,
+            "pwm-rr": 211
+          }
+        },
+        "recommendation_applied": true,
+        "prior_best_id": 4
+      },
+      {
+        "id": 7,
+        "timestamp": 1788111794.9901497,
+        "command": "reverse",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          -4959,
+          -6395
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": -2479.5,
+          "RR": -3197.5
+        },
+        "actual_duty": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 199,
+          "pwm-rr": 211
+        },
+        "comparison": {
+          "test_id": 5,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2595.0,
+              "rate_change_percent": -4.5,
+              "pwm_change": -6
+            },
+            "RR": {
+              "previous_rate": 3004.0,
+              "rate_change_percent": 6.4,
+              "pwm_change": 6
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 199,
+          "pwm-rr": 211
+        },
+        "observation": "yaw-right",
+        "heading": "yaw-right",
+        "path": "none",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "pwm-vector",
+          "summary": "Correct for clockwise heading drift with a balanced 3-count PWM trim, then repeat the identical test.",
+          "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 3,
+            "pwm-fr": -3,
+            "pwm-rl": 3,
+            "pwm-rr": -3
+          },
+          "suggested_settings": {
+            "pwm-fl": 233,
+            "pwm-fr": 227,
+            "pwm-rl": 202,
+            "pwm-rr": 208
+          }
+        },
+        "recommendation_applied": true,
+        "prior_best_id": 3
+      },
+      {
+        "id": 8,
+        "timestamp": 1788111812.3099692,
+        "command": "forward",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          5481,
+          6101
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": 2740.5,
+          "RR": 3050.5
+        },
+        "actual_duty": {
+          "pwm-fl": 233,
+          "pwm-fr": 227,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "comparison": {
+          "test_id": 6,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2544.5,
+              "rate_change_percent": 7.7,
+              "pwm_change": 0
+            },
+            "RR": {
+              "previous_rate": 3078.5,
+              "rate_change_percent": -0.9,
+              "pwm_change": 0
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 233,
+          "pwm-fr": 227,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "none",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "hold",
+          "summary": "Keep these PWM values and repeat the same test to confirm the result.",
+          "basis": "Rear encoder rates are shown per motor for repeatability; RL and RR raw counts are not ratio-matched.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 0,
+            "pwm-fr": 0,
+            "pwm-rl": 0,
+            "pwm-rr": 0
+          },
+          "suggested_settings": {
+            "pwm-fl": 233,
+            "pwm-fr": 227,
+            "pwm-rl": 202,
+            "pwm-rr": 208
+          }
+        },
+        "recommendation_applied": false,
+        "prior_best_id": 4
+      },
+      {
+        "id": 9,
+        "timestamp": 1788111838.1385753,
+        "command": "reverse",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          -5195,
+          -6266
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": -2597.5,
+          "RR": -3133.0
+        },
+        "actual_duty": {
+          "pwm-fl": 233,
+          "pwm-fr": 227,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "comparison": {
+          "test_id": 7,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2479.5,
+              "rate_change_percent": 4.8,
+              "pwm_change": 3
+            },
+            "RR": {
+              "previous_rate": 3197.5,
+              "rate_change_percent": -2.0,
+              "pwm_change": -3
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 233,
+          "pwm-fr": 227,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "drift-left",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "pwm-vector",
+          "summary": "Correct for left path drift with a balanced 3-count PWM trim, then repeat the identical test.",
+          "basis": "The trim comes from the observed chassis motion and mecanum wheel geometry. Rear encoder rates are supporting feedback only and are never compared as equal distance units.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": -3,
+            "pwm-fr": 3,
+            "pwm-rl": 3,
+            "pwm-rr": -3
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 205,
+            "pwm-rr": 205
+          }
+        },
+        "recommendation_applied": true,
+        "prior_best_id": 3
+      },
+      {
+        "id": 10,
+        "timestamp": 1788111856.8326273,
+        "command": "forward",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          5553,
+          6120
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": 2776.5,
+          "RR": 3060.0
+        },
+        "actual_duty": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "comparison": {
+          "test_id": 8,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2740.5,
+              "rate_change_percent": 1.3,
+              "pwm_change": 3
+            },
+            "RR": {
+              "previous_rate": 3050.5,
+              "rate_change_percent": 0.3,
+              "pwm_change": -3
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "none",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "hold",
+          "summary": "Keep these PWM values and repeat the same test to confirm the result.",
+          "basis": "Rear encoder rates are shown per motor for repeatability; RL and RR raw counts are not ratio-matched.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 0,
+            "pwm-fr": 0,
+            "pwm-rl": 0,
+            "pwm-rr": 0
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 205,
+            "pwm-rr": 205
+          }
+        },
+        "recommendation_applied": false,
+        "prior_best_id": 4
+      },
+      {
+        "id": 11,
+        "timestamp": 1788111876.1057086,
+        "command": "reverse",
+        "duration_ms": 2000,
+        "magnitude": 1.0,
+        "deltas": [
+          0,
+          0,
+          -5420,
+          -6420
+        ],
+        "encoder_rates": {
+          "FL": 0.0,
+          "FR": 0.0,
+          "RL": -2710.0,
+          "RR": -3210.0
+        },
+        "actual_duty": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "comparison": {
+          "test_id": 9,
+          "comparable": true,
+          "rear": {
+            "RL": {
+              "previous_rate": 2597.5,
+              "rate_change_percent": 4.3,
+              "pwm_change": 3
+            },
+            "RR": {
+              "previous_rate": 3133.0,
+              "rate_change_percent": 2.5,
+              "pwm_change": -3
+            }
+          }
+        },
+        "settings": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "observation": "straight",
+        "heading": "straight",
+        "path": "none",
+        "quality": "normal",
+        "score": 3,
+        "notes": "",
+        "recommendation": {
+          "kind": "hold",
+          "summary": "Keep these PWM values and repeat the same test to confirm the result.",
+          "basis": "Rear encoder rates are shown per motor for repeatability; RL and RR raw counts are not ratio-matched.",
+          "step": 3,
+          "deltas": {
+            "pwm-fl": 0,
+            "pwm-fr": 0,
+            "pwm-rl": 0,
+            "pwm-rr": 0
+          },
+          "suggested_settings": {
+            "pwm-fl": 230,
+            "pwm-fr": 230,
+            "pwm-rl": 205,
+            "pwm-rr": 205
+          }
+        },
+        "recommendation_applied": false,
+        "prior_best_id": 3
+      }
+    ],
+    "adjustments": [
+      {
+        "id": 1,
+        "timestamp": 1788111694.4360864,
+        "source": "recommendation",
+        "test_id": 3,
+        "before": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "after": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 208,
+          "pwm-rr": 202
+        }
+      },
+      {
+        "id": 2,
+        "timestamp": 1788111728.8580823,
+        "source": "recommendation",
+        "test_id": 4,
+        "before": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 208,
+          "pwm-rr": 202
+        },
+        "after": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        }
+      },
+      {
+        "id": 3,
+        "timestamp": 1788111750.5793262,
+        "source": "recommendation",
+        "test_id": 5,
+        "before": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        },
+        "after": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        }
+      },
+      {
+        "id": 4,
+        "timestamp": 1788111782.528864,
+        "source": "recommendation",
+        "test_id": 6,
+        "before": {
+          "pwm-fl": 227,
+          "pwm-fr": 233,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "after": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 199,
+          "pwm-rr": 211
+        }
+      },
+      {
+        "id": 5,
+        "timestamp": 1788111801.7965312,
+        "source": "recommendation",
+        "test_id": 7,
+        "before": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 199,
+          "pwm-rr": 211
+        },
+        "after": {
+          "pwm-fl": 233,
+          "pwm-fr": 227,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        }
+      },
+      {
+        "id": 6,
+        "timestamp": 1788111846.8355632,
+        "source": "recommendation",
+        "test_id": 9,
+        "before": {
+          "pwm-fl": 233,
+          "pwm-fr": 227,
+          "pwm-rl": 202,
+          "pwm-rr": 208
+        },
+        "after": {
+          "pwm-fl": 230,
+          "pwm-fr": 230,
+          "pwm-rl": 205,
+          "pwm-rr": 205
+        }
+      }
+    ],
+    "best_test_id": 4,
+    "best_test_ids": {
+      "reverse": 1,
+      "forward": 4
+    },
+    "phase": "ended-saved",
+    "error": null,
+    "proven_baseline": {
+      "pwm-fl": 177,
+      "pwm-fr": 177,
+      "pwm-rl": 177,
+      "pwm-rr": 177
+    },
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings · 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-help"
+    },
+    "calibration": {
+      "active": false,
+      "running": false,
+      "phase": "idle",
+      "direction": null,
+      "started": null,
+      "duration_ms": 0,
+      "magnitude": 0.45,
+      "elapsed_ms": 0,
+      "before": null,
+      "after": null,
+      "deltas": null,
+      "live_deltas": null,
+      "error": null,
+      "aborted": false
+    },
+    "pwm_keys": [
+      "pwm-fl",
+      "pwm-fr",
+      "pwm-rl",
+      "pwm-rr"
+    ],
+    "test_limits": {
+      "magnitude_min": 0.15,
+      "magnitude_max": 1.0,
+      "duration_min_ms": 500,
+      "duration_max_ms": 3000
+    }
+  }
+}

@@ -1,0 +1,7 @@
+PASS: safe idle/arming, physical wheel map, 1 s moves/300 ms coasts, instant X, stale latch/recovery, independent watchdog/deadline, telemetry, clock wrap, PWM fault
+PASS: attach-failure leaves all motors stopped and rejects GO
+PASS: task-failure leaves all motors stopped and rejects GO
+PASS: mutex-failure leaves all motors stopped and rejects GO
+PASS: clock-failure leaves all motors stopped and rejects GO
+PASS: uart-failure leaves all motors stopped and rejects GO
+PASS: uart-rx-failure leaves all motors stopped and rejects GO

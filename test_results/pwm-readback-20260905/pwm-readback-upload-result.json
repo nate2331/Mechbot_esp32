@@ -1,0 +1,1382 @@
+{
+  "stage": "/home/nate/maker-pwm-readback-upload-rsy2gw6x",
+  "started": 1788623405.8159308,
+  "commands": [
+    {
+      "step": "backup-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "read-flash",
+        "0x0",
+        "0x70000",
+        "flash-before.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "write-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "write-flash",
+        "--no-progress",
+        "--flash-mode",
+        "keep",
+        "--flash-freq",
+        "keep",
+        "--flash-size",
+        "keep",
+        "0x1000",
+        "Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "boot_app0.bin",
+        "0x10000",
+        "Maker_Mechbot.ino.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "verify-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "verify-flash",
+        "0x1000",
+        "Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "boot_app0.bin",
+        "0x10000",
+        "Maker_Mechbot.ino.bin",
+        "0x9000",
+        "nvs-before.bin"
+      ],
+      "returncode": 0
+    }
+  ],
+  "boot_lines": [
+    {
+      "elapsed_s": 0.012,
+      "line": "ets Jul 29 2019 12:21:46"
+    },
+    {
+      "elapsed_s": 0.012,
+      "line": ""
+    },
+    {
+      "elapsed_s": 0.021,
+      "line": "rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)"
+    },
+    {
+      "elapsed_s": 0.024,
+      "line": "configsip: 0, SPIWP:0xee"
+    },
+    {
+      "elapsed_s": 0.031,
+      "line": "clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00"
+    },
+    {
+      "elapsed_s": 0.033,
+      "line": "mode:DIO, clock div:1"
+    },
+    {
+      "elapsed_s": 0.035,
+      "line": "load:0x3fff0030,len:4876"
+    },
+    {
+      "elapsed_s": 0.037,
+      "line": "ho 0 tail 12 room 4"
+    },
+    {
+      "elapsed_s": 0.039,
+      "line": "load:0x40078000,len:16532"
+    },
+    {
+      "elapsed_s": 0.042,
+      "line": "load:0x40080400,len:3500"
+    },
+    {
+      "elapsed_s": 0.044,
+      "line": "entry 0x400805b4"
+    },
+    {
+      "elapsed_s": 1.676,
+      "line": "WARN IMU not detected; motor control remains available"
+    },
+    {
+      "elapsed_s": 1.678,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 1.686,
+      "line": "READY ESP32_MAKER_MECANUM_IMU_V1"
+    },
+    {
+      "elapsed_s": 1.687,
+      "line": "Commands:"
+    },
+    {
+      "elapsed_s": 1.693,
+      "line": "V <forward> <left> <ccw>   each value -1.0 to +1.0"
+    },
+    {
+      "elapsed_s": 1.7,
+      "line": "forward and left are simultaneous continuous components"
+    },
+    {
+      "elapsed_s": 1.706,
+      "line": "F <0|1>                    field-oriented control off/on"
+    },
+    {
+      "elapsed_s": 1.71,
+      "line": "Z                          re-zero field heading"
+    },
+    {
+      "elapsed_s": 1.714,
+      "line": "X                         immediate stop"
+    },
+    {
+      "elapsed_s": 1.718,
+      "line": "CFG GET|SAVE|RESET        runtime settings"
+    },
+    {
+      "elapsed_s": 1.724,
+      "line": "CFG SET <key> <value>     validated update while stopped"
+    },
+    {
+      "elapsed_s": 1.727,
+      "line": "?                         help"
+    },
+    {
+      "elapsed_s": 1.732,
+      "line": "Heading hold: OFF (verify sensor axes before enabling)"
+    },
+    {
+      "elapsed_s": 1.738,
+      "line": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+    },
+    {
+      "elapsed_s": 1.744,
+      "line": "IMU: SDA21 SCL22, no reset wire; relative yaw, NOT compass north"
+    },
+    {
+      "elapsed_s": 1.75,
+      "line": "Default PWM=177 all wheels; independent output watchdog, ramped drive"
+    },
+    {
+      "elapsed_s": 1.756,
+      "line": "DIAG                      encoder edges/errors and applied PWM"
+    },
+    {
+      "elapsed_s": 1.76,
+      "line": "IMU RETRY                 stopped reinitialization"
+    },
+    {
+      "elapsed_s": 1.762,
+      "line": "Watchdog: 300 ms"
+    },
+    {
+      "elapsed_s": 1.765,
+      "line": "Encoder: T <ms> <FL> <FR> <RL> <RR>"
+    },
+    {
+      "elapsed_s": 1.771,
+      "line": "IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>"
+    },
+    {
+      "elapsed_s": 1.778,
+      "line": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>"
+    },
+    {
+      "elapsed_s": 1.886,
+      "line": "T 1732 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.889,
+      "line": "I 1732 OFFLINE"
+    },
+    {
+      "elapsed_s": 1.897,
+      "line": "N 1732 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.898,
+      "line": "H 1732 IMU 0 0 0 1"
+    },
+    {
+      "elapsed_s": 2.086,
+      "line": "T 1932 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.088,
+      "line": "I 1932 OFFLINE"
+    },
+    {
+      "elapsed_s": 2.096,
+      "line": "N 1932 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.099,
+      "line": "H 1932 IMU 0 0 0 1"
+    },
+    {
+      "elapsed_s": 2.287,
+      "line": "T 2132 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.29,
+      "line": "I 2132 OFFLINE"
+    },
+    {
+      "elapsed_s": 2.299,
+      "line": "N 2132 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.301,
+      "line": "H 2132 IMU 0 0 0 1"
+    },
+    {
+      "elapsed_s": 2.487,
+      "line": "T 2332 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.489,
+      "line": "I 2332 OFFLINE"
+    },
+    {
+      "elapsed_s": 2.496,
+      "line": "N 2332 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.499,
+      "line": "H 2332 IMU 0 0 0 1"
+    },
+    {
+      "elapsed_s": 2.672,
+      "line": "WARN IMU offline; retrying initialization"
+    },
+    {
+      "elapsed_s": 3.273,
+      "line": "WARN IMU not detected; motor control remains available"
+    },
+    {
+      "elapsed_s": 3.277,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 3.284,
+      "line": "T 3131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.286,
+      "line": "I 3131 OFFLINE"
+    },
+    {
+      "elapsed_s": 3.292,
+      "line": "N 3131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.294,
+      "line": "H 3131 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 3.485,
+      "line": "T 3331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.488,
+      "line": "I 3331 OFFLINE"
+    },
+    {
+      "elapsed_s": 3.497,
+      "line": "N 3331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.498,
+      "line": "H 3331 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 3.685,
+      "line": "T 3531 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.688,
+      "line": "I 3531 OFFLINE"
+    },
+    {
+      "elapsed_s": 3.694,
+      "line": "N 3531 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.696,
+      "line": "H 3531 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 3.886,
+      "line": "T 3731 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.889,
+      "line": "I 3731 OFFLINE"
+    },
+    {
+      "elapsed_s": 3.897,
+      "line": "N 3731 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.898,
+      "line": "H 3731 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 4.085,
+      "line": "T 3931 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.088,
+      "line": "I 3931 OFFLINE"
+    },
+    {
+      "elapsed_s": 4.094,
+      "line": "N 3931 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.096,
+      "line": "H 3931 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 4.285,
+      "line": "T 4131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.287,
+      "line": "I 4131 OFFLINE"
+    },
+    {
+      "elapsed_s": 4.295,
+      "line": "N 4131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.298,
+      "line": "H 4131 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 4.486,
+      "line": "T 4331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.489,
+      "line": "I 4331 OFFLINE"
+    },
+    {
+      "elapsed_s": 4.495,
+      "line": "N 4331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.497,
+      "line": "H 4331 IMU 0 0 0 2"
+    },
+    {
+      "elapsed_s": 4.671,
+      "line": "WARN IMU offline; retrying initialization"
+    },
+    {
+      "elapsed_s": 5.273,
+      "line": "WARN IMU not detected; motor control remains ava"
+    },
+    {
+      "elapsed_s": 5.275,
+      "line": "ilable"
+    },
+    {
+      "elapsed_s": 5.277,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 5.284,
+      "line": "T 5131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.286,
+      "line": "I 5131 OFFLINE"
+    },
+    {
+      "elapsed_s": 5.291,
+      "line": "N 5131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.293,
+      "line": "H 5131 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 5.485,
+      "line": "T 5331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.488,
+      "line": "I 5331 OFFLINE"
+    },
+    {
+      "elapsed_s": 5.496,
+      "line": "N 5331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.498,
+      "line": "H 5331 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 5.686,
+      "line": "T 5531 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.689,
+      "line": "I 5531 OFFLINE"
+    },
+    {
+      "elapsed_s": 5.695,
+      "line": "N 5531 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.697,
+      "line": "H 5531 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 5.885,
+      "line": "T 5731 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.888,
+      "line": "I 5731 OFFLINE"
+    },
+    {
+      "elapsed_s": 5.895,
+      "line": "N 5731 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.898,
+      "line": "H 5731 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 6.085,
+      "line": "T 5931 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.088,
+      "line": "I 5931 OFFLINE"
+    },
+    {
+      "elapsed_s": 6.096,
+      "line": "N 5931 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.098,
+      "line": "H 5931 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 6.285,
+      "line": "T 6131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.288,
+      "line": "I 6131 OFFLINE"
+    },
+    {
+      "elapsed_s": 6.295,
+      "line": "N 6131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.298,
+      "line": "H 6131 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 6.484,
+      "line": "T 6331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.487,
+      "line": "I 6331 OFFLINE"
+    },
+    {
+      "elapsed_s": 6.493,
+      "line": "N 6331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.495,
+      "line": "H 6331 IMU 0 0 0 3"
+    },
+    {
+      "elapsed_s": 6.671,
+      "line": "WARN IMU offline; retrying initialization"
+    },
+    {
+      "elapsed_s": 7.274,
+      "line": "WARN IMU not detected; motor control remains avai"
+    },
+    {
+      "elapsed_s": 7.275,
+      "line": "lable"
+    },
+    {
+      "elapsed_s": 7.277,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 7.284,
+      "line": "T 7131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.285,
+      "line": "I 7131 OFFLINE"
+    },
+    {
+      "elapsed_s": 7.291,
+      "line": "N 7131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.293,
+      "line": "H 7131 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 7.486,
+      "line": "T 7331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.488,
+      "line": "I 7331 OFFLINE"
+    },
+    {
+      "elapsed_s": 7.495,
+      "line": "N 7331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.498,
+      "line": "H 7331 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 7.685,
+      "line": "T 7531 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.689,
+      "line": "I 7531 OFFLINE"
+    },
+    {
+      "elapsed_s": 7.697,
+      "line": "N 7531 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.698,
+      "line": "H 7531 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 7.885,
+      "line": "T 7731 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.889,
+      "line": "I 7731 OFFLINE"
+    },
+    {
+      "elapsed_s": 7.897,
+      "line": "N 7731 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.898,
+      "line": "H 7731 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 8.085,
+      "line": "T 7931 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.089,
+      "line": "I 7931 OFFLINE"
+    },
+    {
+      "elapsed_s": 8.097,
+      "line": "N 7931 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.098,
+      "line": "H 7931 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 8.285,
+      "line": "T 8131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.288,
+      "line": "I 8131 OFFLINE"
+    },
+    {
+      "elapsed_s": 8.296,
+      "line": "N 8131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.298,
+      "line": "H 8131 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 8.485,
+      "line": "T 8331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.488,
+      "line": "I 8331 OFFLINE"
+    },
+    {
+      "elapsed_s": 8.496,
+      "line": "N 8331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.498,
+      "line": "H 8331 IMU 0 0 0 4"
+    },
+    {
+      "elapsed_s": 8.671,
+      "line": "WARN IMU offline; retrying initialization"
+    },
+    {
+      "elapsed_s": 9.273,
+      "line": "WARN IMU not detected; motor control remains ava"
+    },
+    {
+      "elapsed_s": 9.275,
+      "line": "ilable"
+    },
+    {
+      "elapsed_s": 9.277,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 9.284,
+      "line": "T 9131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.285,
+      "line": "I 9131 OFFLINE"
+    },
+    {
+      "elapsed_s": 9.291,
+      "line": "N 9131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.293,
+      "line": "H 9131 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 9.486,
+      "line": "T 9331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.489,
+      "line": "I 9331 OFFLINE"
+    },
+    {
+      "elapsed_s": 9.497,
+      "line": "N 9331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.498,
+      "line": "H 9331 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 9.685,
+      "line": "T 9531 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.689,
+      "line": "I 9531 OFFLINE"
+    },
+    {
+      "elapsed_s": 9.697,
+      "line": "N 9531 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.698,
+      "line": "H 9531 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 9.885,
+      "line": "T 9731 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.888,
+      "line": "I 9731 OFFLINE"
+    },
+    {
+      "elapsed_s": 9.895,
+      "line": "N 9731 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.899,
+      "line": "H 9731 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 10.086,
+      "line": "T 9931 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.089,
+      "line": "I 9931 OFFLINE"
+    },
+    {
+      "elapsed_s": 10.095,
+      "line": "N 9931 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.097,
+      "line": "H 9931 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 10.286,
+      "line": "T 10131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.289,
+      "line": "I 10131 OFFLINE"
+    },
+    {
+      "elapsed_s": 10.297,
+      "line": "N 10131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.299,
+      "line": "H 10131 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 10.485,
+      "line": "T 10331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.488,
+      "line": "I 10331 OFFLINE"
+    },
+    {
+      "elapsed_s": 10.496,
+      "line": "N 10331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.499,
+      "line": "H 10331 IMU 0 0 0 5"
+    },
+    {
+      "elapsed_s": 10.672,
+      "line": "WARN IMU offline; retrying initialization"
+    },
+    {
+      "elapsed_s": 11.274,
+      "line": "WARN IMU not detected; motor control remains avail"
+    },
+    {
+      "elapsed_s": 11.275,
+      "line": "able"
+    },
+    {
+      "elapsed_s": 11.278,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 11.283,
+      "line": "T 11131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.285,
+      "line": "I 11131 OFFLINE"
+    },
+    {
+      "elapsed_s": 11.29,
+      "line": "N 11131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.293,
+      "line": "H 11131 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 11.486,
+      "line": "T 11331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.488,
+      "line": "I 11331 OFFLINE"
+    },
+    {
+      "elapsed_s": 11.496,
+      "line": "N 11331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.499,
+      "line": "H 11331 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 11.685,
+      "line": "T 11531 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.689,
+      "line": "I 11531 OFFLINE"
+    },
+    {
+      "elapsed_s": 11.694,
+      "line": "N 11531 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.697,
+      "line": "H 11531 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 11.886,
+      "line": "T 11731 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.889,
+      "line": "I 11731 OFFLINE"
+    },
+    {
+      "elapsed_s": 11.897,
+      "line": "N 11731 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.9,
+      "line": "H 11731 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 12.086,
+      "line": "T 11931 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.089,
+      "line": "I 11931 OFFLINE"
+    },
+    {
+      "elapsed_s": 12.097,
+      "line": "N 11931 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.099,
+      "line": "H 11931 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 12.286,
+      "line": "T 12131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.289,
+      "line": "I 12131 OFFLINE"
+    },
+    {
+      "elapsed_s": 12.295,
+      "line": "N 12131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.297,
+      "line": "H 12131 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 12.486,
+      "line": "T 12331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.489,
+      "line": "I 12331 OFFLINE"
+    },
+    {
+      "elapsed_s": 12.496,
+      "line": "N 12331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.499,
+      "line": "H 12331 IMU 0 0 0 6"
+    },
+    {
+      "elapsed_s": 12.672,
+      "line": "WARN IMU offline; retrying initialization"
+    },
+    {
+      "elapsed_s": 13.273,
+      "line": "WARN IMU not detected; motor control remains available"
+    },
+    {
+      "elapsed_s": 13.277,
+      "line": "IMU I2C FOUND 0x4A"
+    },
+    {
+      "elapsed_s": 13.284,
+      "line": "T 13131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.286,
+      "line": "I 13131 OFFLINE"
+    },
+    {
+      "elapsed_s": 13.291,
+      "line": "N 13131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.294,
+      "line": "H 13131 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 13.486,
+      "line": "T 13331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.489,
+      "line": "I 13331 OFFLINE"
+    },
+    {
+      "elapsed_s": 13.499,
+      "line": "N 13331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.501,
+      "line": "H 13331 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 13.686,
+      "line": "T 13531 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.689,
+      "line": "I 13531 OFFLINE"
+    },
+    {
+      "elapsed_s": 13.696,
+      "line": "N 13531 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.699,
+      "line": "H 13531 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 13.885,
+      "line": "T 13731 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.889,
+      "line": "I 13731 OFFLINE"
+    },
+    {
+      "elapsed_s": 13.897,
+      "line": "N 13731 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.899,
+      "line": "H 13731 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 14.085,
+      "line": "T 13931 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.088,
+      "line": "I 13931 OFFLINE"
+    },
+    {
+      "elapsed_s": 14.095,
+      "line": "N 13931 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.099,
+      "line": "H 13931 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 14.286,
+      "line": "T 14131 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.289,
+      "line": "I 14131 OFFLINE"
+    },
+    {
+      "elapsed_s": 14.297,
+      "line": "N 14131 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.299,
+      "line": "H 14131 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 14.486,
+      "line": "T 14331 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.489,
+      "line": "I 14331 OFFLINE"
+    },
+    {
+      "elapsed_s": 14.497,
+      "line": "N 14331 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.5,
+      "line": "H 14331 IMU 0 0 0 7"
+    },
+    {
+      "elapsed_s": 14.672,
+      "line": "WARN IMU offline; retrying initialization"
+    }
+  ],
+  "manifest": {
+    "source_commit": "0c06b6cdcc3fed3a6834a0e9a225c8f5b159f3ed",
+    "fqbn": "esp32:esp32:esp32",
+    "core": "3.3.11",
+    "source_sha256": {
+      "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+      "Maker_Mechbot.ino": "43adbe6aac0d315684fcfac545156b920225c689aa698f72d6a2ae983d04ae0a",
+      "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+      "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+    },
+    "images": [
+      {
+        "address": "0x1000",
+        "name": "Maker_Mechbot.ino.bootloader.bin",
+        "bytes": 24992,
+        "sha256": "427f96e10c620c4f062dab15da54fc45494d897e8397ae6f3aecc98c42d7e379"
+      },
+      {
+        "address": "0x8000",
+        "name": "Maker_Mechbot.ino.partitions.bin",
+        "bytes": 3072,
+        "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+      },
+      {
+        "address": "0xe000",
+        "name": "boot_app0.bin",
+        "bytes": 8192,
+        "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+      },
+      {
+        "address": "0x10000",
+        "name": "Maker_Mechbot.ino.bin",
+        "bytes": 360576,
+        "sha256": "a84cc43b33c59e512e52013545699a9935a8ae729110047859b630e2680f0c6a"
+      }
+    ]
+  },
+  "before": {
+    "serial_connected": true,
+    "gamepad_connected": true,
+    "deadman": false,
+    "last_line": "WARN IMU reports missing; retrying Q1 G1 A1",
+    "updated": 1788623405.8232203,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "encoders": [
+      3631,
+      4538,
+      14518,
+      20427
+    ],
+    "encoder_updated": 1788623405.7996204,
+    "imu": "I 498019 WAIT Q0 G0 A0",
+    "imu_valid": false,
+    "imu_updated": null,
+    "navigation": "N 498019 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 498020 IMU 1 0 2 1",
+    "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 5736,
+        "b_edges": 5759,
+        "invalid_transitions": 1,
+        "updated": 1788623405.3864696
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 5881,
+        "b_edges": 5841,
+        "invalid_transitions": 0,
+        "updated": 1788623405.3871372
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 27755,
+        "b_edges": 27793,
+        "invalid_transitions": 2,
+        "updated": 1788623405.3987544
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 38330,
+        "b_edges": 38343,
+        "invalid_transitions": 2,
+        "updated": 1788623405.39927
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-help"
+    },
+    "rearm_required": false,
+    "calibration_active": false,
+    "recent_lines": [
+      "T 497011 3631 4538 14518 20427",
+      "I 497012 WAIT Q0 G0 A0",
+      "N 497012 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 497012 IMU 1 0 2 1",
+      "WARN IMU reports missing; retrying Q1 G1 A1",
+      "T 497211 3631 4538 14518 20427",
+      "I 497212 WAIT Q0 G0 A0",
+      "N 497212 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 497212 IMU 1 0 2 1",
+      "T 497412 3631 4538 14518 20427",
+      "I 497412 WAIT Q0 G0 A0",
+      "N 497412 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 497412 IMU 1 0 2 1",
+      "D FL PWM 0.0 A 5736 B 5759 INVALID 1",
+      "D FR PWM 0.0 A 5881 B 5841 INVALID 0",
+      "D RL PWM 0.0 A 27755 B 27793 INVALID 2",
+      "D RR PWM 0.0 A 38330 B 38343 INVALID 2",
+      "T 497619 3631 4538 14518 20427",
+      "I 497619 WAIT Q0 G0 A0",
+      "N 497619 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 497619 IMU 1 0 2 1",
+      "T 497819 3631 4538 14518 20427",
+      "I 497819 WAIT Q0 G0 A0",
+      "N 497819 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 497820 IMU 1 0 2 1",
+      "T 498019 3631 4538 14518 20427",
+      "I 498019 WAIT Q0 G0 A0",
+      "N 498019 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 498020 IMU 1 0 2 1",
+      "WARN IMU reports missing; retrying Q1 G1 A1"
+    ]
+  },
+  "settings_before": {
+    "lines": [
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 498219 3631 4538 14518 20427",
+      "I 498219 WAIT Q0 G0 A0",
+      "N 498219 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 498220 IMU 1 0 2 1",
+      "T 498419 3631 4538 14518 20427",
+      "I 498419 WAIT Q0 G0 A0",
+      "N 498419 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 498420 IMU 1 0 2 1"
+    ]
+  },
+  "step": "verify-flash",
+  "backup_sha256": "62a4102c329ade7cdfe7c6b4033ef30bfcb3fb61c4a80ee1d1bde895359915a2",
+  "backup_range": {
+    "start": 0,
+    "bytes": 458752,
+    "scope": "all overwritten regions plus NVS; remainder of flash untouched"
+  },
+  "written": true,
+  "flash_verified": true,
+  "nvs_unchanged": true,
+  "fresh_ready": true,
+  "settings_after": {
+    "lines": [
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 17531 0 0 0 0",
+      "I 17531 OFFLINE",
+      "N 17531 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17531 IMU 0 0 0 9",
+      "T 17731 0 0 0 0",
+      "I 17731 OFFLINE",
+      "N 17731 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17731 IMU 0 0 0 9"
+    ]
+  },
+  "after": {
+    "serial_connected": true,
+    "gamepad_connected": true,
+    "deadman": false,
+    "updated": 1788623505.5876203,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 17731 IMU 0 0 0 9",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788623505.5744162,
+    "imu": "I 17731 OFFLINE",
+    "imu_valid": false,
+    "imu_updated": null,
+    "navigation": "N 17731 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 17731 IMU 0 0 0 9",
+    "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623505.076616
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623505.077175
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623505.077663
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623505.0900338
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-help"
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "D FR PWM 0.0 A 0 B 0 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 17331 0 0 0 0",
+      "I 17331 OFFLINE",
+      "N 17331 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17331 IMU 0 0 0 9",
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 17531 0 0 0 0",
+      "I 17531 OFFLINE",
+      "N 17531 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17531 IMU 0 0 0 9",
+      "T 17731 0 0 0 0",
+      "I 17731 OFFLINE",
+      "N 17731 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17731 IMU 0 0 0 9"
+    ]
+  },
+  "finished": 1788623505.711222
+}

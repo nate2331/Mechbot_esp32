@@ -1,0 +1,117 @@
+{
+  "serial_connected": true,
+  "gamepad_connected": false,
+  "deadman": false,
+  "updated": 1788572134.9189186,
+  "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "last_line": "H 2956653 IMU 1 2956629 3 1",
+  "navigation": "N 2956653 0.000177 0.000000 0.000000 0.0000 0 0 1",
+  "encoders": [
+    35043,
+    40094,
+    103442,
+    86581
+  ],
+  "encoder_updated": 1788572134.907458,
+  "imu": "I 2956642 -0.010437 -0.008484 0.000000 0.999939 0.000000 0.000000 0.000000 -0.011719 0.003906 0.000000 3",
+  "imu_valid": true,
+  "imu_updated": 1788572134.9187038,
+  "health": "H 2956653 IMU 1 2956629 3 1",
+  "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+  "wheel_diagnostics": {
+    "FL": {
+      "pwm": 0.0,
+      "a_edges": 17557,
+      "b_edges": 17570,
+      "invalid_transitions": 0,
+      "updated": 1788572134.2172875
+    },
+    "FR": {
+      "pwm": 0.0,
+      "a_edges": 20192,
+      "b_edges": 20136,
+      "invalid_transitions": 1,
+      "updated": 1788572134.2174559
+    },
+    "RL": {
+      "pwm": 0.0,
+      "a_edges": 51947,
+      "b_edges": 51755,
+      "invalid_transitions": 2,
+      "updated": 1788572134.2175596
+    },
+    "RR": {
+      "pwm": 0.0,
+      "a_edges": 43337,
+      "b_edges": 43322,
+      "invalid_transitions": 0,
+      "updated": 1788572134.2290897
+    }
+  },
+  "maintenance": false,
+  "board": {
+    "id": "maker",
+    "name": "Maker ESP32 Pro",
+    "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+    "fqbn": "esp32:esp32:esp32",
+    "sketch": "Maker_Mechbot",
+    "encoder_wheels": [
+      "FL",
+      "FR",
+      "RL",
+      "RR"
+    ],
+    "diagnostics": true,
+    "baseline": {
+      "pwm-fl": 177,
+      "pwm-fr": 177,
+      "pwm-rl": 177,
+      "pwm-rr": 177
+    },
+    "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+    "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+    "counts_per_revolution": {
+      "FL": 2468.8,
+      "FR": 2467.9,
+      "RL": 2473.5,
+      "RR": 2469.8
+    },
+    "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+    "closed_loop": false,
+    "identity_source": "maker-help"
+  },
+  "rearm_required": true,
+  "calibration_active": false,
+  "recent_lines": [
+    "Heading hold: OFF (verify sensor axes before enabling)",
+    "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "IMU: SDA21 SCL22, no reset wire; relative yaw, NOT compass north",
+    "Default PWM=177 all wheels; independent output watchdog, ramped drive",
+    "DIAG                      encoder edges/errors and applied PWM",
+    "IMU RETRY                 stopped reinitialization",
+    "Watchdog: 300 ms",
+    "Encoder: T <ms> <FL> <FR> <RL> <RR>",
+    "IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>",
+    "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>",
+    "D FL PWM 0.0 A 17557 B 17570 INVALID 0",
+    "D FR PWM 0.0 A 20192 B 20136 INVALID 1",
+    "D RL PWM 0.0 A 51947 B 51755 INVALID 2",
+    "D RR PWM 0.0 A 43337 B 43322 INVALID 0",
+    "T 2956034 35043 40094 103442 86581",
+    "I 2956034 -0.010376 -0.008362 0.000000 0.999939 0.000000 0.000000 0.000000 -0.003906 0.003906 0.000000 3",
+    "N 2956046 0.000174 0.000000 0.000000 0.0000 0 0 1",
+    "H 2956046 IMU 1 2956030 3 1",
+    "T 2956234 35043 40094 103442 86581",
+    "I 2956234 -0.010437 -0.008362 0.000000 0.999939 0.000000 0.000000 0.000000 -0.011719 0.011719 0.000000 3",
+    "N 2956246 0.000175 0.000000 0.000000 0.0000 0 0 1",
+    "H 2956246 IMU 1 2956227 3 1",
+    "T 2956434 35043 40094 103442 86581",
+    "I 2956434 -0.010498 -0.008423 0.000000 0.999939 0.000000 0.000000 0.000000 -0.011719 0.003906 0.000000 3",
+    "N 2956446 0.000177 0.000000 0.000000 0.0000 0 0 1",
+    "H 2956446 IMU 1 2956427 3 1",
+    "T 2956641 35043 40094 103442 86581",
+    "I 2956642 -0.010437 -0.008484 0.000000 0.999939 0.000000 0.000000 0.000000 -0.011719 0.003906 0.000000 3",
+    "N 2956653 0.000177 0.000000 0.000000 0.0000 0 0 1",
+    "H 2956653 IMU 1 2956629 3 1"
+  ]
+}

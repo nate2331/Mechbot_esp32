@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-07",
+  "board": "esp32:esp32:esp32:FlashMode=dio",
+  "core": "3.3.11",
+  "compilation": "passed",
+  "flash_bytes": 288951,
+  "static_ram_bytes": 22648,
+  "host_scenarios_passed": 7,
+  "uploaded": false,
+  "hardware_tested": false,
+  "pwm_hz": 248,
+  "pwm_clock": "APB",
+  "pwm_resolution_bits": 9,
+  "logical_duty": 150,
+  "hardware_duty": 300,
+  "hashes": [
+    {
+      "Path": "C:\\Users\\nate2\\OneDrive\\Documents\\Arduino\\Mechbot_esp32\\Maker_IMU_RVC_Movement_Test\\Maker_IMU_RVC_Movement_Test.ino",
+      "Hash": "A96685811DA12739FBD94A2ECF4F73477525B9BF447B2DE96B6469B3C18B8D24"
+    },
+    {
+      "Path": "C:\\Users\\nate2\\OneDrive\\Documents\\Arduino\\Mechbot_esp32\\Maker_IMU_RVC_Movement_Test\\MotorSafety.h",
+      "Hash": "290D2FD5D45AC813A14FFC3CBAF5A4EAF6B5A86F22E2247BD93DCB41846ECDB0"
+    },
+    {
+      "Path": "C:\\Users\\nate2\\OneDrive\\Documents\\Arduino\\Mechbot_esp32\\Maker_IMU_RVC_Movement_Test\\RvcParser.h",
+      "Hash": "0C7777A9E1C7F60766E5340DF53C5A327CC0C68BD102EF74D7FE098B61ACBFD8"
+    },
+    {
+      "Path": "C:\\Users\\nate2\\OneDrive\\Documents\\Arduino\\Mechbot_esp32\\tests\\maker_rvc_movement_test.cpp",
+      "Hash": "ACEA0AC306F0D521D911BB62693DC7CDE7AD8ADF8AEAFBA99167ABC03066103B"
+    },
+    {
+      "Path": "C:\\Users\\nate2\\AppData\\Local\\Temp\\codex-maker-rvc-movement-build\\Maker_IMU_RVC_Movement_Test.ino.bin",
+      "Hash": "13E2585CEA3E29EDE3838B945879973A55803AC692B3F8160914D849648D0475"
+    }
+  ]
+}

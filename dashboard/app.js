@@ -43,7 +43,7 @@ async function request(path, options = {}) {
 }
 
 const post = (path, payload = {}) => request(path, {
-  method: 'POST', body: JSON.stringify(payload),
+  method: 'POST', body: JSON.stringify({ board_id: status.board?.id, ...payload }),
 });
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -51,6 +51,35 @@ const lastTest = () => (session.tests || []).at(-1);
 const signed = value => `${value > 0 ? '+' : ''}${value}`;
 const pwmValue = (settings, key) => Math.round(Number(
   settings?.[key] ?? session.proven_baseline?.[key] ?? 0));
+const encoderWheels = () => status.board?.encoder_wheels || [];
+
+function renderBoard() {
+  const board = status.board || {};
+  const known = status.serial_connected && board.id && board.id !== 'unknown';
+  for (const meta of Object.values(PWM_META)) meta.encoder = encoderWheels().includes(meta.short);
+  $('encoderLabel').textContent = board.id === 'maker' ? 'FOUR ENCODERS' : 'ENCODERS';
+  $('encoderDetail').textContent = encoderWheels().join(' / ') || 'Waiting for board identity';
+  $('baselineTitle').textContent = board.baseline_label || 'Identify the controller';
+  $('baselineNote').textContent = board.baseline_note || 'Waiting for firmware identity.';
+  $('applyBaseline').disabled = !known || Boolean(session.calibration?.running);
+  $('feedbackTitle').textContent = board.id === 'maker' ? 'Four-wheel feedback on Maker' : 'Rear-encoder feedback on the legacy chassis';
+  $('feedbackCopy').textContent = board.id === 'maker'
+    ? 'All four encoders were measured over ten wheel turns. This console compares each wheel with its own earlier response. The supervised automatic bench tool uses those measured scales to assess starting PWM and steady speed in both directions. A single PWM trim may not correct the observed rear-left direction difference.'
+    : 'Compare each rear encoder with its own earlier run. Legacy raw counts are not established as equal distance units. Heading and path observations support small reversible chassis trims.';
+  const canUpdate = known && !status.gamepad_connected && !status.deadman && !session.active &&
+    !status.calibration_active && !status.maintenance;
+  $('updateFirmware').disabled = !canUpdate;
+  $('updateFirmware').textContent = known ? `Compile & flash ${board.name}` : 'Identify controller before updating';
+  $('updateFirmware').title = canUpdate ? 'Use the connected board target' : 'Identify the board, disconnect the gamepad and finish tuning first';
+  $('wheelDiagnostics').textContent = board.diagnostics
+    ? encoderWheels().map(wheel => {
+      const diagnostic = status.wheel_diagnostics?.[wheel];
+      if (!diagnostic || Date.now() / 1000 - diagnostic.updated > 3) return `${wheel}: unavailable / stale`;
+      return `${wheel}: PWM ${diagnostic.pwm} · A ${diagnostic.a_edges} · B ${diagnostic.b_edges} · invalid ${diagnostic.invalid_transitions}`;
+    }).join('\n') : 'Per-wheel diagnostics are available on Maker firmware.';
+  document.querySelectorAll('[data-workflow]').forEach(button => { button.disabled = !known; });
+  for (const id of ['apply', 'save']) $(id).disabled = !known || Boolean(session.active) || Boolean(status.maintenance);
+}
 
 function card(id, state) {
   $(id).closest('.status-card').className = `status-card ${state}`;
@@ -95,14 +124,16 @@ async function refresh() {
     session = nextSession;
     const age = status.updated ? Date.now() / 1000 - status.updated : 999;
     const imuHealth = health(status.health);
-    const imuFresh = Boolean(imuHealth?.available && status.imu && age < 3);
+    const imuFresh = Boolean(imuHealth?.available && status.imu_valid && status.imu_updated &&
+      Date.now() / 1000 - status.imu_updated < 1);
     const encoderAge = status.encoder_updated
       ? Date.now() / 1000 - status.encoder_updated : 999;
     const encoderFresh = Boolean(status.serial_connected && encoderAge < 1.5);
     const encoders = Array.isArray(status.encoders) ? status.encoders : [0, 0, 0, 0];
 
     $('serialState').textContent = status.serial_connected ? 'Connected' : 'Disconnected';
-    $('firmware').textContent = status.firmware || status.serial_port || 'No serial device';
+    $('firmware').textContent = status.firmware || (status.board?.identity_source === 'maker-help'
+      ? 'Maker identified · firmware version not reported' : status.serial_port) || 'No serial device';
     card('serialState', status.serial_connected ? 'good' : 'bad');
     $('encoderState').textContent = encoderFresh ? 'Telemetry fresh' : 'Unavailable / stale';
     card('encoderState', encoderFresh ? 'good' : 'warn');
@@ -114,14 +145,15 @@ async function refresh() {
     $('sessionState').textContent = session.active ? 'In progress' : 'None';
     $('sessionDetail').textContent = session.active
       ? `${session.workflow} · ${(session.tests || []).length} test(s) stored`
-      : (session.phase || 'Safe settings retained');
+      : (session.error || (status.rearm_required ? 'Release the deadman before driving' : session.phase) || 'Safe settings retained');
     card('sessionState', session.active ? 'warn' : 'good');
     $('freshness').textContent = age < 999
       ? `Updated ${Math.max(0, Math.round(age))}s ago` : 'Waiting for data';
-    $('encoders').innerHTML = ['FL uninstalled', 'FR uninstalled', 'RL', 'RR']
-      .map((name, index) => `<div class="encoder"><span>${name}</span><strong>${index < 2 ? 'N/A' : encoders[index]}</strong></div>`)
+    $('encoders').innerHTML = ['FL', 'FR', 'RL', 'RR']
+      .map((name, index) => `<div class="encoder"><span>${name}</span><strong>${encoderWheels().includes(name) ? encoders[index] : 'N/A'}</strong></div>`)
       .join('');
     $('events').textContent = (status.recent_lines || []).slice(-18).join('\n') || 'Waiting…';
+    renderBoard();
     renderNext();
 
     if (!$('sessionModal').hidden) {
@@ -146,22 +178,22 @@ function renderNext() {
   } else {
     const encoderFresh = Boolean(status.serial_connected && status.encoder_updated &&
       Date.now() / 1000 - status.encoder_updated < 1.5);
-    button.disabled = !status.serial_connected || !encoderFresh;
+    button.disabled = !status.serial_connected || !encoderFresh || status.board?.id === 'unknown';
     title.textContent = encoderFresh
-      ? 'Run a controlled forward baseline test' : 'Wait for fresh rear encoder telemetry';
+      ? 'Continue supervised motor validation' : 'Wait for fresh encoder telemetry';
     copy.textContent = encoderFresh
-      ? 'Begin at 45% output for 1 second, record nose rotation and path drift, then apply a small suggested trim and repeat the exact same test.'
-      : 'The page will not start a tuning session until a current rear-encoder telemetry frame is available.';
-    button.textContent = 'Start guided tuning';
-    button.onclick = () => openSession('floor');
+      ? 'Check wheel response with the wheels raised first. For a floor test, use a clear area and record heading and path drift. The bench tool measures starting thresholds and steady speed separately.'
+      : 'A known controller and current encoder telemetry are required for tuning.';
+    button.textContent = 'Open bench check';
+    button.onclick = () => openSession('bench');
   }
 }
 
 function workflowCopy() {
   if (workflow === 'bench') return {
-    title: 'Rear encoder response check',
-    copy: 'With every wheel clear of the floor, change PWM or test output and compare each rear encoder with its own prior rate.',
-    warning: 'All four wheels must be securely off the floor. Never use RL/RR rate ratio as a wheel-speed match.',
+    title: 'Encoder response check',
+    copy: 'With every wheel clear of the floor, change PWM or test output and compare each encoder with its own prior rate.',
+    warning: 'All four wheels must be securely off the floor. Pulse totals include startup and are not steady-speed measurements.',
   };
   if (workflow === 'imu') return {
     title: 'Heading-ready PWM tuning',
@@ -272,7 +304,7 @@ function renderWorkbench() {
       ${PWM_KEYS.map(key => {
         const meta = PWM_META[key];
         return `<div class="pwm-card ${meta.encoder ? 'measured' : ''}">
-          <div class="pwm-card-head"><span>${meta.short}</span><small>${meta.encoder ? 'rear encoder' : 'no encoder'}</small></div>
+          <div class="pwm-card-head"><span>${meta.short}</span><small>${meta.encoder ? 'encoder' : 'no encoder'}</small></div>
           <strong>${meta.name}</strong>
           <div class="stepper">
             <button class="secondary" data-pwm-adjust="-1" data-pwm-key="${key}" aria-label="Decrease ${meta.name}">−</button>
@@ -285,7 +317,7 @@ function renderWorkbench() {
     </div>
     <div class="inline-actions">
       <button id="applySessionPwm">Apply PWM live</button>
-      <button id="sessionBaseline" class="secondary">Load 230 / 230 / 200 / 200</button>
+      <button id="sessionBaseline" class="secondary">Load ${PWM_KEYS.map(key => pwmValue(session.proven_baseline, key)).join(' / ')}</button>
       <button id="undoPwm" class="secondary" ${(session.adjustments || []).length ? '' : 'disabled'}>Undo last PWM change</button>
       <span id="pwmApplyState" class="muted">Live on ESP32 · not saved</span>
     </div>
@@ -338,13 +370,12 @@ function renderHistory(tests) {
   return `<section class="history"><div class="workbench-head"><div><h3>Recent scored tests</h3><p>Best is tracked separately for each direction.</p></div></div>
     <div class="history-list">${scored.map(test => {
       const best = session.best_test_ids?.[test.command] === test.id;
-      const rl = Math.abs(Number(test.encoder_rates?.RL || 0)).toFixed(0);
-      const rr = Math.abs(Number(test.encoder_rates?.RR || 0)).toFixed(0);
+      const rates = encoderWheels().map(wheel => `${wheel} ${Math.abs(Number(test.encoder_rates?.[wheel] || 0)).toFixed(0)}`).join(' · ');
       return `<div class="history-row">
         <span>#${test.id}${best ? ' · BEST' : ''}</span>
         <strong>${DIRECTION_LABELS[test.command]}</strong>
         <span>${Math.round((test.magnitude || 1) * 100)}% · ${test.score}/5</span>
-        <span>RL ${rl} · RR ${rr} ticks/s</span>
+        <span>${rates} ticks/s</span>
         <span>${PWM_KEYS.map(key => pwmValue(test.settings, key)).join(' / ')}</span>
         <button class="secondary" data-restore-test="${test.id}">Use #${test.id} PWM</button>
       </div>`;
@@ -507,10 +538,9 @@ function renderRunning(calibration) {
     <div class="running-test"><strong>${DIRECTION_LABELS[calibration.direction || selectedDirection]}</strong><span id="runTime">0.0 / ${(Number(calibration.duration_ms || testDuration) / 1000).toFixed(1)} s</span></div>
     <div class="run-meter"><i id="runMeter"></i></div>
     <div class="live-rate-grid">
-      <div><span>RL live delta</span><strong id="liveRl">0</strong></div>
-      <div><span>RR live delta</span><strong id="liveRr">0</strong></div>
+      ${encoderWheels().map(wheel => `<div><span>${wheel} live delta</span><strong id="live${wheel}">0</strong></div>`).join('')}
     </div>
-    <p class="sensor-caveat">These two numbers are deliberately not divided into a match ratio.</p>`;
+    <p class="sensor-caveat">Pulse response includes startup; compare identical tests on the same wheel.</p>`;
   configureFooter({ primaryText: 'Running…', primaryDisabled: true });
   updateRunningTelemetry(calibration);
 }
@@ -522,8 +552,9 @@ function updateRunningTelemetry(calibration) {
   $('runMeter').style.width = `${clamp(elapsed / duration * 100, 0, 100)}%`;
   $('runTime').textContent = `${(elapsed / 1000).toFixed(1)} / ${(duration / 1000).toFixed(1)} s`;
   const deltas = calibration.live_deltas || [0, 0, 0, 0];
-  $('liveRl').textContent = deltas[2] ?? 0;
-  $('liveRr').textContent = deltas[3] ?? 0;
+  ['FL', 'FR', 'RL', 'RR'].forEach((wheel, index) => {
+    if ($(`live${wheel}`)) $(`live${wheel}`).textContent = deltas[index] ?? 0;
+  });
   $('sessionProgress').style.width = `${35 + clamp(elapsed / duration, 0, 1) * 25}%`;
   $('sessionMessage').textContent = `Running at ${Math.round(Number(calibration.magnitude || testMagnitude) * 100)}% output`;
 }
@@ -532,7 +563,7 @@ function rearComparison(test, name) {
   if (test.comparison && test.comparison.comparable === false) {
     return `Not compared with #${test.comparison.test_id}: ${test.comparison.reason}`;
   }
-  const info = test.comparison?.rear?.[name];
+  const info = test.comparison?.wheels?.[name] || test.comparison?.rear?.[name];
   if (!info) return 'First run in this direction';
   if (info.rate_change_percent == null) return `Prior test #${test.comparison.test_id} had no usable rate`;
   return `${signed(info.rate_change_percent)}% vs test #${test.comparison.test_id} · PWM ${signed(info.pwm_change)}`;
@@ -559,7 +590,7 @@ function renderObservation(test) {
   $('sessionProgress').style.width = '68%';
   const magnitude = Math.round(Number(test.magnitude || 1) * 100);
   const chassisQuestions = workflow === 'bench' ? `
-    <div class="cal-warning subtle">Wheels-up tests cannot reveal chassis heading or path error. Score rear response quality, then change one PWM or output value and repeat.</div>` : `
+    <div class="cal-warning subtle">Wheels-up tests cannot reveal chassis heading or path error. Score wheel response quality, then change one PWM or output value and repeat.</div>` : `
     <fieldset><legend>Did the robot’s nose rotate? <small>Left = counterclockwise viewed from above</small></legend>
       ${radioCards('heading', [['straight', 'No rotation'], ['yaw-left', 'Nose turned left'], ['yaw-right', 'Nose turned right'], ['unsure', 'Not sure']], 'straight')}
     </fieldset>
@@ -570,13 +601,13 @@ function renderObservation(test) {
     <div class="cal-step-label">TEST #${test.id} COMPLETE · DESCRIBE WHAT HAPPENED</div>
     <div class="result-head"><div><h3>${DIRECTION_LABELS[test.command]}</h3><p>${magnitude}% output · ${(test.duration_ms / 1000).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')} s</p></div><span>Auto-stopped</span></div>
     <div class="rear-feedback">
-      ${['RL', 'RR'].map(name => `<div class="rate-card">
+      ${encoderWheels().map(name => `<div class="rate-card">
         <span>${name} encoder</span>
         <strong>${Math.abs(Number(test.encoder_rates?.[name] || 0)).toFixed(1)} <small>ticks/s</small></strong>
         <em>${rearComparison(test, name)}</em>
       </div>`).join('')}
     </div>
-    <p class="sensor-caveat">Compare RL with earlier RL runs and RR with earlier RR runs. Do not compare RL directly with RR.</p>
+    <p class="sensor-caveat">Compare each wheel with its own earlier run at the same output and duration. These rates include startup.</p>
     <div class="actual-duty">${PWM_KEYS.map(key => `<div><span>${PWM_META[key].short} duty</span><strong>${test.actual_duty?.[key] ?? '—'}</strong><small>cap ${pwmValue(test.settings, key)}</small></div>`).join('')}</div>
 
     ${chassisQuestions}
@@ -735,14 +766,13 @@ document.querySelectorAll('[data-workflow]').forEach(button => {
 
 $('applyBaseline').onclick = async () => {
   try {
-    baselinePrevious = PWM_KEYS.map(key => Number($(key).value));
+    baselinePrevious = { board_id: status.board?.id, values: PWM_KEYS.map(key => Number($(key).value)) };
     localStorage.setItem('mechbot-baseline-previous', JSON.stringify(baselinePrevious));
     if (session.active) {
       session = await post('/api/tuning/baseline');
     } else {
-      for (const [key, value] of Object.entries({
-        'pwm-fl': 230, 'pwm-fr': 230, 'pwm-rl': 200, 'pwm-rr': 200,
-      })) await post('/api/settings', { key, value });
+      if (!status.board?.id || status.board.id === 'unknown') throw new Error('Identify the connected controller first');
+      for (const [key, value] of Object.entries(status.board.baseline)) await post('/api/settings', { key, value });
     }
     await loadSettings();
     $('message').textContent = 'Baseline applied live; not saved';
@@ -756,8 +786,9 @@ $('revert').onclick = async () => {
       $('message').textContent = 'No baseline change to revert';
       return;
     }
+    if (baselinePrevious.board_id !== status.board?.id) throw new Error('Previous settings belong to another or unidentified board');
     for (let index = 0; index < PWM_KEYS.length; index += 1) {
-      await post('/api/settings', { key: PWM_KEYS[index], value: baselinePrevious[index] });
+      await post('/api/settings', { key: PWM_KEYS[index], value: baselinePrevious.values[index] });
     }
     baselinePrevious = null;
     localStorage.removeItem('mechbot-baseline-previous');
@@ -806,7 +837,7 @@ async function firmwareStatus() {
 }
 
 $('updateFirmware').onclick = async () => {
-  if (confirm('Compile and flash firmware now?')) {
+  if (confirm(`Compile and flash ${status.board?.name}? Raise the wheels, switch motor power off, and disconnect the gamepad first.`)) {
     try { await post('/api/firmware/start'); await firmwareStatus(); }
     catch (error) { $('firmwareLog').textContent = error.message; }
   }

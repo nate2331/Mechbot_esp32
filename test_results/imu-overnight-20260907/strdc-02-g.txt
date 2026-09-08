@@ -1,0 +1,46 @@
+TRIAL command=g bus_hz=100000 interval_us=20000
+INIT result=0 elapsed_ms=273
+ID_INIT valid=1 PN=10004148 build=6 version=3.2.13 reset_cause=4
+[DEBUG] Timed out waiting for Set Feature Command Response
+SET id=0x02 result=1 elapsed_ms=252
+GET_INITIAL id=0x02 result=0 elapsed_ms=4 interval_us=0 batch_us=0 sensitivity=0 config=0x00000000
+OBSERVE_BEGIN duration_ms=35000; no calibration command was sent.
+LIVE elapsed_ms=1000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=2000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=3000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=4000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=5000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=6000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=7000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=8000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=9000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=10000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=11000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=12000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=13000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=14000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=15000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=16000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=17000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=18000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=19000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=20000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=21000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=22000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=23000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=24000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=25000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=26000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=27000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=28000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=29000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=30000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=31000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=32000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=33000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+LIVE elapsed_ms=34000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+SUMMARY elapsed_ms=35000 resets=0 INT=1 | id=0x02 count=0 new=0 age_ms=-1
+GET_FINAL id=0x02 result=0 elapsed_ms=3 interval_us=0 batch_us=0 sensitivity=0 config=0x00000000
+ID_PROBE write_result=0 response=1 elapsed_ms=4
+ID_FINAL valid=1 PN=10004148 build=6 version=3.2.13 reset_cause=4
+DONE idle; observation counters stopped. Send one new command to reset/test.

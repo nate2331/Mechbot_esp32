@@ -14,11 +14,26 @@ from mechbot_bridge import Bridge
 
 
 class FakeSerial:
-    def __init__(self):
+    def __init__(self, bridge=None):
         self.commands = []
+        self.bridge = bridge
+        self.settings = dict(zip(("pwm-fl", "pwm-fr", "pwm-rl", "pwm-rr"), (230, 230, 200, 200)))
+        self.settings.update({"heading-kp": 0.7, "heading-max": 0.3,
+                              "heading-deadband-deg": 1.5, "heading-sign": 1,
+                              "heading-enabled": 1})
 
     def write(self, data):
-        self.commands.append(data.decode("ascii").strip())
+        command = data.decode("ascii").strip()
+        self.commands.append(command)
+        if self.bridge and command == "CFG GET":
+            for key, value in self.settings.items():
+                self.bridge.parse_line(f"CFG {key} {value}")
+        elif command.startswith("CFG SET"):
+            _, _, key, value = command.split()
+            self.settings[key] = float(value)
+
+    def close(self):
+        pass
 
     def flush(self):
         pass
@@ -29,9 +44,9 @@ class CalibrationSafetyTest(unittest.TestCase):
         self.bridge = Bridge()
         self.tempdir = tempfile.TemporaryDirectory()
         self.bridge.session_file = Path(self.tempdir.name) / "session.json"
-        self.bridge.serial = FakeSerial()
+        self.bridge.serial = FakeSerial(self.bridge)
         self.bridge.telemetry.update(serial_connected=True, encoders=[10, 20, 30, 40],
-                                     encoder_updated=time.time())
+                                     encoder_updated=time.time(), firmware="ESP32_MECANUM_USB_IMU_NAV_V4")
 
     def tearDown(self):
         self.tempdir.cleanup()
@@ -239,6 +254,7 @@ class CalibrationSafetyTest(unittest.TestCase):
         self.bridge.apply_tuning_settings({"pwm-rl": 202})
         state = self.bridge.end_tuning(True, True)
         self.assertEqual(state["phase"], "ended-saved")
+        self.assertEqual(state["saved_settings"]["heading-enabled"], 1)
         heading_restore = max(index for index, command in enumerate(self.bridge.serial.commands)
                               if command == "CFG SET heading-enabled 1.0")
         save = max(index for index, command in enumerate(self.bridge.serial.commands)

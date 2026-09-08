@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blackbot Two Operations</title>
+<link rel="stylesheet" href="/ops.css">
+<script defer src="/ops.js"></script>
+<script defer src="/ops-live.js"></script>
+<script defer src="/ops-sessions.js"></script>
+<script defer src="/ops-evidence.js"></script>
+<script defer src="/ops-encoder-math.js"></script>
+<script defer src="/ops-encoder.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Blackbot Two operations"><span class="brand-mark" aria-hidden="true">▥</span><span>BLACKBOT <b>/ TWO</b><small>ROBOT OPERATIONS</small></span></a>
+  <div class="header-status"><span id="modeBadge" class="badge">CONNECTING</span><span id="connection">Waiting for connection</span></div>
+  <button id="stop" class="stop" type="button">■ STOP MOTORS</button>
+</header>
+  <nav class="workspace-nav" aria-label="Workspace">
+    <button data-view="overview">Overview</button>
+    <button data-view="recordings">Recordings</button>
+    <button data-view="evidence">Evidence</button>
+    <button data-view="geometry">Geometry</button>
+    <a href="/tuning">Tuning ↗</a>
+  </nav>
+  <div id="notice" role="status" aria-live="polite"></div>
+<main>
+  <section id="view-overview" class="view">
+    <div class="hero">
+      <article class="intro">
+        <p class="eyebrow">01 / LIVE OBSERVATION</p>
+        <h1>Signal before <em>speed.</em></h1>
+        <p>Track every wheel. Find the fault. Keep the evidence.</p>
+        <small id="nextAction">Waiting for controller identity</small>
+      </article>
+      <div class="metrics">
+        <article>
+          <label>Controller</label>
+          <strong id="boardName"></strong>
+        </article>
+        <article>
+          <label>Wheel feedback</label>
+          <strong id="rateState"></strong>
+        </article>
+        <article>
+          <label>IMU</label>
+          <strong id="imuState"></strong>
+        </article>
+        <article>
+          <label>Odometry</label>
+          <strong id="poseState"></strong>
+        </article>
+      </div>
+      <div class="panel">
+        <h2>Wheel speed <span class="subtle">/ rolling history</span></h2>
+        <div id="rateUnits"></div>
+        <canvas id="speedChart" width="1000" height="300" aria-label="Four wheel speed traces" role="img"></canvas>
+        <ul class="legend">
+          <li class="fl">FL · front left</li>
+          <li class="fr">FR · front right</li>
+          <li class="rl">RL · rear left</li>
+          <li class="rr">RR · rear right</li>
+        </ul>
+      </div>
+      <div id="wheelCards" class="wheel-grid"></div>
+      <div class="panel">
+        <h2>Encoder integrity</h2>
+        <p>Counter changes are observed between diagnostic samples; pulse timing is approximate.</p>
+        <div class="table-wrapper"><table>
+          <caption>Latest per-wheel diagnostic sample</caption>
+          <thead>
+            <tr><th>Wheel</th><th>PWM</th><th>A edges</th><th>B edges</th><th>Invalid</th><th>Age</th></tr>
+          </thead>
+          <tbody id="diagnosticRows"></tbody>
+        </table></div>
+      </div>
+      <div class="panel" aria-labelledby="encoderCheckTitle">
+        <h2 id="encoderCheckTitle">Encoder check <span class="subtle">/ independent of IMU</span></h2>
+        <p>Compare counts over an observation window. These controls send no motor commands. For hand-turn checks, keep motor power off and support the robot securely.</p>
+        <div class="row">
+          <button id="encoderStart" disabled>Start observation</button>
+          <button id="encoderFinish" class="secondary" disabled>Finish observation</button>
+          <button id="encoderDownload" class="secondary" disabled>Download result</button>
+        </div>
+        <p id="encoderCheckState" role="status">Waiting for fresh Maker encoder diagnostics.</p>
+        <div class="table-wrapper"><table>
+          <caption>Changes since observation started · forward-positive counts</caption>
+          <thead><tr><th>Wheel</th><th>Count change</th><th>Net turns</th><th>A edges</th><th>B edges</th><th>Invalid</th></tr></thead>
+          <tbody id="encoderCheckRows"></tbody>
+        </table></div>
+        <p>Zero errors while stationary is not a motion-test pass. A/B diagnostics and wheel totals arrive separately; finish after fresh stopped samples. Use Recordings for the complete serial trace.</p>
+      </div>
+      <div class="panel">
+        <h2>Event timeline</h2>
+        <ol id="eventList"></ol>
+      </div>
+    </div>
+  </section>
+  <section id="view-recordings" class="view" hidden>
+    <h3>Capture once. Inspect again.</h3>
+    <p>Replay is an offline view of saved telemetry.</p>
+    <form id="captureForm">
+      <label>Session label
+        <input id="captureLabel" maxlength="80" value="Bench observation">
+      </label>
+      <label>Surface
+        <input id="captureSurface" maxlength="80">
+      </label>
+      <label>Load / setup
+        <input id="captureLoad" maxlength="120">
+      </label>
+      <label>Battery voltage (optional)
+        <input id="captureBattery" type="number" min="0" max="60" step="0.1">
+      </label>
+      <button id="captureStart">Start capture</button>
+      <button id="captureStop" type="button" class="secondary">Finish capture</button>
+    </form>
+    <p id="captureState" role="status"></p>
+    <div id="recordingList"></div>
+    <div id="replayPanel" class="panel" hidden>
+      <h4>Offline replay</h4>
+      <button id="replayPlay">Play</button>
+      <button id="replayExit">Return to live</button>
+      <input id="replayScrub" type="range" min="0" max="1" step="0.05" value="0" aria-label="Replay position">
+      <output id="replayTime"></output>
+      <div id="replaySummary"></div>
+      <canvas id="replayChart" width="1000" height="300" aria-label="Recorded wheel speed traces" role="img"></canvas>
+    </div>
+  </section>
+  <section id="view-evidence" class="view" hidden>
+    <h3>What the bench actually proved.</h3>
+    <p>Partial and aborted runs remain evidence, with their limits visible.</p>
+    <div id="evidenceList"></div>
+    <form id="compareForm">
+      <label>Left
+        <select id="compareLeft"></select>
+      </label>
+      <label>Right
+        <select id="compareRight"></select>
+      </label>
+      <button>Compare runs</button>
+    </form>
+    <div id="comparison"></div>
+  </section>
+  <section id="view-geometry" class="view" hidden>
+    <h3>Measure before mapping.</h3>
+    <p>Passive wheel odometry needs measured loaded dimensions. It does not command the robot.</p>
+    <form id="geometryForm">
+      <label>Loaded wheel diameter (m)
+        <input id="wheel_diameter_m" type="number" min="0.001" max="3" step="0.001" required>
+      </label>
+      <label>Front-to-rear wheelbase (m)
+        <input id="wheelbase_m" type="number" min="0.001" max="3" step="0.001" required>
+      </label>
+      <label>Left-to-right track width (m)
+        <input id="track_width_m" type="number" min="0.001" max="3" step="0.001" required>
+      </label>
+      <button>Save measured geometry</button>
+    </form>
+    <button id="resetPose">Reset pose origin</button>
+    <p id="geometryState"></p>
+    <canvas id="poseChart" width="800" height="360" aria-label="Passive odometry path" role="img"></canvas>
+    <div id="poseReadout"></div>
+  </section>
+</main>
+<footer>
+  <p>Blackbot Two • Measurements first, motion with confidence.</p>
+</footer>
+</body>
+</html>

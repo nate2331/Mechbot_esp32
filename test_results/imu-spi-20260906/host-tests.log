@@ -1,0 +1,2 @@
+PASS: SPI reset mode, startup deadline and I/O gating, idle/ready reads, wake/CS/payload sequence, timeout cleanup, rollover, first-failure/product-ID cleanup, and repeated single-slot reinitialization
+PASS: actual firmware mapping, defaults, coherent encoder startup/sampling, all transitions/polarities, resync/reverse counts, PWM polarity, blocked-sensor timeout, stop, malformed/overflow input, settings, stale IMU, SPI initialization, reset mode, failed-init invalidation and stopped reset recovery

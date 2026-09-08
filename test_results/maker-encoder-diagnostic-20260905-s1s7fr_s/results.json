@@ -1,0 +1,229 @@
+{
+  "purpose": "Isolate the new RL invalid transition after automatic forward-start tests",
+  "trials": [
+    {
+      "phase": "RL_only",
+      "repeat": 1,
+      "pwm": [
+        0,
+        0,
+        177,
+        0
+      ],
+      "direction": 1,
+      "observation": {
+        "pwm": [
+          0,
+          0,
+          177,
+          0
+        ],
+        "direction": 1,
+        "rpm": [
+          0.0,
+          0.0,
+          77.25894481503941,
+          0.0
+        ],
+        "sustained": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "start_delay_bounds_ms": [
+          null,
+          null,
+          [
+            75.2,
+            274.6
+          ],
+          null
+        ],
+        "sample_gap_ms": 201.0
+      },
+      "diagnostics_after": {
+        "FL": [
+          0.0,
+          0
+        ],
+        "FR": [
+          0.0,
+          0
+        ],
+        "RL": [
+          0.0,
+          1
+        ],
+        "RR": [
+          0.0,
+          0
+        ]
+      }
+    },
+    {
+      "phase": "RL_only",
+      "repeat": 2,
+      "pwm": [
+        0,
+        0,
+        177,
+        0
+      ],
+      "direction": 1,
+      "observation": {
+        "pwm": [
+          0,
+          0,
+          177,
+          0
+        ],
+        "direction": 1,
+        "rpm": [
+          0.0,
+          0.0,
+          79.28821628666853,
+          0.0
+        ],
+        "sustained": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "start_delay_bounds_ms": [
+          null,
+          null,
+          [
+            76.2,
+            278.1
+          ],
+          null
+        ],
+        "sample_gap_ms": 208.0
+      },
+      "diagnostics_after": {
+        "FL": [
+          0.0,
+          0
+        ],
+        "FR": [
+          0.0,
+          0
+        ],
+        "RL": [
+          0.0,
+          1
+        ],
+        "RR": [
+          0.0,
+          0
+        ]
+      }
+    },
+    {
+      "phase": "RL_only",
+      "repeat": 3,
+      "pwm": [
+        0,
+        0,
+        177,
+        0
+      ],
+      "direction": 1,
+      "observation": {
+        "pwm": [
+          0,
+          0,
+          177,
+          0
+        ],
+        "direction": 1,
+        "rpm": [
+          0.0,
+          0.0,
+          79.32080048514251,
+          0.0
+        ],
+        "sustained": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "start_delay_bounds_ms": [
+          null,
+          null,
+          [
+            72.7,
+            271.2
+          ],
+          null
+        ],
+        "sample_gap_ms": 204.0
+      },
+      "diagnostics_after": {
+        "FL": [
+          0.0,
+          0
+        ],
+        "FR": [
+          0.0,
+          0
+        ],
+        "RL": [
+          0.0,
+          1
+        ],
+        "RR": [
+          0.0,
+          0
+        ]
+      }
+    },
+    {
+      "phase": "all_wheels",
+      "repeat": 1,
+      "pwm": [
+        177,
+        177,
+        177,
+        177
+      ],
+      "direction": 1
+    }
+  ],
+  "status": "aborted",
+  "settings_saved_to_controller": false,
+  "initial_diagnostics": {
+    "FL": [
+      0.0,
+      0
+    ],
+    "FR": [
+      0.0,
+      0
+    ],
+    "RL": [
+      0.0,
+      1
+    ],
+    "RR": [
+      0.0,
+      0
+    ]
+  },
+  "error": "Encoder invalid transitions increased during the pulse",
+  "original_settings": {
+    "pwm-fl": 177.0,
+    "pwm-fr": 177.0,
+    "pwm-rl": 177.0,
+    "pwm-rr": 177.0,
+    "heading-kp": 0.7,
+    "heading-max": 0.3,
+    "heading-deadband-deg": 1.5,
+    "heading-sign": 1.0,
+    "heading-enabled": 0.0
+  },
+  "original_live_settings_restored": true
+}

@@ -1,0 +1,13 @@
+{
+  "operator_request": "Retry the test again",
+  "setup": "Same powered, raised-wheel setup confirmed immediately before prior run",
+  "normal_wiring": "Previously confirmed restored M2/E2 FL, M3/E3 FR, M1/E1 RL, M0/E0 RR",
+  "maximum_pwm": 177,
+  "starting_invalid_counts": {
+    "FL": 0,
+    "FR": 0,
+    "RL": 2,
+    "RR": 0
+  },
+  "script_sha256": "eb385257c32f5dbb90d826cfae4d00f9e4a99d246665edd40d96fbf0db8a76cb"
+}

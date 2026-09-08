@@ -1,0 +1,142 @@
+{
+  "schema": "mechbot-encoder-observation-v1",
+  "valid_window": true,
+  "error": null,
+  "mode": "live",
+  "start": {
+    "mode": "live",
+    "epoch": 1,
+    "profile": "maker",
+    "host_time": 336.03460113,
+    "device_ms": 343757,
+    "counts": [
+      -92,
+      1279,
+      216,
+      1429
+    ],
+    "diagnostics": {
+      "FL": {
+        "host_time": 335.682336737,
+        "pwm": 0,
+        "a_edges": 2866,
+        "b_edges": 2864,
+        "invalid_transitions": 0
+      },
+      "FR": {
+        "host_time": 335.694483828,
+        "pwm": 0,
+        "a_edges": 3145,
+        "b_edges": 3146,
+        "invalid_transitions": 0
+      },
+      "RL": {
+        "host_time": 335.695217875,
+        "pwm": 0,
+        "a_edges": 2628,
+        "b_edges": 2628,
+        "invalid_transitions": 0
+      },
+      "RR": {
+        "host_time": 335.695737708,
+        "pwm": 0,
+        "a_edges": 3434,
+        "b_edges": 3435,
+        "invalid_transitions": 0
+      }
+    },
+    "cpr": {
+      "FL": 2468.8,
+      "FR": 2467.9,
+      "RL": 2473.5,
+      "RR": 2469.8
+    }
+  },
+  "end": {
+    "mode": "live",
+    "epoch": 1,
+    "profile": "maker",
+    "host_time": 371.160557494,
+    "device_ms": 378871,
+    "counts": [
+      2395,
+      3714,
+      2681,
+      3919
+    ],
+    "diagnostics": {
+      "FL": {
+        "host_time": 370.940613481,
+        "pwm": 0,
+        "a_edges": 4192,
+        "b_edges": 4187,
+        "invalid_transitions": 0
+      },
+      "FR": {
+        "host_time": 370.952719015,
+        "pwm": 0,
+        "a_edges": 4367,
+        "b_edges": 4363,
+        "invalid_transitions": 0
+      },
+      "RL": {
+        "host_time": 370.953597026,
+        "pwm": 0,
+        "a_edges": 3861,
+        "b_edges": 3860,
+        "invalid_transitions": 0
+      },
+      "RR": {
+        "host_time": 370.954193269,
+        "pwm": 0,
+        "a_edges": 4681,
+        "b_edges": 4682,
+        "invalid_transitions": 0
+      }
+    },
+    "cpr": {
+      "FL": 2468.8,
+      "FR": 2467.9,
+      "RL": 2473.5,
+      "RR": 2469.8
+    }
+  },
+  "result": {
+    "elapsed_s": 35.12595636399999,
+    "mode": "live",
+    "wheels": {
+      "FL": {
+        "count_delta": 2487,
+        "revolutions": 1.0073720025923525,
+        "a_edges": 1326,
+        "b_edges": 1323,
+        "invalid_transitions": 0
+      },
+      "FR": {
+        "count_delta": 2435,
+        "revolutions": 0.986668827748288,
+        "a_edges": 1222,
+        "b_edges": 1217,
+        "invalid_transitions": 0
+      },
+      "RL": {
+        "count_delta": 2465,
+        "revolutions": 0.9965635738831615,
+        "a_edges": 1233,
+        "b_edges": 1232,
+        "invalid_transitions": 0
+      },
+      "RR": {
+        "count_delta": 2490,
+        "revolutions": 1.008178799902826,
+        "a_edges": 1247,
+        "b_edges": 1247,
+        "invalid_transitions": 0
+      }
+    },
+    "movement_observed": true,
+    "invalid_observed": false
+  },
+  "physical_validation": "Not established by this observation",
+  "scope": "Browser observation of wheel totals and asynchronous diagnostic samples; no motor commands sent."
+}
