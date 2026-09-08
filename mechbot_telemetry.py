@@ -215,8 +215,8 @@ def parse_event(line: Any, host_time: Any) -> Optional[Dict[str, Any]]:
         return out
 
     # IMU record
-    if t0 == 'IR1':
-        if len(tokens) != 14 or tokens[3] not in ('READY', 'STALE', 'SYNCING', 'OFFLINE'):
+    if t0 in ('IR1', 'IR2'):
+        if len(tokens) != (15 if t0 == 'IR2' else 14) or tokens[3] not in ('READY', 'STALE', 'SYNCING', 'OFFLINE'):
             return None
         dev_ms = _parse_uint32(tokens[1])
         age_ms = -1 if tokens[2] == '-1' else _parse_uint32(tokens[2])
@@ -228,14 +228,20 @@ def parse_event(line: Any, host_time: Any) -> Optional[Dict[str, Any]]:
                 any(value is None or not -327.68 <= value < 327.68 for value in angles) or
                 any(value is None or not -32768 <= value <= 32767 for value in acceleration)):
             return None
+        heading = _parse_float(tokens[14]) if t0 == 'IR2' else math.radians(angles[0])
+        if t0 == 'IR2':
+            expected = (-math.radians(angles[0]) + math.pi) % (2*math.pi) - math.pi
+            if heading is None or not -math.pi-1e-6 <= heading <= math.pi+1e-6 or abs((heading-expected+math.pi) % (2*math.pi)-math.pi) > 1e-5:
+                return None
         valid = tokens[3] == 'READY' and 0 <= age_ms <= 500
         return dict(out, type='imu', transport='uart-rvc', device_ms=dev_ms,
                     frame_age_ms=age_ms, valid=valid,
                     reason='ready' if valid else tokens[3].lower() if tokens[3] != 'READY' else 'stale',
-                    yaw_rad=math.radians(angles[0]) if valid else None, ypr_deg=angles,
+                    yaw_rad=heading if valid else None, ypr_deg=angles,
+                    heading_convention='ccw-positive' if t0 == 'IR2' else 'raw-unverified',
                     raw_acceleration_mg=acceleration, quaternion=None, gyro=None,
                     acceleration=None, status=None, heading_accepted=bool(accepted),
-                    control_ready=valid and bool(accepted),
+                    control_ready=valid and bool(accepted) and t0 == 'IR2',
                     bad_checksum=errors[0], discontinuities=errors[1], uart_errors=errors[2])
     if t0 == "I":
         if len(tokens) == 3 and tokens[2] in {"WAIT", "STALE", "OFFLINE"}:

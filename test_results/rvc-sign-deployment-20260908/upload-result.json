@@ -1,0 +1,1824 @@
+{
+  "stage": "/home/nate/maker-rvc-v2-upload-4me4ncrf",
+  "started": 1788908880.282847,
+  "commands": [
+    {
+      "step": "verify-current-v1",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "verify-flash",
+        "0x1000",
+        "/home/nate/maker-rvc-v2-upload-4me4ncrf/rollback/Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "/home/nate/maker-rvc-v2-upload-4me4ncrf/rollback/Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "/home/nate/maker-rvc-v2-upload-4me4ncrf/rollback/boot_app0.bin",
+        "0x10000",
+        "/home/nate/maker-rvc-v2-upload-4me4ncrf/rollback/Maker_Mechbot.ino.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "backup-partition-nvs",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "read-flash",
+        "0x8000",
+        "0x6000",
+        "partition-nvs-before.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "write-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "write-flash",
+        "--no-progress",
+        "--flash-mode",
+        "keep",
+        "--flash-freq",
+        "keep",
+        "--flash-size",
+        "keep",
+        "0x1000",
+        "Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "boot_app0.bin",
+        "0x10000",
+        "Maker_Mechbot.ino.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "verify-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "verify-flash",
+        "0x1000",
+        "Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "boot_app0.bin",
+        "0x10000",
+        "Maker_Mechbot.ino.bin",
+        "0x9000",
+        "nvs-before.bin"
+      ],
+      "returncode": 0
+    }
+  ],
+  "boot_lines": [
+    {
+      "elapsed_s": 0.012,
+      "line": "ets Jul 29 2019 12:21:46"
+    },
+    {
+      "elapsed_s": 0.012,
+      "line": ""
+    },
+    {
+      "elapsed_s": 0.02,
+      "line": "rst:0x1 (POWERON_RESET),boot:0x12 (SPI_FAST_FLASH_BOOT)"
+    },
+    {
+      "elapsed_s": 0.023,
+      "line": "configsip: 0, SPIWP:0xee"
+    },
+    {
+      "elapsed_s": 0.03,
+      "line": "clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00"
+    },
+    {
+      "elapsed_s": 0.032,
+      "line": "mode:DIO, clock div:1"
+    },
+    {
+      "elapsed_s": 0.035,
+      "line": "load:0x3fff0030,len:4640"
+    },
+    {
+      "elapsed_s": 0.037,
+      "line": "load:0x40078000,len:15592"
+    },
+    {
+      "elapsed_s": 0.04,
+      "line": "load:0x40080400,len:3164"
+    },
+    {
+      "elapsed_s": 0.041,
+      "line": "entry 0x4008059c"
+    },
+    {
+      "elapsed_s": 0.679,
+      "line": "IMU RVC receiver initialized; heading acceptance cleared; no sensor reset"
+    },
+    {
+      "elapsed_s": 0.682,
+      "line": "READY ESP32_MAKER_MECANUM_RVC_V2"
+    },
+    {
+      "elapsed_s": 0.685,
+      "line": "FIRMWARE MAKER_RVC_V2_CCW_HEADING"
+    },
+    {
+      "elapsed_s": 0.693,
+      "line": "IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks"
+    },
+    {
+      "elapsed_s": 0.7,
+      "line": "IMU REVOKE: stop and revoke heading acceptance; UART stream continues"
+    },
+    {
+      "elapsed_s": 0.701,
+      "line": "Commands:"
+    },
+    {
+      "elapsed_s": 0.705,
+      "line": "V <forward> <left> <ccw>   each value -1.0 to +1.0"
+    },
+    {
+      "elapsed_s": 0.711,
+      "line": "forward and left are simultaneous continuous components"
+    },
+    {
+      "elapsed_s": 0.716,
+      "line": "F <0|1>                    field-oriented control off/on"
+    },
+    {
+      "elapsed_s": 0.721,
+      "line": "Z                          re-zero field heading"
+    },
+    {
+      "elapsed_s": 0.726,
+      "line": "Field fault latched: 0; acknowledge with F 0 or fresh F 1"
+    },
+    {
+      "elapsed_s": 0.73,
+      "line": "X                         immediate stop"
+    },
+    {
+      "elapsed_s": 0.734,
+      "line": "CFG GET|SAVE|RESET        runtime settings"
+    },
+    {
+      "elapsed_s": 0.739,
+      "line": "CFG SET <key> <value>     validated update while stopped"
+    },
+    {
+      "elapsed_s": 0.742,
+      "line": "?                         help"
+    },
+    {
+      "elapsed_s": 0.747,
+      "line": "Heading hold: OFF (verify sensor axes before enabling)"
+    },
+    {
+      "elapsed_s": 0.754,
+      "line": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+    },
+    {
+      "elapsed_s": 0.761,
+      "line": "IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes"
+    },
+    {
+      "elapsed_s": 0.767,
+      "line": "Default PWM=177 all wheels; independent output watchdog, ramped drive"
+    },
+    {
+      "elapsed_s": 0.773,
+      "line": "DIAG                      encoder edges/errors and applied PWM"
+    },
+    {
+      "elapsed_s": 0.778,
+      "line": "IMU RETRY                 stopped reinitialization"
+    },
+    {
+      "elapsed_s": 0.786,
+      "line": "IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first"
+    },
+    {
+      "elapsed_s": 0.787,
+      "line": "Watchdog: 300 ms"
+    },
+    {
+      "elapsed_s": 0.791,
+      "line": "Encoder: T <ms> <FL> <FR> <RL> <RR>"
+    },
+    {
+      "elapsed_s": 0.804,
+      "line": "IMU: IR2 <ms> <age_ms> <state> <raw_yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors> <ccw_heading_rad>"
+    },
+    {
+      "elapsed_s": 0.81,
+      "line": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>"
+    },
+    {
+      "elapsed_s": 0.868,
+      "line": "T 715 0 0 0 0"
+    },
+    {
+      "elapsed_s": 0.878,
+      "line": "IR2 716 9 READY 125.13 0.64 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 0.883,
+      "line": "N 716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 0.885,
+      "line": "H 716 IMU 1 707 0 1"
+    },
+    {
+      "elapsed_s": 1.069,
+      "line": "T 915 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.078,
+      "line": "IR2 916 9 READY 125.13 0.64 0.33 -8 8 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 1.084,
+      "line": "N 916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.086,
+      "line": "H 916 IMU 1 907 0 1"
+    },
+    {
+      "elapsed_s": 1.269,
+      "line": "T 1115 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.28,
+      "line": "IR2 1116 7 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 1.284,
+      "line": "N 1116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.286,
+      "line": "H 1116 IMU 1 1109 0 1"
+    },
+    {
+      "elapsed_s": 1.469,
+      "line": "T 1315 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.478,
+      "line": "IR2 1316 10 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 1.484,
+      "line": "N 1316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.486,
+      "line": "H 1316 IMU 1 1306 0 1"
+    },
+    {
+      "elapsed_s": 1.668,
+      "line": "T 1515 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.679,
+      "line": "IR2 1516 10 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 1.684,
+      "line": "N 1516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.685,
+      "line": "H 1516 IMU 1 1506 0 1"
+    },
+    {
+      "elapsed_s": 1.869,
+      "line": "T 1716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.879,
+      "line": "IR2 1716 10 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 1.885,
+      "line": "N 1716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.886,
+      "line": "H 1716 IMU 1 1706 0 1"
+    },
+    {
+      "elapsed_s": 2.07,
+      "line": "T 1916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.081,
+      "line": "IR2 1916 1 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 2.085,
+      "line": "N 1916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.087,
+      "line": "H 1916 IMU 1 1915 0 1"
+    },
+    {
+      "elapsed_s": 2.27,
+      "line": "T 2116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.281,
+      "line": "IR2 2116 1 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 2.285,
+      "line": "N 2116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.287,
+      "line": "H 2116 IMU 1 2115 0 1"
+    },
+    {
+      "elapsed_s": 2.469,
+      "line": "T 2316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.48,
+      "line": "IR2 2316 1 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 2.484,
+      "line": "N 2316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.486,
+      "line": "H 2316 IMU 1 2315 0 1"
+    },
+    {
+      "elapsed_s": 2.669,
+      "line": "T 2516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.681,
+      "line": "IR2 2517 3 READY 125.13 0.64 0.32 -8 12 1005 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 2.685,
+      "line": "N 2517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.687,
+      "line": "H 2517 IMU 1 2514 0 1"
+    },
+    {
+      "elapsed_s": 2.87,
+      "line": "T 2716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.881,
+      "line": "IR2 2717 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 2.885,
+      "line": "N 2717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.887,
+      "line": "H 2717 IMU 1 2714 0 1"
+    },
+    {
+      "elapsed_s": 3.07,
+      "line": "T 2916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.079,
+      "line": "IR2 2917 3 READY 125.13 0.65 0.31 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 3.085,
+      "line": "N 2917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.087,
+      "line": "H 2917 IMU 1 2914 0 1"
+    },
+    {
+      "elapsed_s": 3.269,
+      "line": "T 3116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.281,
+      "line": "IR2 3117 3 READY 125.13 0.65 0.30 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 3.285,
+      "line": "N 3117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.287,
+      "line": "H 3117 IMU 1 3114 0 1"
+    },
+    {
+      "elapsed_s": 3.47,
+      "line": "T 3316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.481,
+      "line": "IR2 3317 3 READY 125.13 0.65 0.30 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 3.485,
+      "line": "N 3317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.487,
+      "line": "H 3317 IMU 1 3314 0 1"
+    },
+    {
+      "elapsed_s": 3.67,
+      "line": "T 3516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.682,
+      "line": "IR2 3517 5 READY 125.13 0.65 0.31 -4 12 1005 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 3.686,
+      "line": "N 3517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.688,
+      "line": "H 3517 IMU 1 3512 0 1"
+    },
+    {
+      "elapsed_s": 3.869,
+      "line": "T 3716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.878,
+      "line": "IR2 3717 5 READY 125.13 0.65 0.31 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 3.884,
+      "line": "N 3717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.887,
+      "line": "H 3717 IMU 1 3712 0 1"
+    },
+    {
+      "elapsed_s": 4.07,
+      "line": "T 3916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.081,
+      "line": "IR2 3917 5 READY 125.13 0.65 0.31 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 4.085,
+      "line": "N 3917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.087,
+      "line": "H 3917 IMU 1 3912 0 1"
+    },
+    {
+      "elapsed_s": 4.27,
+      "line": "T 4116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.279,
+      "line": "IR2 4117 6 READY 125.13 0.65 0.31 -8 8 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 4.285,
+      "line": "N 4117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.287,
+      "line": "H 4117 IMU 1 4111 0 1"
+    },
+    {
+      "elapsed_s": 4.469,
+      "line": "T 4316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.481,
+      "line": "IR2 4317 6 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 4.485,
+      "line": "N 4317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.487,
+      "line": "H 4317 IMU 1 4311 0 1"
+    },
+    {
+      "elapsed_s": 4.67,
+      "line": "T 4516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.681,
+      "line": "IR2 4517 7 READY 125.13 0.64 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 4.685,
+      "line": "N 4517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.687,
+      "line": "H 4517 IMU 1 4510 0 1"
+    },
+    {
+      "elapsed_s": 4.87,
+      "line": "T 4716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.881,
+      "line": "IR2 4717 7 READY 125.13 0.64 0.33 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 4.885,
+      "line": "N 4717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.887,
+      "line": "H 4717 IMU 1 4710 0 1"
+    },
+    {
+      "elapsed_s": 5.069,
+      "line": "T 4916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.081,
+      "line": "IR2 4917 7 READY 125.13 0.64 0.33 -8 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 5.085,
+      "line": "N 4917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.087,
+      "line": "H 4917 IMU 1 4910 0 1"
+    },
+    {
+      "elapsed_s": 5.269,
+      "line": "T 5116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.281,
+      "line": "IR2 5117 8 READY 125.13 0.64 0.32 -4 8 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 5.285,
+      "line": "N 5117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.287,
+      "line": "H 5117 IMU 1 5109 0 1"
+    },
+    {
+      "elapsed_s": 5.47,
+      "line": "T 5316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.479,
+      "line": "IR2 5317 8 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 5.485,
+      "line": "N 5317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.487,
+      "line": "H 5317 IMU 1 5309 0 1"
+    },
+    {
+      "elapsed_s": 5.67,
+      "line": "T 5516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.682,
+      "line": "IR2 5517 8 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 5.686,
+      "line": "N 5517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.688,
+      "line": "H 5517 IMU 1 5509 0 1"
+    },
+    {
+      "elapsed_s": 5.87,
+      "line": "T 5716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.879,
+      "line": "IR2 5717 8 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 5.884,
+      "line": "N 5717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.886,
+      "line": "H 5717 IMU 1 5709 0 1"
+    },
+    {
+      "elapsed_s": 6.07,
+      "line": "T 5916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.082,
+      "line": "IR2 5917 8 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 6.086,
+      "line": "N 5917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.088,
+      "line": "H 5917 IMU 1 5909 0 1"
+    },
+    {
+      "elapsed_s": 6.27,
+      "line": "T 6116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.282,
+      "line": "IR2 6117 10 READY 125.13 0.64 0.32 -8 12 1005 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 6.286,
+      "line": "N 6117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.288,
+      "line": "H 6117 IMU 1 6107 0 1"
+    },
+    {
+      "elapsed_s": 6.469,
+      "line": "T 6317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.482,
+      "line": "IR2 6317 10 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 6.486,
+      "line": "N 6317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.488,
+      "line": "H 6317 IMU 1 6307 0 1"
+    },
+    {
+      "elapsed_s": 6.67,
+      "line": "T 6517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.68,
+      "line": "IR2 6517 10 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 6.684,
+      "line": "N 6517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.687,
+      "line": "H 6517 IMU 1 6507 0 1"
+    },
+    {
+      "elapsed_s": 6.87,
+      "line": "T 6717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.881,
+      "line": "IR2 6717 1 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 6.885,
+      "line": "N 6717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.887,
+      "line": "H 6717 IMU 1 6716 0 1"
+    },
+    {
+      "elapsed_s": 7.07,
+      "line": "T 6917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.08,
+      "line": "IR2 6917 1 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 7.085,
+      "line": "N 6917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.087,
+      "line": "H 6917 IMU 1 6916 0 1"
+    },
+    {
+      "elapsed_s": 7.271,
+      "line": "T 7117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.281,
+      "line": "IR2 7118 3 READY 125.13 0.64 0.32 -4 12 1005 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 7.285,
+      "line": "N 7118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.288,
+      "line": "H 7118 IMU 1 7115 0 1"
+    },
+    {
+      "elapsed_s": 7.471,
+      "line": "T 7317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.481,
+      "line": "IR2 7318 3 READY 125.13 0.65 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 7.485,
+      "line": "N 7318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.488,
+      "line": "H 7318 IMU 1 7315 0 1"
+    },
+    {
+      "elapsed_s": 7.67,
+      "line": "T 7517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.679,
+      "line": "IR2 7518 3 READY 125.13 0.66 0.34 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 7.684,
+      "line": "N 7518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.686,
+      "line": "H 7518 IMU 1 7515 0 1"
+    },
+    {
+      "elapsed_s": 7.87,
+      "line": "T 7717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.882,
+      "line": "IR2 7718 4 READY 125.13 0.65 0.34 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 7.887,
+      "line": "N 7718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.888,
+      "line": "H 7718 IMU 1 7714 0 1"
+    },
+    {
+      "elapsed_s": 8.071,
+      "line": "T 7917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.082,
+      "line": "IR2 7918 4 READY 125.13 0.65 0.34 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 8.086,
+      "line": "N 7918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.088,
+      "line": "H 7918 IMU 1 7914 0 1"
+    },
+    {
+      "elapsed_s": 8.271,
+      "line": "T 8117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.281,
+      "line": "IR2 8118 3 READY 125.13 0.65 0.34 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 8.287,
+      "line": "N 8118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.289,
+      "line": "H 8118 IMU 1 8115 0 1"
+    },
+    {
+      "elapsed_s": 8.471,
+      "line": "T 8317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.482,
+      "line": "IR2 8318 5 READY 125.13 0.65 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 8.486,
+      "line": "N 8318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.488,
+      "line": "H 8318 IMU 1 8313 0 1"
+    },
+    {
+      "elapsed_s": 8.67,
+      "line": "T 8517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.682,
+      "line": "IR2 8518 4 READY 125.13 0.65 0.33 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 8.686,
+      "line": "N 8518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.688,
+      "line": "H 8518 IMU 1 8514 0 1"
+    },
+    {
+      "elapsed_s": 8.871,
+      "line": "T 8717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.883,
+      "line": "IR2 8718 6 READY 125.13 0.64 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 8.887,
+      "line": "N 8718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.889,
+      "line": "H 8718 IMU 1 8712 0 1"
+    },
+    {
+      "elapsed_s": 9.07,
+      "line": "T 8917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.08,
+      "line": "IR2 8918 6 READY 125.13 0.64 0.32 -4 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 9.085,
+      "line": "N 8918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.087,
+      "line": "H 8918 IMU 1 8912 0 1"
+    },
+    {
+      "elapsed_s": 9.271,
+      "line": "T 9117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.28,
+      "line": "IR2 9118 6 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 9.286,
+      "line": "N 9118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.288,
+      "line": "H 9118 IMU 1 9112 0 1"
+    },
+    {
+      "elapsed_s": 9.471,
+      "line": "T 9317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.481,
+      "line": "IR2 9318 7 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 9.487,
+      "line": "N 9318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.489,
+      "line": "H 9318 IMU 1 9311 0 1"
+    },
+    {
+      "elapsed_s": 9.671,
+      "line": "T 9517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.683,
+      "line": "IR2 9518 7 READY 125.13 0.64 0.32 -8 8 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 9.687,
+      "line": "N 9518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.688,
+      "line": "H 9518 IMU 1 9511 0 1"
+    },
+    {
+      "elapsed_s": 9.871,
+      "line": "T 9717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.882,
+      "line": "IR2 9718 8 READY 125.13 0.64 0.33 -4 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 9.886,
+      "line": "N 9718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.888,
+      "line": "H 9718 IMU 1 9710 0 1"
+    },
+    {
+      "elapsed_s": 10.071,
+      "line": "T 9917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.082,
+      "line": "IR2 9918 8 READY 125.13 0.64 0.34 -4 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 10.086,
+      "line": "N 9918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.088,
+      "line": "H 9918 IMU 1 9910 0 1"
+    },
+    {
+      "elapsed_s": 10.271,
+      "line": "T 10117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.283,
+      "line": "IR2 10118 8 READY 125.13 0.64 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 10.287,
+      "line": "N 10118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.289,
+      "line": "H 10118 IMU 1 10110 0 1"
+    },
+    {
+      "elapsed_s": 10.471,
+      "line": "T 10317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.483,
+      "line": "IR2 10318 9 READY 125.13 0.64 0.33 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 10.487,
+      "line": "N 10318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.489,
+      "line": "H 10318 IMU 1 10309 0 1"
+    },
+    {
+      "elapsed_s": 10.671,
+      "line": "T 10517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.683,
+      "line": "IR2 10518 9 READY 125.13 0.64 0.33 -4 8 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 10.687,
+      "line": "N 10518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.689,
+      "line": "H 10518 IMU 1 10509 0 1"
+    },
+    {
+      "elapsed_s": 10.871,
+      "line": "T 10717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.88,
+      "line": "IR2 10718 8 READY 125.13 0.64 0.33 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 10.886,
+      "line": "N 10718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.888,
+      "line": "H 10718 IMU 1 10710 0 1"
+    },
+    {
+      "elapsed_s": 11.071,
+      "line": "T 10917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.081,
+      "line": "IR2 10918 10 READY 125.13 0.64 0.32 -8 8 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 11.085,
+      "line": "N 10918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.087,
+      "line": "H 10918 IMU 1 10908 0 1"
+    },
+    {
+      "elapsed_s": 11.271,
+      "line": "T 11118 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.283,
+      "line": "IR2 11118 9 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 11.287,
+      "line": "N 11118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.289,
+      "line": "H 11118 IMU 1 11109 0 1"
+    },
+    {
+      "elapsed_s": 11.471,
+      "line": "T 11318 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.483,
+      "line": "IR2 11318 11 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 11.487,
+      "line": "N 11318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.489,
+      "line": "H 11318 IMU 1 11307 0 1"
+    },
+    {
+      "elapsed_s": 11.67,
+      "line": "T 11518 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.679,
+      "line": "IR2 11518 1 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 11.684,
+      "line": "N 11518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.687,
+      "line": "H 11518 IMU 1 11517 0 1"
+    },
+    {
+      "elapsed_s": 11.871,
+      "line": "T 11718 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.88,
+      "line": "IR2 11718 1 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 11.886,
+      "line": "N 11718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.888,
+      "line": "H 11718 IMU 1 11717 0 1"
+    },
+    {
+      "elapsed_s": 12.071,
+      "line": "T 11918 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.083,
+      "line": "IR2 11918 1 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 12.087,
+      "line": "N 11918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.089,
+      "line": "H 11918 IMU 1 11917 0 1"
+    },
+    {
+      "elapsed_s": 12.272,
+      "line": "T 12119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.282,
+      "line": "IR2 12119 3 READY 125.13 0.64 0.33 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 12.288,
+      "line": "N 12119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.29,
+      "line": "H 12119 IMU 1 12116 0 1"
+    },
+    {
+      "elapsed_s": 12.472,
+      "line": "T 12319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.484,
+      "line": "IR2 12319 3 READY 125.13 0.64 0.33 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 12.488,
+      "line": "N 12319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.49,
+      "line": "H 12319 IMU 1 12316 0 1"
+    },
+    {
+      "elapsed_s": 12.672,
+      "line": "T 12519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.683,
+      "line": "IR2 12519 4 READY 125.13 0.64 0.32 -4 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 12.688,
+      "line": "N 12519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.69,
+      "line": "H 12519 IMU 1 12515 0 1"
+    },
+    {
+      "elapsed_s": 12.872,
+      "line": "T 12719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.881,
+      "line": "IR2 12719 4 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 12.887,
+      "line": "N 12719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.89,
+      "line": "H 12719 IMU 1 12715 0 1"
+    },
+    {
+      "elapsed_s": 13.072,
+      "line": "T 12919 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.083,
+      "line": "IR2 12919 4 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 13.087,
+      "line": "N 12919 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.09,
+      "line": "H 12919 IMU 1 12915 0 1"
+    },
+    {
+      "elapsed_s": 13.271,
+      "line": "T 13119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.28,
+      "line": "IR2 13119 5 READY 125.13 0.64 0.32 -4 8 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 13.286,
+      "line": "N 13119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.289,
+      "line": "H 13119 IMU 1 13114 0 1"
+    },
+    {
+      "elapsed_s": 13.472,
+      "line": "T 13319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.482,
+      "line": "IR2 13319 5 READY 125.13 0.64 0.32 -4 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 13.488,
+      "line": "N 13319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.49,
+      "line": "H 13319 IMU 1 13314 0 1"
+    },
+    {
+      "elapsed_s": 13.672,
+      "line": "T 13519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.684,
+      "line": "IR2 13519 5 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 13.688,
+      "line": "N 13519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.69,
+      "line": "H 13519 IMU 1 13514 0 1"
+    },
+    {
+      "elapsed_s": 13.872,
+      "line": "T 13719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.881,
+      "line": "IR2 13719 5 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 13.887,
+      "line": "N 13719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.89,
+      "line": "H 13719 IMU 1 13714 0 1"
+    },
+    {
+      "elapsed_s": 14.072,
+      "line": "T 13919 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.084,
+      "line": "IR2 13919 5 READY 125.13 0.64 0.32 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 14.088,
+      "line": "N 13919 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.09,
+      "line": "H 13919 IMU 1 13914 0 1"
+    },
+    {
+      "elapsed_s": 14.272,
+      "line": "T 14119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.284,
+      "line": "IR2 14119 7 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 14.288,
+      "line": "N 14119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.29,
+      "line": "H 14119 IMU 1 14112 0 1"
+    },
+    {
+      "elapsed_s": 14.472,
+      "line": "T 14319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.484,
+      "line": "IR2 14319 7 READY 125.13 0.64 0.31 -4 12 996 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 14.488,
+      "line": "N 14319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.49,
+      "line": "H 14319 IMU 1 14312 0 1"
+    },
+    {
+      "elapsed_s": 14.672,
+      "line": "T 14519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.684,
+      "line": "IR2 14519 7 READY 125.13 0.65 0.31 -8 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 14.688,
+      "line": "N 14519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.69,
+      "line": "H 14519 IMU 1 14512 0 1"
+    },
+    {
+      "elapsed_s": 14.872,
+      "line": "T 14719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.882,
+      "line": "IR2 14719 8 READY 125.13 0.65 0.31 -4 12 1000 0 0 0 0 -2.183930"
+    },
+    {
+      "elapsed_s": 14.887,
+      "line": "N 14719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.89,
+      "line": "H 14719 IMU 1 14711 0 1"
+    },
+    {
+      "elapsed_s": 15.072,
+      "line": "T 14919 0 0 0 0"
+    }
+  ],
+  "manifest": {
+    "files": {
+      "Maker_Mechbot/EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+      "Maker_Mechbot/MakerBnoSpi.h": "93515b36e1a1f7b360c89f5c8d15c8bc66efcb405ed0fb90ac44907d88cb762a",
+      "Maker_Mechbot/MakerRvc.h": "dae8d3733a89724d48f670d078aa4bcb0f0219655b092636b6fbdadef27e1af8",
+      "Maker_Mechbot/Maker_Mechbot.ino": "7d736ffab53bbcb33055095dac49b5d6840bf7c9f942d6c3527f82f1784e370a",
+      "Maker_Mechbot/MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+      "Maker_Mechbot/NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4",
+      "Maker_Mechbot/README.md": "24690483affcec1c20cff39dd109c880908aef9c2a849b99e4fe169b52ff1e12",
+      "Maker_Mechbot/RvcParser.h": "0c7777a9e1c7f60766e5340df53c5a327cc0c68bd102ef74d7fe098b61acbfd8",
+      "Maker_Mechbot/SPI_WIRING.md": "3f625941991120f8a525ba61b31e4c35f33e9f1a67d9bbf05463382df206c338",
+      "NAVIGATION_CONTROLS.md": "11ad72c3ad9f918f243c9a457a295b82508e07de6d0ee7d16ba13680e73e1dfd",
+      "dashboard/app.css": "9eb022a75f798973b9f2bd3cbfca2250b75b48ebc1d6cd33995622ebc6bd8179",
+      "dashboard/app.js": "a90be4e78e895e3d45dd399964baf412a8847119278ffa20e77b5361c11ceb1f",
+      "dashboard/calibration.css": "bc2d0aa0c03cf28e5179711d0516f58590062f5fa294421566568bd83a363860",
+      "dashboard/index.html": "8f35ca53f2394e3e8527cfb4f721a247aabd05e76985ebdb7cf37788a9190b99",
+      "dashboard/ops-encoder-math.js": "e7c83ba038713d2f01b6ae5037eaa668789e522971f026c82a22f1f0c9d36a3e",
+      "dashboard/ops-encoder.js": "f029faea65d65b2cb788ae9824aed1455909f120976805827324a178cc0459f4",
+      "dashboard/ops-evidence.js": "37c3f771380cf7690a51bc5e9b7245076d8e51afa706a44fbca6dc35e84d8278",
+      "dashboard/ops-live.js": "6bf931bc4dcac9be26e5c10302bd48d3e0ee5048adf143bc99834fc283c526b7",
+      "dashboard/ops-sessions.js": "2eac92a0047f88256c68c0be1213bfb9daaad1e35eb19b932056ea8266ec63ba",
+      "dashboard/ops.css": "3ad61b62b79f3d355006925c2dbaefd9eff44f9d1ce2c4a583421ed7f9c9c291",
+      "dashboard/ops.html": "1568bf36d8a27120a875cae36220ab653f3a153ef13df56720a9204682c8f3cf",
+      "dashboard/ops.js": "f465d5ec0f487dd850bbb3f9ca3e801b04fc409f5476912875fb2f19dacbe11d",
+      "docs/INTEGRATED_RVC.md": "cde13765f9eb35c35d6fb5ce593006982fe13ef2e85a610a4075d99b4791072a",
+      "docs/RVC_HEADING_CONVENTION.md": "d6eb5c54a7ad18f7e22fa53f1ae94c85a20f0711f23366fdcdadf796fe8c1f5c",
+      "maker_auto_tune.py": "eb385257c32f5dbb90d826cfae4d00f9e4a99d246665edd40d96fbf0db8a76cb",
+      "mechbot_bridge.py": "64ea413424f73765ea816db950859fca8a1d603eb48835672d1b07f31e69613e",
+      "mechbot_evidence.py": "015cd4e704c7f3122176971f348461eed9748ebb081c0231d5348704f2967ff8",
+      "mechbot_firmware_update.py": "544a23958c27f3882dca0b4a536235cdc15b0e0ce5f409dac3756c685a45f2d4",
+      "mechbot_http.py": "de9ee185cb3d6aabad9eb2b13279c3ebc771ed7e169becaa7f8cf1e38f05581f",
+      "mechbot_observer.py": "c461eace915e7ade45c6ec3e352f0aebdf8e89d3ae22cf5ff150244296e52ac9",
+      "mechbot_odometry.py": "56b017ac1613164575e1c8ae55daf340aad196223be4c88c577dba795059e2e5",
+      "mechbot_operations.py": "902afb01b69c4acaa41a68742fcd51448e7ad4120b7066ca10a5713cbd807686",
+      "mechbot_ops.py": "206803fd474e6e4e765db5cc2a0f5bd49271b253d923152b50b562f1a77c80b7",
+      "mechbot_profiles.py": "609dc873918945c23620990af5436a1675ec286e93983b4a6149a4e3f42503ae",
+      "mechbot_recording.py": "9b3b3225908ab0c94efcc894f00c808b94492318bd5ffc3695767351e3b48ccc",
+      "mechbot_telemetry.py": "0ddee4bc0e27fea92994994cd6f40a681b36b59cac6f98c374694db4b28eae05",
+      "mechbotctl.py": "4cf2303ce5d5955aabc660e93da1e1d9b101ce9743806b7615a36f70bcb855b4",
+      "pi_mecanum_gamepad.py": "21803ac304d4b010c38546cfda0f4f6fb2df23a85c86f66593aea17baf25f7a3",
+      "pi_mecanum_teleop.py": "67deba3feb8347127cbc68b5d357b16e67d8418f7b632137379025cace70a52a",
+      "test_results/maker-bench-20260905-koa59no2/results.json": "a6a97d6896d2734fd92d6ea24bdc1063d377ff30162356d97ac0e5ddabd223e2",
+      "test_results/maker-bench-retry-20260905-djty58cn/results.json": "edb9df05900c9f841415ba2694cc2f7a98a0079035e7bb9baf32dda385969b44",
+      "test_results/maker-encoder-diagnostic-20260905-s1s7fr_s/results.json": "d92cadd400fb8ff301bf88a6f86e398bc952fe91764d46ebe33991c7900bb051",
+      "tests/test_board_integration.py": "b5365171f92a3f3578d5a7534d6409009c01a7b876f9c954fa702f9071106ff2",
+      "tests/test_identity_retry.py": "0cd813f986d7b73935d7fb1a1b1a6151e02ece61962f554e0a0bfede9b0eb794",
+      "tests/test_maker_auto_tune.py": "07932c98ac877fd21f99fff270db0bc69b32e770885d26a568517558ec212d26",
+      "tests/test_mechbot_bridge.py": "0eeeff32e75c45815b11dc2be6f0cda6428e16856114b7ba52fcdf33a539653c",
+      "tests/test_mechbot_cli.py": "573d8529599d493bc6a29effbb4a288387d1d99dadc29a9ecad0781b08cc116d",
+      "tests/test_mechbot_evidence.py": "dc6f1c16ac61665dc1732bc50dca17c6ea689f5341fe49564de24f95a24c9afa",
+      "tests/test_mechbot_observer.py": "bcf9bd64f963c6646fc686456869ecbed9297ff034ef4d62c63e53cc570ead39",
+      "tests/test_mechbot_odometry.py": "92b66a3b3723adf4754ff3891fd6774fcb0ffc43c1353baf63736de18ddbb403",
+      "tests/test_mechbot_operations.py": "74630fe0712e6c71627fb50501c1b9d0dc11d801fbc89d45f364b57bba34f803",
+      "tests/test_mechbot_recording.py": "935bdc8741a702149720eee13326013d7750bf9772c9970a220582e992d152c8",
+      "tests/test_mechbot_telemetry.py": "e540ee7a553d7198259c71a3d45db3ff9b99bcc5eca3cdfed027193a18ca09c6",
+      "tests/test_navigation_commands.py": "26541b7fb705ab1a993e456bc98a9b9af53acf02e8f9b0410bc9662e1b4694bf",
+      "tests/test_operations_http.py": "53a4ae974f06571bb7b89be21b49f05b9d32da87741b61f735ca8c83fba67862",
+      "tests/test_operations_integration.py": "890077a2199d371d10f58791260d1022caee08e5cbe867a6fcd131004cd029c2",
+      "tests/test_operations_origin.py": "ac739767fb5c8d8cab03b6ef1aeb7927741da731b4cb09d7ce81a38a2a7099ba",
+      "tests/test_pi_mecanum_gamepad.py": "9fb8ed0b9cf3dee1f615a197e5a02ff261afa67d894a08acd39bf4f0dde253f7",
+      "tests/test_rvc_telemetry.py": "593a55372db3e71edc79183226f8d23199f14f393319957f48068a1e742d86dd"
+    },
+    "images": [
+      {
+        "address": "0x1000",
+        "name": "Maker_Mechbot.ino.bootloader.bin",
+        "bytes": 23488,
+        "sha256": "7784e3c3f38fa4c4334f478131488d8ba2a88ce623adca939f4cb8f019607f31"
+      },
+      {
+        "address": "0x8000",
+        "name": "Maker_Mechbot.ino.partitions.bin",
+        "bytes": 3072,
+        "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+      },
+      {
+        "address": "0xe000",
+        "name": "boot_app0.bin",
+        "bytes": 8192,
+        "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+      },
+      {
+        "address": "0x10000",
+        "name": "Maker_Mechbot.ino.bin",
+        "bytes": 329168,
+        "sha256": "dddddf0eadb2dc94980ce221a6810af7307be749c480cc99e829c65a33c0ec80"
+      }
+    ],
+    "fqbn": "esp32:esp32:esp32",
+    "expected": "ESP32_MAKER_MECANUM_RVC_V2"
+  },
+  "before": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "last_line": "H 1810229 IMU 1 1810229 0 1",
+    "updated": 1788908880.1788557,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "encoders": [
+      0,
+      72,
+      0,
+      0
+    ],
+    "encoder_updated": 1788908880.1659281,
+    "imu": "IR1 1810229 0 READY 125.13 0.68 0.32 -4 12 1000 0 0 0 0",
+    "imu_valid": true,
+    "imu_updated": 1788908880.1666787,
+    "navigation": "N 1810229 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 1810229 IMU 1 1810229 0 1",
+    "help_identity": "Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 4,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908879.489461
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 40,
+        "b_edges": 40,
+        "invalid_transitions": 0,
+        "updated": 1788908879.4900265
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908879.4904184
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908879.502225
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_RVC_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "update_firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "identity_source": "maker-rvc-help",
+      "imu_transport": "uart-rvc",
+      "build_properties": [
+        "compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1"
+      ]
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "N 1809229 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1809229 IMU 1 1809219 0 1",
+      "T 1809429 0 72 0 0",
+      "IR1 1809429 9 READY 125.13 0.68 0.33 -4 12 1005 0 0 0 0",
+      "N 1809429 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1809429 IMU 1 1809420 0 1",
+      "D FL PWM 0.0 A 4 B 0 INVALID 0",
+      "D FR PWM 0.0 A 40 B 40 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 1809629 0 72 0 0",
+      "IR1 1809629 10 READY 125.13 0.68 0.33 -8 12 1000 0 0 0 0",
+      "N 1809629 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1809629 IMU 1 1809619 0 1",
+      "T 1809829 0 72 0 0",
+      "IR1 1809829 0 READY 125.13 0.68 0.33 -8 8 1000 0 0 0 0",
+      "N 1809829 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1809829 IMU 1 1809829 0 1",
+      "T 1810029 0 72 0 0",
+      "IR1 1810029 0 READY 125.13 0.68 0.32 -4 12 1000 0 0 0 0",
+      "N 1810029 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1810029 IMU 1 1810029 0 1",
+      "T 1810229 0 72 0 0",
+      "IR1 1810229 0 READY 125.13 0.68 0.32 -4 12 1000 0 0 0 0",
+      "N 1810229 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1810229 IMU 1 1810229 0 1"
+    ]
+  },
+  "settings_before": {
+    "lines": [
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "D FL PWM 0.0 A 4 B 0 INVALID 0",
+      "D FR PWM 0.0 A 40 B 40 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 1810629 0 72 0 0",
+      "IR1 1810629 0 READY 125.13 0.68 0.32 -4 8 1000 0 0 0 0",
+      "N 1810629 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 1810629 IMU 1 1810629 0 1",
+      "T 1810829 0 72 0 0",
+      "IR1 1810829 3 READY 125.13 0.68 0.32 -12 8 1000 0 0 0 0"
+    ]
+  },
+  "operator_motor_power_off": true,
+  "step": "verify-flash",
+  "rollback_images": [
+    {
+      "address": "0x1000",
+      "name": "Maker_Mechbot.ino.bootloader.bin",
+      "bytes": 23488,
+      "sha256": "7784e3c3f38fa4c4334f478131488d8ba2a88ce623adca939f4cb8f019607f31"
+    },
+    {
+      "address": "0x8000",
+      "name": "Maker_Mechbot.ino.partitions.bin",
+      "bytes": 3072,
+      "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+    },
+    {
+      "address": "0xe000",
+      "name": "boot_app0.bin",
+      "bytes": 8192,
+      "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+    },
+    {
+      "address": "0x10000",
+      "name": "Maker_Mechbot.ino.bin",
+      "bytes": 329088,
+      "sha256": "142fd59bd4a8178c9d77c8d6fe36dd0ed6fff55e8e59d2dc37d04fcd8a69bf8b"
+    }
+  ],
+  "partition_nvs_backup_sha256": "21dadbef563e9bf26e9a99a7557f3f8b94617cc6d06a7cbf304d8635437015df",
+  "written": true,
+  "flash_verified": true,
+  "nvs_unchanged": true,
+  "fresh_ready": true,
+  "settings_after": {
+    "lines": [
+      "T 17519 0 0 0 0",
+      "IR2 17519 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930",
+      "N 17519 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17519 IMU 1 17516 0 1",
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 17719 0 0 0 0",
+      "IR2 17719 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930",
+      "N 17719 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17719 IMU 1 17716 0 1"
+    ]
+  },
+  "after": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "updated": 1788908939.8945897,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 17719 IMU 1 17716 0 1",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788908939.8801012,
+    "imu": "IR2 17719 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930",
+    "imu_valid": true,
+    "imu_updated": 1788908939.8926818,
+    "navigation": "N 17719 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 17719 IMU 1 17716 0 1",
+    "help_identity": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908939.2639816
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908939.2763147
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908939.2769673
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788908939.27801
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "update_firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "identity_source": "maker-rvc-help",
+      "imu_transport": "uart-rvc",
+      "build_properties": [
+        "compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1"
+      ]
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 17119 0 0 0 0",
+      "IR2 17119 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930",
+      "N 17119 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17119 IMU 1 17116 0 1",
+      "T 17319 0 0 0 0",
+      "IR2 17319 3 READY 125.13 0.64 0.32 -4 12 996 0 0 0 0 -2.183930",
+      "N 17319 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17319 IMU 1 17316 0 1",
+      "T 17519 0 0 0 0",
+      "IR2 17519 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930",
+      "N 17519 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17519 IMU 1 17516 0 1",
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 17719 0 0 0 0",
+      "IR2 17719 3 READY 125.13 0.64 0.32 -4 12 1000 0 0 0 0 -2.183930",
+      "N 17719 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17719 IMU 1 17716 0 1"
+    ]
+  },
+  "finished": 1788908940.0463533
+}

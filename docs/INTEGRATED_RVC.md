@@ -1,5 +1,9 @@
 # Integrated Maker RVC firmware
 
+Current firmware is V2 with explicit counterclockwise-positive heading and IR2
+telemetry. See [heading convention correction](RVC_HEADING_CONVENTION.md).
+The V1 contract below describes the first deployment and historical captures.
+
 September 8, 2026: installed and flashed with motor power confirmed off. See
 [verified deployment](../test_results/rvc-deployment-20260908/README.md) for
 image/NVS verification and stopped telemetry checks. The Pi's earlier

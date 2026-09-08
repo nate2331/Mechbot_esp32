@@ -9,6 +9,7 @@ PWM_KEYS = tuple("pwm-" + wheel.lower() for wheel in WHEELS)
 MAKER_COUNTS_PER_REV = (2468.8, 2467.9, 2473.5, 2469.8)
 MAKER_HELP_IDENTITY = "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
 MAKER_RVC_HELP_IDENTITY = "Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+MAKER_RVC_V2_HELP_IDENTITY = "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
 
 PROFILES = {
     "maker": {
@@ -39,8 +40,9 @@ PROFILES = {
 
 def profile_for_firmware(firmware, help_identity=None):
     """Exact READY or the deployed Maker's distinctive help identifies its board."""
-    if firmware == 'ESP32_MAKER_MECANUM_RVC_V1' or (firmware is None and help_identity == MAKER_RVC_HELP_IDENTITY):
-        return dict(deepcopy(PROFILES['maker']), firmware='ESP32_MAKER_MECANUM_RVC_V1',
+    if firmware in ('ESP32_MAKER_MECANUM_RVC_V1', 'ESP32_MAKER_MECANUM_RVC_V2') or (firmware is None and help_identity in (MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY)):
+        return dict(deepcopy(PROFILES['maker']), firmware=firmware or ('ESP32_MAKER_MECANUM_RVC_V2' if help_identity == MAKER_RVC_V2_HELP_IDENTITY else 'ESP32_MAKER_MECANUM_RVC_V1'),
+                    update_firmware='ESP32_MAKER_MECANUM_RVC_V2',
                     identity_source='ready' if firmware else 'maker-rvc-help',
                     imu_transport='uart-rvc', build_properties=['compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1'])
     for profile in PROFILES.values():

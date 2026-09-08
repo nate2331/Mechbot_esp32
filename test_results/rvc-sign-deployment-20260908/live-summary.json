@@ -1,0 +1,12 @@
+{
+  "samples": 30,
+  "stream_fresh": true,
+  "errors": 0,
+  "zero_outputs": true,
+  "heading_accepted": false,
+  "heading_convention": "ccw-positive",
+  "raw_to_heading_verified": true,
+  "yaw_min_rad": -2.18393,
+  "yaw_max_rad": -2.183756,
+  "note": "Motor power confirmed off; no independent stillness or angle reference measurement."
+}

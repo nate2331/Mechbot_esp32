@@ -8,7 +8,7 @@ from unittest.mock import Mock
 from mechbot_bridge import Bridge
 from mechbot_observer import TelemetryObserver
 from mechbot_operations import OperationsService
-from mechbot_profiles import MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY
+from mechbot_profiles import MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY
 from mechbot_firmware_update import build_plan, perform_update, verified_boot
 from mechbot_telemetry import parse_event, RVC_BANNERS, RVC_HELP_READY
 
@@ -23,11 +23,33 @@ VALUE = 'VALUE ypr_deg=-0.01,-0.75,0.40 accel_mg=-8,-12,970 changes_ypr=417 chan
 
 
 class RvcTests(unittest.TestCase):
+    def test_v2_help_recovers_correct_version_without_boot_banner(self):
+        bridge=Bridge(operations=Mock())
+        bridge.parse_line(MAKER_RVC_V2_HELP_IDENTITY)
+        self.assertEqual(bridge.board_profile()['firmware'],'ESP32_MAKER_MECANUM_RVC_V2')
+        observer=TelemetryObserver()
+        observer.feed(MAKER_RVC_V2_HELP_IDENTITY,1)
+        self.assertEqual(observer.snapshot(1)['profile']['firmware'],'ESP32_MAKER_MECANUM_RVC_V2')
+
+    def test_ir2_keeps_raw_angles_and_checks_ccw_heading(self):
+        line='IR2 1234 2 READY -90 0 0 0 0 1000 1 0 0 0 1.570796'
+        event=parse_event(line,1)
+        self.assertEqual(event['ypr_deg'][0],-90)
+        self.assertAlmostEqual(event['yaw_rad'],1.570796)
+        self.assertTrue(event['control_ready'])
+        self.assertEqual(event['heading_convention'],'ccw-positive')
+        for bad in ['nan','-1.570796','9']:
+            self.assertIsNone(parse_event(line.rsplit(' ',1)[0]+' '+bad,1))
+        self.assertIsNone(parse_event(line.rsplit(' ',1)[0],1))
+        wrap=line.replace('-90','180').replace('1.570796','-3.141593')
+        self.assertIsNotNone(parse_event(wrap,1))
+
     def test_integrated_rvc_units_acceptance_and_malformed_reports(self):
         line='IR1 1234 2 READY 90.00 -0.75 0.40 -8 -12 974 1 2 3 4'
         parsed=parse_event(line,1)
         self.assertEqual(parsed['transport'],'uart-rvc')
-        self.assertTrue(parsed['valid'] and parsed['control_ready'])
+        self.assertTrue(parsed['valid'])
+        self.assertFalse(parsed['control_ready']) # IR1 has no corrected heading.
         self.assertAlmostEqual(parsed['yaw_rad'],1.5707963267948966)
         self.assertEqual(parsed['raw_acceleration_mg'],[-8,-12,974])
         for key in ('quaternion','gyro','acceleration','status'):
@@ -48,10 +70,12 @@ class RvcTests(unittest.TestCase):
         bridge.telemetry.update(serial_connected=True,serial_port='/fake/usb')
         bridge.parse_line(MAKER_RVC_HELP_IDENTITY)
         plan=build_plan(bridge.snapshot(),'maker')
-        self.assertEqual(plan['expected'],'ESP32_MAKER_MECANUM_RVC_V1')
+        self.assertEqual(plan['expected'],'ESP32_MAKER_MECANUM_RVC_V2')
         self.assertEqual(plan['build_properties'],['compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1'])
         self.assertFalse(verified_boot(bridge.snapshot(),plan,0))
         bridge.parse_line('READY ESP32_MAKER_MECANUM_RVC_V1')
+        self.assertFalse(verified_boot(bridge.snapshot(),plan,0))
+        bridge.parse_line('READY ESP32_MAKER_MECANUM_RVC_V2')
         self.assertTrue(verified_boot(bridge.snapshot(),plan,0))
         bridge.parse_line('IR1 1234 2 READY 90 0 0 -8 -12 974 0 0 0 0')
         self.assertTrue(bridge.telemetry['imu_valid'])
@@ -68,7 +92,7 @@ class RvcTests(unittest.TestCase):
         calls=[]
         def run(args,check):
             calls.append(args)
-            if args[1]=='upload': status['firmware_received']=101
+            if args[1]=='upload': status.update(firmware_received=101,firmware='ESP32_MAKER_MECANUM_RVC_V2')
         plan=perform_update('maker',api_call=lambda *_:dict(status),run=run,sleep=lambda *_:None,clock=lambda:100)
         self.assertIn('compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1',calls[0])
         self.assertEqual(calls[0][calls[0].index('--output-dir')+1],plan['output_dir'])

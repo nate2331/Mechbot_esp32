@@ -36,8 +36,9 @@ def build_plan(status, requested_board=None):
         raise RuntimeError("finish tuning and maintenance before updating firmware")
     plan = {"board_id": board["id"], "fqbn": board["fqbn"],
             "sketch": str(SOURCE_ROOT / board["sketch"]),
-            "port": status["serial_port"], "expected": board["firmware"]}
+            "port": status["serial_port"], "expected": board.get("update_firmware", board["firmware"])}
     if board.get('build_properties'):
+        plan['source_firmware'] = board['firmware']
         plan['build_properties'] = board['build_properties']
         plan['output_dir'] = str(SOURCE_ROOT / '.maker-rvc-build')
     return plan

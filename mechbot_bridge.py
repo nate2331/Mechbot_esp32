@@ -20,7 +20,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import serial
-from mechbot_profiles import MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, profile_for_firmware, require_profile
+from mechbot_profiles import MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY, profile_for_firmware, require_profile
 from mechbot_operations import OperationsService
 from mechbot_telemetry import RVC_BANNERS, RVC_HELP_READY, parse_event
 from mechbot_http import handle_get, handle_post, read_json_body, validate_origin
@@ -539,6 +539,11 @@ class Bridge:
                 raise RuntimeError("integrated RVC firmware required")
             if not self.serial or not self.telemetry.get("serial_connected"):
                 raise RuntimeError("ESP32 is disconnected")
+            if action in ("accept", "field", "zero") and (
+                    not self.telemetry.get("imu", "").startswith("IR2 ") or
+                    not self.telemetry.get("imu_valid") or
+                    not 0 <= time.time() - (self.telemetry.get("imu_updated") or 0) <= 1):
+                raise RuntimeError("fresh corrected RVC heading firmware required")
             if (self.maintenance or self.calibration["active"] or
                     self.tuning_session.get("active") or self._restore_pending or
                     self.firmware_job["state"] in ("starting", "running")):
@@ -803,7 +808,7 @@ class Bridge:
                 if parts[:1] == ["T"] and len(parts) == 6:
                     self.telemetry["encoders"] = [int(x) for x in parts[2:6]]
                     self.telemetry["encoder_updated"] = now
-                elif parts[:1] == ["IR1"]:
+                elif parts[:1] in (["IR1"], ["IR2"]):
                     event = parse_event(line, now)
                     self.telemetry['imu'] = line
                     self.telemetry['imu_valid'] = bool(event and event['valid'])
@@ -823,7 +828,7 @@ class Bridge:
                     self.telemetry["firmware"] = RVC_BANNERS.get(line, " ".join(parts[1:]))
                     self.telemetry["firmware_received"] = now
                     self.rearm_required = True
-                elif line in (MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY):
+                elif line in (MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY):
                     self.telemetry["help_identity"] = line
                 elif parts[:1] == ["D"] and len(parts) == 10:
                     if (parts[1] in MOTOR_NAMES and parts[2::2] == ["PWM", "A", "B", "INVALID"]):

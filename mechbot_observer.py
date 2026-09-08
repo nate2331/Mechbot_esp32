@@ -6,7 +6,7 @@ import threading
 
 from mechbot_telemetry import parse_event, WheelRateEstimator
 from mechbot_odometry import PassiveOdometry, validate_geometry
-from mechbot_profiles import profile_for_firmware, MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY
+from mechbot_profiles import profile_for_firmware, MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY
 
 WHEELS = ('FL', 'FR', 'RL', 'RR')
 
@@ -77,7 +77,7 @@ class TelemetryObserver:
         if not _valid_time(host_time):
             return None
         with self._lock:
-            if line in (MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY) and self._profile['id'] == 'unknown':
+            if line in (MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY) and self._profile['id'] == 'unknown':
                 profile = profile_for_firmware(None, line)
                 event = dict(type='ready', firmware=profile['firmware'], host_time=float(host_time), raw=line)
             elif event and event['type'] == 'ready':

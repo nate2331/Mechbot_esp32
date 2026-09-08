@@ -10,6 +10,10 @@ in this integrated firmware remain unverified.
 
 ## September 8 deployed RVC checkpoint
 
+V2 supersedes V1 after hand tests confirmed clockwise-positive raw yaw. It uses
+counterclockwise-positive heading for control and retains raw angles in IR2.
+See [the correction record](../docs/RVC_HEADING_CONVENTION.md).
+
 The explicit `MAKER_IMU_RVC=1` build is now flashed and independently verified on
 the buffered GPIO21 setup. The matched Pi software is installed. See
 [build and controls](../docs/INTEGRATED_RVC.md) and [deployment evidence](../test_results/rvc-deployment-20260908/README.md).

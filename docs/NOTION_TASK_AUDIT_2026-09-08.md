@@ -13,7 +13,7 @@ where its stated acceptance also requires physical results.
 
 | Task | Current evidence | Missing completion evidence |
 | --- | --- | --- |
-| 01 Confirm installed hardware and firmware | Buffered 5 V and Pi connection confirmed; integrated RVC image verified and fresh READY captured; Maker/four-encoder history recovered | Full as-built power/mounting/motor/driver record, committed source checkpoint and Nathan's baseline confirmation |
+| 01 Confirm installed hardware and firmware | Buffered 5 V and Pi connection confirmed; integrated RVC image verified and fresh READY captured; source recorded in 65bb431; Maker/four-encoder history recovered | Full as-built power/mounting/motor/driver record and Nathan's baseline confirmation |
 | 02 Verify calibration and stable heading | 37m51s historical communication run; fresh Pi observation; startup reset records; new RVC parser distinguishes unknown calibration | Independently measured angle/sign/drift, repeatable accepted procedure and motor-powered reliability |
 | 03 Prototype ESP32 heading hold | Target capture, wrapped P correction, turn priority, field-loss latch and integrated RVC path tested and deployed | Recorded straight-drive results after sensor confidence |
 | 04 Tune heading hold | Existing parameters and bench wheel observations; no accepted shared trim | Controllable low-speed response; measured gain/deadband/limit trials, drift/oscillation outcomes |

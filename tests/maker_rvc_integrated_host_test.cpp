@@ -39,7 +39,7 @@ int main(int argc,char** argv) {
   setup(); stopped();
   assert(Serial1.rx==21 && Serial1.tx==-1 && Serial1.baud==115200 && Serial1.bufferSize==8192);
   for(unsigned pin:{16U,22U,25U,26U,32U,33U}) assert(pinModes[pin]==0 && pinDuty[pin]==0);
-  assert(Serial.output.find("READY ESP32_MAKER_MECANUM_RVC_V1")!=std::string::npos);
+  assert(Serial.output.find("READY ESP32_MAKER_MECANUM_RVC_V2")!=std::string::npos);
   assert(Serial.output.find("Maker mapping:")==std::string::npos);
   assert(!settings.headingEnabled && !fieldOrientedEnabled);
   command("IMU ACCEPT"); assert(!rvc.accepted(millis()));
@@ -48,10 +48,10 @@ int main(int argc,char** argv) {
   command("F 1"); assert(!fieldOrientedEnabled); stopped();
   command("IMU ACCEPT"); assert(rvc.accepted(millis())); stopped();
   command("F 1"); assert(fieldOrientedEnabled); stopped();
-  sample(5,9000); command("V 0.5 0 0");
+  sample(5,-9000); command("V 0.5 0 0");
   near(pendingMotorCommands[0],88.5F); near(pendingMotorCommands[1],-88.5F);
   Serial.output.clear(); sendImuTelemetry();
-  assert(Serial.output.find(" READY 90.00 -0.75 0.40 -8 -12 974 1 0 0 0")!=std::string::npos);
+  assert(Serial.output.find(" READY -90.00 -0.75 0.40 -8 -12 974 1 0 0 0 1.570796")!=std::string::npos);
   assert(!imuQuaternionValid && !imuGyroValid && !imuAccelerationValid); // no invented fields
 
   auto bad=frame(6); bad[18]^=1; push(bad); pollImu();
@@ -85,5 +85,13 @@ int main(int argc,char** argv) {
   assert(rvc.fresh(millis())); command("IMU ACCEPT"); assert(rvc.accepted(millis()));
   command("IMU REVOKE"); assert(!rvc.accepted(millis())); stopped();
   command("IMU ACCEPT"); command("IMU RETRY"); assert(!rvc.accepted(millis())); stopped();
+  for(unsigned i=0;i<5;++i) sample(i,-5371);
+  command("IMU ACCEPT"); float baselineYaw; assert(readCurrentYaw(baselineYaw));
+  sample(5,-14182); assert(readCurrentYaw(heading));
+  near((heading-baselineYaw)*180.0F/NavigationMath::PI_F,88.11F);
+  sample(6,3680); assert(readCurrentYaw(heading));
+  near((heading-baselineYaw)*180.0F/NavigationMath::PI_F,-90.51F);
+  sample(7,18000); assert(readCurrentYaw(heading));
+  near(std::fabs(heading),NavigationMath::PI_F);
   std::cout << "PASS: integrated receive-only RVC, qualification/acceptance, raw telemetry, field transform, checksum/index/UART faults, bounded backlog drain, loop gap/stale, rollover, revoke/retry and motor watchdog\n";
 }

@@ -110,7 +110,8 @@
     UI.text('rvcDetail', '');
     if (imu?.transport === 'uart-rvc' && !offline) {
       UI.text('imuState', freshImu ? 'RVC yaw '+UI.fmt(degrees(imu.yaw_rad), 2)+'° · '+age(imu) : 'RVC · '+reason(imu, 'stale'));
-      UI.text('rvcDetail', (imu.control_ready === true && freshImu ? 'Heading accepted for this session. ' : 'Heading acceptance required. ')+
+      UI.text('rvcDetail', (imu.heading_convention === 'ccw-positive' ? 'Counterclockwise-positive heading. ' : 'Raw yaw; heading convention unverified. ')+
+        (imu.control_ready === true && freshImu ? 'Heading accepted for this session. ' : 'Heading acceptance required. ')+
         'Calibration status and gyro unavailable; acceleration is raw mg. Checksum '+UI.fmt(imu.bad_checksum,0)+
         ' · index '+UI.fmt(imu.discontinuities,0)+' · UART '+UI.fmt(imu.uart_errors,0)+'.');
     }

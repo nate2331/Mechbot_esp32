@@ -371,7 +371,8 @@ bool readCurrentYaw(
 #if MAKER_IMU_RVC
   (void)minimumStatus; // RVC has no calibration status; acceptance is separate.
   if (!rvc.accepted(nowMs)) return false;
-  yaw=NavigationMath::wrapRadians(rvc.sample().yaw * .01F * NavigationMath::PI_F / 180.0F);
+  // September 8 hand checks: raw RVC yaw increases clockwise in this mounting.
+  yaw=NavigationMath::wrapRadians(-rvc.sample().yaw * .01F * NavigationMath::PI_F / 180.0F);
   return isfinite(yaw);
 #else
   if (!imuAvailable || !imuQuaternionValid ||
@@ -736,11 +737,12 @@ void sendImuTelemetry() {
   const uint32_t nowMs = millis();
 #if MAKER_IMU_RVC
   const auto& value=rvc.sample();
-  Serial.printf("IR1 %lu %lld %s %.2f %.2f %.2f %d %d %d %u %lu %lu %lu\n",
+  Serial.printf("IR2 %lu %lld %s %.2f %.2f %.2f %d %d %d %u %lu %lu %lu %.6f\n",
     static_cast<unsigned long>(nowMs), static_cast<long long>(rvc.age(nowMs)), rvc.state(nowMs),
     value.yaw*.01, value.pitch*.01, value.roll*.01, value.ax,value.ay,value.az,
     rvc.accepted(nowMs)?1U:0U, static_cast<unsigned long>(rvc.badChecksums()),
-    static_cast<unsigned long>(rvc.discontinuities()), static_cast<unsigned long>(rvc.uartErrors()));
+    static_cast<unsigned long>(rvc.discontinuities()), static_cast<unsigned long>(rvc.uartErrors()),
+    NavigationMath::wrapRadians(-value.yaw*.01F*NavigationMath::PI_F/180.0F));
 #else
 
   if (!imuAvailable) {
@@ -867,7 +869,7 @@ void sendTelemetry() {
 
 void printHelp() {
 #if MAKER_IMU_RVC
-  Serial.println("FIRMWARE MAKER_RVC_V1_FIELD_FAULT_LATCH");
+  Serial.println("FIRMWARE MAKER_RVC_V2_CCW_HEADING");
   Serial.println("IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks");
   Serial.println("IMU REVOKE: stop and revoke heading acceptance; UART stream continues");
 #else
@@ -885,7 +887,7 @@ void printHelp() {
   Serial.println("  ?                         help");
   Serial.printf("Heading hold: %s (verify sensor axes before enabling)\n", settings.headingEnabled ? "ON" : "OFF");
 #if MAKER_IMU_RVC
-  Serial.println("Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive");
+  Serial.println("Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive");
 #else
   Serial.println("Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive");
 #endif
@@ -903,7 +905,7 @@ void printHelp() {
   Serial.println("Watchdog: 300 ms");
   Serial.println("Encoder: T <ms> <FL> <FR> <RL> <RR>");
 #if MAKER_IMU_RVC
-  Serial.println("IMU: IR1 <ms> <age_ms> <state> <yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors>");
+  Serial.println("IMU: IR2 <ms> <age_ms> <state> <raw_yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors> <ccw_heading_rad>");
 #else
   Serial.println("IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>");
 #endif
@@ -1135,7 +1137,7 @@ void setup() {
   lastCommandMs = millis();
   lastTelemetryMs = millis();
 #if MAKER_IMU_RVC
-  Serial.println("READY ESP32_MAKER_MECANUM_RVC_V1");
+  Serial.println("READY ESP32_MAKER_MECANUM_RVC_V2");
 #else
   Serial.println("READY ESP32_MAKER_MECANUM_IMU_V1");
 #endif

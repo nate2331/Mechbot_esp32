@@ -1,4 +1,5 @@
 import unittest
+import time
 from test_mechbot_bridge import Bridge, FakeSerial
 from mechbot_bridge import BUTTON_DEADMAN
 
@@ -8,7 +9,7 @@ class NavigationCommandsTest(unittest.TestCase):
         self.bridge = Bridge()
         self.bridge.serial = FakeSerial()
         self.bridge.telemetry.update(serial_connected=True,
-            firmware='ESP32_MAKER_MECANUM_RVC_V1')
+            firmware='ESP32_MAKER_MECANUM_RVC_V2',imu='IR2 1 0 READY',imu_valid=True,imu_updated=time.time())
         self.bridge._restore_pending = False
 
     def test_stopped_commands_are_exact_and_not_claimed_acknowledged(self):
@@ -44,6 +45,13 @@ class NavigationCommandsTest(unittest.TestCase):
             self.bridge.telemetry['firmware'] = identity
             with self.assertRaises(RuntimeError):
                 self.bridge.navigation_command('robot')
+        self.assertEqual(self.bridge.serial.commands, [])
+
+    def test_old_or_stale_heading_cannot_be_accepted(self):
+        for line, updated in [('IR1 1 0 READY', time.time()), ('IR2 1 0 READY', time.time()-2)]:
+            self.bridge.telemetry.update(imu=line,imu_updated=updated)
+            with self.assertRaisesRegex(RuntimeError,'corrected'):
+                self.bridge.navigation_command('accept','HEADING_MEASURED')
         self.assertEqual(self.bridge.serial.commands, [])
 
     def test_failed_stop_prevents_reference_command(self):
