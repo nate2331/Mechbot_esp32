@@ -34,9 +34,13 @@ def build_plan(status, requested_board=None):
         raise RuntimeError("disconnect the controller before updating firmware")
     if status.get("calibration_active") or status.get("maintenance"):
         raise RuntimeError("finish tuning and maintenance before updating firmware")
-    return {"board_id": board["id"], "fqbn": board["fqbn"],
+    plan = {"board_id": board["id"], "fqbn": board["fqbn"],
             "sketch": str(SOURCE_ROOT / board["sketch"]),
             "port": status["serial_port"], "expected": board["firmware"]}
+    if board.get('build_properties'):
+        plan['build_properties'] = board['build_properties']
+        plan['output_dir'] = str(SOURCE_ROOT / '.maker-rvc-build')
+    return plan
 
 
 def verified_boot(status, plan, after):
@@ -50,7 +54,12 @@ def perform_update(board_id=None, api_call=api, run=subprocess.run,
                    sleep=time.sleep, clock=time.time):
     plan = build_plan(api_call("/api/status"), board_id)
     print(f"Compiling {plan['board_id']} ({plan['fqbn']}) with one job...", flush=True)
-    run([CLI, "compile", "--jobs", "1", "--fqbn", plan["fqbn"], plan["sketch"]], check=True)
+    compile_args = [CLI, "compile", "--jobs", "1", "--fqbn", plan["fqbn"]]
+    for setting in plan.get('build_properties', []):
+        compile_args += ['--build-property', setting]
+    if plan.get('output_dir'):
+        compile_args += ['--output-dir', plan['output_dir']]
+    run(compile_args + [plan['sketch']], check=True)
     current = build_plan(api_call("/api/status"), plan["board_id"])
     if current != plan:
         raise RuntimeError("controller changed during compilation; upload cancelled")
@@ -59,7 +68,10 @@ def perform_update(board_id=None, api_call=api, run=subprocess.run,
     try:
         sleep(1)
         print(f"Uploading {plan['board_id']} on {plan['port']}...", flush=True)
-        run([CLI, "upload", "-p", plan["port"], "--fqbn", plan["fqbn"], plan["sketch"]], check=True)
+        upload_args = [CLI, "upload", "-p", plan["port"], "--fqbn", plan["fqbn"]]
+        if plan.get('output_dir'):
+            upload_args += ['--input-dir', plan['output_dir']]
+        run(upload_args + [plan['sketch']], check=True)
     finally:
         api_call("/api/maintenance", {"enabled": False})
     deadline = clock() + 20

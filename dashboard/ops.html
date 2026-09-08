@@ -28,6 +28,17 @@
   <div id="notice" role="status" aria-live="polite"></div>
 <main>
   <section id="view-overview" class="view">
+    <article class="panel">
+      <h2>Heading and drive frame</h2>
+      <p>Release the gamepad deadman before changing the frame. Field forward is the heading captured when you select Field frame; Re-zero replaces that reference.</p>
+      <button id="navRobot" type="button" disabled>Robot frame</button>
+      <button id="navField" type="button" disabled>Field frame</button>
+      <button id="navZero" type="button" disabled>Re-zero field</button>
+      <button id="navRevoke" type="button" disabled>Revoke heading</button>
+      <p><label><input id="headingMeasured" type="checkbox"> I have measured the sensor mounting, yaw direction and heading accuracy for this session.</label></p>
+      <button id="navAccept" type="button" disabled>Accept measured heading</button>
+      <p id="navStatus">Integrated RVC firmware and a live connection are required.</p>
+    </article>
     <div class="hero">
       <article class="intro">
         <p class="eyebrow">01 / LIVE OBSERVATION</p>
@@ -47,6 +58,7 @@
         <article>
           <label>IMU</label>
           <strong id="imuState"></strong>
+          <small id="rvcDetail"></small>
         </article>
         <article>
           <label>Odometry</label>

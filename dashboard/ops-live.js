@@ -99,8 +99,31 @@
     UI.text('modeBadge', label);
     UI.text('connection', offline ? 'Disconnected · stale data cleared' : bridge?.serial_connected === true ? 'Connected · '+(bridge.serial_port || 'controller') : 'Disconnected');
     UI.text('boardName', offline ? 'Unknown controller' : profile.name || 'Unidentified controller');
+    const navigationAvailable = !offline && mode === 'live' && !UI.replay && profile.imu_transport === 'uart-rvc' && bridge?.serial_connected === true;
+    for (const id of ['navRobot','navField','navZero','navRevoke','navAccept']) {
+      if (UI.el(id)) UI.el(id).disabled = !navigationAvailable;
+    }
+    UI.text('navStatus', navigationAvailable ? 'Commands stop first. A sensor fault requires renewed heading acceptance and an explicit frame selection.' : 'Integrated RVC firmware and a live connection are required.');
     UI.text('rateState', offline ? 'Unknown · offline' : freshRates ? 'Fresh feedback' : reason(rates, 'Awaiting samples')+(rates ? ' · '+age(rates) : ''));
     UI.text('imuState', offline ? 'Unknown · offline' : freshImu ? UI.fmt(degrees(imu.yaw_rad), 1)+'° · '+age(imu) : imu?.reason === 'offline' ? 'Sensor offline · '+age(imu) : 'Waiting/stale'+(imu ? ' · '+reason(imu, 'invalid')+' · '+age(imu) : ''));
+    const rvc = data.rvc;
+    UI.text('rvcDetail', '');
+    if (imu?.transport === 'uart-rvc' && !offline) {
+      UI.text('imuState', freshImu ? 'RVC yaw '+UI.fmt(degrees(imu.yaw_rad), 2)+'° · '+age(imu) : 'RVC · '+reason(imu, 'stale'));
+      UI.text('rvcDetail', (imu.control_ready === true && freshImu ? 'Heading accepted for this session. ' : 'Heading acceptance required. ')+
+        'Calibration status and gyro unavailable; acceleration is raw mg. Checksum '+UI.fmt(imu.bad_checksum,0)+
+        ' · index '+UI.fmt(imu.discontinuities,0)+' · UART '+UI.fmt(imu.uart_errors,0)+'.');
+    }
+    if (rvc && !offline) {
+      const current = rvc.valid === true && rvc.run?.fresh === true && rvc.value?.fresh === true;
+      UI.text('imuState', current ? 'RVC yaw '+UI.fmt(rvc.value.ypr_deg?.[0], 2)+'° · '+age(rvc.value) : 'RVC · '+reason(rvc, 'awaiting report'));
+      const rate = rvc.run?.fresh === true && rvc.run.window_ms > 0 ? rvc.run.new*1000/rvc.run.window_ms : null;
+      const counts = rvc.counts?.fresh === true ? rvc.counts : null;
+      const uart = rvc.uart?.fresh === true ? rvc.uart.totals : null;
+      UI.text('rvcDetail', UI.fmt(rate, 0)+' frames/s · checksum '+UI.fmt(counts?.bad_checksum, 0)+
+        ' · index '+UI.fmt(counts?.discontinuities, 0)+' · UART '+UI.fmt(Array.isArray(uart) ? uart.reduce((a,b)=>a+b,0) : null, 0)+
+        '. Sensor diagnostic; heading accuracy unverified. Gyro and calibration status unavailable.');
+    }
     UI.text('poseState', offline ? 'Unknown · offline' : !measured ? 'Geometry required' : tracking ? 'Tracking' : 'Paused');
     UI.text('rateUnits', UI.drawRates(UI.el('speedChart'), data.samples)+' · signed wheel feedback');
     UI.drawPose(UI.el('poseChart'), data.samples, tracking ? data.pose : null);
@@ -135,6 +158,6 @@
     });
     const invalid = Object.values(data.diagnostics || {}).some(d => finite(d?.invalid_transitions) && d.invalid_transitions > 0);
     const next = offline ? 'Reconnect and identify the controller before reviewing current signals.' : label === 'REPLAY' ? 'Offline replay; exit replay before changing live geometry.' : supported.length < 4 ? 'Identify four wheel encoder capabilities before enabling odometry.' : invalid ? 'Inspect encoder wiring and invalid-transition counts before the next supervised test.' : !freshRates ? 'Check wheel telemetry and freshness before a supervised bench test.' : !freshImu ? 'Check IMU telemetry; wheel-only odometry does not confirm heading.' : !measured ? 'Measure loaded wheel geometry before interpreting travel.' : 'Review a supervised bench run; floor performance remains unverified.';
-    UI.text('nextAction', next);
+    UI.text('nextAction', rvc && !offline && label !== 'REPLAY' ? 'Record startup and known-angle checks for the RVC sensor. Robot firmware integration and motor-noise testing remain pending.' : next);
   };
 })();

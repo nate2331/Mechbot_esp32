@@ -1,0 +1,5 @@
+PASS: integrated receive-only RVC, qualification/acceptance, raw telemetry, field transform, checksum/index/UART faults, bounded backlog drain, loop gap/stale, rollover, revoke/retry and motor watchdog
+PASS: integrated RVC uart initialization failure stays unavailable/stopped
+PASS: integrated RVC rx initialization failure stays unavailable/stopped
+PASS: actual firmware mapping, defaults, coherent encoder startup/sampling, all transitions/polarities, resync/reverse counts, PWM polarity, blocked-sensor timeout, stop, malformed/overflow input, settings, stale IMU, SPI initialization, reset mode, failed-init invalidation, bounded missing/stale recovery, selective retries, fresh-event recovery, motion deferral, rollover, read-only diagnostics and queued arrival freshness
+PASS: actual Maker heading target, correction sign/limit/deadband, manual turn, idle, wrap, field cardinal headings, zero, stale/reset latch and explicit mode recovery

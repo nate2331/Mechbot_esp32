@@ -8,7 +8,21 @@ See ../HARDWARE_BASELINE.md for the results, RL speed asymmetry and recurring IM
 faults. Floor operation, continuous speed control and sustained IMU reliability
 in this integrated firmware remain unverified.
 
-## September 7, 2026 checkpoint
+## September 8 deployed RVC checkpoint
+
+The explicit `MAKER_IMU_RVC=1` build is now flashed and independently verified on
+the buffered GPIO21 setup. The matched Pi software is installed. See
+[build and controls](../docs/INTEGRATED_RVC.md) and [deployment evidence](../test_results/rvc-deployment-20260908/README.md).
+Default compilation still selects experimental SPI; use the RVC build property
+for the current wiring. Both variants retain 20 kHz / duty 177 defaults. Heading
+acceptance remains off until measured mounting, yaw sign and accuracy checks.
+
+## Historical September 7 checkpoint
+
+September 8 source update: field-reference loss now latches a stop until explicit
+`F 0` or fresh `F 1`; ordinary commands cannot silently switch frames after IMU
+recovery. [Actual-sketch tests and target compilation](../test_results/maker-navigation-20260908/README.md)
+passed. The default SPI variant was not uploaded; the RVC variant is now deployed.
 
 This integrated source still uses the SPI V2 transport and its 20 kHz PWM / 177
 default ceilings. Its September 6 upload was verified on COM8, but the IMU
@@ -23,7 +37,7 @@ UART on GPIO21. The saved run reached 37 min 51 s and 227,501 valid frames with
 zero reported checksum, UART, index, repeat or pause errors. Ten ESP-only resets
 also reacquired the powered stream, and four user startup sequences reached
 READY. See the [bench findings](../test_results/imu-maker-rvc-continuous-20260907/FINDINGS.md).
-RVC integration into this robot firmware remains pending. The recovery changed
+RVC integration was pending at this historical checkpoint. The recovery changed
 the controller/setup, buffering, supply and startup procedure across trials;
 the evidence does not isolate 5 V as the cause of recovery.
 

@@ -20,8 +20,9 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import serial
-from mechbot_profiles import MAKER_HELP_IDENTITY, profile_for_firmware, require_profile
+from mechbot_profiles import MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, profile_for_firmware, require_profile
 from mechbot_operations import OperationsService
+from mechbot_telemetry import RVC_BANNERS, RVC_HELP_READY, parse_event
 from mechbot_http import handle_get, handle_post, read_json_body, validate_origin
 
 SEND_HZ = 20.0
@@ -521,6 +522,39 @@ class Bridge:
         with self.lock:
             return [line for sequence, line in self._responses if sequence > marker]
 
+    def navigation_command(self, action, confirmation=None):
+        """Dispatch a stopped RVC mode change through the single serial owner.
+
+        Sent is not an acknowledgement: firmware remains authoritative for fresh
+        heading eligibility and emits OK/ERR into the captured serial stream.
+        """
+        commands = {"robot": "F 0", "field": "F 1", "zero": "Z",
+                    "accept": "IMU ACCEPT", "revoke": "IMU REVOKE"}
+        if not isinstance(action, str) or action not in commands:
+            raise ValueError("unknown navigation action")
+        if action == "accept" and confirmation != "HEADING_MEASURED":
+            raise ValueError("measured mounting, yaw direction and accuracy confirmation required")
+        with self.lock:
+            if self.board_profile().get("imu_transport") != "uart-rvc":
+                raise RuntimeError("integrated RVC firmware required")
+            if not self.serial or not self.telemetry.get("serial_connected"):
+                raise RuntimeError("ESP32 is disconnected")
+            if (self.maintenance or self.calibration["active"] or
+                    self.tuning_session.get("active") or self._restore_pending or
+                    self.firmware_job["state"] in ("starting", "running")):
+                raise RuntimeError("finish tuning and maintenance before changing navigation")
+            if self.buttons[BUTTON_DEADMAN] or self.telemetry.get("deadman"):
+                raise RuntimeError("release the gamepad deadman before changing navigation")
+            self.rearm_required = True
+            # Use writes directly so a failed stop cannot be swallowed before a
+            # reference-changing command. Selection and transmission are atomic
+            # with respect to gamepad dispatch below.
+            self.write("V 0 0 0")
+            self.write("X")
+            self.write(commands[action])
+            return {"sent": commands[action], "acknowledged": False,
+                    "rearm_required": True}
+
     def snapshot(self):
         with self.lock:
             return copy.deepcopy(dict(self.telemetry, simulated=self.telemetry.get('simulated', False), maintenance=self.maintenance,
@@ -769,6 +803,11 @@ class Bridge:
                 if parts[:1] == ["T"] and len(parts) == 6:
                     self.telemetry["encoders"] = [int(x) for x in parts[2:6]]
                     self.telemetry["encoder_updated"] = now
+                elif parts[:1] == ["IR1"]:
+                    event = parse_event(line, now)
+                    self.telemetry['imu'] = line
+                    self.telemetry['imu_valid'] = bool(event and event['valid'])
+                    self.telemetry['imu_updated'] = now if event and event['valid'] else None
                 elif parts[:1] == ["I"]:
                     self.telemetry["imu"] = line
                     valid = len(parts) == 13 and all(math.isfinite(float(value)) for value in parts[2:])
@@ -778,13 +817,13 @@ class Bridge:
                     self.telemetry["navigation"] = line
                 elif parts[:1] == ["H"]:
                     self.telemetry["health"] = line
-                elif parts[:1] == ["READY"]:
+                elif line in RVC_BANNERS or (parts[:1] == ["READY"] and line != RVC_HELP_READY):
                     if self.calibration.get("running"):
                         self.calibration_abort.set()
-                    self.telemetry["firmware"] = " ".join(parts[1:])
+                    self.telemetry["firmware"] = RVC_BANNERS.get(line, " ".join(parts[1:]))
                     self.telemetry["firmware_received"] = now
                     self.rearm_required = True
-                elif line == MAKER_HELP_IDENTITY:
+                elif line in (MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY):
                     self.telemetry["help_identity"] = line
                 elif parts[:1] == ["D"] and len(parts) == 10:
                     if (parts[1] in MOTOR_NAMES and parts[2::2] == ["PWM", "A", "B", "INVALID"]):
@@ -914,13 +953,14 @@ class Bridge:
                 now = time.monotonic()
                 self.poll_identity(now)
                 if self.serial and not self.calibration["active"] and now >= next_send:
-                    deadman = bool(self.joystick and self.buttons[BUTTON_DEADMAN] and
-                                   not self.rearm_required and not self._restore_pending and
-                                   self.board_profile()["id"] != "unknown" and
-                                   self.firmware_job["state"] not in ("starting", "running"))
-                    self.telemetry["deadman"] = deadman
-                    motion = gamepad_motion(self.axes) if deadman else (0.0, 0.0, 0.0)
-                    self.write("V %.3f %.3f %.3f" % motion)
+                    with self.lock:
+                        deadman = bool(self.joystick and self.buttons[BUTTON_DEADMAN] and
+                                       not self.rearm_required and not self._restore_pending and
+                                       self.board_profile()["id"] != "unknown" and
+                                       self.firmware_job["state"] not in ("starting", "running"))
+                        self.telemetry["deadman"] = deadman
+                        motion = gamepad_motion(self.axes) if deadman else (0.0, 0.0, 0.0)
+                        self.write("V %.3f %.3f %.3f" % motion)
                     next_send = now + 1.0 / SEND_HZ
                 if self.serial and self.board_profile()["diagnostics"] and now >= self._next_diagnostics:
                     self.write("DIAG")
@@ -990,6 +1030,8 @@ class Handler(BaseHTTPRequestHandler):
                 if self.bridge.firmware_job["state"] in ("starting", "running"):
                     raise RuntimeError("firmware update is running")
             if self.path == "/api/stop": self.bridge.emergency_stop(); result = {"ok": True}
+            elif self.path == "/api/navigation":
+                result = self.bridge.navigation_command(data.get("action"), data.get("confirmation"))
             elif self.path == "/api/maintenance":
                 self.bridge.set_maintenance(bool(data.get("enabled")))
                 result = {"ok": True, "maintenance": self.bridge.maintenance}

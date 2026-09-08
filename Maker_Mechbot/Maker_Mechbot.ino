@@ -33,8 +33,15 @@
 */
 
 #include <Arduino.h>
+#ifndef MAKER_IMU_RVC
+#define MAKER_IMU_RVC 0
+#endif
+#if MAKER_IMU_RVC
+#include "MakerRvc.h"
+#else
 #include <SPI.h>
 #include "MakerBnoSpi.h"
+#endif
 #include <Preferences.h>
 #include <esp_arduino_version.h>
 
@@ -128,9 +135,13 @@ DRAM_ATTR const int8_t quadratureDelta[16] = {
 
 
 
+#if MAKER_IMU_RVC
+MakerRvc rvc;
+#else
 MakerBnoSpi bno08x(IMU_RESET_PIN, IMU_WAKE_PIN, IMU_INT_PIN);
-Preferences preferences;
 sh2_SensorValue_t imuEvent;
+#endif
+Preferences preferences;
 
 struct RuntimeSettings {
   uint8_t pwm[MOTOR_COUNT];
@@ -189,6 +200,9 @@ bool headingTargetValid = false;
 bool fieldOrientedEnabled = false;
 bool fieldReferenceValid = false;
 bool navigationImuFaultReported = false;
+// A lost field reference must never turn queued field commands into robot commands.
+// Only an explicit F 0 or a successful F 1 may acknowledge this fault.
+bool fieldFaultLatched = false;
 float headingTargetYaw = 0.0F;
 float fieldReferenceYaw = 0.0F;
 float lastHeadingError = 0.0F;
@@ -354,6 +368,12 @@ bool readCurrentYaw(
     float &yaw,
     uint8_t minimumStatus = IMU_MIN_HEADING_HOLD_STATUS) {
   const uint32_t nowMs = millis();
+#if MAKER_IMU_RVC
+  (void)minimumStatus; // RVC has no calibration status; acceptance is separate.
+  if (!rvc.accepted(nowMs)) return false;
+  yaw=NavigationMath::wrapRadians(rvc.sample().yaw * .01F * NavigationMath::PI_F / 180.0F);
+  return isfinite(yaw);
+#else
   if (!imuAvailable || !imuQuaternionValid ||
       imuStatus < minimumStatus ||
       nowMs - lastImuQuaternionMs > IMU_STALE_MS) {
@@ -362,21 +382,31 @@ bool readCurrentYaw(
 
   return NavigationMath::quaternionToYaw(
       imuQx, imuQy, imuQz, imuQw, yaw);
+#endif
 }
 
 void invalidateNavigationReferences(const char *reason) {
   const bool fieldWasEnabled = fieldOrientedEnabled;
+  if (fieldWasEnabled) fieldFaultLatched = true;
   headingTargetValid = false;
   fieldOrientedEnabled = false;
   fieldReferenceValid = false;
   lastHeadingError = 0.0F;
   lastHeadingCorrection = 0.0F;
   if (fieldWasEnabled) {
-    Serial.printf("WARN field-oriented control disabled: %s\n", reason);
+    Serial.printf("WARN field reference lost: %s; motion latched until F 0 or fresh F 1\n", reason);
   }
 }
 
 void applyVelocity(float forward, float left, float ccw) {
+  if (fieldFaultLatched) {
+    stopAllMotors();
+    if (!navigationImuFaultReported) {
+      Serial.println("FAULT field reference lost; choose F 0 or fresh F 1 before motion");
+      navigationImuFaultReported = true;
+    }
+    return;
+  }
   forward = constrain(forward, -1.0F, 1.0F);
   left = constrain(left, -1.0F, 1.0F);
   ccw = constrain(ccw, -1.0F, 1.0F);
@@ -389,10 +419,15 @@ void applyVelocity(float forward, float left, float ccw) {
   float currentYaw = 0.0F;
   const bool headingAvailable = readCurrentYaw(currentYaw);
   const bool fieldHeadingAvailable =
+#if MAKER_IMU_RVC
+      headingAvailable;
+#else
       headingAvailable && imuStatus >= IMU_MIN_FIELD_ORIENTED_STATUS;
+#endif
 
   if (fieldOrientedEnabled && translationRequested) {
     if (!fieldHeadingAvailable || !fieldReferenceValid) {
+      fieldFaultLatched = true;
       stopAllMotors();
       if (!navigationImuFaultReported) {
         Serial.println("FAULT field-oriented heading unavailable; motors stopped");
@@ -475,6 +510,28 @@ int64_t getEncoderCount(uint8_t index) {
 
 void initializeImu();
 
+#if MAKER_IMU_RVC
+void initializeImu() {
+  stopAllMotors();
+  invalidateNavigationReferences("RVC receiver restart");
+  ++imuReinitCount;
+  imuAvailable=rvc.begin(millis());
+  imuQuaternionValid=imuGyroValid=imuAccelerationValid=false;
+  lastImuEventMs=lastImuQuaternionMs=lastImuGyroMs=lastImuAccelerationMs=0;
+  Serial.println("IMU RVC receiver initialized; heading acceptance cleared; no sensor reset");
+}
+
+void pollImu() {
+  const uint32_t now=millis();
+  rvc.poll(now);
+  imuAvailable=rvc.available();
+  if (rvc.fresh(now)) lastImuEventMs=now-static_cast<uint32_t>(rvc.age(now));
+  if ((fieldOrientedEnabled || headingTargetValid) && !rvc.accepted(now)) {
+    stopAllMotors();
+    invalidateNavigationReferences("RVC heading acceptance lost");
+  }
+}
+#else
 bool enableImuReports() {
   bool ok = true;
   if (!bno08x.enableReport(SH2_GAME_ROTATION_VECTOR,
@@ -664,6 +721,7 @@ void pollImu() {
 
   retryMissingImuReports();
 }
+#endif
 
 void sendEncoderTelemetry() {
   Serial.printf("T %lu %lld %lld %lld %lld\n",
@@ -676,6 +734,14 @@ void sendEncoderTelemetry() {
 
 void sendImuTelemetry() {
   const uint32_t nowMs = millis();
+#if MAKER_IMU_RVC
+  const auto& value=rvc.sample();
+  Serial.printf("IR1 %lu %lld %s %.2f %.2f %.2f %d %d %d %u %lu %lu %lu\n",
+    static_cast<unsigned long>(nowMs), static_cast<long long>(rvc.age(nowMs)), rvc.state(nowMs),
+    value.yaw*.01, value.pitch*.01, value.roll*.01, value.ax,value.ay,value.az,
+    rvc.accepted(nowMs)?1U:0U, static_cast<unsigned long>(rvc.badChecksums()),
+    static_cast<unsigned long>(rvc.discontinuities()), static_cast<unsigned long>(rvc.uartErrors()));
+#else
 
   if (!imuAvailable) {
     Serial.printf("I %lu OFFLINE\n", static_cast<unsigned long>(nowMs));
@@ -704,12 +770,13 @@ void sendImuTelemetry() {
       imuGx, imuGy, imuGz,
       imuAx, imuAy, imuAz,
       static_cast<unsigned int>(imuStatus));
+#endif
 }
 
 void sendNavigationTelemetry() {
   const uint32_t nowMs = millis();
   float currentYaw = 0.0F;
-  const bool headingAvailable = readCurrentYaw(currentYaw);
+  const bool headingAvailable = !fieldFaultLatched && readCurrentYaw(currentYaw);
   Serial.printf("N %lu %.6f %.6f %.6f %.4f %u %u %u\n",
                 static_cast<unsigned long>(nowMs),
                 headingAvailable ? currentYaw : 0.0F,
@@ -722,6 +789,10 @@ void sendNavigationTelemetry() {
 }
 
 void sendImuDiagnostics() {
+#if MAKER_IMU_RVC
+  sendImuTelemetry();
+  Serial.println("IMU DIAG RVC RX21 TX_NONE CALIBRATION_UNKNOWN GYRO_UNAVAILABLE ACCEL_RAW_MG");
+#else
   // No report requests or hardware resets: this snapshot leaves outputs alone.
   const uint32_t nowMs = millis();
   Serial.printf("IMU DIAG SPI AVAILABLE %u INT %u Q %u AGE %lld G %u AGE %lld A %u AGE %lld RESET %lu REINIT %lu REPORT_RETRY %lu\n",
@@ -749,6 +820,7 @@ void sendImuDiagnostics() {
                 static_cast<unsigned long>(transport.sensorQueueDrops),
                 static_cast<unsigned int>(bno08x.queuedPackets()),
                 static_cast<unsigned int>(bno08x.queuedSensorEvents()));
+#endif
 }
 
 
@@ -788,34 +860,53 @@ void sendTelemetry() {
   sendNavigationTelemetry();
   Serial.printf("H %lu IMU %u %lu %lu %lu\n",
                 static_cast<unsigned long>(millis()), imuAvailable ? 1U : 0U,
-                static_cast<unsigned long>(lastImuQuaternionMs),
+                static_cast<unsigned long>(MAKER_IMU_RVC ? lastImuEventMs : lastImuQuaternionMs),
                 static_cast<unsigned long>(imuResetCount),
                 static_cast<unsigned long>(imuReinitCount));
 }
 
 void printHelp() {
-  Serial.println("FIRMWARE MAKER_SPI_V2_STALE_RECOVERY");
+#if MAKER_IMU_RVC
+  Serial.println("FIRMWARE MAKER_RVC_V1_FIELD_FAULT_LATCH");
+  Serial.println("IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks");
+  Serial.println("IMU REVOKE: stop and revoke heading acceptance; UART stream continues");
+#else
+  Serial.println("FIRMWARE MAKER_SPI_V3_FIELD_FAULT_LATCH");
+#endif
   Serial.println("Commands:");
   Serial.println("  V <forward> <left> <ccw>   each value -1.0 to +1.0");
   Serial.println("    forward and left are simultaneous continuous components");
   Serial.println("  F <0|1>                    field-oriented control off/on");
   Serial.println("  Z                          re-zero field heading");
+  Serial.printf("Field fault latched: %u; acknowledge with F 0 or fresh F 1\n", fieldFaultLatched ? 1U : 0U);
   Serial.println("  X                         immediate stop");
   Serial.println("  CFG GET|SAVE|RESET        runtime settings");
   Serial.println("  CFG SET <key> <value>     validated update while stopped");
   Serial.println("  ?                         help");
   Serial.printf("Heading hold: %s (verify sensor axes before enabling)\n", settings.headingEnabled ? "ON" : "OFF");
+#if MAKER_IMU_RVC
+  Serial.println("Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive");
+#else
   Serial.println("Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive");
+#endif
+#if MAKER_IMU_RVC
+  Serial.println("IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes");
+#else
   Serial.printf("IMU: SPI SCK%d MISO%d MOSI%d CS%d INT%d RST%d WAKE%d; relative yaw, NOT compass north\n",
                 IMU_SCK_PIN, IMU_MISO_PIN, IMU_MOSI_PIN, IMU_CS_PIN,
                 IMU_INT_PIN, IMU_RESET_PIN, IMU_WAKE_PIN);
+#endif
   Serial.println("Default PWM=177 all wheels; independent output watchdog, ramped drive");
   Serial.println("  DIAG                      encoder edges/errors and applied PWM");
   Serial.println("  IMU RETRY                 stopped reinitialization");
   Serial.println("  IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first");
   Serial.println("Watchdog: 300 ms");
   Serial.println("Encoder: T <ms> <FL> <FR> <RL> <RR>");
+#if MAKER_IMU_RVC
+  Serial.println("IMU: IR1 <ms> <age_ms> <state> <yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors>");
+#else
   Serial.println("IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>");
+#endif
   Serial.println("Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>");
 }
 
@@ -838,6 +929,17 @@ void processCommand(char *line) {
 
   if (strcmp(line, "DIAG") == 0) { sendDiagnostics(); return; }
   if (strcmp(line, "IMU RETRY") == 0) { initializeImu(); return; }
+#if MAKER_IMU_RVC
+  if (strcmp(line,"IMU ACCEPT")==0) {
+    stopAllMotors();
+    Serial.println(rvc.accept(millis()) ? "OK IMU ACCEPT SESSION_ONLY" : "ERR IMU ACCEPT requires qualified fresh RVC");
+    return;
+  }
+  if (strcmp(line,"IMU REVOKE")==0) {
+    stopAllMotors(); rvc.revoke(); invalidateNavigationReferences("operator revoked RVC heading");
+    Serial.println("OK IMU REVOKE"); return;
+  }
+#endif
   if (strcmp(line, "IMU DIAG") == 0) {
     if (motionRequested) Serial.println("ERR IMU DIAG requires stopped motion; send X first");
     else sendImuDiagnostics();
@@ -898,6 +1000,8 @@ void processCommand(char *line) {
       stopAllMotors();
       fieldOrientedEnabled = false;
       fieldReferenceValid = false;
+      fieldFaultLatched = false;
+      navigationImuFaultReported = false;
       Serial.println("OK FIELD 0");
       return;
     }
@@ -912,6 +1016,8 @@ void processCommand(char *line) {
       fieldReferenceYaw = currentYaw;
       fieldReferenceValid = true;
       fieldOrientedEnabled = true;
+      fieldFaultLatched = false;
+      navigationImuFaultReported = false;
       Serial.printf("OK FIELD 1 ZERO %.6f\n", fieldReferenceYaw);
       return;
     }
@@ -1021,11 +1127,18 @@ void setup() {
     while (true) delay(1000);
   }
   loadSettings();
+#if MAKER_IMU_RVC
+  settings.headingEnabled=false; // A saved SPI setting cannot arm a new RVC heading path.
+#endif
   initializeImu();
 
   lastCommandMs = millis();
   lastTelemetryMs = millis();
+#if MAKER_IMU_RVC
+  Serial.println("READY ESP32_MAKER_MECANUM_RVC_V1");
+#else
   Serial.println("READY ESP32_MAKER_MECANUM_IMU_V1");
+#endif
   printHelp();
 }
 

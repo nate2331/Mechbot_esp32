@@ -6,7 +6,7 @@ import threading
 
 from mechbot_telemetry import parse_event, WheelRateEstimator
 from mechbot_odometry import PassiveOdometry, validate_geometry
-from mechbot_profiles import profile_for_firmware, MAKER_HELP_IDENTITY
+from mechbot_profiles import profile_for_firmware, MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY
 
 WHEELS = ('FL', 'FR', 'RL', 'RR')
 
@@ -38,6 +38,7 @@ class TelemetryObserver:
         self._geometry = None
         self._rates = None
         self._imu = None
+        self._rvc = {}
         self._diagnostics = {}
         self._samples.clear()
 
@@ -76,8 +77,8 @@ class TelemetryObserver:
         if not _valid_time(host_time):
             return None
         with self._lock:
-            if line == MAKER_HELP_IDENTITY and self._profile['id'] == 'unknown':
-                profile = profile_for_firmware(None, MAKER_HELP_IDENTITY)
+            if line in (MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY) and self._profile['id'] == 'unknown':
+                profile = profile_for_firmware(None, line)
                 event = dict(type='ready', firmware=profile['firmware'], host_time=float(host_time), raw=line)
             elif event and event['type'] == 'ready':
                 profile = profile_for_firmware(event['firmware'])
@@ -116,6 +117,21 @@ class TelemetryObserver:
                 self._diagnostics[wheel] = copy.deepcopy(event)
             elif kind == 'imu':
                 self._imu = copy.deepcopy(event)
+            elif kind == 'rvc':
+                record = event['record']
+                if record == 'run':
+                    previous = self._rvc.get('run')
+                    if previous:
+                        elapsed = (event['boot_ms'] - previous['boot_ms']) & 0xffffffff
+                        if elapsed >= 2**31 or event['frames'] < previous['frames']:
+                            self._rvc.clear()
+                            self._event('rvc_restart', 'RVC device clock/counters restarted', now)
+                        elif elapsed == 0 or event['frames'] == previous['frames']:
+                            event = dict(event, state='NO_PROGRESS')
+                    # VALUE has no timestamp: never pair a previous value with a new RUN.
+                    self._rvc.pop('value', None)
+                    self._rvc.pop('stale', None)
+                self._rvc[record] = copy.deepcopy(event)
             elif kind == 'event':
                 self._events.append(dict(copy.deepcopy(event), epoch=self._epoch))
             return copy.deepcopy(event)
@@ -126,8 +142,29 @@ class TelemetryObserver:
         with self._lock:
             result = copy.deepcopy(dict(
                 profile=self._profile, epoch=self._epoch, rates=self._rates, imu=self._imu,
+                rvc=copy.deepcopy(self._rvc) if self._rvc else None,
                 diagnostics=self._diagnostics, samples=list(self._samples), events=list(self._events),
                 pose=self._odometry.snapshot(), geometry=self._geometry))
+        rvc = result['rvc']
+        if rvc:
+            for record in rvc.values():
+                difference = now - record['host_time']
+                record.update(age_s=max(0.0, difference), fresh=0 <= difference <= 1.5)
+            run, value = rvc.get('run'), rvc.get('value')
+            reason = 'awaiting_run'
+            if run:
+                reason = ('host_clock' if now < run['host_time'] else 'stale') if not run['fresh'] else run['state'].lower()
+                if reason == 'ready' and (run['frames'] < 5 or run['acquisitions'] == 0 or not 0 <= run['age_ms'] <= 500):
+                    reason = 'stale'
+                if reason == 'ready' and (not value or not value['fresh'] or
+                        not 0 <= value['host_time'] - run['host_time'] <= 0.5):
+                    reason = 'awaiting_value'
+            if 'stale' in rvc:
+                reason = 'stale'
+            rvc.update(valid=reason == 'ready', reason=reason,
+                       transport='uart-rvc', calibration_status=None,
+                       gyro_available=False, acceleration_kind='raw_mg',
+                       robot_control_ready=False)
         for name in ('rates', 'imu'):
             record = result[name]
             if record is None:
@@ -136,6 +173,8 @@ class TelemetryObserver:
             record.update(age_s=max(0.0, difference), fresh=0 <= difference <= 1.5)
             if not record['fresh']:
                 record.update(valid=False, reason='host_clock' if difference < 0 else 'stale')
+                if 'control_ready' in record:
+                    record['control_ready'] = False
                 if name == 'rates':
                     record['rpm'] = dict.fromkeys(record['rpm'])
                     record['ticks_per_s'] = dict.fromkeys(record['ticks_per_s'])

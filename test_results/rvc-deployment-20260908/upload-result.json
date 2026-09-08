@@ -1,0 +1,1678 @@
+{
+  "stage": "/home/nate/maker-rvc-upload-dnnwe2yi",
+  "started": 1788906624.9095702,
+  "commands": [
+    {
+      "step": "backup-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "read-flash",
+        "0x0",
+        "0x400000",
+        "flash-before.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "write-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "write-flash",
+        "--no-progress",
+        "--flash-mode",
+        "keep",
+        "--flash-freq",
+        "keep",
+        "--flash-size",
+        "keep",
+        "0x1000",
+        "Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "boot_app0.bin",
+        "0x10000",
+        "Maker_Mechbot.ino.bin"
+      ],
+      "returncode": 0
+    },
+    {
+      "step": "verify-flash",
+      "args": [
+        "/home/nate/.arduino15/packages/esp32/tools/esptool_py/5.3.1/esptool",
+        "--chip",
+        "esp32",
+        "--port",
+        "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+        "--baud",
+        "115200",
+        "--before",
+        "default-reset",
+        "--after",
+        "no-reset",
+        "verify-flash",
+        "0x1000",
+        "Maker_Mechbot.ino.bootloader.bin",
+        "0x8000",
+        "Maker_Mechbot.ino.partitions.bin",
+        "0xe000",
+        "boot_app0.bin",
+        "0x10000",
+        "Maker_Mechbot.ino.bin",
+        "0x9000",
+        "nvs-before.bin"
+      ],
+      "returncode": 0
+    }
+  ],
+  "boot_lines": [
+    {
+      "elapsed_s": 0.012,
+      "line": "ets Jul 29 2019 12:21:46"
+    },
+    {
+      "elapsed_s": 0.012,
+      "line": ""
+    },
+    {
+      "elapsed_s": 0.02,
+      "line": "rst:0x1 (POWERON_RESET),boot:0x12 (SPI_FAST_FLASH_BOOT)"
+    },
+    {
+      "elapsed_s": 0.023,
+      "line": "configsip: 0, SPIWP:0xee"
+    },
+    {
+      "elapsed_s": 0.03,
+      "line": "clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00"
+    },
+    {
+      "elapsed_s": 0.032,
+      "line": "mode:DIO, clock div:1"
+    },
+    {
+      "elapsed_s": 0.035,
+      "line": "load:0x3fff0030,len:4640"
+    },
+    {
+      "elapsed_s": 0.037,
+      "line": "load:0x40078000,len:15592"
+    },
+    {
+      "elapsed_s": 0.04,
+      "line": "load:0x40080400,len:3164"
+    },
+    {
+      "elapsed_s": 0.041,
+      "line": "entry 0x4008059c"
+    },
+    {
+      "elapsed_s": 0.678,
+      "line": "IMU RVC receiver initialized; heading acceptance cleared; no sensor reset"
+    },
+    {
+      "elapsed_s": 0.681,
+      "line": "READY ESP32_MAKER_MECANUM_RVC_V1"
+    },
+    {
+      "elapsed_s": 0.685,
+      "line": "FIRMWARE MAKER_RVC_V1_FIELD_FAULT_LATCH"
+    },
+    {
+      "elapsed_s": 0.693,
+      "line": "IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks"
+    },
+    {
+      "elapsed_s": 0.7,
+      "line": "IMU REVOKE: stop and revoke heading acceptance; UART stream continues"
+    },
+    {
+      "elapsed_s": 0.701,
+      "line": "Commands:"
+    },
+    {
+      "elapsed_s": 0.705,
+      "line": "V <forward> <left> <ccw>   each value -1.0 to +1.0"
+    },
+    {
+      "elapsed_s": 0.711,
+      "line": "forward and left are simultaneous continuous components"
+    },
+    {
+      "elapsed_s": 0.716,
+      "line": "F <0|1>                    field-oriented control off/on"
+    },
+    {
+      "elapsed_s": 0.721,
+      "line": "Z                          re-zero field heading"
+    },
+    {
+      "elapsed_s": 0.726,
+      "line": "Field fault latched: 0; acknowledge with F 0 or fresh F 1"
+    },
+    {
+      "elapsed_s": 0.73,
+      "line": "X                         immediate stop"
+    },
+    {
+      "elapsed_s": 0.734,
+      "line": "CFG GET|SAVE|RESET        runtime settings"
+    },
+    {
+      "elapsed_s": 0.739,
+      "line": "CFG SET <key> <value>     validated update while stopped"
+    },
+    {
+      "elapsed_s": 0.742,
+      "line": "?                         help"
+    },
+    {
+      "elapsed_s": 0.747,
+      "line": "Heading hold: OFF (verify sensor axes before enabling)"
+    },
+    {
+      "elapsed_s": 0.754,
+      "line": "Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+    },
+    {
+      "elapsed_s": 0.761,
+      "line": "IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes"
+    },
+    {
+      "elapsed_s": 0.767,
+      "line": "Default PWM=177 all wheels; independent output watchdog, ramped drive"
+    },
+    {
+      "elapsed_s": 0.773,
+      "line": "DIAG                      encoder edges/errors and applied PWM"
+    },
+    {
+      "elapsed_s": 0.777,
+      "line": "IMU RETRY                 stopped reinitialization"
+    },
+    {
+      "elapsed_s": 0.786,
+      "line": "IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first"
+    },
+    {
+      "elapsed_s": 0.787,
+      "line": "Watchdog: 300 ms"
+    },
+    {
+      "elapsed_s": 0.79,
+      "line": "Encoder: T <ms> <FL> <FR> <RL> <RR>"
+    },
+    {
+      "elapsed_s": 0.802,
+      "line": "IMU: IR1 <ms> <age_ms> <state> <yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors>"
+    },
+    {
+      "elapsed_s": 0.808,
+      "line": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>"
+    },
+    {
+      "elapsed_s": 0.869,
+      "line": "T 716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 0.88,
+      "line": "IR1 716 10 READY -43.29 -2.03 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 0.884,
+      "line": "N 716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 0.885,
+      "line": "H 717 IMU 1 706 0 1"
+    },
+    {
+      "elapsed_s": 1.069,
+      "line": "T 916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.079,
+      "line": "IR1 916 1 READY -43.29 -2.03 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.083,
+      "line": "N 916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.085,
+      "line": "H 916 IMU 1 915 0 1"
+    },
+    {
+      "elapsed_s": 1.268,
+      "line": "T 1116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.28,
+      "line": "IR1 1116 1 READY -43.29 -2.02 -1.07 20 -35 977 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.284,
+      "line": "N 1116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.285,
+      "line": "H 1116 IMU 1 1115 0 1"
+    },
+    {
+      "elapsed_s": 1.469,
+      "line": "T 1316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.48,
+      "line": "IR1 1316 1 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.484,
+      "line": "N 1316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.485,
+      "line": "H 1316 IMU 1 1315 0 1"
+    },
+    {
+      "elapsed_s": 1.669,
+      "line": "T 1516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.679,
+      "line": "IR1 1516 1 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.683,
+      "line": "N 1516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.685,
+      "line": "H 1516 IMU 1 1515 0 1"
+    },
+    {
+      "elapsed_s": 1.87,
+      "line": "T 1716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.88,
+      "line": "IR1 1717 3 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 1.884,
+      "line": "N 1717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 1.886,
+      "line": "H 1717 IMU 1 1714 0 1"
+    },
+    {
+      "elapsed_s": 2.07,
+      "line": "T 1916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.08,
+      "line": "IR1 1917 3 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.084,
+      "line": "N 1917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.086,
+      "line": "H 1917 IMU 1 1914 0 1"
+    },
+    {
+      "elapsed_s": 2.269,
+      "line": "T 2116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.278,
+      "line": "IR1 2117 3 READY -43.29 -2.02 -1.08 16 -35 970 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.284,
+      "line": "N 2117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.286,
+      "line": "H 2117 IMU 1 2114 0 1"
+    },
+    {
+      "elapsed_s": 2.47,
+      "line": "T 2316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.48,
+      "line": "IR1 2317 3 READY -43.29 -2.02 -1.08 16 -35 978 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.484,
+      "line": "N 2317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.486,
+      "line": "H 2317 IMU 1 2314 0 1"
+    },
+    {
+      "elapsed_s": 2.67,
+      "line": "T 2516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.68,
+      "line": "IR1 2517 5 READY -43.29 -2.02 -1.08 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.684,
+      "line": "N 2517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.686,
+      "line": "H 2517 IMU 1 2512 0 1"
+    },
+    {
+      "elapsed_s": 2.87,
+      "line": "T 2716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.881,
+      "line": "IR1 2717 5 READY -43.29 -2.02 -1.08 16 -35 970 0 0 0 0"
+    },
+    {
+      "elapsed_s": 2.885,
+      "line": "N 2717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 2.886,
+      "line": "H 2717 IMU 1 2712 0 1"
+    },
+    {
+      "elapsed_s": 3.07,
+      "line": "T 2916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.08,
+      "line": "IR1 2917 5 READY -43.29 -2.02 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.084,
+      "line": "N 2917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.086,
+      "line": "H 2917 IMU 1 2912 0 1"
+    },
+    {
+      "elapsed_s": 3.269,
+      "line": "T 3116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.278,
+      "line": "IR1 3117 5 READY -43.29 -2.03 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.282,
+      "line": "N 3117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.285,
+      "line": "H 3117 IMU 1 3112 0 1"
+    },
+    {
+      "elapsed_s": 3.469,
+      "line": "T 3316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.477,
+      "line": "IR1 3317 6 READY -43.29 -2.02 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.482,
+      "line": "N 3317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.484,
+      "line": "H 3317 IMU 1 3311 0 1"
+    },
+    {
+      "elapsed_s": 3.67,
+      "line": "T 3516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.679,
+      "line": "IR1 3517 6 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.683,
+      "line": "N 3517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.685,
+      "line": "H 3517 IMU 1 3511 0 1"
+    },
+    {
+      "elapsed_s": 3.87,
+      "line": "T 3716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.88,
+      "line": "IR1 3717 7 READY -43.29 -2.03 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 3.884,
+      "line": "N 3717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 3.886,
+      "line": "H 3717 IMU 1 3710 0 1"
+    },
+    {
+      "elapsed_s": 4.069,
+      "line": "T 3916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.078,
+      "line": "IR1 3917 7 READY -43.29 -2.03 -1.06 16 -31 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.083,
+      "line": "N 3917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.085,
+      "line": "H 3917 IMU 1 3910 0 1"
+    },
+    {
+      "elapsed_s": 4.27,
+      "line": "T 4116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.28,
+      "line": "IR1 4117 8 READY -43.29 -2.03 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.284,
+      "line": "N 4117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.286,
+      "line": "H 4117 IMU 1 4109 0 1"
+    },
+    {
+      "elapsed_s": 4.47,
+      "line": "T 4316 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.48,
+      "line": "IR1 4317 8 READY -43.29 -2.02 -1.05 16 -35 978 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.484,
+      "line": "N 4317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.486,
+      "line": "H 4317 IMU 1 4309 0 1"
+    },
+    {
+      "elapsed_s": 4.67,
+      "line": "T 4516 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.681,
+      "line": "IR1 4517 8 READY -43.29 -2.02 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.685,
+      "line": "N 4517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.687,
+      "line": "H 4517 IMU 1 4509 0 1"
+    },
+    {
+      "elapsed_s": 4.87,
+      "line": "T 4716 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.88,
+      "line": "IR1 4717 8 READY -43.29 -2.02 -1.06 20 -31 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 4.884,
+      "line": "N 4717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 4.886,
+      "line": "H 4717 IMU 1 4709 0 1"
+    },
+    {
+      "elapsed_s": 5.07,
+      "line": "T 4916 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.08,
+      "line": "IR1 4917 8 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.084,
+      "line": "N 4917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.086,
+      "line": "H 4917 IMU 1 4909 0 1"
+    },
+    {
+      "elapsed_s": 5.27,
+      "line": "T 5116 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.281,
+      "line": "IR1 5117 8 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.285,
+      "line": "N 5117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.287,
+      "line": "H 5117 IMU 1 5109 0 1"
+    },
+    {
+      "elapsed_s": 5.47,
+      "line": "T 5317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.48,
+      "line": "IR1 5317 10 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.484,
+      "line": "N 5317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.486,
+      "line": "H 5317 IMU 1 5307 0 1"
+    },
+    {
+      "elapsed_s": 5.67,
+      "line": "T 5517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.681,
+      "line": "IR1 5517 10 READY -43.29 -2.03 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.685,
+      "line": "N 5517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.687,
+      "line": "H 5517 IMU 1 5507 0 1"
+    },
+    {
+      "elapsed_s": 5.87,
+      "line": "T 5717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.881,
+      "line": "IR1 5717 1 READY -43.29 -2.03 -1.06 20 -35 977 0 0 0 0"
+    },
+    {
+      "elapsed_s": 5.885,
+      "line": "N 5717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 5.887,
+      "line": "H 5717 IMU 1 5716 0 1"
+    },
+    {
+      "elapsed_s": 6.07,
+      "line": "T 5917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.08,
+      "line": "IR1 5917 1 READY -43.29 -2.03 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.084,
+      "line": "N 5917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.086,
+      "line": "H 5917 IMU 1 5916 0 1"
+    },
+    {
+      "elapsed_s": 6.27,
+      "line": "T 6117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.278,
+      "line": "IR1 6117 1 READY -43.29 -2.02 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.283,
+      "line": "N 6117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.286,
+      "line": "H 6117 IMU 1 6116 0 1"
+    },
+    {
+      "elapsed_s": 6.471,
+      "line": "T 6317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.481,
+      "line": "IR1 6318 3 READY -43.29 -2.02 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.485,
+      "line": "N 6318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.487,
+      "line": "H 6318 IMU 1 6315 0 1"
+    },
+    {
+      "elapsed_s": 6.671,
+      "line": "T 6517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.681,
+      "line": "IR1 6518 3 READY -43.29 -2.02 -1.06 16 -35 978 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.686,
+      "line": "N 6518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.687,
+      "line": "H 6518 IMU 1 6515 0 1"
+    },
+    {
+      "elapsed_s": 6.871,
+      "line": "T 6717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.881,
+      "line": "IR1 6718 3 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 6.885,
+      "line": "N 6718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 6.887,
+      "line": "H 6718 IMU 1 6715 0 1"
+    },
+    {
+      "elapsed_s": 7.07,
+      "line": "T 6917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.081,
+      "line": "IR1 6918 4 READY -43.29 -2.03 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.085,
+      "line": "N 6918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.087,
+      "line": "H 6918 IMU 1 6914 0 1"
+    },
+    {
+      "elapsed_s": 7.271,
+      "line": "T 7117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.281,
+      "line": "IR1 7118 4 READY -43.29 -2.03 -1.07 20 -31 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.285,
+      "line": "N 7118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.287,
+      "line": "H 7118 IMU 1 7114 0 1"
+    },
+    {
+      "elapsed_s": 7.47,
+      "line": "T 7317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.481,
+      "line": "IR1 7318 4 READY -43.29 -2.03 -1.08 16 -31 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.485,
+      "line": "N 7318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.487,
+      "line": "H 7318 IMU 1 7314 0 1"
+    },
+    {
+      "elapsed_s": 7.67,
+      "line": "T 7517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.679,
+      "line": "IR1 7518 5 READY -43.29 -2.03 -1.09 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.686,
+      "line": "N 7518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.688,
+      "line": "H 7518 IMU 1 7513 0 1"
+    },
+    {
+      "elapsed_s": 7.87,
+      "line": "T 7717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.879,
+      "line": "IR1 7718 4 READY -43.29 -2.02 -1.09 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 7.886,
+      "line": "N 7718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 7.888,
+      "line": "H 7718 IMU 1 7714 0 1"
+    },
+    {
+      "elapsed_s": 8.07,
+      "line": "T 7917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.079,
+      "line": "IR1 7918 6 READY -43.29 -2.02 -1.08 16 -35 978 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.086,
+      "line": "N 7918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.088,
+      "line": "H 7918 IMU 1 7912 0 1"
+    },
+    {
+      "elapsed_s": 8.271,
+      "line": "T 8117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.279,
+      "line": "IR1 8118 6 READY -43.29 -2.02 -1.08 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.286,
+      "line": "N 8118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.288,
+      "line": "H 8118 IMU 1 8112 0 1"
+    },
+    {
+      "elapsed_s": 8.47,
+      "line": "T 8317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.478,
+      "line": "IR1 8318 6 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.485,
+      "line": "N 8318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.487,
+      "line": "H 8318 IMU 1 8312 0 1"
+    },
+    {
+      "elapsed_s": 8.671,
+      "line": "T 8517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.679,
+      "line": "IR1 8518 7 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.686,
+      "line": "N 8518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.688,
+      "line": "H 8518 IMU 1 8511 0 1"
+    },
+    {
+      "elapsed_s": 8.87,
+      "line": "T 8717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.879,
+      "line": "IR1 8718 7 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 8.885,
+      "line": "N 8718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 8.887,
+      "line": "H 8718 IMU 1 8711 0 1"
+    },
+    {
+      "elapsed_s": 9.07,
+      "line": "T 8917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.079,
+      "line": "IR1 8918 8 READY -43.29 -2.02 -1.07 20 -35 977 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.084,
+      "line": "N 8918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.087,
+      "line": "H 8918 IMU 1 8910 0 1"
+    },
+    {
+      "elapsed_s": 9.27,
+      "line": "T 9117 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.279,
+      "line": "IR1 9118 8 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.284,
+      "line": "N 9118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.286,
+      "line": "H 9118 IMU 1 9110 0 1"
+    },
+    {
+      "elapsed_s": 9.471,
+      "line": "T 9317 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.479,
+      "line": "IR1 9318 8 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.485,
+      "line": "N 9318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.488,
+      "line": "H 9318 IMU 1 9310 0 1"
+    },
+    {
+      "elapsed_s": 9.671,
+      "line": "T 9517 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.68,
+      "line": "IR1 9518 9 READY -43.29 -2.02 -1.08 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.685,
+      "line": "N 9518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.688,
+      "line": "H 9518 IMU 1 9509 0 1"
+    },
+    {
+      "elapsed_s": 9.871,
+      "line": "T 9717 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.879,
+      "line": "IR1 9718 9 READY -43.29 -2.02 -1.08 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 9.884,
+      "line": "N 9718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 9.886,
+      "line": "H 9718 IMU 1 9709 0 1"
+    },
+    {
+      "elapsed_s": 10.071,
+      "line": "T 9917 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.079,
+      "line": "IR1 9918 9 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.084,
+      "line": "N 9918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.086,
+      "line": "H 9918 IMU 1 9909 0 1"
+    },
+    {
+      "elapsed_s": 10.27,
+      "line": "T 10118 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.281,
+      "line": "IR1 10118 9 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.286,
+      "line": "N 10118 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.288,
+      "line": "H 10118 IMU 1 10109 0 1"
+    },
+    {
+      "elapsed_s": 10.472,
+      "line": "T 10318 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.482,
+      "line": "IR1 10318 9 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.486,
+      "line": "N 10318 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.489,
+      "line": "H 10318 IMU 1 10309 0 1"
+    },
+    {
+      "elapsed_s": 10.671,
+      "line": "T 10518 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.68,
+      "line": "IR1 10518 1 READY -43.29 -2.02 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.685,
+      "line": "N 10518 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.688,
+      "line": "H 10518 IMU 1 10517 0 1"
+    },
+    {
+      "elapsed_s": 10.871,
+      "line": "T 10718 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.882,
+      "line": "IR1 10718 1 READY -43.29 -2.02 -1.06 16 -35 978 0 0 0 0"
+    },
+    {
+      "elapsed_s": 10.886,
+      "line": "N 10718 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 10.888,
+      "line": "H 10718 IMU 1 10717 0 1"
+    },
+    {
+      "elapsed_s": 11.07,
+      "line": "T 10918 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.081,
+      "line": "IR1 10918 1 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.086,
+      "line": "N 10918 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.088,
+      "line": "H 10918 IMU 1 10917 0 1"
+    },
+    {
+      "elapsed_s": 11.272,
+      "line": "T 11119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.283,
+      "line": "IR1 11119 3 READY -43.29 -2.02 -1.07 16 -31 977 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.287,
+      "line": "N 11119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.289,
+      "line": "H 11119 IMU 1 11116 0 1"
+    },
+    {
+      "elapsed_s": 11.472,
+      "line": "T 11319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.482,
+      "line": "IR1 11319 3 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.487,
+      "line": "N 11319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.489,
+      "line": "H 11319 IMU 1 11316 0 1"
+    },
+    {
+      "elapsed_s": 11.672,
+      "line": "T 11519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.682,
+      "line": "IR1 11519 3 READY -43.29 -2.02 -1.07 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.686,
+      "line": "N 11519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.688,
+      "line": "H 11519 IMU 1 11516 0 1"
+    },
+    {
+      "elapsed_s": 11.872,
+      "line": "T 11719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.882,
+      "line": "IR1 11719 4 READY -43.29 -2.02 -1.07 16 -35 978 0 0 0 0"
+    },
+    {
+      "elapsed_s": 11.887,
+      "line": "N 11719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 11.889,
+      "line": "H 11719 IMU 1 11715 0 1"
+    },
+    {
+      "elapsed_s": 12.071,
+      "line": "T 11919 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.078,
+      "line": "IR1 11919 4 READY -43.29 -2.02 -1.08 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.084,
+      "line": "N 11919 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.086,
+      "line": "H 11919 IMU 1 11915 0 1"
+    },
+    {
+      "elapsed_s": 12.272,
+      "line": "T 12119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.282,
+      "line": "IR1 12119 5 READY -43.29 -2.02 -1.08 16 -35 970 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.286,
+      "line": "N 12119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.289,
+      "line": "H 12119 IMU 1 12114 0 1"
+    },
+    {
+      "elapsed_s": 12.472,
+      "line": "T 12319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.482,
+      "line": "IR1 12319 5 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.487,
+      "line": "N 12319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.489,
+      "line": "H 12319 IMU 1 12314 0 1"
+    },
+    {
+      "elapsed_s": 12.672,
+      "line": "T 12519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.682,
+      "line": "IR1 12519 5 READY -43.29 -2.02 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.687,
+      "line": "N 12519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.689,
+      "line": "H 12519 IMU 1 12514 0 1"
+    },
+    {
+      "elapsed_s": 12.872,
+      "line": "T 12719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.882,
+      "line": "IR1 12719 5 READY -43.29 -2.02 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 12.886,
+      "line": "N 12719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 12.888,
+      "line": "H 12719 IMU 1 12714 0 1"
+    },
+    {
+      "elapsed_s": 13.072,
+      "line": "T 12919 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.082,
+      "line": "IR1 12919 5 READY -43.29 -2.02 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.087,
+      "line": "N 12919 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.089,
+      "line": "H 12919 IMU 1 12914 0 1"
+    },
+    {
+      "elapsed_s": 13.272,
+      "line": "T 13119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.282,
+      "line": "IR1 13119 5 READY -43.29 -2.02 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.287,
+      "line": "N 13119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.289,
+      "line": "H 13119 IMU 1 13114 0 1"
+    },
+    {
+      "elapsed_s": 13.472,
+      "line": "T 13319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.482,
+      "line": "IR1 13319 7 READY -43.29 -2.03 -1.07 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.486,
+      "line": "N 13319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.488,
+      "line": "H 13319 IMU 1 13312 0 1"
+    },
+    {
+      "elapsed_s": 13.672,
+      "line": "T 13519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.682,
+      "line": "IR1 13519 7 READY -43.29 -2.03 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.687,
+      "line": "N 13519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.689,
+      "line": "H 13519 IMU 1 13512 0 1"
+    },
+    {
+      "elapsed_s": 13.872,
+      "line": "T 13719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.882,
+      "line": "IR1 13719 8 READY -43.29 -2.03 -1.06 16 -35 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 13.887,
+      "line": "N 13719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 13.889,
+      "line": "H 13719 IMU 1 13711 0 1"
+    },
+    {
+      "elapsed_s": 14.072,
+      "line": "T 13919 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.082,
+      "line": "IR1 13919 8 READY -43.29 -2.03 -1.06 20 -31 974 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.086,
+      "line": "N 13919 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.089,
+      "line": "H 13919 IMU 1 13911 0 1"
+    },
+    {
+      "elapsed_s": 14.272,
+      "line": "T 14119 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.282,
+      "line": "IR1 14119 8 READY -43.29 -2.03 -1.06 16 -31 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.286,
+      "line": "N 14119 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.289,
+      "line": "H 14119 IMU 1 14111 0 1"
+    },
+    {
+      "elapsed_s": 14.471,
+      "line": "T 14319 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.482,
+      "line": "IR1 14319 9 READY -43.29 -2.04 -1.06 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.486,
+      "line": "N 14319 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.488,
+      "line": "H 14319 IMU 1 14310 0 1"
+    },
+    {
+      "elapsed_s": 14.672,
+      "line": "T 14519 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.682,
+      "line": "IR1 14519 9 READY -43.29 -2.04 -1.05 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.687,
+      "line": "N 14519 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.689,
+      "line": "H 14519 IMU 1 14510 0 1"
+    },
+    {
+      "elapsed_s": 14.871,
+      "line": "T 14719 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.882,
+      "line": "IR1 14719 9 READY -43.29 -2.04 -1.05 20 -35 973 0 0 0 0"
+    },
+    {
+      "elapsed_s": 14.886,
+      "line": "N 14719 0.000000 0.000000 0.000000 0.0000 0 0 0"
+    },
+    {
+      "elapsed_s": 14.888,
+      "line": "H 14719 IMU 1 14710 0 1"
+    },
+    {
+      "elapsed_s": 15.072,
+      "line": "T 14919 0 0 0 0"
+    }
+  ],
+  "manifest": {
+    "files": {
+      "Maker_Mechbot/EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+      "Maker_Mechbot/MakerBnoSpi.h": "93515b36e1a1f7b360c89f5c8d15c8bc66efcb405ed0fb90ac44907d88cb762a",
+      "Maker_Mechbot/MakerRvc.h": "dae8d3733a89724d48f670d078aa4bcb0f0219655b092636b6fbdadef27e1af8",
+      "Maker_Mechbot/Maker_Mechbot.ino": "2cf0d47ff9b0e1b6500d7ba525a8c358c505e76244f0b15d3f2c643c60d70d5e",
+      "Maker_Mechbot/MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+      "Maker_Mechbot/NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4",
+      "Maker_Mechbot/README.md": "783a3d2e683765374b9108373d5d855d9a209739036b113ed9b0661858287a60",
+      "Maker_Mechbot/RvcParser.h": "0c7777a9e1c7f60766e5340df53c5a327cc0c68bd102ef74d7fe098b61acbfd8",
+      "Maker_Mechbot/SPI_WIRING.md": "3f625941991120f8a525ba61b31e4c35f33e9f1a67d9bbf05463382df206c338",
+      "NAVIGATION_CONTROLS.md": "3244130bf5e1f06eb39c88a2d4db565ea25550d6bbd4ad9ddf9bbf667e522a3e",
+      "dashboard/app.css": "9eb022a75f798973b9f2bd3cbfca2250b75b48ebc1d6cd33995622ebc6bd8179",
+      "dashboard/app.js": "a90be4e78e895e3d45dd399964baf412a8847119278ffa20e77b5361c11ceb1f",
+      "dashboard/calibration.css": "bc2d0aa0c03cf28e5179711d0516f58590062f5fa294421566568bd83a363860",
+      "dashboard/index.html": "8f35ca53f2394e3e8527cfb4f721a247aabd05e76985ebdb7cf37788a9190b99",
+      "dashboard/ops-encoder-math.js": "e7c83ba038713d2f01b6ae5037eaa668789e522971f026c82a22f1f0c9d36a3e",
+      "dashboard/ops-encoder.js": "f029faea65d65b2cb788ae9824aed1455909f120976805827324a178cc0459f4",
+      "dashboard/ops-evidence.js": "37c3f771380cf7690a51bc5e9b7245076d8e51afa706a44fbca6dc35e84d8278",
+      "dashboard/ops-live.js": "463d53be25ac781fff9767be37e9b60440b4389a61b77f2207bf0381a22d25e7",
+      "dashboard/ops-sessions.js": "2eac92a0047f88256c68c0be1213bfb9daaad1e35eb19b932056ea8266ec63ba",
+      "dashboard/ops.css": "3ad61b62b79f3d355006925c2dbaefd9eff44f9d1ce2c4a583421ed7f9c9c291",
+      "dashboard/ops.html": "1568bf36d8a27120a875cae36220ab653f3a153ef13df56720a9204682c8f3cf",
+      "dashboard/ops.js": "f465d5ec0f487dd850bbb3f9ca3e801b04fc409f5476912875fb2f19dacbe11d",
+      "docs/INTEGRATED_RVC.md": "c893bcb5a4c6ba8b84b547f0b9d38f6e3e4cefdf660be202c5e699ae2ac46157",
+      "maker_auto_tune.py": "eb385257c32f5dbb90d826cfae4d00f9e4a99d246665edd40d96fbf0db8a76cb",
+      "mechbot_bridge.py": "e25e6495153582283258be49e949e5d522751337f0cba5117807c0a522a64eb8",
+      "mechbot_evidence.py": "015cd4e704c7f3122176971f348461eed9748ebb081c0231d5348704f2967ff8",
+      "mechbot_firmware_update.py": "d6431a3ed76995bd0ce8d3161c0c80b3adcf0a6b9f25f5d51cfe1c101d5a80ed",
+      "mechbot_http.py": "de9ee185cb3d6aabad9eb2b13279c3ebc771ed7e169becaa7f8cf1e38f05581f",
+      "mechbot_observer.py": "48fb8c3da693f107a2b87595a546b75106b29a3ae81022fa9e5490c6dbf33f72",
+      "mechbot_odometry.py": "56b017ac1613164575e1c8ae55daf340aad196223be4c88c577dba795059e2e5",
+      "mechbot_operations.py": "902afb01b69c4acaa41a68742fcd51448e7ad4120b7066ca10a5713cbd807686",
+      "mechbot_ops.py": "206803fd474e6e4e765db5cc2a0f5bd49271b253d923152b50b562f1a77c80b7",
+      "mechbot_profiles.py": "5a985072f15fb768a626dd14130aafa2b1d11582c905ec28fd795e85f4dedd67",
+      "mechbot_recording.py": "9b3b3225908ab0c94efcc894f00c808b94492318bd5ffc3695767351e3b48ccc",
+      "mechbot_telemetry.py": "3ebb179a8728540980a657cc96a2422a39a45b7d8fb57e5e2c01070d690d737b",
+      "mechbotctl.py": "4cf2303ce5d5955aabc660e93da1e1d9b101ce9743806b7615a36f70bcb855b4",
+      "pi_mecanum_gamepad.py": "21803ac304d4b010c38546cfda0f4f6fb2df23a85c86f66593aea17baf25f7a3",
+      "pi_mecanum_teleop.py": "67deba3feb8347127cbc68b5d357b16e67d8418f7b632137379025cace70a52a",
+      "test_results/maker-bench-20260905-koa59no2/results.json": "a6a97d6896d2734fd92d6ea24bdc1063d377ff30162356d97ac0e5ddabd223e2",
+      "test_results/maker-bench-retry-20260905-djty58cn/results.json": "edb9df05900c9f841415ba2694cc2f7a98a0079035e7bb9baf32dda385969b44",
+      "test_results/maker-encoder-diagnostic-20260905-s1s7fr_s/results.json": "d92cadd400fb8ff301bf88a6f86e398bc952fe91764d46ebe33991c7900bb051",
+      "tests/test_board_integration.py": "b5365171f92a3f3578d5a7534d6409009c01a7b876f9c954fa702f9071106ff2",
+      "tests/test_identity_retry.py": "0cd813f986d7b73935d7fb1a1b1a6151e02ece61962f554e0a0bfede9b0eb794",
+      "tests/test_maker_auto_tune.py": "07932c98ac877fd21f99fff270db0bc69b32e770885d26a568517558ec212d26",
+      "tests/test_mechbot_bridge.py": "0eeeff32e75c45815b11dc2be6f0cda6428e16856114b7ba52fcdf33a539653c",
+      "tests/test_mechbot_cli.py": "573d8529599d493bc6a29effbb4a288387d1d99dadc29a9ecad0781b08cc116d",
+      "tests/test_mechbot_evidence.py": "dc6f1c16ac61665dc1732bc50dca17c6ea689f5341fe49564de24f95a24c9afa",
+      "tests/test_mechbot_observer.py": "bcf9bd64f963c6646fc686456869ecbed9297ff034ef4d62c63e53cc570ead39",
+      "tests/test_mechbot_odometry.py": "92b66a3b3723adf4754ff3891fd6774fcb0ffc43c1353baf63736de18ddbb403",
+      "tests/test_mechbot_operations.py": "74630fe0712e6c71627fb50501c1b9d0dc11d801fbc89d45f364b57bba34f803",
+      "tests/test_mechbot_recording.py": "935bdc8741a702149720eee13326013d7750bf9772c9970a220582e992d152c8",
+      "tests/test_mechbot_telemetry.py": "e540ee7a553d7198259c71a3d45db3ff9b99bcc5eca3cdfed027193a18ca09c6",
+      "tests/test_navigation_commands.py": "2dd4257690f4fdf3606d5b1980c1cbbe2571aaa39d9c4474eea02ae047a62716",
+      "tests/test_operations_http.py": "53a4ae974f06571bb7b89be21b49f05b9d32da87741b61f735ca8c83fba67862",
+      "tests/test_operations_integration.py": "890077a2199d371d10f58791260d1022caee08e5cbe867a6fcd131004cd029c2",
+      "tests/test_operations_origin.py": "ac739767fb5c8d8cab03b6ef1aeb7927741da731b4cb09d7ce81a38a2a7099ba",
+      "tests/test_pi_mecanum_gamepad.py": "9fb8ed0b9cf3dee1f615a197e5a02ff261afa67d894a08acd39bf4f0dde253f7",
+      "tests/test_rvc_telemetry.py": "41894d3eb2b24ddf3053323981e8288b9d4255392f5155a038cd8c51e70698f5"
+    },
+    "images": [
+      {
+        "address": "0x1000",
+        "name": "Maker_Mechbot.ino.bootloader.bin",
+        "bytes": 23488,
+        "sha256": "7784e3c3f38fa4c4334f478131488d8ba2a88ce623adca939f4cb8f019607f31"
+      },
+      {
+        "address": "0x8000",
+        "name": "Maker_Mechbot.ino.partitions.bin",
+        "bytes": 3072,
+        "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+      },
+      {
+        "address": "0xe000",
+        "name": "boot_app0.bin",
+        "bytes": 8192,
+        "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+      },
+      {
+        "address": "0x10000",
+        "name": "Maker_Mechbot.ino.bin",
+        "bytes": 329088,
+        "sha256": "142fd59bd4a8178c9d77c8d6fe36dd0ed6fff55e8e59d2dc37d04fcd8a69bf8b"
+      }
+    ],
+    "fqbn": "esp32:esp32:esp32",
+    "expected": "ESP32_MAKER_MECANUM_RVC_V1"
+  },
+  "before": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "last_line": "VALUE ypr_deg=-43.33,-2.01,-1.05 accel_mg=20,-35,973 changes_ypr=19036 changes_accel=355905",
+    "updated": 1788906624.6644948,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "firmware": "MAKER_IMU_RVC_CONTINUOUS_V1",
+    "firmware_received": 1788906610.8411546,
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "unknown",
+      "name": "Maker UART-RVC diagnostic",
+      "firmware": "MAKER_IMU_RVC_CONTINUOUS_V1",
+      "encoder_wheels": [],
+      "diagnostics": false,
+      "baseline": {},
+      "baseline_label": "Identify the connected controller",
+      "baseline_note": "Standalone sensor diagnostic; robot control and firmware updates are unavailable.",
+      "counts_per_revolution": {},
+      "calibration_source": null,
+      "closed_loop": false
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.01,-1.07 accel_mg=20,-35,973 changes_ypr=19014 changes_accel=355367",
+      "RUN boot_ms=4392010 state=READY bytes=8359831 frames=439987 new=101 window_ms=1000 age_ms=1 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4391642 longest_ready_ms=4391642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.01,-1.06 accel_mg=16,-35,974 changes_ypr=19015 changes_accel=355447",
+      "RUN boot_ms=4393010 state=READY bytes=8361731 frames=440087 new=100 window_ms=1000 age_ms=3 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4392642 longest_ready_ms=4392642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.02,-1.08 accel_mg=20,-35,977 changes_ypr=19022 changes_accel=355522",
+      "RUN boot_ms=4394010 state=READY bytes=8363631 frames=440187 new=100 window_ms=1000 age_ms=5 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4393642 longest_ready_ms=4393642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.02,-1.07 accel_mg=20,-35,973 changes_ypr=19023 changes_accel=355600",
+      "RUN boot_ms=4395010 state=READY bytes=8365531 frames=440287 new=100 window_ms=1000 age_ms=7 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4394642 longest_ready_ms=4394642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.02,-1.07 accel_mg=20,-35,977 changes_ypr=19023 changes_accel=355675",
+      "RUN boot_ms=4396010 state=READY bytes=8367439 frames=440387 new=100 window_ms=1000 age_ms=9 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4395642 longest_ready_ms=4395642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.00,-1.09 accel_mg=20,-31,974 changes_ypr=19029 changes_accel=355755",
+      "RUN boot_ms=4397010 state=READY bytes=8369350 frames=440488 new=101 window_ms=1000 age_ms=1 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4396642 longest_ready_ms=4396642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.01,-1.08 accel_mg=20,-35,977 changes_ypr=19033 changes_accel=355835",
+      "RUN boot_ms=4398010 state=READY bytes=8371250 frames=440588 new=100 window_ms=1000 age_ms=3 first_frame_boot_ms=328 first_ready_boot_ms=368 acquisitions=1 pauses=0 max_gap_ms=12 ready_ms=4397642 longest_ready_ms=4397642",
+      "COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0",
+      "UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0",
+      "VALUE ypr_deg=-43.33,-2.01,-1.05 accel_mg=20,-35,973 changes_ypr=19036 changes_accel=355905"
+    ]
+  },
+  "operator_motor_power_off": true,
+  "step": "verify-flash",
+  "backup_sha256": "b4434f5dae29f17c38ffd3887fbff26770211826d4ca01abaa674e4d3f7afb3e",
+  "written": true,
+  "flash_verified": true,
+  "nvs_unchanged": true,
+  "fresh_ready": true,
+  "settings_after": {
+    "lines": [
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 17519 0 0 0 0",
+      "IR1 17519 5 READY -43.28 -2.06 -1.06 16 -35 974 0 0 0 0",
+      "N 17519 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17519 IMU 1 17514 0 1",
+      "T 17719 0 0 0 0",
+      "IR1 17719 5 READY -43.28 -2.06 -1.07 16 -31 973 0 0 0 0",
+      "N 17719 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17719 IMU 1 17714 0 1"
+    ]
+  },
+  "after": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "updated": 1788907087.6642673,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 17719 IMU 1 17714 0 1",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788907087.650019,
+    "imu": "IR1 17719 5 READY -43.28 -2.06 -1.07 16 -31 973 0 0 0 0",
+    "imu_valid": true,
+    "imu_updated": 1788907087.6625473,
+    "navigation": "N 17719 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 17719 IMU 1 17714 0 1",
+    "help_identity": "Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907087.007973
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907087.0086582
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907087.0092115
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907087.0097008
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_RVC_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-rvc-help",
+      "imu_transport": "uart-rvc",
+      "build_properties": [
+        "compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1"
+      ]
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 17119 0 0 0 0",
+      "IR1 17119 4 READY -43.28 -2.05 -1.05 16 -35 978 0 0 0 0",
+      "N 17119 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17119 IMU 1 17115 0 1",
+      "T 17319 0 0 0 0",
+      "IR1 17319 4 READY -43.28 -2.05 -1.06 20 -35 973 0 0 0 0",
+      "N 17319 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17319 IMU 1 17315 0 1",
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 17519 0 0 0 0",
+      "IR1 17519 5 READY -43.28 -2.06 -1.06 16 -35 974 0 0 0 0",
+      "N 17519 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17519 IMU 1 17514 0 1",
+      "T 17719 0 0 0 0",
+      "IR1 17719 5 READY -43.28 -2.06 -1.07 16 -31 973 0 0 0 0",
+      "N 17719 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 17719 IMU 1 17714 0 1"
+    ]
+  },
+  "finished": 1788907087.7979074
+}

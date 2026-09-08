@@ -31,7 +31,7 @@ class Element {
   replaceChildren(...children) { this.children=children; this._text=''; }
 }
 function application() {
-  const ids = ['modeBadge','connection','boardName','rateState','imuState','poseState','rateUnits','wheelCards',
+  const ids = ['modeBadge','connection','boardName','rateState','imuState','rvcDetail','poseState','rateUnits','wheelCards',
     'diagnosticRows','eventList','poseReadout','geometryState','geometryForm','geometrySubmit','resetPose',
     'wheel_diameter_m','wheelbase_m','track_width_m','nextAction'];
   const nodes = Object.fromEntries(ids.map(id => [id, new Element()]));
@@ -55,6 +55,41 @@ function observation() {
     geometry:{wheel_diameter_m:0.1,wheelbase_m:0.3,track_width_m:0.25}, pose:{valid:true,x_m:1,y_m:2,yaw_rad:0},
     samples:[], events:[{host_time:9,message:'<img src=x onerror=bad()>',level:'warn'}]};
 }
+
+test('RVC diagnostic stays separate from integrated IMU and robot readiness', () => {
+  const {UI,nodes}=application(), data=observation();
+  data.profile={id:'unknown',name:'Maker UART-RVC diagnostic',encoder_wheels:[]};
+  data.imu=null; data.rates=null; data.geometry=null;
+  data.rvc={valid:true,reason:'ready',run:{fresh:true,new:100,window_ms:1000},
+    value:{fresh:true,ypr_deg:[-.01,0,0],age_s:.1},
+    counts:{fresh:true,bad_checksum:2,discontinuities:3},uart:{fresh:true,totals:[0,1,0,0,0]}};
+  UI.renderLive(data,'live',{serial_connected:true});
+  assert.match(nodes.imuState.textContent,/RVC yaw -0.01/);
+  assert.match(nodes.rvcDetail.textContent,/100 frames\/s.*checksum 2.*index 3.*UART 1/);
+  assert.match(nodes.rvcDetail.textContent,/accuracy unverified/);
+  assert.ok(nodes.geometrySubmit.disabled && nodes.resetPose.disabled);
+  data.rvc.valid=false; data.rvc.reason='stale'; data.rvc.counts.fresh=false;
+  UI.renderLive(data,'replay',{});
+  assert.equal(nodes.imuState.textContent,'RVC · stale');
+  assert.match(nodes.rvcDetail.textContent,/checksum —/);
+  assert.match(nodes.nextAction.textContent,/Offline replay/);
+  UI.renderLive(null,'offline',{});
+  assert.equal(nodes.rvcDetail.textContent,'');
+});
+
+test('integrated RVC presents unknown calibration and explicit acceptance', () => {
+  const {UI,nodes}=application(), data=observation();
+  Object.assign(data.imu,{transport:'uart-rvc',control_ready:false,bad_checksum:0,discontinuities:1,uart_errors:0});
+  UI.renderLive(data,'live',{});
+  assert.match(nodes.imuState.textContent,/RVC yaw 90.00/);
+  assert.match(nodes.rvcDetail.textContent,/Heading acceptance required/);
+  assert.match(nodes.rvcDetail.textContent,/Calibration status and gyro unavailable/);
+  data.imu.control_ready=true; UI.renderLive(data,'live',{});
+  assert.match(nodes.rvcDetail.textContent,/accepted for this session/);
+  data.imu.fresh=false; data.imu.valid=false; data.imu.reason='stale'; UI.renderLive(data,'live',{});
+  assert.equal(nodes.imuState.textContent,'RVC · stale');
+  assert.match(nodes.rvcDetail.textContent,/acceptance required/);
+});
 
 test('constant/single signed wheel samples never divide by zero', () => {
   const {UI}=application();

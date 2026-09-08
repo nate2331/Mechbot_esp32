@@ -13,6 +13,73 @@ import math
 import re
 from typing import Any, Dict, List, Optional
 
+RVC_BANNERS = {
+    f"MAKER_IMU_RVC_{kind} V1 | UART1 RX21 TX=none | 115200 8N1":
+        f"MAKER_IMU_RVC_{kind}_V1" for kind in ('CONTINUOUS', 'MOVEMENT')
+}
+RVC_HELP_READY = ('READY requires 5 sequential checksum-valid frames, <=100ms apart; '
+                  'STALE after >500ms without a valid frame.')
+
+
+def _rvc_fields(tokens, names):
+    if len(tokens) != len(names):
+        return None
+    fields = {}
+    for token, name in zip(tokens, names):
+        key, separator, value = token.partition('=')
+        if not separator or key != name:
+            return None
+        fields[key] = value
+    return fields
+
+
+def _parse_rvc(tokens):
+    kind = tokens[0]
+    if kind == 'RUN':
+        names = ('boot_ms state bytes frames new window_ms age_ms first_frame_boot_ms '
+                 'first_ready_boot_ms acquisitions pauses max_gap_ms ready_ms longest_ready_ms').split()
+        fields = _rvc_fields(tokens[1:], names)
+        if fields is None or fields['state'] not in ('READY', 'STALE', 'SYNCING', 'UART_FAILED'):
+            return None
+        for key in names:
+            if key == 'state':
+                continue
+            fields[key] = -1 if key == 'age_ms' and fields[key] == '-1' else _parse_uint32(fields[key])
+            if fields[key] is None:
+                return None
+        return dict(type='rvc', record='run', **fields)
+    if kind == 'COUNTS':
+        names = 'bad_checksum discontinuities repeats post_first_ready_bad post_first_ready_discontinuities'.split()
+        fields = _rvc_fields(tokens[1:], names)
+        if fields is None:
+            return None
+        fields = {key: _parse_uint32(value) for key, value in fields.items()}
+        return None if None in fields.values() else dict(type='rvc', record='counts', **fields)
+    if kind == 'VALUE':
+        fields = _rvc_fields(tokens[1:], ['ypr_deg', 'accel_mg', 'changes_ypr', 'changes_accel'])
+        if fields is None:
+            return None
+        for key in ('ypr_deg', 'accel_mg'):
+            parser = _parse_float if key == 'ypr_deg' else _parse_int64
+            values = [parser(value) for value in fields[key].split(',')]
+            limit = 327.68 if key == 'ypr_deg' else 32768
+            if len(values) != 3 or any(value is None or not -limit <= value < limit for value in values):
+                return None
+            fields[key] = values
+        for key in ('changes_ypr', 'changes_accel'):
+            fields[key] = _parse_uint32(fields[key])
+            if fields[key] is None:
+                return None
+        return dict(type='rvc', record='value', **fields)
+    if kind == 'UART_EVENTS' and len(tokens) == 8 and tokens[1:3] == [
+            'total/post_first_ready', 'fifo,buffer,frame,parity,break=']:
+        pairs = [[_parse_uint32(value) for value in token.split('/')] for token in tokens[3:]]
+        if any(len(pair) != 2 or None in pair for pair in pairs):
+            return None
+        return dict(type='rvc', record='uart', totals=[pair[0] for pair in pairs],
+                    post_first_ready=[pair[1] for pair in pairs])
+    return None
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -90,6 +157,21 @@ def parse_event(line: Any, host_time: Any) -> Optional[Dict[str, Any]]:
         "host_time": float(host_time),
     }
 
+    if line.strip() in RVC_BANNERS:
+        return dict(out, type='ready', firmware=RVC_BANNERS[line.strip()])
+    if line.strip() == RVC_HELP_READY:
+        return None
+    if t0 == 'EVENT' and len(tokens) == 4 and tokens[1] == 'STALE':
+        fields = _rvc_fields(tokens[2:], ['boot_ms', 'age_ms'])
+        if fields:
+            fields = {key: _parse_uint32(value) for key, value in fields.items()}
+            if None not in fields.values():
+                return dict(out, type='rvc', record='stale', **fields)
+        return None
+    if t0 in ('RUN', 'COUNTS', 'VALUE', 'UART_EVENTS'):
+        rvc = _parse_rvc(tokens)
+        return dict(out, **rvc) if rvc else None
+
     # Encoder record
     if t0 == "T" and len(tokens) == 6:
         dev_ms = _parse_uint32(tokens[1])
@@ -133,6 +215,28 @@ def parse_event(line: Any, host_time: Any) -> Optional[Dict[str, Any]]:
         return out
 
     # IMU record
+    if t0 == 'IR1':
+        if len(tokens) != 14 or tokens[3] not in ('READY', 'STALE', 'SYNCING', 'OFFLINE'):
+            return None
+        dev_ms = _parse_uint32(tokens[1])
+        age_ms = -1 if tokens[2] == '-1' else _parse_uint32(tokens[2])
+        angles = [_parse_float(token) for token in tokens[4:7]]
+        acceleration = [_parse_int64(token) for token in tokens[7:10]]
+        accepted = _parse_uint32(tokens[10])
+        errors = [_parse_uint32(token) for token in tokens[11:14]]
+        if (dev_ms is None or age_ms is None or accepted not in (0, 1) or None in errors or
+                any(value is None or not -327.68 <= value < 327.68 for value in angles) or
+                any(value is None or not -32768 <= value <= 32767 for value in acceleration)):
+            return None
+        valid = tokens[3] == 'READY' and 0 <= age_ms <= 500
+        return dict(out, type='imu', transport='uart-rvc', device_ms=dev_ms,
+                    frame_age_ms=age_ms, valid=valid,
+                    reason='ready' if valid else tokens[3].lower() if tokens[3] != 'READY' else 'stale',
+                    yaw_rad=math.radians(angles[0]) if valid else None, ypr_deg=angles,
+                    raw_acceleration_mg=acceleration, quaternion=None, gyro=None,
+                    acceleration=None, status=None, heading_accepted=bool(accepted),
+                    control_ready=valid and bool(accepted),
+                    bad_checksum=errors[0], discontinuities=errors[1], uart_errors=errors[2])
     if t0 == "I":
         if len(tokens) == 3 and tokens[2] in {"WAIT", "STALE", "OFFLINE"}:
             dev_ms = _parse_uint32(tokens[1])

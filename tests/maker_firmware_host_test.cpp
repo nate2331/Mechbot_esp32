@@ -57,6 +57,9 @@ void testImuHardwareResetRecovery() {
   Serial.output.clear(); sendImuTelemetry();
   assert(Serial.output.find("OFFLINE")!=std::string::npos);
 
+  // Explicitly select robot-relative control after losing a field reference.
+  cmd("F 0");
+
   // Offline polling must not reset a sensor while motion is requested.
   bno08x.beginSucceeds=true;
   bno08x.needsHardwareReset=true;
@@ -251,7 +254,7 @@ void testImuRecoveryRolloverAndDiagnostics() {
   assert(bno08x.beginCalls==diagBegins && imuReportRetryCount==diagRetries);
   cmd("X");
   Serial.output.clear(); cmd("?");
-  assert(Serial.output.find("FIRMWARE MAKER_SPI_V2_STALE_RECOVERY")!=std::string::npos);
+  assert(Serial.output.find("FIRMWARE MAKER_SPI_V3_FIELD_FAULT_LATCH")!=std::string::npos);
 }
 void testQueuedImuArrivalFreshness() {
   cmd("X");

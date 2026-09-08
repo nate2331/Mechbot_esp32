@@ -1,0 +1,12 @@
+{
+  "fqbn": "esp32:esp32:esp32:FlashMode=dio",
+  "firmware_label": "MAKER_SPI_V3_FIELD_FAULT_LATCH",
+  "uploaded": false,
+  "transport": "experimental SPI; not compatible with current buffered UART wiring",
+  "source_sha256": {
+    "Maker_Mechbot/Maker_Mechbot.ino": "f87380861b8930df4d311850d7737c5491b3e0b52108d4fed791cc1f7c5265d5",
+    "tests/maker_navigation_host_test.cpp": "47fd2b948103647f13af464f1df7466da0a62ab4e0dc140da8c82fa5199e51c9",
+    "tests/maker_firmware_host_test.cpp": "2f356b06c78ab9dee9a7449f9400f501c22a88a38b8d50f80162b93c4f196e8f"
+  },
+  "binary_sha256": "78fb8168ad8cc7f8de666cbb3bbfea1d918a39cb768b278f0099597fd56e9073"
+}

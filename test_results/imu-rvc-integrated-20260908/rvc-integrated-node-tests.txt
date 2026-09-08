@@ -1,0 +1,47 @@
+✔ capture submits once, converts voltage, waits for success, and blocks replay capture (50.7423ms)
+✔ recording controls are explicit buttons and download IDs are encoded (2.3166ms)
+✔ seek requests serialize and stale positions cannot overwrite a newer seek (5.1813ms)
+✔ changing recordings or returning live invalidates in-flight results (2.1724ms)
+✔ playback uses elapsed time, coalesces requests, ends paused, and never sends recorded TX (3.0436ms)
+✔ replay failures pause playback and expose the error (2.0365ms)
+✔ evidence keeps aborted, unknown and partial labels, displays errors, and preserves selection (3.2036ms)
+✔ comparison displays actual field names, missing conditions, zero deltas, and object values (2.3515ms)
+✔ wheel-only snapshot works with no IMU; signed turns and errors are measured (16.8362ms)
+✔ stationary observation does not establish motion validation (2.5309ms)
+✔ snapshots are detached from their input (1.2898ms)
+✔ unknown board, stale samples, unsafe counters and disconnected transport are rejected (3.8907ms)
+✔ uncalibrated wheels retain counts but do not invent revolutions (1.3805ms)
+✔ identity, mode, calibration, counter and host-clock resets invalidate comparisons (1.8729ms)
+✔ device clock rollover is allowed while diagnostic counter rollover is rejected (1.5794ms)
+✔ observation uses only GET operations and exports a finished stationary result (3.3949ms)
+✔ an intermediate counter reset stays invalid even after larger counts return (1.7094ms)
+✔ disconnect, replay, stale diagnostics and observation gaps latch an invalid window (5.477ms)
+✔ new observation clears a previous failure; completed reports survive disconnection (1.7797ms)
+✔ RVC diagnostic stays separate from integrated IMU and robot readiness (9.4358ms)
+✔ integrated RVC presents unknown calibration and explicit acceptance (1.5587ms)
+✔ constant/single signed wheel samples never divide by zero (1.723ms)
+✔ FR data is plotted even if FL is missing; ticks/s is used when RPM is absent (1.9923ms)
+✔ invalid samples, missing wheel values, and reversed timestamps break speed traces (1.8014ms)
+✔ all chart coordinates stay finite for extreme finite data and invalid input (1.4408ms)
+✔ history is bounded to the latest 300 samples before scaling or rendering (5.6132ms)
+✔ pose traces preserve invalid gaps and use the same scale for x and y (1.0633ms)
+✔ pose heading uses +x right and +y up, and invalid yaw is never drawn (1.4965ms)
+✔ empty and entirely invalid traces show waiting text rather than fabricated data (0.9942ms)
+✔ live render uses bridge keys, keeps zero diagnostics, and produces exactly six columns (1.3377ms)
+✔ stale feedback is never labeled fresh and stale counters retain values and age (1.1146ms)
+✔ null observations clear prior data and disable geometry controls (1.0811ms)
+✔ geometry gates require four positive finite CPRs and disallow replay changes (1.3204ms)
+✔ measured geometry fills empty unfocused fields once without overwriting edits (0.9855ms)
+✔ ticks-only capabilities stay explicit and event list retains latest twenty in reverse order (1.1792ms)
+✔ successful polling clears its own stale connection failure (28.2353ms)
+✔ recovery preserves another notice shown after the connection failure (1.6458ms)
+✔ a current observation fault remains visible after network recovery (2.5357ms)
+✔ ordinary successful polling does not erase operator notifications (1.1071ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.1822

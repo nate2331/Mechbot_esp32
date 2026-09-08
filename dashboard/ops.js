@@ -91,6 +91,19 @@
   };
   window.UI = UI;
   document.addEventListener('DOMContentLoaded', () => {
+    for (const [id, action] of Object.entries({navRobot:'robot',navField:'field',navZero:'zero',navRevoke:'revoke',navAccept:'accept'})) {
+      UI.el(id)?.addEventListener('click', UI.run(async () => {
+        if (UI.replay || UI.live?.mode !== 'live' || UI.live?.observed?.profile?.imu_transport !== 'uart-rvc')
+          throw new Error('A live integrated RVC connection is required.');
+        if (action === 'accept' && !UI.el('headingMeasured').checked)
+          throw new Error('Complete the heading measurements before accepting.');
+        const result = await UI.api('/api/navigation', {action,
+          confirmation: action === 'accept' ? 'HEADING_MEASURED' : undefined});
+        UI.el('headingMeasured').checked = false;
+        UI.notify(result.sent+' sent; controller acknowledgement is not yet verified. Release and press the deadman again before driving.');
+        await UI.refresh();
+      }));
+    }
     document.querySelectorAll('nav [data-view]').forEach(button =>
       button.addEventListener('click', UI.run(() => UI.showView(button.dataset.view))));
     UI.el('stop').addEventListener('click', UI.run(async () => {

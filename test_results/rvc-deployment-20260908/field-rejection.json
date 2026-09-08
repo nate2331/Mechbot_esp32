@@ -1,0 +1,131 @@
+{
+  "rejected": true,
+  "sent": {
+    "sent": "F 1",
+    "acknowledged": false,
+    "rearm_required": true
+  },
+  "status": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "updated": 1788907209.8736534,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 139929 IMU 1 139924 0 1",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788907209.8586068,
+    "imu": "IR1 139929 5 READY -43.30 -2.03 -1.09 16 -35 974 0 0 0 0",
+    "imu_valid": true,
+    "imu_updated": 1788907209.871744,
+    "navigation": "N 139929 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 139929 IMU 1 139924 0 1",
+    "help_identity": "Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907209.6848369
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907209.685499
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907209.6859605
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788907209.697727
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_RVC_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings · 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-rvc-help",
+      "imu_transport": "uart-rvc",
+      "build_properties": [
+        "compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1"
+      ]
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "T 139129 0 0 0 0",
+      "IR1 139129 3 READY -43.30 -2.03 -1.07 20 -35 973 0 0 0 0",
+      "N 139129 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 139129 IMU 1 139126 0 1",
+      "T 139329 0 0 0 0",
+      "IR1 139329 4 READY -43.30 -2.03 -1.08 16 -31 973 0 0 0 0",
+      "N 139329 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 139329 IMU 1 139325 0 1",
+      "T 139529 0 0 0 0",
+      "IR1 139529 4 READY -43.30 -2.03 -1.09 20 -35 973 0 0 0 0",
+      "N 139529 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 139529 IMU 1 139525 0 1",
+      "OK STOP",
+      "ERR field mode requires a fresh IMU heading; motors stopped",
+      "T 139729 0 0 0 0",
+      "IR1 139729 4 READY -43.30 -2.03 -1.09 16 -31 977 0 0 0 0",
+      "N 139729 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 139729 IMU 1 139725 0 1",
+      "D FL PWM 0.0 A 0 B 0 INVALID 0",
+      "D FR PWM 0.0 A 0 B 0 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 139929 0 0 0 0",
+      "IR1 139929 5 READY -43.30 -2.03 -1.09 16 -35 974 0 0 0 0",
+      "N 139929 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 139929 IMU 1 139924 0 1"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "node_passed": 39,
+  "uploaded": false,
+  "rvc_flash_bytes": 328939,
+  "spi_flash_bytes": 366987,
+  "python_tests": 241,
+  "rvc_globals_bytes": 23400,
+  "date": "2026-09-08",
+  "spi_globals_bytes": 31920,
+  "pi_service_changed": false,
+  "files": [
+    {
+      "path": "Maker_Mechbot/Maker_Mechbot.ino",
+      "sha256": "2cf0d47ff9b0e1b6500d7ba525a8c358c505e76244f0b15d3f2c643c60d70d5e"
+    },
+    {
+      "path": "Maker_Mechbot/MakerRvc.h",
+      "sha256": "dae8d3733a89724d48f670d078aa4bcb0f0219655b092636b6fbdadef27e1af8"
+    },
+    {
+      "path": "Maker_Mechbot/RvcParser.h",
+      "sha256": "0c7777a9e1c7f60766e5340df53c5a327cc0c68bd102ef74d7fe098b61acbfd8"
+    },
+    {
+      "path": "mechbot_bridge.py",
+      "sha256": "11f1b341bf2e7404800e18870377a985b3921064a73a389bb3717dacf7277c28"
+    },
+    {
+      "path": "mechbot_telemetry.py",
+      "sha256": "3ebb179a8728540980a657cc96a2422a39a45b7d8fb57e5e2c01070d690d737b"
+    },
+    {
+      "path": "mechbot_observer.py",
+      "sha256": "48fb8c3da693f107a2b87595a546b75106b29a3ae81022fa9e5490c6dbf33f72"
+    },
+    {
+      "path": "mechbot_profiles.py",
+      "sha256": "5a985072f15fb768a626dd14130aafa2b1d11582c905ec28fd795e85f4dedd67"
+    },
+    {
+      "path": "mechbot_firmware_update.py",
+      "sha256": "d6431a3ed76995bd0ce8d3161c0c80b3adcf0a6b9f25f5d51cfe1c101d5a80ed"
+    },
+    {
+      "path": "dashboard/ops-live.js",
+      "sha256": "1f55432d796906a6b5a446d207d022cb95beb066cacf0969b5bed868cdcdb504"
+    },
+    {
+      "path": "tests/maker_rvc_integrated_host_test.cpp",
+      "sha256": "d8560edf8005d76b9143a78ab4f21a7771caac22f98ae190f3948982bb1865ec"
+    },
+    {
+      "path": "tests/test_rvc_telemetry.py",
+      "sha256": "41894d3eb2b24ddf3053323981e8288b9d4255392f5155a038cd8c51e70698f5"
+    },
+    {
+      "path": "build/maker-rvc-integrated/Maker_Mechbot.ino.bin",
+      "sha256": "142fd59bd4a8178c9d77c8d6fe36dd0ed6fff55e8e59d2dc37d04fcd8a69bf8b"
+    },
+    {
+      "path": "build/maker-field-latch/Maker_Mechbot.ino.bin",
+      "sha256": "41f24d44b6aa03d199b35a6a1dca7eb44638919f0d8f510b5f6078192245f9c7"
+    }
+  ],
+  "python_skipped": 1
+}

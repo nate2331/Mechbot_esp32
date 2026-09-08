@@ -34,7 +34,7 @@ class ObserverTest(unittest.TestCase):
 
     def snapshot(self, observer, now):
         result = observer.snapshot(now)
-        self.assertEqual(set(result), {'profile', 'epoch', 'rates', 'imu', 'diagnostics',
+        self.assertEqual(set(result), {'profile', 'epoch', 'rates', 'imu', 'rvc', 'diagnostics',
                                       'samples', 'events', 'pose', 'geometry'})
         json.dumps(result, allow_nan=False)
         return result

@@ -1,12 +1,14 @@
 """Board capabilities shared by the bridge and updater; no hardware IO."""
 
 from copy import deepcopy
+from mechbot_telemetry import RVC_BANNERS
 
 WHEELS = ("FL", "FR", "RL", "RR")
 PWM_KEYS = tuple("pwm-" + wheel.lower() for wheel in WHEELS)
 # September 3, 2026: ten complete forward wheel turns, normal encoder wiring.
 MAKER_COUNTS_PER_REV = (2468.8, 2467.9, 2473.5, 2469.8)
 MAKER_HELP_IDENTITY = "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+MAKER_RVC_HELP_IDENTITY = "Maker RVC mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
 
 PROFILES = {
     "maker": {
@@ -37,15 +39,21 @@ PROFILES = {
 
 def profile_for_firmware(firmware, help_identity=None):
     """Exact READY or the deployed Maker's distinctive help identifies its board."""
+    if firmware == 'ESP32_MAKER_MECANUM_RVC_V1' or (firmware is None and help_identity == MAKER_RVC_HELP_IDENTITY):
+        return dict(deepcopy(PROFILES['maker']), firmware='ESP32_MAKER_MECANUM_RVC_V1',
+                    identity_source='ready' if firmware else 'maker-rvc-help',
+                    imu_transport='uart-rvc', build_properties=['compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1'])
     for profile in PROFILES.values():
         if firmware == profile["firmware"]:
             return dict(deepcopy(profile), identity_source="ready")
     if firmware is None and help_identity == MAKER_HELP_IDENTITY:
         return dict(deepcopy(PROFILES["maker"]), identity_source="maker-help")
-    return {"id": "unknown", "name": "Unidentified controller",
+    diagnostic = firmware in RVC_BANNERS.values()
+    return {"id": "unknown", "name": "Maker UART-RVC diagnostic" if diagnostic else "Unidentified controller",
             "firmware": firmware, "encoder_wheels": [], "diagnostics": False,
             "baseline": {}, "baseline_label": "Identify the connected controller",
-            "baseline_note": "Board-specific tuning and firmware updates are unavailable.",
+            "baseline_note": ("Standalone sensor diagnostic; robot control and firmware updates are unavailable."
+                              if diagnostic else "Board-specific tuning and firmware updates are unavailable."),
             "counts_per_revolution": {}, "calibration_source": None,
             "closed_loop": False}
 

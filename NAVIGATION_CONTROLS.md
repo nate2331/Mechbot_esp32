@@ -20,6 +20,15 @@ most 500 ms. When heading is unavailable in robot-relative mode, correction is
 bypassed. Field-relative translation instead stops if its required yaw is lost.
 IMU reset clears the field reference; Maker also stops before report recovery.
 
+September 8 Maker source update: loss of field heading/reference or an IMU reset
+while field mode is enabled latches a motor stop. Fresh reports, ordinary `V`,
+`X`, `Z` or configuration changes do not acknowledge that fault. Send `F 0` to
+explicitly return to robot-relative mode, or `F 1` with a fresh qualified heading
+to recapture the field reference. This prevents queued gamepad commands from
+silently changing coordinate frames after recovery. `N` ready is false while
+the latch is set; `?` reports the latch. The update is not flashed and still uses
+the experimental SPI transport, which is incompatible with the current UART wiring.
+
 | Command | Behavior |
 | --- | --- |
 | V forward left ccw | Normalized motion components; firmware supports vector mixing |
@@ -66,3 +75,23 @@ heading-controller, motion-primitive, arbitration, simulator and waypoint work.
 Its protocol and firmware have diverged from this tree. Review and port selected
 components after measurement and interface checks; do not assume those features
 are deployed on this robot.
+# Pi RVC operator controls — September 8, 2026
+
+The Operations console provides Robot frame, Field frame, Re-zero field, Revoke
+heading and Accept measured heading. Controls require a live integrated RVC
+connection; replay, standalone diagnostic and offline views cannot use them.
+Acceptance requires the operator to confirm measured mounting, yaw direction and
+accuracy. It must not be used merely because changing sensor values are visible.
+
+The single bridge owner accepts `POST /api/navigation` with `action` set to
+`robot`, `field`, `zero`, `revoke` or `accept`. The latter additionally requires
+`confirmation: "HEADING_MEASURED"`. These map to F 0, F 1, Z, IMU REVOKE and IMU
+ACCEPT. Unknown commands, held deadman, disconnected/non-RVC firmware, tuning,
+pending restoration and maintenance are rejected before writing. Each permitted
+action writes zero velocity, X, then the selected command under one lock and
+requires deadman rearming. A failed stop prevents the reference command.
+
+The HTTP result reports dispatch, not acknowledgement. Inspect the captured OK/ERR
+and live heading status for acceptance; firmware still enforces stream freshness.
+Field-reference loss requires explicit recovery as described below. Heading hold
+is configured separately; these buttons do not enable it or save NVS settings.

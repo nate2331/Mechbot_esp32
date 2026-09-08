@@ -1,5 +1,10 @@
 # Blackbot Two operations runbook
 
+September 8: the matched RVC bridge and field/reference controls are now installed,
+and integrated RVC firmware is flashed. See the [deployment evidence](../test_results/rvc-deployment-20260908/README.md).
+This supersedes staging-only statements below. Heading acceptance remains off;
+angle/startup and motor-powered trials are still required.
+
 The Operations console and its capture, observer, CLI and browser integration
 passed the software checks recorded in [OPERATIONS_VALIDATION.md](OPERATIONS_VALIDATION.md).
 The September 5 [Pi installation record](PI_OPERATIONS_DEPLOYMENT_2026-09-05.md)
@@ -10,6 +15,11 @@ Earlier Pi installation results in
 [DEPLOYMENT.md](../DEPLOYMENT.md) do not establish that these additions are installed.
 
 ## Pages and operating modes
+
+The [September 8 UART-RVC observation update](RVC_TELEMETRY_2026-09-08.md) adds
+standalone sensor diagnostics to the IMU card and capture/replay. It is prepared
+locally and staged on the Pi; activation is not established by this document.
+RVC readings do not identify an integrated robot or enable tuning/navigation.
 
 The Overview's [Encoder check](ENCODER_OBSERVATION.md) compares counts and
 diagnostic deltas without requiring the IMU. Start/finish/download are passive
