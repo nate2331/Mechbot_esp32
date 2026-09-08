@@ -1,0 +1,2087 @@
+{
+  "stage": "/home/nate/rvc-restarts-x_6azrkq",
+  "scope": "Three ESP32 resets; IMU remains powered; motor power off per operator",
+  "rounds": [
+    {
+      "round": 1,
+      "ready_s": 0.6624695670006986,
+      "first_qualified_report_s": 0.8617802190001385,
+      "first_heading_rad": -2.211158,
+      "valid_reports": 26,
+      "zero_outputs": true,
+      "heading_off": true,
+      "lines": [
+        {
+          "elapsed_s": 0.6593756580004992,
+          "line": "IMU RVC receiver initialized; heading acceptance cleared; no sensor reset"
+        },
+        {
+          "elapsed_s": 0.6624695670006986,
+          "line": "READY ESP32_MAKER_MECANUM_RVC_V2"
+        },
+        {
+          "elapsed_s": 0.6656223810005031,
+          "line": "FIRMWARE MAKER_RVC_V2_CCW_HEADING"
+        },
+        {
+          "elapsed_s": 0.6738793310005349,
+          "line": "IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks"
+        },
+        {
+          "elapsed_s": 0.6802665730001536,
+          "line": "IMU REVOKE: stop and revoke heading acceptance; UART stream continues"
+        },
+        {
+          "elapsed_s": 0.6812711920001675,
+          "line": "Commands:"
+        },
+        {
+          "elapsed_s": 0.6860987180007214,
+          "line": "V <forward> <left> <ccw>   each value -1.0 to +1.0"
+        },
+        {
+          "elapsed_s": 0.6915034230005404,
+          "line": "forward and left are simultaneous continuous components"
+        },
+        {
+          "elapsed_s": 0.6968672950006294,
+          "line": "F <0|1>                    field-oriented control off/on"
+        },
+        {
+          "elapsed_s": 0.7015645120000045,
+          "line": "Z                          re-zero field heading"
+        },
+        {
+          "elapsed_s": 0.7066946900004041,
+          "line": "Field fault latched: 0; acknowledge with F 0 or fresh F 1"
+        },
+        {
+          "elapsed_s": 0.7105897310002547,
+          "line": "X                         immediate stop"
+        },
+        {
+          "elapsed_s": 0.714632113999869,
+          "line": "CFG GET|SAVE|RESET        runtime settings"
+        },
+        {
+          "elapsed_s": 0.7199712990004627,
+          "line": "CFG SET <key> <value>     validated update while stopped"
+        },
+        {
+          "elapsed_s": 0.7229655740002272,
+          "line": "?                         help"
+        },
+        {
+          "elapsed_s": 0.7278047150002749,
+          "line": "Heading hold: OFF (verify sensor axes before enabling)"
+        },
+        {
+          "elapsed_s": 0.734724916000232,
+          "line": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+        },
+        {
+          "elapsed_s": 0.7423036489999504,
+          "line": "IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes"
+        },
+        {
+          "elapsed_s": 0.748428394000257,
+          "line": "Default PWM=177 all wheels; independent output watchdog, ramped drive"
+        },
+        {
+          "elapsed_s": 0.7541458550003881,
+          "line": "DIAG                      encoder edges/errors and applied PWM"
+        },
+        {
+          "elapsed_s": 0.7587416140004279,
+          "line": "IMU RETRY                 stopped reinitialization"
+        },
+        {
+          "elapsed_s": 0.7669257010002184,
+          "line": "IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first"
+        },
+        {
+          "elapsed_s": 0.7685894249998455,
+          "line": "Watchdog: 300 ms"
+        },
+        {
+          "elapsed_s": 0.7717493740001373,
+          "line": "Encoder: T <ms> <FL> <FR> <RL> <RR>"
+        },
+        {
+          "elapsed_s": 0.7845677100003741,
+          "line": "IMU: IR2 <ms> <age_ms> <state> <raw_yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors> <ccw_heading_rad>"
+        },
+        {
+          "elapsed_s": 0.7912470810006198,
+          "line": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>"
+        },
+        {
+          "elapsed_s": 0.8508012290003535,
+          "line": "T 715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 0.8617802190001385,
+          "line": "IR2 716 2 READY 126.69 0.79 0.40 -8 12 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 0.865691302000414,
+          "line": "N 716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 0.8673802339999384,
+          "line": "H 716 IMU 1 714 0 1"
+        },
+        {
+          "elapsed_s": 1.050246151000465,
+          "line": "T 915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.059816777999913,
+          "line": "IR2 916 4 READY 126.69 0.79 0.40 -8 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 1.0638696820005862,
+          "line": "N 916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.0656038730003274,
+          "line": "H 916 IMU 1 912 0 1"
+        },
+        {
+          "elapsed_s": 1.2507745960001557,
+          "line": "T 1115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.2623287340002207,
+          "line": "IR2 1116 4 READY 126.69 0.79 0.40 -8 12 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 1.2663314300007187,
+          "line": "N 1116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.268195671000285,
+          "line": "H 1116 IMU 1 1112 0 1"
+        },
+        {
+          "elapsed_s": 1.4504061820007337,
+          "line": "T 1315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.4616510010000638,
+          "line": "IR2 1316 5 READY 126.69 0.79 0.40 -8 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 1.4657032280001658,
+          "line": "N 1316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.467591843000264,
+          "line": "H 1316 IMU 1 1311 0 1"
+        },
+        {
+          "elapsed_s": 1.574792465000428,
+          "line": "OK STOP"
+        },
+        {
+          "elapsed_s": 1.580453416000637,
+          "line": "D FL PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.583923829000014,
+          "line": "D FR PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5873261699998693,
+          "line": "D RL PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5907537709999815,
+          "line": "D RR PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5945531890001803,
+          "line": "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.5982502130000285,
+          "line": "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6017832289999205,
+          "line": "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6054446810003355,
+          "line": "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6067379940004685,
+          "line": "CFG pwm-fl 177"
+        },
+        {
+          "elapsed_s": 1.6080134419999013,
+          "line": "CFG pwm-fr 177"
+        },
+        {
+          "elapsed_s": 1.6093431600002077,
+          "line": "CFG pwm-rl 177"
+        },
+        {
+          "elapsed_s": 1.610619338000106,
+          "line": "CFG pwm-rr 177"
+        },
+        {
+          "elapsed_s": 1.6125473270003567,
+          "line": "CFG heading-kp 0.7000"
+        },
+        {
+          "elapsed_s": 1.6144989110007373,
+          "line": "CFG heading-max 0.3000"
+        },
+        {
+          "elapsed_s": 1.6171897009999157,
+          "line": "CFG heading-deadband-deg 1.500"
+        },
+        {
+          "elapsed_s": 1.6188083209999604,
+          "line": "CFG heading-sign 1"
+        },
+        {
+          "elapsed_s": 1.6206871450003746,
+          "line": "CFG heading-enabled 0"
+        },
+        {
+          "elapsed_s": 1.621723170000223,
+          "line": "OK CFG GET"
+        },
+        {
+          "elapsed_s": 1.6489340870002707,
+          "line": "T 1515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.654487435000192,
+          "line": "IR2 1516 5 READY 126.69 0.79 0.41 -8 16 1005 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 1.6585003910004161,
+          "line": "N 1516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.6607779070000106,
+          "line": "H 1516 IMU 1 1511 0 1"
+        },
+        {
+          "elapsed_s": 1.8507893860005424,
+          "line": "T 1715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.8624328969999624,
+          "line": "IR2 1716 5 READY 126.69 0.79 0.40 -8 12 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 1.8664433020003344,
+          "line": "N 1716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.86830769900007,
+          "line": "H 1716 IMU 1 1711 0 1"
+        },
+        {
+          "elapsed_s": 2.0503697230005855,
+          "line": "T 1915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.0619259960003546,
+          "line": "IR2 1916 6 READY 126.69 0.80 0.39 -8 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 2.065919421000217,
+          "line": "N 1916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.0678035050004837,
+          "line": "H 1916 IMU 1 1910 0 1"
+        },
+        {
+          "elapsed_s": 2.250617132000116,
+          "line": "T 2115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.262388089000524,
+          "line": "IR2 2116 6 READY 126.69 0.80 0.39 -4 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 2.266497554000125,
+          "line": "N 2116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.2683918470002027,
+          "line": "H 2116 IMU 1 2110 0 1"
+        },
+        {
+          "elapsed_s": 2.450967976999891,
+          "line": "T 2315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.4600714770003833,
+          "line": "IR2 2316 6 READY 126.69 0.81 0.38 -8 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 2.465884352000103,
+          "line": "N 2316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.46801233899987,
+          "line": "H 2316 IMU 1 2310 0 1"
+        },
+        {
+          "elapsed_s": 2.6509204430003592,
+          "line": "T 2515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.662411613000586,
+          "line": "IR2 2516 7 READY 126.69 0.81 0.38 -4 16 1005 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 2.6664131630004704,
+          "line": "N 2516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.6682772479998675,
+          "line": "H 2516 IMU 1 2509 0 1"
+        },
+        {
+          "elapsed_s": 2.850990876000651,
+          "line": "T 2715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.8602120300001843,
+          "line": "IR2 2716 7 READY 126.69 0.81 0.38 -4 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 2.865981104000639,
+          "line": "N 2716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.8681282050001755,
+          "line": "H 2716 IMU 1 2709 0 1"
+        },
+        {
+          "elapsed_s": 3.0506941800003915,
+          "line": "T 2915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.0622891500006517,
+          "line": "IR2 2916 7 READY 126.69 0.82 0.38 -8 12 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 3.0663098140003058,
+          "line": "N 2916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.068170096999893,
+          "line": "H 2916 IMU 1 2909 0 1"
+        },
+        {
+          "elapsed_s": 3.2501835279999796,
+          "line": "T 3115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.2612305390002803,
+          "line": "IR2 3116 7 READY 126.69 0.82 0.38 -4 12 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 3.265247349000674,
+          "line": "N 3116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.267108257000473,
+          "line": "H 3116 IMU 1 3109 0 1"
+        },
+        {
+          "elapsed_s": 3.449466214000495,
+          "line": "T 3315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.459217620000345,
+          "line": "IR2 3316 7 READY 126.69 0.81 0.38 -8 16 1000 0 0 0 0 -2.211158"
+        },
+        {
+          "elapsed_s": 3.4638154110007235,
+          "line": "N 3316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.4657064220000393,
+          "line": "H 3316 IMU 1 3309 0 1"
+        },
+        {
+          "elapsed_s": 3.6506522019999466,
+          "line": "T 3515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.6623622229999455,
+          "line": "IR2 3516 9 READY 126.70 0.80 0.39 -8 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.6663790330003394,
+          "line": "N 3516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.668246034000731,
+          "line": "H 3516 IMU 1 3507 0 1"
+        },
+        {
+          "elapsed_s": 3.8498880140004985,
+          "line": "T 3715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.861763188000623,
+          "line": "IR2 3716 9 READY 126.70 0.81 0.40 -4 12 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.8657486970005266,
+          "line": "N 3716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.8676156980000087,
+          "line": "H 3716 IMU 1 3707 0 1"
+        },
+        {
+          "elapsed_s": 4.051107700000102,
+          "line": "T 3915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.061122226999942,
+          "line": "IR2 3916 10 READY 126.70 0.82 0.39 -12 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.067214993000562,
+          "line": "N 3916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.069119129000683,
+          "line": "H 3916 IMU 1 3906 0 1"
+        },
+        {
+          "elapsed_s": 4.250857044999975,
+          "line": "T 4116 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.261453594000159,
+          "line": "IR2 4116 10 READY 126.70 0.82 0.39 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.266614709000351,
+          "line": "N 4116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.268580406000183,
+          "line": "H 4116 IMU 1 4106 0 1"
+        },
+        {
+          "elapsed_s": 4.451129194000714,
+          "line": "T 4316 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.462796194000475,
+          "line": "IR2 4316 1 READY 126.70 0.82 0.39 -4 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.46678998400057,
+          "line": "N 4316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.468656568999904,
+          "line": "H 4316 IMU 1 4315 0 1"
+        },
+        {
+          "elapsed_s": 4.649027111000578,
+          "line": "T 4516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.654857590000574,
+          "line": "IR2 4516 1 READY 126.70 0.82 0.39 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.659215437000057,
+          "line": "N 4516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.66118467600063,
+          "line": "H 4516 IMU 1 4515 0 1"
+        },
+        {
+          "elapsed_s": 4.850207579000198,
+          "line": "T 4716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.861870308000107,
+          "line": "IR2 4716 1 READY 126.70 0.82 0.38 -4 16 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.865916650000145,
+          "line": "N 4716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.867793858999903,
+          "line": "H 4716 IMU 1 4715 0 1"
+        },
+        {
+          "elapsed_s": 5.050438582999959,
+          "line": "T 4916 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.058873031000076,
+          "line": "IR2 4916 1 READY 126.70 0.82 0.38 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.063572695999937,
+          "line": "N 4916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.065849169000103,
+          "line": "H 4916 IMU 1 4915 0 1"
+        },
+        {
+          "elapsed_s": 5.251012030000311,
+          "line": "T 5116 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.261898262000614,
+          "line": "IR2 5117 3 READY 126.70 0.81 0.37 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.265931687000375,
+          "line": "N 5117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.267800719000661,
+          "line": "H 5117 IMU 1 5114 0 1"
+        },
+        {
+          "elapsed_s": 5.452018231000693,
+          "line": "T 5316 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.461853386000257,
+          "line": "IR2 5317 3 READY 126.70 0.82 0.37 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.468048390000149,
+          "line": "N 5317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.469945599000312,
+          "line": "H 5317 IMU 1 5314 0 1"
+        },
+        {
+          "elapsed_s": 5.650775561000046,
+          "line": "T 5516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.659479796000596,
+          "line": "IR2 5517 3 READY 126.70 0.82 0.37 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.664332583000032,
+          "line": "N 5517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.666226615000596,
+          "line": "H 5517 IMU 1 5514 0 1"
+        },
+        {
+          "elapsed_s": 5.851268228000663,
+          "line": "T 5716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.862825855000665,
+          "line": "IR2 5717 3 READY 126.70 0.82 0.37 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.866831781000656,
+          "line": "N 5717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.868704876000265,
+          "line": "H 5717 IMU 1 5714 0 1"
+        },
+        {
+          "elapsed_s": 6.051425901000584,
+          "line": "T 5916 0 0 0 0"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "ready_s": 0.6631695120004224,
+      "first_qualified_report_s": 0.8607769139998709,
+      "first_heading_rad": -2.211332,
+      "valid_reports": 26,
+      "zero_outputs": true,
+      "heading_off": true,
+      "lines": [
+        {
+          "elapsed_s": 0.6602571110006465,
+          "line": "IMU RVC receiver initialized; heading acceptance cleared; no sensor reset"
+        },
+        {
+          "elapsed_s": 0.6631695120004224,
+          "line": "READY ESP32_MAKER_MECANUM_RVC_V2"
+        },
+        {
+          "elapsed_s": 0.6661676410003565,
+          "line": "FIRMWARE MAKER_RVC_V2_CCW_HEADING"
+        },
+        {
+          "elapsed_s": 0.6739975669997875,
+          "line": "IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks"
+        },
+        {
+          "elapsed_s": 0.6800811680004699,
+          "line": "IMU REVOKE: stop and revoke heading acceptance; UART stream continues"
+        },
+        {
+          "elapsed_s": 0.6811278700006369,
+          "line": "Commands:"
+        },
+        {
+          "elapsed_s": 0.6858120650003912,
+          "line": "V <forward> <left> <ccw>   each value -1.0 to +1.0"
+        },
+        {
+          "elapsed_s": 0.6910363040005905,
+          "line": "forward and left are simultaneous continuous components"
+        },
+        {
+          "elapsed_s": 0.6961652320005669,
+          "line": "F <0|1>                    field-oriented control off/on"
+        },
+        {
+          "elapsed_s": 0.7006834410003648,
+          "line": "Z                          re-zero field heading"
+        },
+        {
+          "elapsed_s": 0.705636069999855,
+          "line": "Field fault latched: 0; acknowledge with F 0 or fresh F 1"
+        },
+        {
+          "elapsed_s": 0.7094218950005597,
+          "line": "X                         immediate stop"
+        },
+        {
+          "elapsed_s": 0.7133850600002916,
+          "line": "CFG GET|SAVE|RESET        runtime settings"
+        },
+        {
+          "elapsed_s": 0.7185616960005063,
+          "line": "CFG SET <key> <value>     validated update while stopped"
+        },
+        {
+          "elapsed_s": 0.7215217009998014,
+          "line": "?                         help"
+        },
+        {
+          "elapsed_s": 0.7262493850003011,
+          "line": "Heading hold: OFF (verify sensor axes before enabling)"
+        },
+        {
+          "elapsed_s": 0.7328866220004784,
+          "line": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+        },
+        {
+          "elapsed_s": 0.7401389540000309,
+          "line": "IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes"
+        },
+        {
+          "elapsed_s": 0.7462145859999509,
+          "line": "Default PWM=177 all wheels; independent output watchdog, ramped drive"
+        },
+        {
+          "elapsed_s": 0.7518496510001569,
+          "line": "DIAG                      encoder edges/errors and applied PWM"
+        },
+        {
+          "elapsed_s": 0.756514941000205,
+          "line": "IMU RETRY                 stopped reinitialization"
+        },
+        {
+          "elapsed_s": 0.7646264780005367,
+          "line": "IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first"
+        },
+        {
+          "elapsed_s": 0.7662158789999012,
+          "line": "Watchdog: 300 ms"
+        },
+        {
+          "elapsed_s": 0.7693747350003832,
+          "line": "Encoder: T <ms> <FL> <FR> <RL> <RR>"
+        },
+        {
+          "elapsed_s": 0.7821892170004503,
+          "line": "IMU: IR2 <ms> <age_ms> <state> <raw_yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors> <ccw_heading_rad>"
+        },
+        {
+          "elapsed_s": 0.7888903070006563,
+          "line": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>"
+        },
+        {
+          "elapsed_s": 0.8482343550003861,
+          "line": "T 715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 0.8607769139998709,
+          "line": "IR2 716 7 READY 126.70 0.82 0.37 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 0.8646691949998058,
+          "line": "N 716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 0.8663658340001348,
+          "line": "H 716 IMU 1 709 0 1"
+        },
+        {
+          "elapsed_s": 1.0508548010002414,
+          "line": "T 915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.0617915520006136,
+          "line": "IR2 916 9 READY 126.70 0.82 0.37 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.065698520999831,
+          "line": "N 916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.0673897960004979,
+          "line": "H 916 IMU 1 907 0 1"
+        },
+        {
+          "elapsed_s": 1.2507788840002831,
+          "line": "T 1115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.2624072910002724,
+          "line": "IR2 1116 9 READY 126.70 0.81 0.37 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.2663830090004922,
+          "line": "N 1116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.2682603749999544,
+          "line": "H 1116 IMU 1 1107 0 1"
+        },
+        {
+          "elapsed_s": 1.4509287450000556,
+          "line": "T 1315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.4607431190006537,
+          "line": "IR2 1316 9 READY 126.70 0.81 0.38 -4 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.4669728110002325,
+          "line": "N 1316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.4688637700000982,
+          "line": "H 1316 IMU 1 1307 0 1"
+        },
+        {
+          "elapsed_s": 1.577314529999967,
+          "line": "OK STOP"
+        },
+        {
+          "elapsed_s": 1.5827844420000474,
+          "line": "D FL PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5866219839999758,
+          "line": "D FR PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.590394214999833,
+          "line": "D RL PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5939278050000212,
+          "line": "D RR PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.597626704000504,
+          "line": "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6013108110000758,
+          "line": "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6049579400005314,
+          "line": "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6086836089998542,
+          "line": "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6099958280001374,
+          "line": "CFG pwm-fl 177"
+        },
+        {
+          "elapsed_s": 1.6113142960002733,
+          "line": "CFG pwm-fr 177"
+        },
+        {
+          "elapsed_s": 1.6126155780002591,
+          "line": "CFG pwm-rl 177"
+        },
+        {
+          "elapsed_s": 1.613893370000369,
+          "line": "CFG pwm-rr 177"
+        },
+        {
+          "elapsed_s": 1.6157982350005113,
+          "line": "CFG heading-kp 0.7000"
+        },
+        {
+          "elapsed_s": 1.6177733069998794,
+          "line": "CFG heading-max 0.3000"
+        },
+        {
+          "elapsed_s": 1.620415244000469,
+          "line": "CFG heading-deadband-deg 1.500"
+        },
+        {
+          "elapsed_s": 1.6220408429999225,
+          "line": "CFG heading-sign 1"
+        },
+        {
+          "elapsed_s": 1.623936906000381,
+          "line": "CFG heading-enabled 0"
+        },
+        {
+          "elapsed_s": 1.6249634000005244,
+          "line": "OK CFG GET"
+        },
+        {
+          "elapsed_s": 1.6505056989999503,
+          "line": "T 1515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.6621156170003815,
+          "line": "IR2 1516 10 READY 126.70 0.81 0.38 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.6660912300003474,
+          "line": "N 1516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.6679702100000213,
+          "line": "H 1516 IMU 1 1506 0 1"
+        },
+        {
+          "elapsed_s": 1.8511595099998885,
+          "line": "T 1716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.8630193720000534,
+          "line": "IR2 1716 10 READY 126.70 0.81 0.38 -8 12 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.8669982669998717,
+          "line": "N 1716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.8688830279998,
+          "line": "H 1716 IMU 1 1706 0 1"
+        },
+        {
+          "elapsed_s": 2.0509301590000177,
+          "line": "T 1916 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.0624557560004178,
+          "line": "IR2 1916 9 READY 126.70 0.81 0.38 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.066425536000679,
+          "line": "N 1916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.0683010780003315,
+          "line": "H 1916 IMU 1 1907 0 1"
+        },
+        {
+          "elapsed_s": 2.2513905890000387,
+          "line": "T 2116 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.262836655000683,
+          "line": "IR2 2117 2 READY 126.70 0.81 0.38 -8 12 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.266847632000463,
+          "line": "N 2117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.2687243210002634,
+          "line": "H 2117 IMU 1 2115 0 1"
+        },
+        {
+          "elapsed_s": 2.4503676040003484,
+          "line": "T 2316 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.4618324200000643,
+          "line": "IR2 2316 1 READY 126.70 0.80 0.39 -4 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.465825846000371,
+          "line": "N 2316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.467703576000531,
+          "line": "H 2316 IMU 1 2315 0 1"
+        },
+        {
+          "elapsed_s": 2.651840049000384,
+          "line": "T 2516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.663037420999899,
+          "line": "IR2 2517 3 READY 126.70 0.80 0.39 -4 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.66702246100067,
+          "line": "N 2517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.6689100350004082,
+          "line": "H 2517 IMU 1 2514 0 1"
+        },
+        {
+          "elapsed_s": 2.851716946000124,
+          "line": "T 2716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.86291780800002,
+          "line": "IR2 2717 3 READY 126.70 0.80 0.38 -4 16 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.866922483000053,
+          "line": "N 2717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.868811254999855,
+          "line": "H 2717 IMU 1 2714 0 1"
+        },
+        {
+          "elapsed_s": 3.05178342399995,
+          "line": "T 2916 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.063014963000569,
+          "line": "IR2 2917 3 READY 126.70 0.80 0.39 -8 12 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.067006826000579,
+          "line": "N 2917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.068894504000127,
+          "line": "H 2917 IMU 1 2914 0 1"
+        },
+        {
+          "elapsed_s": 3.251454334999835,
+          "line": "T 3116 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.2622167150002497,
+          "line": "IR2 3117 3 READY 126.70 0.81 0.38 -4 16 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.266216286000599,
+          "line": "N 3117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.268088235000505,
+          "line": "H 3117 IMU 1 3114 0 1"
+        },
+        {
+          "elapsed_s": 3.4516877890000615,
+          "line": "T 3316 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.461414196000078,
+          "line": "IR2 3317 3 READY 126.70 0.81 0.38 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.4661139640002148,
+          "line": "N 3317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.468430853999962,
+          "line": "H 3317 IMU 1 3314 0 1"
+        },
+        {
+          "elapsed_s": 3.65188671299984,
+          "line": "T 3516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.66313033500046,
+          "line": "IR2 3517 3 READY 126.70 0.81 0.38 -8 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.667126625000492,
+          "line": "N 3517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.669011074000082,
+          "line": "H 3517 IMU 1 3514 0 1"
+        },
+        {
+          "elapsed_s": 3.851256953000302,
+          "line": "T 3716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.8629835350002395,
+          "line": "IR2 3717 5 READY 126.70 0.81 0.37 -8 16 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.8669841480004834,
+          "line": "N 3717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.86887495100018,
+          "line": "H 3717 IMU 1 3712 0 1"
+        },
+        {
+          "elapsed_s": 4.05120338100005,
+          "line": "T 3916 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.0610682750002525,
+          "line": "IR2 3917 5 READY 126.70 0.82 0.37 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.066240066999853,
+          "line": "N 3917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.068791692000559,
+          "line": "H 3917 IMU 1 3912 0 1"
+        },
+        {
+          "elapsed_s": 4.2511887660002685,
+          "line": "T 4116 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.262860611000178,
+          "line": "IR2 4117 6 READY 126.70 0.82 0.37 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.267245384000489,
+          "line": "N 4117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.2691592589999345,
+          "line": "H 4117 IMU 1 4111 0 1"
+        },
+        {
+          "elapsed_s": 4.451257120000264,
+          "line": "T 4316 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.462927245000174,
+          "line": "IR2 4317 6 READY 126.70 0.82 0.37 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.466908119000436,
+          "line": "N 4317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.468785797000237,
+          "line": "H 4317 IMU 1 4311 0 1"
+        },
+        {
+          "elapsed_s": 4.651588958000502,
+          "line": "T 4516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.662965599000017,
+          "line": "IR2 4517 6 READY 126.70 0.82 0.37 -4 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.6669542330000695,
+          "line": "N 4517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.668849515000147,
+          "line": "H 4517 IMU 1 4511 0 1"
+        },
+        {
+          "elapsed_s": 4.851615176999985,
+          "line": "T 4716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.862964683000428,
+          "line": "IR2 4717 7 READY 126.70 0.82 0.37 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.867018628000551,
+          "line": "N 4717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.868910316999973,
+          "line": "H 4717 IMU 1 4710 0 1"
+        },
+        {
+          "elapsed_s": 5.05130202700002,
+          "line": "T 4916 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.062897257000259,
+          "line": "IR2 4917 7 READY 126.70 0.82 0.37 -8 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.066897245000291,
+          "line": "N 4917 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.068801069000074,
+          "line": "H 4917 IMU 1 4910 0 1"
+        },
+        {
+          "elapsed_s": 5.251792769000531,
+          "line": "T 5116 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.263096026000312,
+          "line": "IR2 5117 8 READY 126.70 0.82 0.37 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.267117471999882,
+          "line": "N 5117 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.269005566000487,
+          "line": "H 5117 IMU 1 5109 0 1"
+        },
+        {
+          "elapsed_s": 5.451453994000076,
+          "line": "T 5316 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.462993027999801,
+          "line": "IR2 5317 8 READY 126.70 0.82 0.37 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.466987495000467,
+          "line": "N 5317 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.468876579000607,
+          "line": "H 5317 IMU 1 5309 0 1"
+        },
+        {
+          "elapsed_s": 5.6512733939998725,
+          "line": "T 5516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.6628558640004485,
+          "line": "IR2 5517 8 READY 126.70 0.81 0.38 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.66686736200063,
+          "line": "N 5517 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.66875082200022,
+          "line": "H 5517 IMU 1 5509 0 1"
+        },
+        {
+          "elapsed_s": 5.851973247999922,
+          "line": "T 5716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.861048832000051,
+          "line": "IR2 5717 8 READY 126.70 0.80 0.39 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.86669462700047,
+          "line": "N 5717 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.869461197000419,
+          "line": "H 5717 IMU 1 5709 0 1"
+        },
+        {
+          "elapsed_s": 6.052043269000023,
+          "line": "T 5916 0 0 0 0"
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "ready_s": 0.6632088449996445,
+      "first_qualified_report_s": 0.8611123900000166,
+      "first_heading_rad": -2.211332,
+      "valid_reports": 26,
+      "zero_outputs": true,
+      "heading_off": true,
+      "lines": [
+        {
+          "elapsed_s": 0.6602688399998442,
+          "line": "IMU RVC receiver initialized; heading acceptance cleared; no sensor reset"
+        },
+        {
+          "elapsed_s": 0.6632088449996445,
+          "line": "READY ESP32_MAKER_MECANUM_RVC_V2"
+        },
+        {
+          "elapsed_s": 0.6662153070001295,
+          "line": "FIRMWARE MAKER_RVC_V2_CCW_HEADING"
+        },
+        {
+          "elapsed_s": 0.6740147130003606,
+          "line": "IMU ACCEPT: stopped, session-only heading acceptance after measured mounting/angle checks"
+        },
+        {
+          "elapsed_s": 0.6801491979995262,
+          "line": "IMU REVOKE: stop and revoke heading acceptance; UART stream continues"
+        },
+        {
+          "elapsed_s": 0.6810981930002526,
+          "line": "Commands:"
+        },
+        {
+          "elapsed_s": 0.6857441080001081,
+          "line": "V <forward> <left> <ccw>   each value -1.0 to +1.0"
+        },
+        {
+          "elapsed_s": 0.6910885019997295,
+          "line": "forward and left are simultaneous continuous components"
+        },
+        {
+          "elapsed_s": 0.6962786269996286,
+          "line": "F <0|1>                    field-oriented control off/on"
+        },
+        {
+          "elapsed_s": 0.7007083999997121,
+          "line": "Z                          re-zero field heading"
+        },
+        {
+          "elapsed_s": 0.7057187880000129,
+          "line": "Field fault latched: 0; acknowledge with F 0 or fresh F 1"
+        },
+        {
+          "elapsed_s": 0.7095110709997243,
+          "line": "X                         immediate stop"
+        },
+        {
+          "elapsed_s": 0.7134947049999028,
+          "line": "CFG GET|SAVE|RESET        runtime settings"
+        },
+        {
+          "elapsed_s": 0.7186925380001412,
+          "line": "CFG SET <key> <value>     validated update while stopped"
+        },
+        {
+          "elapsed_s": 0.7216148349998548,
+          "line": "?                         help"
+        },
+        {
+          "elapsed_s": 0.726347935999911,
+          "line": "Heading hold: OFF (verify sensor axes before enabling)"
+        },
+        {
+          "elapsed_s": 0.733049495999694,
+          "line": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive"
+        },
+        {
+          "elapsed_s": 0.7404245340003399,
+          "line": "IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes"
+        },
+        {
+          "elapsed_s": 0.7465092279999226,
+          "line": "Default PWM=177 all wheels; independent output watchdog, ramped drive"
+        },
+        {
+          "elapsed_s": 0.7521470539995789,
+          "line": "DIAG                      encoder edges/errors and applied PWM"
+        },
+        {
+          "elapsed_s": 0.7567772399997921,
+          "line": "IMU RETRY                 stopped reinitialization"
+        },
+        {
+          "elapsed_s": 0.7649135159999787,
+          "line": "IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first"
+        },
+        {
+          "elapsed_s": 0.7664644810001846,
+          "line": "Watchdog: 300 ms"
+        },
+        {
+          "elapsed_s": 0.7696497939996334,
+          "line": "Encoder: T <ms> <FL> <FR> <RL> <RR>"
+        },
+        {
+          "elapsed_s": 0.7824720369999341,
+          "line": "IMU: IR2 <ms> <age_ms> <state> <raw_yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors> <ccw_heading_rad>"
+        },
+        {
+          "elapsed_s": 0.7891888559997824,
+          "line": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>"
+        },
+        {
+          "elapsed_s": 0.8493075269998371,
+          "line": "T 715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 0.8611123900000166,
+          "line": "IR2 715 10 READY 126.70 0.80 0.39 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 0.865006963000269,
+          "line": "N 715 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 0.8667342790004113,
+          "line": "H 716 IMU 1 705 0 1"
+        },
+        {
+          "elapsed_s": 1.048914899999545,
+          "line": "T 915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.0590353629995661,
+          "line": "IR2 915 10 READY 126.70 0.80 0.39 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.0636195600000065,
+          "line": "N 915 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.0656233820000125,
+          "line": "H 915 IMU 1 905 0 1"
+        },
+        {
+          "elapsed_s": 1.2494081960003314,
+          "line": "T 1115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.2583068029998685,
+          "line": "IR2 1115 1 READY 126.70 0.80 0.38 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.2640626479997081,
+          "line": "N 1115 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.266114125999593,
+          "line": "H 1115 IMU 1 1114 0 1"
+        },
+        {
+          "elapsed_s": 1.4496392560004097,
+          "line": "T 1315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.4613368809996246,
+          "line": "IR2 1315 1 READY 126.70 0.80 0.38 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.4653499420001026,
+          "line": "N 1315 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.467233192999629,
+          "line": "H 1315 IMU 1 1314 0 1"
+        },
+        {
+          "elapsed_s": 1.5751520880003227,
+          "line": "OK STOP"
+        },
+        {
+          "elapsed_s": 1.5811287099995752,
+          "line": "D FL PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5849927110002682,
+          "line": "D FR PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5887660360003792,
+          "line": "D RL PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5921465549999994,
+          "line": "D RR PWM 0.0 A 0 B 0 INVALID 0"
+        },
+        {
+          "elapsed_s": 1.5958653489997232,
+          "line": "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.5995305509995887,
+          "line": "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6030612229997132,
+          "line": "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6067580910003016,
+          "line": "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0"
+        },
+        {
+          "elapsed_s": 1.6080537999996523,
+          "line": "CFG pwm-fl 177"
+        },
+        {
+          "elapsed_s": 1.6093486230001872,
+          "line": "CFG pwm-fr 177"
+        },
+        {
+          "elapsed_s": 1.6106445389996225,
+          "line": "CFG pwm-rl 177"
+        },
+        {
+          "elapsed_s": 1.6119313420003891,
+          "line": "CFG pwm-rr 177"
+        },
+        {
+          "elapsed_s": 1.6138312069997482,
+          "line": "CFG heading-kp 0.7000"
+        },
+        {
+          "elapsed_s": 1.615816384000027,
+          "line": "CFG heading-max 0.3000"
+        },
+        {
+          "elapsed_s": 1.6184641009995175,
+          "line": "CFG heading-deadband-deg 1.500"
+        },
+        {
+          "elapsed_s": 1.6200708469996243,
+          "line": "CFG heading-sign 1"
+        },
+        {
+          "elapsed_s": 1.621938837000016,
+          "line": "CFG heading-enabled 0"
+        },
+        {
+          "elapsed_s": 1.6230321009998079,
+          "line": "OK CFG GET"
+        },
+        {
+          "elapsed_s": 1.6503007270002854,
+          "line": "T 1515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.6593844349999927,
+          "line": "IR2 1516 2 READY 126.70 0.79 0.39 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.6649795539997285,
+          "line": "N 1516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.6668728049999118,
+          "line": "H 1516 IMU 1 1514 0 1"
+        },
+        {
+          "elapsed_s": 1.850201635999838,
+          "line": "T 1715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 1.8600213230001827,
+          "line": "IR2 1716 3 READY 126.70 0.79 0.39 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 1.8651576989996101,
+          "line": "N 1716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 1.8676685439995708,
+          "line": "H 1716 IMU 1 1713 0 1"
+        },
+        {
+          "elapsed_s": 2.0506347250002364,
+          "line": "T 1915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.0613672609997593,
+          "line": "IR2 1916 2 READY 126.70 0.80 0.39 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.06538448900028,
+          "line": "N 1916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.067302894999557,
+          "line": "H 1916 IMU 1 1914 0 1"
+        },
+        {
+          "elapsed_s": 2.250641050000013,
+          "line": "T 2115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.2619521710003028,
+          "line": "IR2 2116 4 READY 126.70 0.80 0.39 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.2659490859996367,
+          "line": "N 2116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.2678315040002417,
+          "line": "H 2116 IMU 1 2112 0 1"
+        },
+        {
+          "elapsed_s": 2.4509002869999676,
+          "line": "T 2315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.462041410999518,
+          "line": "IR2 2316 4 READY 126.70 0.79 0.40 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.466042545000164,
+          "line": "N 2316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.467927982999754,
+          "line": "H 2316 IMU 1 2312 0 1"
+        },
+        {
+          "elapsed_s": 2.6506157840003652,
+          "line": "T 2515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.661900916000377,
+          "line": "IR2 2516 4 READY 126.70 0.79 0.40 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.6659222569996928,
+          "line": "N 2516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.6678633720002836,
+          "line": "H 2516 IMU 1 2512 0 1"
+        },
+        {
+          "elapsed_s": 2.8501649809995797,
+          "line": "T 2715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 2.8617565140002625,
+          "line": "IR2 2716 4 READY 126.70 0.80 0.40 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 2.865746450000188,
+          "line": "N 2716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 2.8676351180001802,
+          "line": "H 2716 IMU 1 2712 0 1"
+        },
+        {
+          "elapsed_s": 3.0509033259995704,
+          "line": "T 2915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.0620609600000535,
+          "line": "IR2 2916 5 READY 126.70 0.79 0.40 -8 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.0660599060001914,
+          "line": "N 2916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.067949459000374,
+          "line": "H 2916 IMU 1 2911 0 1"
+        },
+        {
+          "elapsed_s": 3.250775956000325,
+          "line": "T 3115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.262023274999592,
+          "line": "IR2 3116 6 READY 126.70 0.80 0.39 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.2660115970002153,
+          "line": "N 3116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.2678882849995716,
+          "line": "H 3116 IMU 1 3110 0 1"
+        },
+        {
+          "elapsed_s": 3.450410307999846,
+          "line": "T 3315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.4618421039995155,
+          "line": "IR2 3316 6 READY 126.70 0.80 0.39 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.465865997000037,
+          "line": "N 3316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.46776596699965,
+          "line": "H 3316 IMU 1 3310 0 1"
+        },
+        {
+          "elapsed_s": 3.649575552999522,
+          "line": "T 3515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.6606169389997376,
+          "line": "IR2 3516 6 READY 126.70 0.80 0.38 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.6647208829999727,
+          "line": "N 3516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.6666269460001786,
+          "line": "H 3516 IMU 1 3510 0 1"
+        },
+        {
+          "elapsed_s": 3.8506508720001875,
+          "line": "T 3715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 3.8598128610001368,
+          "line": "IR2 3716 7 READY 126.70 0.79 0.36 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 3.864494139999806,
+          "line": "N 3716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 3.866793217999657,
+          "line": "H 3716 IMU 1 3709 0 1"
+        },
+        {
+          "elapsed_s": 4.050094446000003,
+          "line": "T 3915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.061751135000122,
+          "line": "IR2 3916 7 READY 126.70 0.79 0.36 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.065757164000388,
+          "line": "N 3916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.0676513529997465,
+          "line": "H 3916 IMU 1 3909 0 1"
+        },
+        {
+          "elapsed_s": 4.250899249000213,
+          "line": "T 4115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.259954467999705,
+          "line": "IR2 4116 7 READY 126.70 0.79 0.35 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.265601305000018,
+          "line": "N 4116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.26834923000024,
+          "line": "H 4116 IMU 1 4109 0 1"
+        },
+        {
+          "elapsed_s": 4.45064057899981,
+          "line": "T 4315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.461953471000015,
+          "line": "IR2 4316 8 READY 126.70 0.80 0.36 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.46596246900026,
+          "line": "N 4316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.467858168000021,
+          "line": "H 4316 IMU 1 4308 0 1"
+        },
+        {
+          "elapsed_s": 4.650503365999612,
+          "line": "T 4515 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.662004640000305,
+          "line": "IR2 4516 7 READY 126.70 0.80 0.36 -8 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.666060096000365,
+          "line": "N 4516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.6679594400002316,
+          "line": "H 4516 IMU 1 4509 0 1"
+        },
+        {
+          "elapsed_s": 4.850087875999634,
+          "line": "T 4715 0 0 0 0"
+        },
+        {
+          "elapsed_s": 4.861703366999791,
+          "line": "IR2 4716 9 READY 126.70 0.81 0.36 -4 12 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 4.865721219000079,
+          "line": "N 4716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 4.86760259499988,
+          "line": "H 4716 IMU 1 4707 0 1"
+        },
+        {
+          "elapsed_s": 5.050778826000169,
+          "line": "T 4915 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.061583079999764,
+          "line": "IR2 4916 9 READY 126.70 0.81 0.36 -4 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.065601661999608,
+          "line": "N 4916 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.06750652699975,
+          "line": "H 4916 IMU 1 4907 0 1"
+        },
+        {
+          "elapsed_s": 5.2501806829995985,
+          "line": "T 5115 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.259128351999607,
+          "line": "IR2 5116 9 READY 126.70 0.81 0.36 -8 16 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.264823833999799,
+          "line": "N 5116 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.2676127479999195,
+          "line": "H 5116 IMU 1 5107 0 1"
+        },
+        {
+          "elapsed_s": 5.450202946999525,
+          "line": "T 5315 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.460208984000019,
+          "line": "IR2 5316 9 READY 126.70 0.81 0.36 -8 12 1005 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.4646912039997915,
+          "line": "N 5316 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.466755962999741,
+          "line": "H 5316 IMU 1 5307 0 1"
+        },
+        {
+          "elapsed_s": 5.650238334999813,
+          "line": "T 5516 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.6619790849999845,
+          "line": "IR2 5516 10 READY 126.70 0.82 0.36 -8 16 1000 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.666000582999914,
+          "line": "N 5516 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.6678885729998,
+          "line": "H 5516 IMU 1 5506 0 1"
+        },
+        {
+          "elapsed_s": 5.8511764699997,
+          "line": "T 5716 0 0 0 0"
+        },
+        {
+          "elapsed_s": 5.860303510999984,
+          "line": "IR2 5716 10 READY 126.70 0.81 0.37 -4 16 996 0 0 0 0 -2.211332"
+        },
+        {
+          "elapsed_s": 5.866011649000029,
+          "line": "N 5716 0.000000 0.000000 0.000000 0.0000 0 0 0"
+        },
+        {
+          "elapsed_s": 5.868712802999653,
+          "line": "H 5716 IMU 1 5706 0 1"
+        },
+        {
+          "elapsed_s": 6.050675460999628,
+          "line": "T 5916 0 0 0 0"
+        }
+      ]
+    }
+  ],
+  "before": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "updated": 1788909723.9632957,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 801779 IMU 1 801771 0 1",
+    "encoders": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "encoder_updated": 1788909723.9390314,
+    "imu": "IR2 801779 8 READY 126.69 0.81 0.38 -8 16 996 0 0 0 0 -2.211158",
+    "imu_valid": true,
+    "imu_updated": 1788909723.9508562,
+    "navigation": "N 801779 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 801779 IMU 1 801771 0 1",
+    "help_identity": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909723.6700456
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 1,
+        "invalid_transitions": 0,
+        "updated": 1788909723.6706092
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909723.6819484
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909723.6824272
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "update_firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "identity_source": "maker-rvc-help",
+      "imu_transport": "uart-rvc",
+      "build_properties": [
+        "compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1"
+      ]
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "N 800779 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 800779 IMU 1 800774 0 1",
+      "T 800979 0 1 0 0",
+      "IR2 800979 7 READY 126.69 0.81 0.38 -8 16 1000 0 0 0 0 -2.211158",
+      "N 800979 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 800979 IMU 1 800972 0 1",
+      "T 801179 0 1 0 0",
+      "IR2 801179 7 READY 126.69 0.82 0.38 -8 12 1000 0 0 0 0 -2.211158",
+      "N 801179 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 801179 IMU 1 801172 0 1",
+      "T 801379 0 1 0 0",
+      "IR2 801379 7 READY 126.69 0.81 0.38 -4 16 1000 0 0 0 0 -2.211158",
+      "N 801379 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 801379 IMU 1 801372 0 1",
+      "D FL PWM 0.0 A 0 B 0 INVALID 0",
+      "D FR PWM 0.0 A 0 B 1 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 801579 0 1 0 0",
+      "IR2 801579 8 READY 126.69 0.81 0.38 -8 16 1000 0 0 0 0 -2.211158",
+      "N 801579 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 801579 IMU 1 801571 0 1",
+      "T 801779 0 1 0 0",
+      "IR2 801779 8 READY 126.69 0.81 0.38 -8 16 996 0 0 0 0 -2.211158",
+      "N 801779 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 801779 IMU 1 801771 0 1"
+    ]
+  },
+  "after": {
+    "serial_connected": true,
+    "gamepad_connected": false,
+    "deadman": false,
+    "updated": 1788909745.0416186,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 8317 IMU 1 8311 0 1",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788909745.0271475,
+    "imu": "IR2 8317 6 READY 126.70 0.83 0.37 -8 16 1000 0 0 0 0 -2.211332",
+    "imu_valid": true,
+    "imu_updated": 1788909745.0283535,
+    "navigation": "N 8317 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 8317 IMU 1 8311 0 1",
+    "help_identity": "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909744.828125
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909744.840271
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909744.8409166
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788909744.8414009
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "update_firmware": "ESP32_MAKER_MECANUM_RVC_V2",
+      "identity_source": "maker-rvc-help",
+      "imu_transport": "uart-rvc",
+      "build_properties": [
+        "compiler.cpp.extra_flags=-DMAKER_IMU_RVC=1"
+      ]
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "CFG GET|SAVE|RESET        runtime settings",
+      "CFG SET <key> <value>     validated update while stopped",
+      "?                         help",
+      "Heading hold: OFF (verify sensor axes before enabling)",
+      "Maker RVC V2 mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+      "IMU: receive-only UART1 RX21 TX_NONE; buffered 5 V sensor; no mode/reset pin writes",
+      "Default PWM=177 all wheels; independent output watchdog, ramped drive",
+      "DIAG                      encoder edges/errors and applied PWM",
+      "IMU RETRY                 stopped reinitialization",
+      "IMU DIAG                  read-only stream ages (ms), INT and recovery counters; stop first",
+      "Watchdog: 300 ms",
+      "Encoder: T <ms> <FL> <FR> <RL> <RR>",
+      "IMU: IR2 <ms> <age_ms> <state> <raw_yaw_deg> <pitch_deg> <roll_deg> <ax_mg> <ay_mg> <az_mg> <accepted> <bad> <gaps> <uart_errors> <ccw_heading_rad>",
+      "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>",
+      "D FL PWM 0.0 A 0 B 0 INVALID 0",
+      "D FR PWM 0.0 A 0 B 0 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 8116 0 0 0 0",
+      "IR2 8117 6 READY 126.70 0.83 0.37 -8 16 1000 0 0 0 0 -2.211332",
+      "N 8117 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 8117 IMU 1 8111 0 1",
+      "T 8316 0 0 0 0",
+      "IR2 8317 6 READY 126.70 0.83 0.37 -8 16 1000 0 0 0 0 -2.211332",
+      "N 8317 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 8317 IMU 1 8311 0 1"
+    ]
+  }
+}
