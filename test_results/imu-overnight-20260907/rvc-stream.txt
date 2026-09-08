@@ -1,0 +1,54 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0xb (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x10cc
+load:0x403c8700,len:0xc2c
+load:0x403cb700,len:0x30b0
+entry 0x403c88b8
+IMU_RVC_TEST V1 CUSTOM | RX8 RST4 P0=5 | no UART TX pin
+Automatic one 35-second trial; x=stop and restore I2C; r=repeat when idle; s=snapshot
+BEGIN RVC #1 RX8=IMU_SDA_TX baud=115200 8N1 frame=19 P0=1 RSTlow20ms
+RUN #1 t=1000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=832
+RUN #1 t=2000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=1832
+RUN #1 t=3000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=2832
+RUN #1 t=4000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=3832
+RUN #1 t=5000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=4832
+RUN #1 t=6000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=5832
+RUN #1 t=7000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=6832
+RUN #1 t=8000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=7832
+RUN #1 t=9000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=8832
+RUN #1 t=10000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=9832
+RUN #1 t=11000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=10832
+RUN #1 t=12000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=11832
+RUN #1 t=13000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=12832
+RUN #1 t=14000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=13832
+RUN #1 t=15000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=14832
+RUN #1 t=16000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=15832
+RUN #1 t=17000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=16832
+RUN #1 t=18000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=17832
+RUN #1 t=19000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=18832
+RUN #1 t=20000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=19832
+RUN #1 t=21000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=20832
+RUN #1 t=22000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=21832
+RUN #1 t=23000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=22832
+RUN #1 t=24000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=23832
+RUN #1 t=25000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=24832
+RUN #1 t=26000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=25832
+RUN #1 t=27000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=26832
+RUN #1 t=28000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=27832
+RUN #1 t=29000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=28832
+RUN #1 t=30000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=29832
+RUN #1 t=31000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=30832
+RUN #1 t=32000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=31832
+RUN #1 t=33000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=32832
+RUN #1 t=34000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=33832
+RESULT reason=35_SECONDS
+FINAL #1 t=35000 WAIT bytes=78 frames=0 new=0 fresh_index=0 repeated_index=0 bad=0 discontinuities=0 age=-1 byte_age=34832
+PREFIX bytes=78 first_byte=164 last_byte=168 HEX 25 48 69 6C 6C 63 72 65 73 74 20 4C 61 62 73 20 31 30 30 30 34 31 34 38 0A 25 53 57 20 56 65 72 20 33 2E 32 2E 31 33 0A 25 28 63 29 20 32 30 31 36 20 48 69 6C 6C 63 72 65 73 74 20 4C 61 62 6F 72 61 74 6F 72 69 65 73 2C 20 49 6E 63 2E
+PREFIX ASCII %Hillcrest Labs 10004148.%SW Ver 3.2.13.%(c) 2016 Hillcrest Laboratories, Inc.
+RESTORE I2C commanded P0=0 RST=1 bus=1
+ RESTORE ACK 0x4A rc=0
+ RESTORE ACK 0x4B rc=2
+END RVC #1; return-to-I2C reset sent; r=repeat, s=snapshot

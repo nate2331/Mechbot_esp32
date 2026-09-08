@@ -1,0 +1,2 @@
+# Live serial bridge dependency. Demo, evidence, replay and odometry use the standard library.
+pyserial==3.5

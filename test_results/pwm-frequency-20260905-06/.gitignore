@@ -1,0 +1,4 @@
+recheck/
+pwm-frequency-tests/test_sketch.exe
+__pycache__/
+Maker_PWM_Frequency_Test/build/

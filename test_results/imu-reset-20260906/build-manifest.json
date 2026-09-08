@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-06",
+  "status": "compiled; user will flash manually; hardware not verified",
+  "fqbn": "esp32:esp32:esp32",
+  "core": "3.3.11",
+  "bno08x_library": "1.2.7",
+  "imu_reset_gpio": 25,
+  "imu_power_note": "STRDC VDC 3.3V for direct ESP32 logic; GPIO25 must be unused",
+  "source_sha256": {
+    "Maker_Mechbot.ino": "22955d27f53dfdd33b5f13429d3da934e06cb9446f7104431e8a52463d2f526b",
+    "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+    "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+    "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+  },
+  "application": {
+    "path": "C:\\Users\\nate2\\AppData\\Local\\Temp\\mechbot-maker-rst25-20260906\\Maker_Mechbot.ino.bin",
+    "bytes": 360640,
+    "sha256": "68c3463de123f8be790edf5b7a960a80b47e3de83ba07ee14519d83b85fdf223"
+  },
+  "compile": {
+    "program_bytes": 360491,
+    "global_bytes": 27688
+  },
+  "host_tests": {
+    "navigation_math": "passed",
+    "maker_motor_safety": "passed",
+    "maker_firmware": "passed, including reset-before-address-probe, stop-before-reset, failure state cleanup and stopped recovery"
+  },
+  "uploaded_by_agent": false
+}

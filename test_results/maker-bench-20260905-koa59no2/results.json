@@ -1,0 +1,862 @@
+{
+  "schema": 1,
+  "created_utc": "2026-09-05T01:07:09.964757+00:00",
+  "simulated": false,
+  "wheel_order": [
+    "FL",
+    "FR",
+    "RL",
+    "RR"
+  ],
+  "counts_per_revolution": [
+    2468.8,
+    2467.9,
+    2473.5,
+    2469.8
+  ],
+  "maximum_pwm": 177,
+  "tolerance_fraction": 0.05,
+  "startup": {
+    "forward": {
+      "FL": {
+        "status": "measured",
+        "trials": [
+          {
+            "pwm": 16,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 24,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 32,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 40,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 48,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 56,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 64,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 72,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 80,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 88,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 96,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 104,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 112,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": true,
+            "rpm": 33.026,
+            "start_delay_bounds_ms": [
+              82.6,
+              282.9
+            ]
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": true,
+            "rpm": 33.628,
+            "start_delay_bounds_ms": [
+              82.0,
+              282.6
+            ]
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": true,
+            "rpm": 33.819,
+            "start_delay_bounds_ms": [
+              83.5,
+              283.7
+            ]
+          },
+          {
+            "pwm": 116,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 118,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 32.245,
+            "start_delay_bounds_ms": [
+              79.4,
+              279.2
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 33.478,
+            "start_delay_bounds_ms": [
+              78.6,
+              279.0
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 33.619,
+            "start_delay_bounds_ms": [
+              79.8,
+              279.9
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 33.356,
+            "start_delay_bounds_ms": [
+              76.9,
+              276.7
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 33.842,
+            "start_delay_bounds_ms": [
+              81.3,
+              281.5
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 33.748,
+            "start_delay_bounds_ms": [
+              81.6,
+              287.8
+            ]
+          }
+        ],
+        "minimum_reliable_start_pwm": 119,
+        "duty_percent": 46.67,
+        "highest_lower_tested_failure_pwm": 118,
+        "resolution_pwm_counts": 1,
+        "confirmation_starts": 3
+      },
+      "FR": {
+        "status": "measured",
+        "trials": [
+          {
+            "pwm": 16,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 24,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 32,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 40,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 48,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 56,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 64,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 72,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 80,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 88,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 96,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 104,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 112,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": true,
+            "rpm": 36.047,
+            "start_delay_bounds_ms": [
+              84.0,
+              284.3
+            ]
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": true,
+            "rpm": 39.409,
+            "start_delay_bounds_ms": [
+              70.5,
+              272.9
+            ]
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": true,
+            "rpm": 39.872,
+            "start_delay_bounds_ms": [
+              77.4,
+              278.1
+            ]
+          },
+          {
+            "pwm": 116,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 118,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 39.507,
+            "start_delay_bounds_ms": [
+              76.9,
+              277.6
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 39.507,
+            "start_delay_bounds_ms": [
+              77.5,
+              278.1
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 39.626,
+            "start_delay_bounds_ms": [
+              78.8,
+              279.5
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 39.75,
+            "start_delay_bounds_ms": [
+              84.3,
+              285.1
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 39.68,
+            "start_delay_bounds_ms": [
+              84.2,
+              284.2
+            ]
+          },
+          {
+            "pwm": 119,
+            "started_and_sustained": true,
+            "rpm": 39.811,
+            "start_delay_bounds_ms": [
+              81.8,
+              281.8
+            ]
+          }
+        ],
+        "minimum_reliable_start_pwm": 119,
+        "duty_percent": 46.67,
+        "highest_lower_tested_failure_pwm": 118,
+        "resolution_pwm_counts": 1,
+        "confirmation_starts": 3
+      },
+      "RL": {
+        "status": "measured",
+        "trials": [
+          {
+            "pwm": 16,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 24,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 32,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 40,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 48,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 56,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 64,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 72,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 80,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 88,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 96,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 104,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 112,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 128,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 136,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 144,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 152,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 160,
+            "started_and_sustained": true,
+            "rpm": 56.68,
+            "start_delay_bounds_ms": [
+              84.7,
+              285.4
+            ]
+          },
+          {
+            "pwm": 160,
+            "started_and_sustained": true,
+            "rpm": 58.798,
+            "start_delay_bounds_ms": [
+              73.2,
+              276.5
+            ]
+          },
+          {
+            "pwm": 160,
+            "started_and_sustained": true,
+            "rpm": 59.403,
+            "start_delay_bounds_ms": [
+              79.6,
+              280.6
+            ]
+          },
+          {
+            "pwm": 156,
+            "started_and_sustained": true,
+            "rpm": 55.168,
+            "start_delay_bounds_ms": [
+              68.1,
+              266.7
+            ]
+          },
+          {
+            "pwm": 156,
+            "started_and_sustained": true,
+            "rpm": 55.108,
+            "start_delay_bounds_ms": [
+              75.3,
+              275.7
+            ]
+          },
+          {
+            "pwm": 156,
+            "started_and_sustained": true,
+            "rpm": 55.289,
+            "start_delay_bounds_ms": [
+              74.1,
+              275.9
+            ]
+          },
+          {
+            "pwm": 154,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 155,
+            "started_and_sustained": true,
+            "rpm": 53.366,
+            "start_delay_bounds_ms": [
+              77.8,
+              278.3
+            ]
+          },
+          {
+            "pwm": 155,
+            "started_and_sustained": true,
+            "rpm": 53.548,
+            "start_delay_bounds_ms": [
+              75.3,
+              275.5
+            ]
+          },
+          {
+            "pwm": 155,
+            "started_and_sustained": true,
+            "rpm": 54.093,
+            "start_delay_bounds_ms": [
+              75.8,
+              276.6
+            ]
+          },
+          {
+            "pwm": 155,
+            "started_and_sustained": true,
+            "rpm": 53.73,
+            "start_delay_bounds_ms": [
+              78.5,
+              278.4
+            ]
+          },
+          {
+            "pwm": 155,
+            "started_and_sustained": true,
+            "rpm": 53.851,
+            "start_delay_bounds_ms": [
+              77.6,
+              278.4
+            ]
+          },
+          {
+            "pwm": 155,
+            "started_and_sustained": true,
+            "rpm": 53.669,
+            "start_delay_bounds_ms": [
+              76.5,
+              277.6
+            ]
+          }
+        ],
+        "minimum_reliable_start_pwm": 155,
+        "duty_percent": 60.78,
+        "highest_lower_tested_failure_pwm": 154,
+        "resolution_pwm_counts": 1,
+        "confirmation_starts": 3
+      },
+      "RR": {
+        "status": "measured",
+        "trials": [
+          {
+            "pwm": 16,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 24,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 32,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 40,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 48,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 56,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 64,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 72,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 80,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 88,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 96,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 104,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 112,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 120,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 128,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 136,
+            "started_and_sustained": true,
+            "rpm": 47.615,
+            "start_delay_bounds_ms": [
+              76.3,
+              278.0
+            ]
+          },
+          {
+            "pwm": 136,
+            "started_and_sustained": true,
+            "rpm": 50.045,
+            "start_delay_bounds_ms": [
+              76.6,
+              276.5
+            ]
+          },
+          {
+            "pwm": 136,
+            "started_and_sustained": true,
+            "rpm": 51.259,
+            "start_delay_bounds_ms": [
+              81.4,
+              283.3
+            ]
+          },
+          {
+            "pwm": 132,
+            "started_and_sustained": true,
+            "rpm": 47.925,
+            "start_delay_bounds_ms": [
+              83.6,
+              283.7
+            ]
+          },
+          {
+            "pwm": 132,
+            "started_and_sustained": true,
+            "rpm": 48.344,
+            "start_delay_bounds_ms": [
+              71.6,
+              269.8
+            ]
+          },
+          {
+            "pwm": 132,
+            "started_and_sustained": true,
+            "rpm": 44.093,
+            "start_delay_bounds_ms": [
+              275.1,
+              475.3
+            ]
+          },
+          {
+            "pwm": 130,
+            "started_and_sustained": false,
+            "rpm": 0.0,
+            "start_delay_bounds_ms": null
+          },
+          {
+            "pwm": 131,
+            "started_and_sustained": true,
+            "rpm": 47.615,
+            "start_delay_bounds_ms": [
+              78.1,
+              279.0
+            ]
+          },
+          {
+            "pwm": 131,
+            "started_and_sustained": true,
+            "rpm": 47.615,
+            "start_delay_bounds_ms": [
+              77.0,
+              277.5
+            ]
+          },
+          {
+            "pwm": 131,
+            "started_and_sustained": true,
+            "rpm": 47.98,
+            "start_delay_bounds_ms": [
+              74.4,
+              281.5
+            ]
+          },
+          {
+            "pwm": 131,
+            "started_and_sustained": true,
+            "rpm": 48.647,
+            "start_delay_bounds_ms": [
+              83.8,
+              285.3
+            ]
+          },
+          {
+            "pwm": 131,
+            "started_and_sustained": true,
+            "rpm": 47.615,
+            "start_delay_bounds_ms": [
+              84.1,
+              284.0
+            ]
+          },
+          {
+            "pwm": 131,
+            "started_and_sustained": true,
+            "rpm": 48.166,
+            "start_delay_bounds_ms": [
+              68.9,
+              266.7
+            ]
+          }
+        ],
+        "minimum_reliable_start_pwm": 131,
+        "duty_percent": 51.37,
+        "highest_lower_tested_failure_pwm": 130,
+        "resolution_pwm_counts": 1,
+        "confirmation_starts": 3
+      }
+    }
+  },
+  "directional_matching": {
+    "forward": {
+      "converged": false,
+      "history": []
+    }
+  },
+  "shared_verification": [],
+  "recommended_shared_pwm": null,
+  "status": "aborted",
+  "notes": [
+    "Minimum PWM means the lowest tested duty that repeatedly started from rest and sustained encoder motion in this bench test.",
+    "A start must produce at least five forward-signed counts and keep moving in both final sample intervals; a single encoder twitch does not pass.",
+    "Start-delay brackets include the firmware slew ramp, encoder detection threshold and serial sampling latency (nominal telemetry period 200 ms).",
+    "Thresholds depend on load, battery, temperature and shaft position; verify loaded behavior separately.",
+    "Startup thresholds are measured, not installed as minimum-output compensation. Existing firmware only stores one PWM ceiling per wheel for both directions.",
+    "No wheel-speed PID is installed. This is an automated measure-adjust-retest calibration, not continuous control during driving."
+  ],
+  "error": "Encoder invalid transitions increased during the pulse",
+  "original_live_settings": {
+    "pwm-fl": 177.0,
+    "pwm-fr": 177.0,
+    "pwm-rl": 177.0,
+    "pwm-rr": 177.0,
+    "heading-kp": 0.7,
+    "heading-max": 0.3,
+    "heading-deadband-deg": 1.5,
+    "heading-sign": 1.0,
+    "heading-enabled": 0.0
+  },
+  "original_live_settings_restored": true,
+  "settings_saved_to_controller": false
+}

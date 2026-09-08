@@ -1,0 +1,35 @@
+diff --git a/C:/Users/nate2/OneDrive/Documents/Arduino/libraries/Adafruit_BNO08x/src/sh2.c b/ESP32S3_IMU_Trials/src/adafruit_bno08x/sh2.c
+index d2f00f0..89ba49e 100644
+--- a/C:/Users/nate2/OneDrive/Documents/Arduino/libraries/Adafruit_BNO08x/src/sh2.c
++++ b/ESP32S3_IMU_Trials/src/adafruit_bno08x/sh2.c
+@@ -488,11 +488,13 @@ static int opProcess(sh2_t *pSh2, const sh2_Op_t *pOp)
+     }
+ 
+     uint32_t now_us = start_us;
++    // Diagnostic-only: upstream zero means an unlimited wait. Keep failed
++    // readback operations finite so the next hardware-reset trial remains usable.
++    const uint32_t timeout_us = pOp->timeout_us ? pOp->timeout_us : 1000000;
+     
+     // While op not complete and not timed out.
+     while ((pSh2->pOp != 0) &&
+-           ((pOp->timeout_us == 0) ||
+-            ((now_us-start_us) < pOp->timeout_us))) {
++           ((now_us-start_us) < timeout_us)) {
+         // Service SHTP to poll the device.
+         shtp_service(pSh2->pShtp);
+ 
+diff --git a/C:/Users/nate2/OneDrive/Documents/Arduino/libraries/Adafruit_BNO08x/src/Adafruit_BNO08x.cpp b/ESP32S3_IMU_Trials/src/adafruit_bno08x/Adafruit_BNO08x.cpp
+index 0cd1fc5..4a5e91a 100644
+--- a/C:/Users/nate2/OneDrive/Documents/Arduino/libraries/Adafruit_BNO08x/src/Adafruit_BNO08x.cpp
++++ b/ESP32S3_IMU_Trials/src/adafruit_bno08x/Adafruit_BNO08x.cpp
+@@ -398,7 +398,9 @@ static int i2chal_write(sh2_Hal_t *self, uint8_t *pBuffer, unsigned len) {
+ 
+   uint16_t write_size = min(i2c_buffer_max, len);
+   if (!i2c_dev->write(pBuffer, write_size)) {
+-    return 0;
++    // Diagnostic-only: a failed synchronous I2C transaction is an I/O error.
++    // Returning zero makes upstream SHTP retry forever before its op timeout.
++    return SH2_ERR_IO;
+   }
+ 
+   return write_size;

@@ -1,0 +1,66 @@
+{
+  "package": "Maker_Mechbot_SPI_2026-09-06",
+  "packaged_utc": "2026-09-06T21:10:47.9197909Z",
+  "target": "ESP32 Dev Module / NULLLAB Maker ESP32 Pro",
+  "fqbn": "esp32:esp32:esp32",
+  "core": "3.3.11",
+  "Adafruit_BNO08x": "1.2.7",
+  "Adafruit_BusIO": "1.17.4",
+  "flash_mode": "dio",
+  "flash_frequency": "80m",
+  "flash_size": "4MB",
+  "files": [
+    {
+      "offset": "0x1000",
+      "name": "Maker_Mechbot.ino.bootloader.bin",
+      "sha256": "427f96e10c620c4f062dab15da54fc45494d897e8397ae6f3aecc98c42d7e379",
+      "bytes": 24992
+    },
+    {
+      "offset": "0x8000",
+      "name": "Maker_Mechbot.ino.partitions.bin",
+      "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1",
+      "bytes": 3072
+    },
+    {
+      "offset": "0xe000",
+      "name": "boot_app0.bin",
+      "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0",
+      "bytes": 8192
+    },
+    {
+      "offset": "0x10000",
+      "name": "Maker_Mechbot.ino.bin",
+      "sha256": "c6c413fbfcf38a5d1601df78f41f29dc4c0e5680d951b611196cdd1fc2758796",
+      "bytes": 364976
+    }
+  ],
+  "source_sha256": {
+    "Maker_Mechbot.ino": "a5d342fcb96db1361960e17bdfc97c1790c6a94169c5fade997753ad61dc88ba",
+    "MakerBnoSpi.h": "9240f220a8a6a4498c6864564b661e3f4cb5a8447b60a89b424005ac1c7849f8",
+    "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+    "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+    "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+  },
+  "pins": {
+    "sck": 22,
+    "miso": 21,
+    "mosi": 32,
+    "cs": 33,
+    "int": 26,
+    "rst": 25,
+    "wake_p0": 16,
+    "p1": "3.3 V",
+    "vdc": "3.3 V"
+  },
+  "software_validation": {
+    "navigation_math": "passed",
+    "maker_motor_safety": "passed",
+    "maker_firmware": "passed",
+    "maker_bno_spi": "passed",
+    "real_sh2_lifecycle": "passed using actual installed sh2.c, shtp.c and sh2_util.c"
+  },
+  "hardware_spi_verified": false,
+  "agent_has_uploaded_this_spi_build": false,
+  "user_reported_spi_wiring_connected": true
+}

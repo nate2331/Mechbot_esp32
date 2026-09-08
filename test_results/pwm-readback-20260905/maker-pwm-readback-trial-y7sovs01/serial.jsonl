@@ -1,0 +1,176 @@
+{"host_time": 635.667897152, "direction": "tx", "raw": "X\n"}
+{"host_time": 635.672954131, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 635.684498766, "direction": "rx", "raw": "T 63331 0 0 0 0\n"}
+{"host_time": 635.687686995, "direction": "rx", "raw": "I 63331 OFFLINE\n"}
+{"host_time": 635.696239339, "direction": "rx", "raw": "N 63331 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 635.699148975, "direction": "rx", "raw": "H 63331 IMU 0 0 0 32\n"}
+{"host_time": 635.884872933, "direction": "rx", "raw": "T 63531 0 0 0 0\n"}
+{"host_time": 635.887811527, "direction": "rx", "raw": "I 63531 OFFLINE\n"}
+{"host_time": 635.894294912, "direction": "rx", "raw": "N 63531 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 635.897429339, "direction": "rx", "raw": "H 63531 IMU 0 0 0 32\n"}
+{"host_time": 636.084814912, "direction": "rx", "raw": "T 63731 0 0 0 0\n"}
+{"host_time": 636.087943506, "direction": "rx", "raw": "I 63731 OFFLINE\n"}
+{"host_time": 636.095247047, "direction": "rx", "raw": "N 63731 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 636.098560172, "direction": "rx", "raw": "H 63731 IMU 0 0 0 32\n"}
+{"host_time": 636.285406787, "direction": "rx", "raw": "T 63931 0 0 0 0\n"}
+{"host_time": 636.288469651, "direction": "rx", "raw": "I 63931 OFFLINE\n"}
+{"host_time": 636.295764704, "direction": "rx", "raw": "N 63931 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 636.298860016, "direction": "rx", "raw": "H 63931 IMU 0 0 0 32\n"}
+{"host_time": 636.485287099, "direction": "rx", "raw": "T 64131 0 0 0 0\n"}
+{"host_time": 636.488291839, "direction": "rx", "raw": "I 64131 OFFLINE\n"}
+{"host_time": 636.495533922, "direction": "rx", "raw": "N 64131 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 636.498692047, "direction": "rx", "raw": "H 64131 IMU 0 0 0 32\n"}
+{"host_time": 636.685278922, "direction": "rx", "raw": "T 64331 0 0 0 0\n"}
+{"host_time": 636.688276422, "direction": "rx", "raw": "I 64331 OFFLINE\n"}
+{"host_time": 636.695756422, "direction": "rx", "raw": "N 64331 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 636.698351214, "direction": "rx", "raw": "H 64331 IMU 0 0 0 32\n"}
+{"host_time": 636.872098714, "direction": "rx", "raw": "WARN IMU offline; retrying initialization\r\n"}
+{"host_time": 637.471730172, "direction": "rx", "raw": "WARN IMU not detected; motor control remains available\r\n"}
+{"host_time": 637.476904651, "direction": "rx", "raw": "IMU I2C FOUND 0x4A\n"}
+{"host_time": 637.484162255, "direction": "rx", "raw": "T 65131 0 0 0 0\n"}
+{"host_time": 637.486913349, "direction": "rx", "raw": "I 65131 OFFLINE\n"}
+{"host_time": 637.494146266, "direction": "rx", "raw": "N 65131 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 637.497649651, "direction": "rx", "raw": "H 65131 IMU 0 0 0 33\n"}
+{"host_time": 637.673674911, "direction": "tx", "raw": "X\n"}
+{"host_time": 637.678944807, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 637.679765068, "direction": "tx", "raw": "?\n"}
+{"host_time": 637.685739651, "direction": "rx", "raw": "T 65331 0 0 0 0\n"}
+{"host_time": 637.687875953, "direction": "rx", "raw": "I 65331 OFFLINE\n"}
+{"host_time": 637.693461578, "direction": "rx", "raw": "N 65331 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 637.696311474, "direction": "rx", "raw": "H 65331 IMU 0 0 0 33\n"}
+{"host_time": 637.697762047, "direction": "rx", "raw": "Commands:\r\n"}
+{"host_time": 637.702375224, "direction": "rx", "raw": "  V <forward> <left> <ccw>   each value -1.0 to +1.0\r\n"}
+{"host_time": 637.70737064, "direction": "rx", "raw": "    forward and left are simultaneous continuous components\r\n"}
+{"host_time": 637.712329703, "direction": "rx", "raw": "  F <0|1>                    field-oriented control off/on\r\n"}
+{"host_time": 637.71664038, "direction": "rx", "raw": "  Z                          re-zero field heading\r\n"}
+{"host_time": 637.720317411, "direction": "rx", "raw": "  X                         immediate stop\r\n"}
+{"host_time": 637.724130328, "direction": "rx", "raw": "  CFG GET|SAVE|RESET        runtime settings\r\n"}
+{"host_time": 637.729102724, "direction": "rx", "raw": "  CFG SET <key> <value>     validated update while stopped\r\n"}
+{"host_time": 637.731963401, "direction": "rx", "raw": "  ?                         help\r\n"}
+{"host_time": 637.736510068, "direction": "rx", "raw": "Heading hold: OFF (verify sensor axes before enabling)\n"}
+{"host_time": 637.742286838, "direction": "rx", "raw": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive\r\n"}
+{"host_time": 637.747709443, "direction": "rx", "raw": "IMU: SDA21 SCL22, no reset wire; relative yaw, NOT compass north\r\n"}
+{"host_time": 637.753456578, "direction": "rx", "raw": "Default PWM=177 all wheels; independent output watchdog, ramped drive\r\n"}
+{"host_time": 637.758833922, "direction": "rx", "raw": "  DIAG                      encoder edges/errors and applied PWM\r\n"}
+{"host_time": 637.763279755, "direction": "rx", "raw": "  IMU RETRY                 stopped reinitialization\r\n"}
+{"host_time": 637.764900172, "direction": "rx", "raw": "Watchdog: 300 ms\r\n"}
+{"host_time": 637.765230432, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 637.768382828, "direction": "rx", "raw": "Encoder: T <ms> <FL> <FR> <RL> <RR>\r\n"}
+{"host_time": 637.774224182, "direction": "rx", "raw": "IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>\r\n"}
+{"host_time": 637.780592099, "direction": "rx", "raw": "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>\r\n"}
+{"host_time": 637.78199012, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 637.783334443, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 637.784798453, "direction": "rx", "raw": "CFG pwm-rl 177\n"}
+{"host_time": 637.78614913, "direction": "rx", "raw": "CFG pwm-rr 177\n"}
+{"host_time": 637.78810939, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 637.790098088, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 637.792682047, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 637.794360536, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 637.796309182, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 637.797416682, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 637.885438661, "direction": "rx", "raw": "T 65531 0 0 0 0\n"}
+{"host_time": 637.889086995, "direction": "rx", "raw": "I 65531 OFFLINE\n"}
+{"host_time": 637.894667724, "direction": "rx", "raw": "N 65531 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 637.896830276, "direction": "rx", "raw": "H 65531 IMU 0 0 0 33\n"}
+{"host_time": 638.085074234, "direction": "rx", "raw": "T 65731 0 0 0 0\n"}
+{"host_time": 638.088354495, "direction": "rx", "raw": "I 65731 OFFLINE\n"}
+{"host_time": 638.096567359, "direction": "rx", "raw": "N 65731 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 638.099261422, "direction": "rx", "raw": "H 65731 IMU 0 0 0 33\n"}
+{"host_time": 638.284707672, "direction": "rx", "raw": "T 65931 0 0 0 0\n"}
+{"host_time": 638.287607828, "direction": "rx", "raw": "I 65931 OFFLINE\n"}
+{"host_time": 638.293862828, "direction": "rx", "raw": "N 65931 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 638.296926578, "direction": "rx", "raw": "H 65931 IMU 0 0 0 33\n"}
+{"host_time": 638.484785849, "direction": "rx", "raw": "T 66131 0 0 0 0\n"}
+{"host_time": 638.487835692, "direction": "rx", "raw": "I 66131 OFFLINE\n"}
+{"host_time": 638.49489064, "direction": "rx", "raw": "N 66131 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 638.498158869, "direction": "rx", "raw": "H 66131 IMU 0 0 0 33\n"}
+{"host_time": 638.685368713, "direction": "rx", "raw": "T 66331 0 0 0 0\n"}
+{"host_time": 638.68834413, "direction": "rx", "raw": "I 66331 OFFLINE\n"}
+{"host_time": 638.695384026, "direction": "rx", "raw": "N 66331 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 638.698197932, "direction": "rx", "raw": "H 66331 IMU 0 0 0 33\n"}
+{"host_time": 638.870765171, "direction": "rx", "raw": "WARN IMU offline; retrying initialization\r\n"}
+{"host_time": 639.474030119, "direction": "rx", "raw": "WARN IMU not detected; motor control remains available\r\n"}
+{"host_time": 639.478016525, "direction": "rx", "raw": "IMU I2C FOUND 0x4A\n"}
+{"host_time": 639.484108765, "direction": "rx", "raw": "T 67131 0 0 0 0\n"}
+{"host_time": 639.486446056, "direction": "rx", "raw": "I 67131 OFFLINE\n"}
+{"host_time": 639.492069702, "direction": "rx", "raw": "N 67131 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 639.494646577, "direction": "rx", "raw": "H 67131 IMU 0 0 0 34\n"}
+{"host_time": 639.685256994, "direction": "rx", "raw": "T 67331 0 0 0 0\n"}
+{"host_time": 639.688990379, "direction": "rx", "raw": "I 67331 OFFLINE\n"}
+{"host_time": 639.695202202, "direction": "rx", "raw": "N 67331 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 639.697247723, "direction": "rx", "raw": "H 67331 IMU 0 0 0 34\n"}
+{"host_time": 639.800737723, "direction": "tx", "raw": "CFG SET heading-enabled 0\n"}
+{"host_time": 639.814171108, "direction": "rx", "raw": "OK CFG SET heading-enabled\n"}
+{"host_time": 639.885473192, "direction": "rx", "raw": "T 67531 0 0 0 0\n"}
+{"host_time": 639.889023244, "direction": "rx", "raw": "I 67531 OFFLINE\n"}
+{"host_time": 639.894592983, "direction": "rx", "raw": "N 67531 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 639.895165796, "direction": "tx", "raw": "X\n"}
+{"host_time": 639.897681629, "direction": "rx", "raw": "H 67531 IMU 0 0 0 34\n"}
+{"host_time": 639.899922098, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 640.085233504, "direction": "rx", "raw": "T 67731 0 0 0 0\n"}
+{"host_time": 640.088923556, "direction": "rx", "raw": "I 67731 OFFLINE\n"}
+{"host_time": 640.094506473, "direction": "rx", "raw": "N 67731 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 640.097114702, "direction": "rx", "raw": "H 67731 IMU 0 0 0 34\n"}
+{"host_time": 640.285292046, "direction": "rx", "raw": "T 67931 0 0 0 0\n"}
+{"host_time": 640.288344962, "direction": "rx", "raw": "I 67931 OFFLINE\n"}
+{"host_time": 640.295329494, "direction": "rx", "raw": "N 67931 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 640.298511369, "direction": "rx", "raw": "H 67931 IMU 0 0 0 34\n"}
+{"host_time": 640.484812046, "direction": "rx", "raw": "T 68131 0 0 0 0\n"}
+{"host_time": 640.487830014, "direction": "rx", "raw": "I 68131 OFFLINE\n"}
+{"host_time": 640.494880587, "direction": "rx", "raw": "N 68131 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 640.498174129, "direction": "rx", "raw": "H 68131 IMU 0 0 0 34\n"}
+{"host_time": 640.685304025, "direction": "rx", "raw": "T 68331 0 0 0 0\n"}
+{"host_time": 640.688279754, "direction": "rx", "raw": "I 68331 OFFLINE\n"}
+{"host_time": 640.695330535, "direction": "rx", "raw": "N 68331 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 640.698526889, "direction": "rx", "raw": "H 68331 IMU 0 0 0 34\n"}
+{"host_time": 640.871680691, "direction": "rx", "raw": "WARN IMU offline; retrying initialization\r\n"}
+{"host_time": 641.29559267, "direction": "tx", "raw": "X\n"}
+{"host_time": 641.296555691, "direction": "tx", "raw": "X\n"}
+{"host_time": 641.474039337, "direction": "rx", "raw": "WARN IMU not detected; motor control remains available\r\n"}
+{"host_time": 641.47753892, "direction": "rx", "raw": "IMU I2C FOUND 0x4A\n"}
+{"host_time": 641.484656368, "direction": "rx", "raw": "T 69131 0 0 0 0\n"}
+{"host_time": 641.487039181, "direction": "rx", "raw": "I 69131 OFFLINE\n"}
+{"host_time": 641.493338191, "direction": "rx", "raw": "N 69131 0.000000 0.000000 0.000000 0.0000 0 0 0\n"}
+{"host_time": 641.496366004, "direction": "rx", "raw": "H 69131 IMU 0 0 0 35\n"}
+{"host_time": 641.497688972, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 641.498088139, "direction": "tx", "raw": "CFG SET pwm-fl 177\n"}
+{"host_time": 641.499033712, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 641.506369493, "direction": "rx", "raw": "OK CFG SET pwm-fl\n"}
+{"host_time": 641.506699129, "direction": "tx", "raw": "CFG SET pwm-fr 177\n"}
+{"host_time": 641.515175639, "direction": "rx", "raw": "OK CFG SET pwm-fr\n"}
+{"host_time": 641.515613139, "direction": "tx", "raw": "CFG SET pwm-rl 177\n"}
+{"host_time": 641.525078399, "direction": "rx", "raw": "OK CFG SET pwm-rl\n"}
+{"host_time": 641.525771056, "direction": "tx", "raw": "CFG SET pwm-rr 177\n"}
+{"host_time": 641.535179077, "direction": "rx", "raw": "OK CFG SET pwm-rr\n"}
+{"host_time": 641.535805431, "direction": "tx", "raw": "CFG SET heading-enabled 0\n"}
+{"host_time": 641.547864233, "direction": "rx", "raw": "OK CFG SET heading-enabled\n"}
+{"host_time": 641.548624806, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 641.555644181, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 641.557811368, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 641.559562566, "direction": "rx", "raw": "CFG pwm-rl 177\n"}
+{"host_time": 641.561282827, "direction": "rx", "raw": "CFG pwm-rr 177\n"}
+{"host_time": 641.563730483, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 641.566244493, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 641.569725847, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 641.571554233, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 641.573479233, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 641.57456366, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 641.57494267, "direction": "tx", "raw": "X\n"}
+{"host_time": 641.580504337, "direction": "rx", "raw": "OK STOP\r\n"}
+{"host_time": 641.580847827, "direction": "tx", "raw": "CFG GET\n"}
+{"host_time": 641.587375222, "direction": "rx", "raw": "CFG pwm-fl 177\n"}
+{"host_time": 641.589229493, "direction": "rx", "raw": "CFG pwm-fr 177\n"}
+{"host_time": 641.590938035, "direction": "rx", "raw": "CFG pwm-rl 177\n"}
+{"host_time": 641.592680587, "direction": "rx", "raw": "CFG pwm-rr 177\n"}
+{"host_time": 641.595090743, "direction": "rx", "raw": "CFG heading-kp 0.7000\n"}
+{"host_time": 641.597641108, "direction": "rx", "raw": "CFG heading-max 0.3000\n"}
+{"host_time": 641.601037983, "direction": "rx", "raw": "CFG heading-deadband-deg 1.500\n"}
+{"host_time": 641.603132045, "direction": "rx", "raw": "CFG heading-sign 1\n"}
+{"host_time": 641.605656785, "direction": "rx", "raw": "CFG heading-enabled 0\n"}
+{"host_time": 641.606956212, "direction": "rx", "raw": "OK CFG GET\r\n"}
+{"host_time": 641.607313191, "direction": "tx", "raw": "DIAG\n"}
+{"host_time": 641.613418243, "direction": "rx", "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0\n"}
+{"host_time": 641.616857462, "direction": "rx", "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0\n"}
+{"host_time": 641.620353191, "direction": "rx", "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0\n"}
+{"host_time": 641.623760691, "direction": "rx", "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0\n"}
+{"host_time": 641.624228191, "direction": "tx", "raw": "X\n"}

@@ -1,0 +1,62 @@
+diff --git a/data/upstream/BNO08x_Gyro.ino b/ESP32S3_STRDC_Gyro_Test.ino
+index 5a5ff6c..c17774b 100644
+--- a/data/upstream/BNO08x_Gyro.ino
++++ b/ESP32S3_STRDC_Gyro_Test.ino
+@@ -40,8 +40,8 @@
+  * INCLUDES
+  *************************************/
+ 
+-#include "interrupt.h"
+-#include "BNO08X.h"
++#include "src/vendor/interrupt.h"
++#include "src/vendor/BNO08X.h"
+ 
+ /*************************************
+  * DEFINITIONS
+@@ -50,8 +50,8 @@
+ bno08x_t bno;
+ 
+ // Select desired peripheral, initialization, pinout, interrupt will be configured automatically
+-//#define USE_I2C
+-#define USE_SPI
++#define USE_I2C
++//#define USE_SPI
+ //#define USE_UART
+ 
+ // Select desired data gathering behavior
+@@ -59,7 +59,7 @@ bno08x_t bno;
+ //#define USE_POLL
+ 
+ // Pin Definition
+-#define LED 3
++#define LED 47 // Unconnected GPIO; no external LED needed for this test.
+ 
+ #ifdef USE_SPI
+ // Pin definitions for SPI
+@@ -70,9 +70,9 @@ bno08x_t bno;
+ 
+ #ifdef USE_I2C
+ // Pin definitions for I2C
+-#define BNO_PIN_INT 17
+-#define BNO_PIN_RST 16
+-#define BNO_PIN_WAKE 15
++#define BNO_PIN_INT 6
++#define BNO_PIN_RST 4
++#define BNO_PIN_WAKE 5
+ #endif
+ 
+ #ifdef USE_UART
+@@ -177,7 +177,12 @@ void setup() {
+ 
+   #endif
+   
+-  // Initialize GPIO not handled in BNO handler
++  // Shared Pin Configuration (from STRDC's Rotation_Vector example).
++  bno.wakePin = BNO_PIN_WAKE;
++  bno.pinInt = BNO_PIN_INT;
++  bno.pinRst = BNO_PIN_RST;
++
++  // Initialize GPIO not handled in BNO handler
+   gpio_mode(LED, OUTPUT);
+   gpio_write(LED, HIGH);
+ 

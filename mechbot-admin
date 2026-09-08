@@ -1,0 +1,29 @@
+#!/bin/sh
+set -eu
+
+case "${1:-}" in
+  install-tailscale)
+    [ "$#" -eq 1 ] || { echo "no arguments allowed" >&2; exit 2; }
+    exec sh -c 'curl -fsSL https://tailscale.com/install.sh | sh'
+    ;;
+  tailscale-up)
+    [ "$#" -eq 1 ] || { echo "no arguments allowed" >&2; exit 2; }
+    exec /usr/bin/tailscale up
+    ;;
+  tailscale-status)
+    [ "$#" -eq 1 ] || { echo "no arguments allowed" >&2; exit 2; }
+    exec /usr/bin/tailscale status
+    ;;
+  restart-bridge)
+    [ "$#" -eq 1 ] || { echo "no arguments allowed" >&2; exit 2; }
+    exec /usr/bin/systemctl restart mecanum-gamepad.service
+    ;;
+  status-bridge)
+    [ "$#" -eq 1 ] || { echo "no arguments allowed" >&2; exit 2; }
+    exec /usr/bin/systemctl status --no-pager mecanum-gamepad.service
+    ;;
+  *)
+    echo "allowed: install-tailscale, tailscale-up, tailscale-status, restart-bridge, status-bridge" >&2
+    exit 2
+    ;;
+esac

@@ -1,0 +1,111 @@
+ARMED #2 RX21 input. APPLY IMU 5V NOW; waiting for idle HIGH >=2ms, then first byte (120s total).
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 after_arm_ms=26
+UART_LISTENING: idle HIGH passed; waiting for first byte.
+FIRST_BYTE #2 after_arm_ms=37; capture window=35000ms
+RUN #2 arm_ms=1037 capture_ms=1000 NO_FRAMES bytes=11760 frames=0 new=0 fresh_index=0 repeated_index=0 bad_checksum=0 discontinuities=0 frame_age_ms=-1 byte_age_ms=4
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=191
+RUN #2 arm_ms=2037 capture_ms=2000 NO_FRAMES bytes=23400 frames=0 new=0 fresh_index=0 repeated_index=0 bad_checksum=0 discontinuities=0 frame_age_ms=-1 byte_age_ms=1
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=444
+RUN #2 arm_ms=3037 capture_ms=3000 NO_FRAMES bytes=35160 frames=0 new=0 fresh_index=0 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=-1 byte_age_ms=4
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=720
+RUN #2 arm_ms=4037 capture_ms=4000 NO_FRAMES bytes=41541 frames=0 new=0 fresh_index=0 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=-1 byte_age_ms=115
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=5037 capture_ms=5000 LIVE bytes=43403 frames=98 new=98 fresh_index=98 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=4 byte_age_ms=4
+ VALUE index=98 ypr_deg=-0.01,-0.08,-1.19 accel_mg=24,0,965 changes_ypr=56 changes_accel=94 first_frame_ms=4028 last_frame_ms=4996
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=6037 capture_ms=6000 LIVE bytes=45303 frames=198 new=100 fresh_index=198 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=6 byte_age_ms=6
+ VALUE index=198 ypr_deg=0.13,-0.19,-1.16 accel_mg=16,-20,977 changes_ypr=127 changes_accel=191 first_frame_ms=4028 last_frame_ms=5994
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=7037 capture_ms=7000 LIVE bytes=47203 frames=298 new=100 fresh_index=298 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=8 byte_age_ms=8
+ VALUE index=42 ypr_deg=0.12,-0.18,-1.15 accel_mg=20,-8,973 changes_ypr=184 changes_accel=290 first_frame_ms=4028 last_frame_ms=6992
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=8037 capture_ms=8000 LIVE bytes=49122 frames=399 new=101 fresh_index=399 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=0 byte_age_ms=0
+ VALUE index=143 ypr_deg=0.12,-0.20,-1.13 accel_mg=16,-4,974 changes_ypr=217 changes_accel=373 first_frame_ms=4028 last_frame_ms=8000
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=9037 capture_ms=9000 LIVE bytes=51022 frames=499 new=100 fresh_index=499 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=2 byte_age_ms=2
+ VALUE index=243 ypr_deg=0.13,-0.23,-1.15 accel_mg=24,-16,973 changes_ypr=245 changes_accel=461 first_frame_ms=4028 last_frame_ms=8998
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=10037 capture_ms=10000 LIVE bytes=52922 frames=599 new=100 fresh_index=599 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=4 byte_age_ms=4
+ VALUE index=87 ypr_deg=0.22,-0.23,-1.31 accel_mg=24,-16,973 changes_ypr=307 changes_accel=561 first_frame_ms=4028 last_frame_ms=9996
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=11037 capture_ms=11000 LIVE bytes=54822 frames=699 new=100 fresh_index=699 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=6 byte_age_ms=6
+ VALUE index=187 ypr_deg=-0.75,0.81,-1.32 accel_mg=31,-4,1001 changes_ypr=374 changes_accel=648 first_frame_ms=4028 last_frame_ms=10994
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=12037 capture_ms=12000 LIVE bytes=56722 frames=799 new=100 fresh_index=799 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=8 byte_age_ms=8
+ VALUE index=31 ypr_deg=-18.63,1.77,1.32 accel_mg=-8,31,962 changes_ypr=474 changes_accel=742 first_frame_ms=4028 last_frame_ms=11992
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=13037 capture_ms=13000 LIVE bytes=58641 frames=900 new=101 fresh_index=900 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=0 byte_age_ms=0
+ VALUE index=132 ypr_deg=-48.79,0.39,0.74 accel_mg=16,12,954 changes_ypr=575 changes_accel=828 first_frame_ms=4028 last_frame_ms=13000
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=14037 capture_ms=14000 LIVE bytes=60541 frames=1000 new=100 fresh_index=1000 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=2 byte_age_ms=2
+ VALUE index=232 ypr_deg=-77.77,-2.45,1.96 accel_mg=-16,-39,961 changes_ypr=675 changes_accel=921 first_frame_ms=4028 last_frame_ms=13998
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=15037 capture_ms=15000 LIVE bytes=62441 frames=1100 new=100 fresh_index=1100 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=4 byte_age_ms=4
+ VALUE index=76 ypr_deg=-98.72,-1.44,3.26 accel_mg=-31,-8,981 changes_ypr=775 changes_accel=1008 first_frame_ms=4028 last_frame_ms=14996
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=16037 capture_ms=16000 LIVE bytes=64341 frames=1200 new=100 fresh_index=1200 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=6 byte_age_ms=6
+ VALUE index=176 ypr_deg=-105.02,-3.53,1.63 accel_mg=-16,-59,973 changes_ypr=875 changes_accel=1098 first_frame_ms=4028 last_frame_ms=15994
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=17037 capture_ms=17000 LIVE bytes=66241 frames=1300 new=100 fresh_index=1300 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=8 byte_age_ms=8
+ VALUE index=20 ypr_deg=-103.20,-2.34,1.92 accel_mg=-31,-39,973 changes_ypr=975 changes_accel=1182 first_frame_ms=4028 last_frame_ms=16992
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=18037 capture_ms=18000 LIVE bytes=68160 frames=1401 new=101 fresh_index=1401 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=0 byte_age_ms=0
+ VALUE index=121 ypr_deg=-92.38,-0.38,1.53 accel_mg=-28,-8,966 changes_ypr=1076 changes_accel=1273 first_frame_ms=4028 last_frame_ms=18000
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=19037 capture_ms=19000 LIVE bytes=70060 frames=1501 new=100 fresh_index=1501 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=2 byte_age_ms=2
+ VALUE index=221 ypr_deg=-77.23,-1.41,1.03 accel_mg=-8,-31,973 changes_ypr=1176 changes_accel=1363 first_frame_ms=4028 last_frame_ms=18998
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=20037 capture_ms=20000 LIVE bytes=71960 frames=1601 new=100 fresh_index=1601 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=4 byte_age_ms=4
+ VALUE index=65 ypr_deg=-60.53,-1.04,-1.00 accel_mg=24,-12,957 changes_ypr=1276 changes_accel=1450 first_frame_ms=4028 last_frame_ms=19996
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=21037 capture_ms=21000 LIVE bytes=73860 frames=1701 new=100 fresh_index=1701 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=6 byte_age_ms=6
+ VALUE index=165 ypr_deg=-51.79,-1.46,-2.94 accel_mg=35,-28,974 changes_ypr=1376 changes_accel=1541 first_frame_ms=4028 last_frame_ms=20994
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=22037 capture_ms=22000 LIVE bytes=75760 frames=1801 new=100 fresh_index=1801 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=8 byte_age_ms=8
+ VALUE index=9 ypr_deg=-53.96,-3.07,-0.66 accel_mg=24,-43,985 changes_ypr=1476 changes_accel=1633 first_frame_ms=4028 last_frame_ms=21992
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=23037 capture_ms=23000 LIVE bytes=77679 frames=1902 new=101 fresh_index=1902 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=0 byte_age_ms=0
+ VALUE index=110 ypr_deg=-30.72,-3.84,-1.41 accel_mg=16,-90,966 changes_ypr=1577 changes_accel=1727 first_frame_ms=4028 last_frame_ms=23000
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=24037 capture_ms=24000 LIVE bytes=79579 frames=2002 new=100 fresh_index=2002 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=2 byte_age_ms=2
+ VALUE index=210 ypr_deg=-15.04,-3.50,0.04 accel_mg=-8,-51,978 changes_ypr=1677 changes_accel=1823 first_frame_ms=4028 last_frame_ms=23998
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=25037 capture_ms=25000 LIVE bytes=81479 frames=2102 new=100 fresh_index=2102 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=4 byte_age_ms=4
+ VALUE index=54 ypr_deg=-7.33,-3.32,2.39 accel_mg=-39,-74,978 changes_ypr=1777 changes_accel=1915 first_frame_ms=4028 last_frame_ms=24996
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=26037 capture_ms=26000 LIVE bytes=83379 frames=2202 new=100 fresh_index=2202 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=5 byte_age_ms=5
+ VALUE index=154 ypr_deg=-4.87,-3.81,1.22 accel_mg=-28,-71,973 changes_ypr=1876 changes_accel=2002 first_frame_ms=4028 last_frame_ms=25995
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=27037 capture_ms=27000 LIVE bytes=85279 frames=2302 new=100 fresh_index=2302 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=7 byte_age_ms=7
+ VALUE index=254 ypr_deg=-7.51,-2.47,8.01 accel_mg=-145,-35,958 changes_ypr=1976 changes_accel=2093 first_frame_ms=4028 last_frame_ms=26993
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=28037 capture_ms=28000 LIVE bytes=87191 frames=2402 new=100 fresh_index=2402 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=9 byte_age_ms=0
+ VALUE index=98 ypr_deg=-6.98,-3.07,17.98 accel_mg=-285,-51,887 changes_ypr=2076 changes_accel=2187 first_frame_ms=4028 last_frame_ms=27991
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=29037 capture_ms=29000 LIVE bytes=89098 frames=2503 new=101 fresh_index=2503 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=1 byte_age_ms=1
+ VALUE index=199 ypr_deg=-5.15,1.28,21.46 accel_mg=-360,16,892 changes_ypr=2177 changes_accel=2283 first_frame_ms=4028 last_frame_ms=28999
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=30037 capture_ms=30000 LIVE bytes=90998 frames=2603 new=100 fresh_index=2603 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=3 byte_age_ms=3
+ VALUE index=43 ypr_deg=-6.17,0.45,-0.24 accel_mg=8,-4,1017 changes_ypr=2277 changes_accel=2376 first_frame_ms=4028 last_frame_ms=29997
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=31037 capture_ms=31000 LIVE bytes=92898 frames=2703 new=100 fresh_index=2703 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=5 byte_age_ms=5
+ VALUE index=143 ypr_deg=-12.20,1.56,-1.56 accel_mg=24,55,953 changes_ypr=2377 changes_accel=2474 first_frame_ms=4028 last_frame_ms=30995
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=32037 capture_ms=32000 LIVE bytes=94798 frames=2803 new=100 fresh_index=2803 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=7 byte_age_ms=7
+ VALUE index=243 ypr_deg=-9.51,2.58,-19.41 accel_mg=332,51,911 changes_ypr=2477 changes_accel=2571 first_frame_ms=4028 last_frame_ms=31993
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=33037 capture_ms=33000 LIVE bytes=96698 frames=2903 new=100 fresh_index=2903 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=9 byte_age_ms=9
+ VALUE index=87 ypr_deg=-8.92,5.89,-6.23 accel_mg=110,102,950 changes_ypr=2577 changes_accel=2667 first_frame_ms=4028 last_frame_ms=32991
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RUN #2 arm_ms=34037 capture_ms=34000 LIVE bytes=98617 frames=3004 new=101 fresh_index=3004 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=1 byte_age_ms=1
+ VALUE index=188 ypr_deg=-8.75,26.45,4.89 accel_mg=-90,450,864 changes_ypr=2678 changes_accel=2765 first_frame_ms=4028 last_frame_ms=33999
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+RESULT #2 reason=35_SECONDS_FROM_FIRST_BYTE
+FINAL #2 arm_ms=35037 capture_ms=35000 LIVE bytes=100517 frames=3104 new=100 fresh_index=3104 repeated_index=0 bad_checksum=1 discontinuities=0 frame_age_ms=3 byte_age_ms=3
+ VALUE index=32 ypr_deg=-8.31,2.71,0.38 accel_mg=-4,31,962 changes_ypr=2778 changes_accel=2859 first_frame_ms=4028 last_frame_ms=34997
+ UART_EVENTS fifo_overflow=0 buffer_full=0 frame=0 parity=0 break=1497
+PREFIX bytes=128 first_byte_after_arm_ms=37 last_byte_after_first_ms=34997 HEX 9F 9E 60 9E 6E 5E 6E 6E E6 11 82 FD 5D 7D 59 59 ED 79 FD 80 59 50 58 58 59 79 5D 59 79 59 50 6E 11 82 02 10 50 F8 58 79 79 59 50 E0 59 10 10 10 10 10 10 10 50 80 79 A1 19 00 6E A2 FD FD F9 59 59 51 58 00 A6 59 F9 07 F8 AD D2 AF F8 F9 AD 10 50 AD 50 AD 05 F8 2D 50 AD AD 5D 10 78 AD F8 AD A5 AD AD AD FD 6D 10 50 E9 ED AD AD ED AD FD FD AD 11 00 A2 59 FD AD FD 81 11 90 79 99 60 1E 9E
+PREFIX ASCII ..`.n^nn....]}YY.y..YPXXYy]YyYPn....P.XyyYP.Y.......P.y...n....YYQX..Y..........P.P...-P..].x........m.P............Y......y.`..
+Counts are newly received packets. Repeated values can be normal; index gaps are not exact lost-packet counts.
+UART overflow events mean capture may be incomplete. No frames alone does not prove physical damage.
+END #2 RX remains input; IMU POWER IS STILL EXTERNAL. Turn IMU 5V OFF before r.

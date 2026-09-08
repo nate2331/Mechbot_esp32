@@ -1,0 +1,45 @@
+TRIAL command=a bus_hz=100000 interval_us=20000
+INIT result=0 elapsed_ms=274
+ID_INIT valid=1 PN=10004148 build=6 version=3.2.13 reset_cause=4
+SET id=0x01 result=0 elapsed_ms=70
+GET_INITIAL id=0x01 result=0 elapsed_ms=9 interval_us=16000 batch_us=0 sensitivity=0 config=0x00000000
+OBSERVE_BEGIN duration_ms=35000; no calibration command was sent.
+LIVE elapsed_ms=1001 resets=0 INT=1 | id=0x01 count=64 new=64 age_ms=9
+LIVE elapsed_ms=2002 resets=0 INT=1 | id=0x01 count=128 new=64 age_ms=11
+LIVE elapsed_ms=3002 resets=0 INT=0 | id=0x01 count=192 new=64 age_ms=13
+LIVE elapsed_ms=4005 resets=0 INT=1 | id=0x01 count=257 new=65 age_ms=0
+LIVE elapsed_ms=5005 resets=0 INT=1 | id=0x01 count=321 new=64 age_ms=0
+LIVE elapsed_ms=6005 resets=0 INT=1 | id=0x01 count=385 new=64 age_ms=1
+LIVE elapsed_ms=7006 resets=0 INT=1 | id=0x01 count=449 new=64 age_ms=3
+LIVE elapsed_ms=8006 resets=0 INT=1 | id=0x01 count=513 new=64 age_ms=4
+LIVE elapsed_ms=9007 resets=0 INT=1 | id=0x01 count=577 new=64 age_ms=5
+LIVE elapsed_ms=10008 resets=0 INT=1 | id=0x01 count=641 new=64 age_ms=7
+LIVE elapsed_ms=11009 resets=0 INT=1 | id=0x01 count=705 new=64 age_ms=9
+LIVE elapsed_ms=12009 resets=0 INT=1 | id=0x01 count=769 new=64 age_ms=9
+LIVE elapsed_ms=13010 resets=0 INT=1 | id=0x01 count=832 new=63 age_ms=11
+LIVE elapsed_ms=14014 resets=0 INT=1 | id=0x01 count=897 new=65 age_ms=0
+LIVE elapsed_ms=15014 resets=0 INT=1 | id=0x01 count=961 new=64 age_ms=1
+LIVE elapsed_ms=16015 resets=0 INT=1 | id=0x01 count=1025 new=64 age_ms=3
+LIVE elapsed_ms=17015 resets=0 INT=1 | id=0x01 count=1089 new=64 age_ms=3
+LIVE elapsed_ms=18016 resets=0 INT=1 | id=0x01 count=1153 new=64 age_ms=5
+LIVE elapsed_ms=19016 resets=0 INT=1 | id=0x01 count=1217 new=64 age_ms=5
+LIVE elapsed_ms=20017 resets=0 INT=1 | id=0x01 count=1281 new=64 age_ms=7
+LIVE elapsed_ms=21017 resets=0 INT=1 | id=0x01 count=1345 new=64 age_ms=7
+LIVE elapsed_ms=22018 resets=0 INT=1 | id=0x01 count=1409 new=64 age_ms=9
+LIVE elapsed_ms=23018 resets=0 INT=1 | id=0x01 count=1473 new=64 age_ms=9
+LIVE elapsed_ms=24019 resets=0 INT=1 | id=0x01 count=1537 new=64 age_ms=11
+LIVE elapsed_ms=25019 resets=0 INT=1 | id=0x01 count=1601 new=64 age_ms=11
+LIVE elapsed_ms=26023 resets=0 INT=1 | id=0x01 count=1665 new=64 age_ms=0
+LIVE elapsed_ms=27023 resets=0 INT=1 | id=0x01 count=1729 new=64 age_ms=1
+LIVE elapsed_ms=28023 resets=0 INT=1 | id=0x01 count=1793 new=64 age_ms=1
+LIVE elapsed_ms=29024 resets=0 INT=1 | id=0x01 count=1857 new=64 age_ms=3
+LIVE elapsed_ms=30024 resets=0 INT=1 | id=0x01 count=1921 new=64 age_ms=3
+LIVE elapsed_ms=31025 resets=0 INT=1 | id=0x01 count=1985 new=64 age_ms=5
+LIVE elapsed_ms=32025 resets=0 INT=1 | id=0x01 count=2049 new=64 age_ms=5
+LIVE elapsed_ms=33025 resets=0 INT=1 | id=0x01 count=2113 new=64 age_ms=6
+LIVE elapsed_ms=34026 resets=0 INT=1 | id=0x01 count=2177 new=64 age_ms=7
+SUMMARY elapsed_ms=35000 resets=0 INT=0 | id=0x01 count=2239 new=62 age_ms=13
+GET_FINAL id=0x01 result=0 elapsed_ms=8 interval_us=16000 batch_us=0 sensitivity=0 config=0x00000000
+ID_PROBE write_result=0 response=1 elapsed_ms=5
+ID_FINAL valid=1 PN=10004148 build=6 version=3.2.13 reset_cause=4
+DONE idle; observation counters stopped. Send one new command to reset/test.

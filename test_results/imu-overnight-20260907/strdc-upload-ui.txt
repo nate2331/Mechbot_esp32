@@ -1,0 +1,8 @@
+Manually transcribed from Arduino IDE 2.3.10 computer-use screenshot.
+Window: ESP32S3_STRDC_Readback_Test. Board/port: ESP32S3 Dev Module on COM7.
+
+Wrote 339408 bytes (196642 compressed) at 0x00010000 in 3.1 seconds (883.1 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...

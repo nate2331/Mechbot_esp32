@@ -1,0 +1,49 @@
+{
+  "date": "2026-09-06",
+  "status": "compiled and software-tested; physical SPI wiring and upload pending",
+  "fqbn": "esp32:esp32:esp32",
+  "core": "3.3.11",
+  "bno08x_library": "1.2.7",
+  "transport": "SPI",
+  "clock_hz": 1000000,
+  "spi_mode": 3,
+  "pins": {
+    "sck": 22,
+    "miso": 21,
+    "mosi": 32,
+    "cs": 33,
+    "int": 26,
+    "rst": 25,
+    "wake_p0": 16,
+    "p1": "3.3 V",
+    "vdc": "3.3 V"
+  },
+  "source_sha256": {
+    "Maker_Mechbot.ino": "a5d342fcb96db1361960e17bdfc97c1790c6a94169c5fade997753ad61dc88ba",
+    "MakerBnoSpi.h": "9240f220a8a6a4498c6864564b661e3f4cb5a8447b60a89b424005ac1c7849f8",
+    "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+    "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+    "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+  },
+  "built_adapter_matches_source_excluding_generated_line_directive": true,
+  "application": {
+    "path": "C:\\Users\\nate2\\AppData\\Local\\Temp\\mechbot-maker-spi-20260906\\Maker_Mechbot.ino.bin",
+    "bytes": 364976,
+    "sha256": "c6c413fbfcf38a5d1601df78f41f29dc4c0e5680d951b611196cdd1fc2758796"
+  },
+  "compile": {
+    "program_bytes": 364831,
+    "global_bytes": 27712
+  },
+  "host_tests": {
+    "navigation_math": "passed",
+    "maker_motor_safety": "passed",
+    "maker_firmware": "passed",
+    "maker_bno_spi": "passed",
+    "real_sh2_lifecycle": "passed using actual installed sh2.c, shtp.c and sh2_util.c"
+  },
+  "uploaded_by_agent": false,
+  "physical_spi_wiring_confirmed": false,
+  "hardware_spi_verified": false,
+  "last_known_uploaded_transport": "I2C with RST25"
+}

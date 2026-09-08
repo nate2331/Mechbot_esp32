@@ -3,6 +3,8 @@
 
   Serial protocol at 115200 baud:
     V <forward> <left> <ccw>   Values are normalized from -1.0 to +1.0
+    F <0|1>                    Disable/enable field-oriented translation
+    Z                          Re-zero the current field heading
     X                         Immediate stop
     ?                         Print help
 
@@ -19,12 +21,18 @@
     - A valid V command must arrive at least every 300 ms.
     - A timeout or malformed motion command stops all motors.
     - An IMU failure is reported but does not disable motor control.
+    - Heading hold is enabled by default and yields to deliberate turn input.
+    - Field-oriented control defaults to disabled.
+    - Field-oriented motion stops if its required heading becomes unavailable.
 */
 
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_BNO08x.h>
+#include <Preferences.h>
 #include <esp_arduino_version.h>
+
+#include "NavigationMath.h"
 
 constexpr uint32_t SERIAL_BAUD = 115200;
 constexpr uint32_t PWM_FREQUENCY_HZ = 20000;
@@ -32,16 +40,30 @@ constexpr uint8_t PWM_RESOLUTION_BITS = 8;
 constexpr uint32_t COMMAND_TIMEOUT_MS = 300;
 constexpr uint32_t TELEMETRY_INTERVAL_MS = 200;
 constexpr float ENCODER_COUNTS_PER_REV = 2500.0F;
-constexpr size_t RX_BUFFER_SIZE = 80;
+constexpr size_t RX_BUFFER_SIZE = 128;
 
 constexpr int IMU_SDA_PIN = 1;
 constexpr int IMU_SCL_PIN = 2;
+constexpr int IMU_RESET_PIN = 42;
 constexpr uint8_t IMU_I2C_ADDRESS = 0x4A;
 constexpr uint32_t IMU_I2C_FREQUENCY_HZ = 100000;
-constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz per report
+constexpr uint32_t IMU_REPORT_INTERVAL_US = 20000;  // 50 Hz
 constexpr uint32_t IMU_STALE_MS = 500;
 constexpr uint32_t IMU_RETRY_INTERVAL_MS = 2000;
 constexpr uint32_t IMU_REPORT_RETRY_INTERVAL_MS = 1000;
+// Relative heading hold only needs a fresh quaternion; SH-2 can report useful
+// short-term yaw while its absolute accuracy status is still 0. Field-oriented
+// control retains the stricter calibrated-heading requirement.
+constexpr uint8_t IMU_MIN_HEADING_HOLD_STATUS = 0;
+constexpr uint8_t IMU_MIN_FIELD_ORIENTED_STATUS = 1;
+
+// Starting values only. Tune on blocks at low speed before unrestricted use.
+constexpr float DEFAULT_HEADING_HOLD_KP = 0.70F;
+constexpr float DEFAULT_HEADING_HOLD_MAX_CORRECTION = 0.30F;
+constexpr float DEFAULT_HEADING_HOLD_ERROR_DEADBAND_RAD =
+    1.5F * NavigationMath::PI_F / 180.0F;
+constexpr float MANUAL_TURN_DEADBAND = 0.01F;
+constexpr float TRANSLATION_DEADBAND = 0.01F;
 
 enum MotorIndex : uint8_t {
   FRONT_LEFT = 0,
@@ -64,10 +86,10 @@ struct MotorConfig {
 };
 
 MotorConfig motors[MOTOR_COUNT] = {
-  {"FL", 12, 13, 38,  4,  5, 230, +1, +1},
+  {"FL", 12, 13, 38, 10, 11, 230, +1, +1},
   {"FR", 14, 15, 39,  6,  7, 230, +1, +1},
   {"RL", 16, 17, 40,  8,  9, 177, +1, +1},
-  {"RR", 18, 21, 41, 10, 11, 172, +1, -1}
+  {"RR", 18, 21, 41,  4,  5, 143, +1, +1}
 };
 
 volatile int32_t encoderCounts[MOTOR_COUNT] = {0, 0, 0, 0};
@@ -85,17 +107,35 @@ DRAM_ATTR const int8_t quadratureDelta[16] = {
 constexpr uint8_t pwmChannels[MOTOR_COUNT] = {0, 1, 2, 3};
 #endif
 
-Adafruit_BNO08x bno08x(-1);
+Adafruit_BNO08x bno08x(IMU_RESET_PIN);
+Preferences preferences;
 sh2_SensorValue_t imuEvent;
+
+struct RuntimeSettings {
+  uint8_t pwm[MOTOR_COUNT];
+  float headingKp;
+  float headingMax;
+  float headingDeadbandRad;
+  int8_t headingSign;
+  bool headingEnabled;
+};
+
+RuntimeSettings settings = {{230, 230, 177, 143},
+  DEFAULT_HEADING_HOLD_KP, DEFAULT_HEADING_HOLD_MAX_CORRECTION,
+  DEFAULT_HEADING_HOLD_ERROR_DEADBAND_RAD, +1, true};
 
 bool imuAvailable = false;
 bool imuQuaternionValid = false;
 bool imuGyroValid = false;
 bool imuAccelerationValid = false;
+bool imuInitializationAttempted = false;
 uint8_t imuStatus = 0;
 uint32_t lastImuEventMs = 0;
+uint32_t lastImuQuaternionMs = 0;
 uint32_t lastImuInitAttemptMs = 0;
 uint32_t lastImuReportRetryMs = 0;
+uint32_t imuResetCount = 0;
+uint32_t imuReinitCount = 0;
 
 float imuQx = 0.0F;
 float imuQy = 0.0F;
@@ -115,6 +155,78 @@ uint32_t lastTelemetryMs = 0;
 bool commandActive = false;
 bool motionRequested = false;
 bool watchdogReported = false;
+
+bool headingTargetValid = false;
+bool fieldOrientedEnabled = false;
+bool fieldReferenceValid = false;
+bool navigationImuFaultReported = false;
+float headingTargetYaw = 0.0F;
+float fieldReferenceYaw = 0.0F;
+float lastHeadingError = 0.0F;
+float lastHeadingCorrection = 0.0F;
+
+void applySettingsToMotors() {
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) motors[i].matchedPwm = settings.pwm[i];
+}
+
+void resetSettingsToDefaults() {
+  const uint8_t defaults[MOTOR_COUNT] = {230, 230, 177, 143};
+  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) settings.pwm[i] = defaults[i];
+  settings.headingKp = DEFAULT_HEADING_HOLD_KP;
+  settings.headingMax = DEFAULT_HEADING_HOLD_MAX_CORRECTION;
+  settings.headingDeadbandRad = DEFAULT_HEADING_HOLD_ERROR_DEADBAND_RAD;
+  settings.headingSign = +1;
+  settings.headingEnabled = true;
+  applySettingsToMotors();
+}
+
+void loadSettings() {
+  resetSettingsToDefaults();
+  if (!preferences.begin("mechbot", true)) return;
+  settings.pwm[0] = preferences.getUChar("pwm_fl", settings.pwm[0]);
+  settings.pwm[1] = preferences.getUChar("pwm_fr", settings.pwm[1]);
+  settings.pwm[2] = preferences.getUChar("pwm_rl", settings.pwm[2]);
+  settings.pwm[3] = preferences.getUChar("pwm_rr", settings.pwm[3]);
+  settings.headingKp = preferences.getFloat("head_kp", settings.headingKp);
+  settings.headingMax = preferences.getFloat("head_max", settings.headingMax);
+  settings.headingDeadbandRad = preferences.getFloat("head_db", settings.headingDeadbandRad);
+  settings.headingSign = preferences.getChar("head_sign", settings.headingSign);
+  settings.headingEnabled = preferences.getBool("head_on", settings.headingEnabled);
+  preferences.end();
+  if (settings.headingKp < 0 || settings.headingKp > 5 || settings.headingMax < 0 ||
+      settings.headingMax > 1 || settings.headingDeadbandRad < 0 ||
+      settings.headingDeadbandRad > 0.5F ||
+      (settings.headingSign != -1 && settings.headingSign != 1)) {
+    Serial.println("WARN invalid saved settings; defaults restored");
+    resetSettingsToDefaults();
+  }
+  applySettingsToMotors();
+}
+
+bool saveSettings() {
+  if (!preferences.begin("mechbot", false)) return false;
+  bool ok = true;
+  ok &= preferences.putUChar("pwm_fl", settings.pwm[0]) == 1;
+  ok &= preferences.putUChar("pwm_fr", settings.pwm[1]) == 1;
+  ok &= preferences.putUChar("pwm_rl", settings.pwm[2]) == 1;
+  ok &= preferences.putUChar("pwm_rr", settings.pwm[3]) == 1;
+  ok &= preferences.putFloat("head_kp", settings.headingKp) == sizeof(float);
+  ok &= preferences.putFloat("head_max", settings.headingMax) == sizeof(float);
+  ok &= preferences.putFloat("head_db", settings.headingDeadbandRad) == sizeof(float);
+  ok &= preferences.putChar("head_sign", settings.headingSign) == 1;
+  ok &= preferences.putBool("head_on", settings.headingEnabled) == 1;
+  preferences.end();
+  return ok;
+}
+
+void printSettings() {
+  Serial.printf("CFG pwm-fl %u\nCFG pwm-fr %u\nCFG pwm-rl %u\nCFG pwm-rr %u\n",
+                settings.pwm[0], settings.pwm[1], settings.pwm[2], settings.pwm[3]);
+  Serial.printf("CFG heading-kp %.4f\nCFG heading-max %.4f\n", settings.headingKp, settings.headingMax);
+  Serial.printf("CFG heading-deadband-deg %.3f\n", settings.headingDeadbandRad * 180.0F / NavigationMath::PI_F);
+  Serial.printf("CFG heading-sign %d\nCFG heading-enabled %u\n", settings.headingSign, settings.headingEnabled ? 1U : 0U);
+  Serial.println("OK CFG GET");
+}
 
 void IRAM_ATTR updateEncoder(uint8_t index) {
   const uint8_t currentState =
@@ -164,6 +276,9 @@ void stopAllMotors() {
   }
   commandActive = false;
   motionRequested = false;
+  headingTargetValid = false;
+  lastHeadingError = 0.0F;
+  lastHeadingCorrection = 0.0F;
 }
 
 void setMotorCommand(uint8_t index, float normalizedCommand) {
@@ -187,28 +302,114 @@ void setMotorCommand(uint8_t index, float normalizedCommand) {
   writePwm(index, duty);
 }
 
+bool readCurrentYaw(
+    float &yaw,
+    uint8_t minimumStatus = IMU_MIN_HEADING_HOLD_STATUS) {
+  const uint32_t nowMs = millis();
+  if (!imuAvailable || !imuQuaternionValid ||
+      imuStatus < minimumStatus ||
+      nowMs - lastImuQuaternionMs > IMU_STALE_MS) {
+    return false;
+  }
+
+  return NavigationMath::quaternionToYaw(
+      imuQx, imuQy, imuQz, imuQw, yaw);
+}
+
+void invalidateNavigationReferences(const char *reason) {
+  const bool fieldWasEnabled = fieldOrientedEnabled;
+  headingTargetValid = false;
+  fieldOrientedEnabled = false;
+  fieldReferenceValid = false;
+  lastHeadingError = 0.0F;
+  lastHeadingCorrection = 0.0F;
+  if (fieldWasEnabled) {
+    Serial.printf("WARN field-oriented control disabled: %s\n", reason);
+  }
+}
+
 void applyVelocity(float forward, float left, float ccw) {
   forward = constrain(forward, -1.0F, 1.0F);
   left = constrain(left, -1.0F, 1.0F);
   ccw = constrain(ccw, -1.0F, 1.0F);
-  motionRequested = fabsf(forward) >= 0.01F ||
-                    fabsf(left) >= 0.01F ||
-                    fabsf(ccw) >= 0.01F;
 
-  // Mecanum inverse kinematics matching the verified WASD/QE directions.
-  float wheel[MOTOR_COUNT] = {
-    forward - left - ccw,  // FL
-    forward + left + ccw,  // FR
-    forward + left - ccw,  // RL
-    forward - left + ccw   // RR
-  };
+  const bool translationRequested =
+      fabsf(forward) >= TRANSLATION_DEADBAND ||
+      fabsf(left) >= TRANSLATION_DEADBAND;
+  const bool rotationRequested = fabsf(ccw) >= TRANSLATION_DEADBAND;
+  const bool manualTurnRequested = fabsf(ccw) >= MANUAL_TURN_DEADBAND;
+  float currentYaw = 0.0F;
+  const bool headingAvailable = readCurrentYaw(currentYaw);
+  const bool fieldHeadingAvailable =
+      headingAvailable && imuStatus >= IMU_MIN_FIELD_ORIENTED_STATUS;
 
-  float largest = 1.0F;
-  for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
-    largest = max(largest, fabsf(wheel[i]));
+  if (fieldOrientedEnabled && translationRequested) {
+    if (!fieldHeadingAvailable || !fieldReferenceValid) {
+      stopAllMotors();
+      if (!navigationImuFaultReported) {
+        Serial.println("FAULT field-oriented heading unavailable; motors stopped");
+        navigationImuFaultReported = true;
+      }
+      return;
+    }
+
+    const float relativeYaw = NavigationMath::wrapRadians(
+        currentYaw - fieldReferenceYaw);
+    float robotForward = 0.0F;
+    float robotLeft = 0.0F;
+    NavigationMath::fieldToRobot(forward, left, relativeYaw,
+                                 robotForward, robotLeft);
+    forward = robotForward;
+    left = robotLeft;
   }
+
+  lastHeadingError = 0.0F;
+  lastHeadingCorrection = 0.0F;
+  if (!translationRequested) {
+    // Capture a fresh target when the next translation begins.
+    headingTargetValid = false;
+  } else if (manualTurnRequested) {
+    // Deliberate rotation always wins; follow it so release holds the new yaw.
+    headingTargetValid = headingAvailable;
+    if (headingAvailable) {
+      headingTargetYaw = currentYaw;
+    }
+  } else if (!headingAvailable) {
+    headingTargetValid = false;
+    if (!navigationImuFaultReported) {
+      Serial.println("WARN heading hold bypassed: heading unavailable");
+      navigationImuFaultReported = true;
+    }
+  } else {
+    if (!headingTargetValid) {
+      headingTargetYaw = currentYaw;
+      headingTargetValid = true;
+    }
+
+    lastHeadingError = NavigationMath::wrapRadians(
+        headingTargetYaw - currentYaw);
+    lastHeadingCorrection = settings.headingEnabled
+        ? settings.headingSign * NavigationMath::boundedProportionalCorrection(
+            lastHeadingError, settings.headingKp, settings.headingMax,
+            settings.headingDeadbandRad)
+        : 0.0F;
+    if (lastHeadingCorrection != 0.0F) {
+      ccw = constrain(ccw + lastHeadingCorrection, -1.0F, 1.0F);
+    }
+  }
+
+  if (headingAvailable) {
+    navigationImuFaultReported = false;
+  }
+
+  motionRequested = translationRequested || rotationRequested;
+
+  // Preserve the full translation vector while mixing simultaneous rotation.
+  // The wheel order matches the verified WASD/QE directions.
+  float wheel[MOTOR_COUNT];
+  NavigationMath::mecanumMix(forward, left, ccw, wheel);
   for (uint8_t i = 0; i < MOTOR_COUNT; ++i) {
-    setMotorCommand(i, wheel[i] / largest);
+    setMotorCommand(i, wheel[i]);
   }
 
   lastCommandMs = millis();
@@ -223,9 +424,22 @@ int32_t getEncoderCount(uint8_t index) {
   return count;
 }
 
+void initializeImu();
+
+void scanImuBus() {
+  bool found = false;
+  for (uint8_t address = 1; address < 127; ++address) {
+    Wire.beginTransmission(address);
+    if (Wire.endTransmission() == 0) {
+      Serial.printf("IMU I2C FOUND 0x%02X\n", address);
+      found = true;
+    }
+  }
+  if (!found) Serial.println("WARN IMU I2C bus scan found no devices");
+}
+
 bool enableImuReports() {
   bool ok = true;
-
   if (!bno08x.enableReport(SH2_ROTATION_VECTOR,
                             IMU_REPORT_INTERVAL_US)) {
     Serial.println("WARN IMU rotation vector unavailable");
@@ -244,53 +458,47 @@ bool enableImuReports() {
     ok = false;
   }
   delay(10);
-
   lastImuReportRetryMs = millis();
-
   return ok;
 }
 
 void retryMissingImuReports() {
-  const bool allReportsValid = imuQuaternionValid &&
-                               imuGyroValid &&
+  const bool allReportsValid = imuQuaternionValid && imuGyroValid &&
                                imuAccelerationValid;
   const uint32_t nowMs = millis();
   if (!imuAvailable || allReportsValid || motionRequested ||
-      nowMs - lastImuReportRetryMs < IMU_REPORT_RETRY_INTERVAL_MS) {
-    return;
-  }
-
+      nowMs - lastImuReportRetryMs < IMU_REPORT_RETRY_INTERVAL_MS) return;
   lastImuReportRetryMs = nowMs;
   Serial.printf("WARN IMU reports missing; retrying Q%u G%u A%u\n",
-                imuQuaternionValid ? 0U : 1U,
-                imuGyroValid ? 0U : 1U,
+                imuQuaternionValid ? 0U : 1U, imuGyroValid ? 0U : 1U,
                 imuAccelerationValid ? 0U : 1U);
-
-  if (!imuQuaternionValid) {
-    bno08x.enableReport(SH2_ROTATION_VECTOR, IMU_REPORT_INTERVAL_US);
-    delay(10);
-  }
-  if (!imuGyroValid) {
-    bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED,
-                         IMU_REPORT_INTERVAL_US);
-    delay(10);
-  }
-  if (!imuAccelerationValid) {
-    bno08x.enableReport(SH2_LINEAR_ACCELERATION,
-                         IMU_REPORT_INTERVAL_US);
-    delay(10);
-  }
+  if (!imuQuaternionValid) bno08x.enableReport(SH2_ROTATION_VECTOR, IMU_REPORT_INTERVAL_US);
+  delay(10);
+  if (!imuGyroValid) bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED, IMU_REPORT_INTERVAL_US);
+  delay(10);
+  if (!imuAccelerationValid) bno08x.enableReport(SH2_LINEAR_ACCELERATION, IMU_REPORT_INTERVAL_US);
+  delay(10);
 }
 
 void initializeImu() {
   lastImuInitAttemptMs = millis();
+  ++imuReinitCount;
+  if (imuInitializationAttempted) {
+    // Recreate the I2C peripheral without calling sh2_close(). The Adafruit
+    // library can leave SH-2's globals only partially initialized after a
+    // failed product-ID exchange, and sh2_close() then dereferences null.
+    Wire.end();
+    delay(100);
+  }
+  imuInitializationAttempted = true;
   Wire.begin(IMU_SDA_PIN, IMU_SCL_PIN);
   Wire.setClock(IMU_I2C_FREQUENCY_HZ);
-  delay(100);
+  delay(500);
 
   if (!bno08x.begin_I2C(IMU_I2C_ADDRESS, &Wire)) {
     imuAvailable = false;
     Serial.println("WARN IMU not detected; motor control remains available");
+    scanImuBus();
     return;
   }
 
@@ -299,6 +507,7 @@ void initializeImu() {
   imuGyroValid = false;
   imuAccelerationValid = false;
   lastImuEventMs = 0;
+  lastImuQuaternionMs = 0;
   if (enableImuReports()) {
     Serial.println("IMU READY BNO085 ROTATION_VECTOR GYRO LINEAR_ACCEL");
   } else {
@@ -318,9 +527,12 @@ void pollImu() {
   }
 
   if (bno08x.wasReset()) {
+    ++imuResetCount;
     imuQuaternionValid = false;
     imuGyroValid = false;
     imuAccelerationValid = false;
+    lastImuQuaternionMs = 0;
+    invalidateNavigationReferences("IMU reset");
     Serial.println("WARN IMU reset; restarting reports");
     enableImuReports();
   }
@@ -340,8 +552,8 @@ void pollImu() {
         imuQuaternionValid = true;
         imuStatus = imuEvent.status;
         lastImuEventMs = millis();
+        lastImuQuaternionMs = lastImuEventMs;
         break;
-
       case SH2_GYROSCOPE_CALIBRATED:
         imuGx = imuEvent.un.gyroscope.x;
         imuGy = imuEvent.un.gyroscope.y;
@@ -349,7 +561,6 @@ void pollImu() {
         imuGyroValid = true;
         lastImuEventMs = millis();
         break;
-
       case SH2_LINEAR_ACCELERATION:
         imuAx = imuEvent.un.linearAcceleration.x;
         imuAy = imuEvent.un.linearAcceleration.y;
@@ -406,19 +617,46 @@ void sendImuTelemetry() {
       static_cast<unsigned int>(imuStatus));
 }
 
+void sendNavigationTelemetry() {
+  const uint32_t nowMs = millis();
+  float currentYaw = 0.0F;
+  const bool headingAvailable = readCurrentYaw(currentYaw);
+  Serial.printf("N %lu %.6f %.6f %.6f %.4f 1 %u %u\n",
+                static_cast<unsigned long>(nowMs),
+                headingAvailable ? currentYaw : 0.0F,
+                headingTargetValid ? headingTargetYaw : 0.0F,
+                lastHeadingError,
+                lastHeadingCorrection,
+                fieldOrientedEnabled ? 1U : 0U,
+                headingAvailable ? 1U : 0U);
+}
+
 void sendTelemetry() {
   sendEncoderTelemetry();
   sendImuTelemetry();
+  sendNavigationTelemetry();
+  Serial.printf("H %lu IMU %u %lu %lu %lu\n",
+                static_cast<unsigned long>(millis()), imuAvailable ? 1U : 0U,
+                static_cast<unsigned long>(lastImuQuaternionMs),
+                static_cast<unsigned long>(imuResetCount),
+                static_cast<unsigned long>(imuReinitCount));
 }
 
 void printHelp() {
   Serial.println("Commands:");
   Serial.println("  V <forward> <left> <ccw>   each value -1.0 to +1.0");
+  Serial.println("    forward and left are simultaneous continuous components");
+  Serial.println("  F <0|1>                    field-oriented control off/on");
+  Serial.println("  Z                          re-zero field heading");
   Serial.println("  X                         immediate stop");
+  Serial.println("  CFG GET|SAVE|RESET        runtime settings");
+  Serial.println("  CFG SET <key> <value>     validated update while stopped");
   Serial.println("  ?                         help");
+  Serial.println("Heading hold: ON (automatic; manual turn input takes priority)");
   Serial.println("Watchdog: 300 ms");
   Serial.println("Encoder: T <ms> <FL> <FR> <RL> <RR>");
   Serial.println("IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>");
+  Serial.println("Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>");
 }
 
 void processCommand(char *line) {
@@ -435,6 +673,83 @@ void processCommand(char *line) {
 
   if (line[0] == '?' && line[1] == '\0') {
     printHelp();
+    return;
+  }
+
+  if (strcmp(line, "CFG GET") == 0) { printSettings(); return; }
+  if (strcmp(line, "CFG SAVE") == 0) {
+    stopAllMotors();
+    Serial.println(saveSettings() ? "OK CFG SAVE" : "ERR CFG SAVE");
+    return;
+  }
+  if (strcmp(line, "CFG RESET") == 0) {
+    stopAllMotors(); resetSettingsToDefaults();
+    Serial.println("OK CFG RESET"); printSettings(); return;
+  }
+  if (strncmp(line, "CFG SET ", 8) == 0) {
+    stopAllMotors();
+    char key[32] = {0}; float value = 0.0F; char extra = '\0';
+    if (sscanf(line + 8, "%31s %f %c", key, &value, &extra) != 2 || !isfinite(value)) {
+      Serial.println("ERR CFG malformed"); return;
+    }
+    bool valid = true;
+    if (strcmp(key, "pwm-fl") == 0 && value >= 0 && value <= 255) settings.pwm[0] = lroundf(value);
+    else if (strcmp(key, "pwm-fr") == 0 && value >= 0 && value <= 255) settings.pwm[1] = lroundf(value);
+    else if (strcmp(key, "pwm-rl") == 0 && value >= 0 && value <= 255) settings.pwm[2] = lroundf(value);
+    else if (strcmp(key, "pwm-rr") == 0 && value >= 0 && value <= 255) settings.pwm[3] = lroundf(value);
+    else if (strcmp(key, "heading-kp") == 0 && value >= 0 && value <= 5) settings.headingKp = value;
+    else if (strcmp(key, "heading-max") == 0 && value >= 0 && value <= 1) settings.headingMax = value;
+    else if (strcmp(key, "heading-deadband-deg") == 0 && value >= 0 && value <= 30) settings.headingDeadbandRad = value * NavigationMath::PI_F / 180.0F;
+    else if (strcmp(key, "heading-sign") == 0 && (value == -1 || value == 1)) settings.headingSign = static_cast<int8_t>(value);
+    else if (strcmp(key, "heading-enabled") == 0 && (value == 0 || value == 1)) settings.headingEnabled = value == 1;
+    else valid = false;
+    if (!valid) { Serial.println("ERR CFG invalid key or value"); return; }
+    applySettingsToMotors();
+    Serial.printf("OK CFG SET %s\n", key); return;
+  }
+
+  if (line[0] == 'Z' && line[1] == '\0') {
+    float currentYaw = 0.0F;
+    if (!readCurrentYaw(currentYaw, IMU_MIN_FIELD_ORIENTED_STATUS)) {
+      stopAllMotors();
+      Serial.println("ERR field zero requires a fresh IMU heading; motors stopped");
+      return;
+    }
+    stopAllMotors();
+    fieldReferenceYaw = currentYaw;
+    fieldReferenceValid = true;
+    Serial.printf("OK FIELD ZERO %.6f\n", fieldReferenceYaw);
+    return;
+  }
+
+  if (line[0] == 'F' && (line[1] == ' ' || line[1] == '\t')) {
+    int enabled = -1;
+    char extra = '\0';
+    const int fields = sscanf(line, "F %d %c", &enabled, &extra);
+    if (fields == 1 && enabled == 0) {
+      stopAllMotors();
+      fieldOrientedEnabled = false;
+      fieldReferenceValid = false;
+      Serial.println("OK FIELD 0");
+      return;
+    }
+    if (fields == 1 && enabled == 1) {
+      float currentYaw = 0.0F;
+      if (!readCurrentYaw(currentYaw, IMU_MIN_FIELD_ORIENTED_STATUS)) {
+        stopAllMotors();
+        Serial.println("ERR field mode requires a fresh IMU heading; motors stopped");
+        return;
+      }
+      stopAllMotors();
+      fieldReferenceYaw = currentYaw;
+      fieldReferenceValid = true;
+      fieldOrientedEnabled = true;
+      Serial.printf("OK FIELD 1 ZERO %.6f\n", fieldReferenceYaw);
+      return;
+    }
+
+    stopAllMotors();
+    Serial.println("ERR malformed field command; motors stopped");
     return;
   }
 
@@ -525,11 +840,12 @@ void setup() {
                   rearRightEncoderISR, CHANGE);
 
   stopAllMotors();
+  loadSettings();
   initializeImu();
 
   lastCommandMs = millis();
   lastTelemetryMs = millis();
-  Serial.println("READY ESP32_MECANUM_USB_IMU_V2_4");
+  Serial.println("READY ESP32_MECANUM_USB_IMU_NAV_V4");
   printHelp();
 }
 

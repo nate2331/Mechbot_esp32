@@ -1,0 +1,12 @@
+App(
+    appid="imu_rvc_test",
+    name="IMU RVC Test",
+    apptype=FlipperAppType.EXTERNAL,
+    entry_point="imu_rvc_test_app",
+    requires=["gui", "storage", "power", "expansion"],
+    stack_size=6144,
+    fap_category="GPIO",
+    fap_version="0.1",
+    fap_description="Battery-only passive STRDC BNO085 RVC capture",
+    fap_author="Codex",
+)

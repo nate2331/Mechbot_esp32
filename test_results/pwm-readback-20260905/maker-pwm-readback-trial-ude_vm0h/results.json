@@ -1,0 +1,345 @@
+{
+  "scope": "single raised-wheel forward pulse to compare peripheral PWM readback with requested duty",
+  "status": "aborted",
+  "directory": "/home/nate/maker-pwm-readback-trial-ude_vm0h",
+  "pulses": [],
+  "started": 1788623586.2808046,
+  "settings_saved_to_nvs": false,
+  "imu_validation": "excluded; heading and field control must remain disabled",
+  "preflight": {
+    "serial_connected": true,
+    "gamepad_connected": true,
+    "deadman": false,
+    "updated": 1788623586.2923248,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "H 98429 IMU 0 0 0 49",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788623586.279916,
+    "imu": "I 98429 OFFLINE",
+    "imu_valid": false,
+    "imu_updated": null,
+    "navigation": "N 98429 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 98429 IMU 0 0 0 49",
+    "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623585.4467707
+      },
+      "FR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623585.4474862
+      },
+      "RL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623585.4479709
+      },
+      "RR": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623585.4602115
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-help"
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "N 97429 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 97429 IMU 0 0 0 49",
+      "D FL PWM 0.0 A 0 B 0 INVALID 0",
+      "D FR PWM 0.0 A 0 B 0 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "T 97629 0 0 0 0",
+      "I 97629 OFFLINE",
+      "N 97629 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 97629 IMU 0 0 0 49",
+      "T 97829 0 0 0 0",
+      "I 97829 OFFLINE",
+      "N 97829 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 97829 IMU 0 0 0 49",
+      "T 98029 0 0 0 0",
+      "I 98029 OFFLINE",
+      "N 98029 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 98029 IMU 0 0 0 49",
+      "T 98229 0 0 0 0",
+      "I 98229 OFFLINE",
+      "N 98229 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 98229 IMU 0 0 0 49",
+      "T 98429 0 0 0 0",
+      "I 98429 OFFLINE",
+      "N 98429 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 98429 IMU 0 0 0 49"
+    ]
+  },
+  "settings_before": {
+    "lines": [
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "D FL PWM 0.0 A 0 B 0 INVALID 0",
+      "D FR PWM 0.0 A 0 B 0 INVALID 0",
+      "D RL PWM 0.0 A 0 B 0 INVALID 0",
+      "D RR PWM 0.0 A 0 B 0 INVALID 0",
+      "P FL PIN 17 DUTY 0 HZ 0 PIN 12 DUTY 0 HZ 0",
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "WARN IMU offline; retrying initialization"
+    ]
+  },
+  "firmware_upload_manifest": {
+    "source_commit": "0c06b6cdcc3fed3a6834a0e9a225c8f5b159f3ed",
+    "fqbn": "esp32:esp32:esp32",
+    "core": "3.3.11",
+    "source_sha256": {
+      "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+      "Maker_Mechbot.ino": "43adbe6aac0d315684fcfac545156b920225c689aa698f72d6a2ae983d04ae0a",
+      "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+      "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+    },
+    "images": [
+      {
+        "address": "0x1000",
+        "name": "Maker_Mechbot.ino.bootloader.bin",
+        "bytes": 24992,
+        "sha256": "427f96e10c620c4f062dab15da54fc45494d897e8397ae6f3aecc98c42d7e379"
+      },
+      {
+        "address": "0x8000",
+        "name": "Maker_Mechbot.ino.partitions.bin",
+        "bytes": 3072,
+        "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+      },
+      {
+        "address": "0xe000",
+        "name": "boot_app0.bin",
+        "bytes": 8192,
+        "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+      },
+      {
+        "address": "0x10000",
+        "name": "Maker_Mechbot.ino.bin",
+        "bytes": 360576,
+        "sha256": "a84cc43b33c59e512e52013545699a9935a8ae729110047859b630e2680f0c6a"
+      }
+    ]
+  },
+  "runner_sha256": "f069a0f5f54e56a9ce55e517d7cc91603cf37ccc3ae1c6288912247ed5b1f6d7",
+  "error": "Encoder telemetry is stale",
+  "restored": true,
+  "restored_config": {
+    "pwm-fl": 177.0,
+    "pwm-fr": 177.0,
+    "pwm-rl": 177.0,
+    "pwm-rr": 177.0,
+    "heading-kp": 0.7,
+    "heading-max": 0.3,
+    "heading-deadband-deg": 1.5,
+    "heading-sign": 1.0,
+    "heading-enabled": 0.0
+  },
+  "final_diagnostics": {
+    "FL": [
+      0.0,
+      0
+    ],
+    "FR": [
+      0.0,
+      0
+    ],
+    "RL": [
+      0.0,
+      0
+    ],
+    "RR": [
+      0.0,
+      0
+    ]
+  },
+  "postflight": {
+    "serial_connected": true,
+    "gamepad_connected": true,
+    "deadman": false,
+    "updated": 1788623595.4137301,
+    "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "last_line": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+    "encoders": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "encoder_updated": 1788623595.3309212,
+    "imu": "I 107444 OFFLINE",
+    "imu_valid": false,
+    "imu_updated": null,
+    "navigation": "N 107444 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "health": "H 107444 IMU 0 0 0 54",
+    "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+    "wheel_diagnostics": {
+      "FL": {
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "updated": 1788623595.4137301
+      }
+    },
+    "simulated": false,
+    "maintenance": false,
+    "operations_error": null,
+    "board": {
+      "id": "maker",
+      "name": "Maker ESP32 Pro",
+      "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+      "fqbn": "esp32:esp32:esp32",
+      "sketch": "Maker_Mechbot",
+      "encoder_wheels": [
+        "FL",
+        "FR",
+        "RL",
+        "RR"
+      ],
+      "diagnostics": true,
+      "baseline": {
+        "pwm-fl": 177,
+        "pwm-fr": 177,
+        "pwm-rl": 177,
+        "pwm-rr": 177
+      },
+      "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+      "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+      "counts_per_revolution": {
+        "FL": 2468.8,
+        "FR": 2467.9,
+        "RL": 2473.5,
+        "RR": 2469.8
+      },
+      "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+      "closed_loop": false,
+      "identity_source": "maker-help"
+    },
+    "rearm_required": true,
+    "calibration_active": false,
+    "recent_lines": [
+      "WARN IMU not detected; motor control remains available",
+      "IMU I2C FOUND 0x4A",
+      "T 107244 0 0 0 0",
+      "I 107244 OFFLINE",
+      "N 107244 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 107244 IMU 0 0 0 54",
+      "T 107444 0 0 0 0",
+      "I 107444 OFFLINE",
+      "N 107444 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 107444 IMU 0 0 0 54",
+      "Commands:",
+      "V <forward> <left> <ccw>   each value -1.0 to +1.0",
+      "forward and left are simultaneous continuous components",
+      "F <0|1>                    field-oriented control off/on",
+      "Z                          re-zero field heading",
+      "X                         immediate stop",
+      "CFG GET|SAVE|RESET        runtime settings",
+      "CFG SET <key> <value>     validated update while stopped",
+      "?                         help",
+      "Heading hold: OFF (verify sensor axes before enabling)",
+      "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+      "IMU: SDA21 SCL22, no reset wire; relative yaw, NOT compass north",
+      "Default PWM=177 all wheels; independent output watchdog, ramped drive",
+      "DIAG                      encoder edges/errors and applied PWM",
+      "IMU RETRY                 stopped reinitialization",
+      "Watchdog: 300 ms",
+      "Encoder: T <ms> <FL> <FR> <RL> <RR>",
+      "IMU: I <ms> <qx> <qy> <qz> <qw> <gx> <gy> <gz> <ax> <ay> <az> <status>",
+      "Navigation: N <ms> <yaw> <target> <error> <correction> <hold> <field> <ready>",
+      "D FL PWM 0.0 A 0 B 0 INVALID 0"
+    ]
+  },
+  "settings_after": {
+    "lines": [
+      "P FR PIN 14 DUTY 0 HZ 0 PIN 15 DUTY 0 HZ 0",
+      "P RL PIN 4 DUTY 0 HZ 0 PIN 2 DUTY 0 HZ 0",
+      "P RR PIN 27 DUTY 0 HZ 0 PIN 13 DUTY 0 HZ 0",
+      "OK STOP",
+      "CFG pwm-fl 177",
+      "CFG pwm-fr 177",
+      "CFG pwm-rl 177",
+      "CFG pwm-rr 177",
+      "CFG heading-kp 0.7000",
+      "CFG heading-max 0.3000",
+      "CFG heading-deadband-deg 1.500",
+      "CFG heading-sign 1",
+      "CFG heading-enabled 0",
+      "OK CFG GET",
+      "T 107644 0 0 0 0",
+      "I 107644 OFFLINE",
+      "N 107644 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 107644 IMU 0 0 0 54",
+      "T 107844 0 0 0 0",
+      "I 107844 OFFLINE",
+      "N 107844 0.000000 0.000000 0.000000 0.0000 0 0 0",
+      "H 107844 IMU 0 0 0 54"
+    ]
+  },
+  "finished": 1788623595.7889578
+}

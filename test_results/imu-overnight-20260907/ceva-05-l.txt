@@ -1,0 +1,100 @@
+BEGIN #5 l GYRO10 I2C=100000
+RESET commanded low20ms released400ms RST=1 P0=0 bus=1
+ACK 0x4A rc=0
+ACK 0x4B rc=2
+BOOT init=1 open_rc=0 id_rc=0 reset_events=1 clock=100000
+PRE ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+SET id=0x02 interval_us=100000 rc=0
+PRE CFG id=0x02 rc=0 want_us=100000 got_us=0 time_ms=5
+RUN #5 l GYRO10 t=1001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=2001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=3001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=4001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=5001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=6001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=7001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=8001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=9001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=10001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=11001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=12001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=13001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=14001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=15001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=16001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=17001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=18001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=19001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=20001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=21001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=22001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=23001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=24001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=25001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=26001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=27001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=28001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=29001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=30001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=31001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=32001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=33001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RUN #5 l GYRO10 t=34001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+RESULT reason=35_SECONDS boot_resets=1
+FINAL #5 l GYRO10 t=35001ms reset=0 decode=0 transport=0 INT=1
+ 0x02 WAIT n=0 new=0 age=-1 gap=0 dup=0
+POST CFG id=0x02 rc=0 want_us=100000 got_us=0 time_ms=4
+POST ID rc=0 entries=4
+ ID0 part=10004148 ver=3.2.13 build=6 cause=2
+ ID1 part=10003606 ver=1.2.4 build=230 cause=0
+ ID2 part=10003254 ver=4.4.3 build=485 cause=0
+ ID3 part=10003171 ver=4.2.10 build=548 cause=0
+POST ERR rc=-6 captured=8 complete=0 time_ms=1000
+ ERR0 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR1 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR2 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR3 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR4 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR5 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR6 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+ ERR7 sev=4 seq=0 src=4 err=1 module=21 code=0 hex=04 00 04 01 15 00
+OFF id=0x02 rc=0
+END #5; s=reprint result, next command starts fresh reset

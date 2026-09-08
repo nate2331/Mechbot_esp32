@@ -1,0 +1,9 @@
+
+Compiling navigation_math_test
+navigation math tests passed
+Compiling maker_motor_safety_test
+PASS: timeout, ramp, stop, reversal, zero, invalid inputs, clock wrap, mecanum and IMU math
+Compiling maker_firmware_host_test
+PASS: actual firmware mapping, defaults, coherent encoder startup/sampling, all transitions/polarities, resync/reverse counts, PWM polarity, blocked-sensor timeout, stop, malformed/overflow input, settings, stale IMU, SPI initialization, reset mode, failed-init invalidation, bounded missing/stale recovery, selective retries, fresh-event recovery, motion deferral, rollover, read-only diagnostics and queued arrival freshness
+Compiling maker_bno_spi_test
+PASS: SPI continuous CS with early INT release, full-duplex RX/TX and zero padding, valid/null/malformed bounds, FIFO backpressure/order, negative wake timeout and rollover, all bundled reports and arrival timestamps, reset/retry cleanup, and repeated single-slot reinitialization

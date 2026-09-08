@@ -1,0 +1,26 @@
+{
+  "user_reported_previous_vdc_volts": 5,
+  "user_confirmed_rewired_after_3v3_instructions": true,
+  "voltage_measured_at_imu": false,
+  "power_led_verified": false,
+  "scan_found_no_devices_count": 8,
+  "detected_addresses": [],
+  "controller_ready_observed": false,
+  "settings_unchanged": true,
+  "serial_connected": true,
+  "maintenance": false,
+  "imu": "I 859628 OFFLINE",
+  "imu_valid": false,
+  "all_outputs_zero": true,
+  "transmitted": [
+    "X",
+    "?",
+    "IMU RETRY",
+    "X",
+    "DIAG",
+    "CFG GET"
+  ],
+  "error": null,
+  "restore_error": null,
+  "raw_evidence": "pi-3v3-reset-result.json"
+}

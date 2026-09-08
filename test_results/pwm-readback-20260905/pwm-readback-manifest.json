@@ -1,0 +1,37 @@
+{
+  "source_commit": "0c06b6cdcc3fed3a6834a0e9a225c8f5b159f3ed",
+  "fqbn": "esp32:esp32:esp32",
+  "core": "3.3.11",
+  "source_sha256": {
+    "EncoderSampling.h": "b22771187b5133708e82f579d2c5cf452067d2f9fc6b8dbcee16021a4116f595",
+    "Maker_Mechbot.ino": "43adbe6aac0d315684fcfac545156b920225c689aa698f72d6a2ae983d04ae0a",
+    "MotorSafety.h": "290d2fd5d45ac813a14ffc3cbaf5a4eaf6b5a86f22e2247bd93dcb41846ecdb0",
+    "NavigationMath.h": "31338ae4e7b9e941df7c26d69d026d768b3f301c295ecf2c7a6d806c71cc67f4"
+  },
+  "images": [
+    {
+      "address": "0x1000",
+      "name": "Maker_Mechbot.ino.bootloader.bin",
+      "bytes": 24992,
+      "sha256": "427f96e10c620c4f062dab15da54fc45494d897e8397ae6f3aecc98c42d7e379"
+    },
+    {
+      "address": "0x8000",
+      "name": "Maker_Mechbot.ino.partitions.bin",
+      "bytes": 3072,
+      "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+    },
+    {
+      "address": "0xe000",
+      "name": "boot_app0.bin",
+      "bytes": 8192,
+      "sha256": "f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0"
+    },
+    {
+      "address": "0x10000",
+      "name": "Maker_Mechbot.ino.bin",
+      "bytes": 360576,
+      "sha256": "a84cc43b33c59e512e52013545699a9935a8ae729110047859b630e2680f0c6a"
+    }
+  ]
+}

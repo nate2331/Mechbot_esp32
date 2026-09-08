@@ -1,0 +1,107 @@
+Source: Arduino IDE COM7 Serial Monitor accessibility tree, observed during computer use. This is a visible UI excerpt, not a complete serial capture.
+
+Window: "ESP32S3_IMU_Test | Arduino IDE 2.3.10", App: Arduino IDE.exe.
+	0 pane ESP32S3_IMU_Test | Arduino IDE 2.3.10 Secondary Actions: Raise
+		1 document ESP32S3_IMU_Test | Arduino IDE 2.3.10 ID: 103757728
+			2 text 
+			3 text ESP32S3 Dev Module
+			4 text 
+			5 list
+				6 list item (selectable) ID: shell-tab-arduino-sketchbook-widget
+					7 text 
+				8 list item (selectable) ID: shell-tab-boards-list-widget
+					9 text 
+				10 list item (selectable) ID: shell-tab-library-list-widget
+					11 text 
+				12 list item (selectable) ID: shell-tab-debug
+					13 text 
+				14 list item (selectable) ID: shell-tab-search-view-container
+					15 text 
+			16 text 
+			17 list
+				18 list item (selectable) C:\Users\nate2\OneDrive\Documents\Arduino\Mechbot_esp32\ESP32S3_IMU_Test\ESP32S3_IMU_Test.ino ID: shell-tab-code-editor-opener\:file\:///c%3A/Users/nate2/OneDrive/Documents/Arduino/Mechbot_esp32/ESP32S3_IMU_Test/ESP32S3_IMU_Test.ino\:0
+					19 text ESP32S3_IMU_Test.ino
+				20 list item (selectable) C:\Users\nate2\OneDrive\Documents\Arduino\Mechbot_esp32\ESP32S3_IMU_Test\README.md ID: shell-tab-code-editor-opener\:file\:///c%3A/Users/nate2/OneDrive/Documents/Arduino/Mechbot_esp32/ESP32S3_IMU_Test/README.md\:0
+					21 text README.md
+				22 list item (selectable) C:\Users\nate2\OneDrive\Documents\Arduino\Mechbot_esp32\ESP32S3_IMU_Test\VALIDATION.md ID: shell-tab-code-editor-opener\:file\:///c%3A/Users/nate2/OneDrive/Documents/Arduino/Mechbot_esp32/ESP32S3_IMU_Test/VALIDATION.md\:1
+					23 text VALIDATION.md
+			24 text 
+			25 editor Editor content;Press Alt+F1 for Accessibility Options.
+			26 list
+				27 list item (selectable) Output ID: shell-tab-outputView
+					28 text Output
+				29 list item (selectable) ID: shell-tab-serial-monitor
+					30 text Serial Monitor
+					31 text 
+			32 text 
+			33 text 
+			34 text 
+			35 text 
+			36 edit Message (Enter to send message to 'ESP32S3 Dev Module' on 'COM7') Description: Message (Enter to send message to 'ESP32S3 Dev Module' on 'COM7')
+			37 log
+			38 text New Line
+			39 combo box ID: react-select-4-input
+			40 text 
+			41 log
+			42 text 115200 baud
+			43 combo box ID: react-select-5-input
+			44 text 
+			388 text GYRO WAIT samples=0 new=0 age_ms=-1
+			389 text ms=148023 TEST=ACCEL_PLUS_GYRO decode_errors=0
+			390 text ACCEL STALE samples=4735 new=0 age_ms=73015 last_xyz=0.270,-0.078,9.504 m/s^2
+			391 text GYRO WAIT samples=0 new=0 age_ms=-1
+			392 text ms=149024 TEST=ACCEL_PLUS_GYRO decode_errors=0
+			393 text ACCEL STALE samples=4735 new=0 age_ms=74016 last_xyz=0.270,-0.078,9.504 m/s^2
+			394 text GYRO WAIT samples=0 new=0 age_ms=-1
+			395 text ms=150025 TEST=ACCEL_PLUS_GYRO decode_errors=0
+			396 text ACCEL STALE samples=4735 new=0 age_ms=75017 last_xyz=0.270,-0.078,9.504 m/s^2
+			397 text GYRO WAIT samples=0 new=0 age_ms=-1
+			398 text ms=151026 TEST=ACCEL_PLUS_GYRO decode_errors=0
+			399 text ACCEL STALE samples=4735 new=0 age_ms=76018 last_xyz=0.270,-0.078,9.504 m/s^2
+			400 text GYRO WAIT samples=0 new=0 age_ms=-1
+			401 text ms=152027 TEST=ACCEL_PLUS_GYRO decode_errors=0
+			402 text ACCEL STALE samples=4735 new=0 age_ms=77019 last_xyz=0.270,-0.078,9.504 m/s^2
+			403 text GYRO WAIT samples=0 new=0 age_ms=-1
+			61 text Ln 1, Col 1
+			62 text ESP32S3 Dev Module
+			63 text on COM7
+			64 text 
+			65 text 2
+			66 button Toggle Bottom Panel ID: status-bar-bottom-panel-toggle
+			67 alert
+			68 alert
+			69 group
+			70 group
+		71 pane (disabled)
+		72 title bar
+			73 menu bar System ID: MenuBar
+				107 menu item System
+			75 button Minimize
+			76 button Maximize
+			77 button Close
+		78 pane
+			79 pane
+				80 pane
+					81 pane
+						82 menu bar
+							83 menu item File
+							84 menu item Edit
+							85 menu item Sketch
+							86 menu item Tools
+							87 menu item Help
+						88 pane
+							89 pane
+							90 pane
+
+Document text: ```
+/*
+  Standalone ESP32-S3 + STRDC BNO085, four-wire I2C test.
+  ESP32-S3 3V3 -> IMU VDC; GND -> GND; GPIO8 -> SDA; GPIO9 -> SCL.
+  Use GPIO numbers, not header positions. See README for USB settings.
+  No robot connections, motor code, RST wire, or INT wire.
+  Starts with accelerometer only. Send g to add calibrated gyro, ? for help.
+  Unplug USB to power-cycle BOTH boards before repeating the comparison.
+*/
+#include <Arduino.h>
+#include <Wire.h>
+```

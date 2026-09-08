@@ -1,0 +1,276 @@
+HOST START 2026-09-07T13:58:07.0004073-05:00 port=COM8; IMU power untouched. RTS resets ESP only.
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=62 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1912 frames=100 new=100 window_ms=1000 age_ms=0 first_frame_boot_ms=22 first_ready_boot_ms=62 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=948 longest_ready_ms=948
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.37,-1.15 accel_mg=20,-4,977 changes_ypr=5 changes_accel=74
+RUN boot_ms=2010 state=READY bytes=3812 frames=200 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=22 first_ready_boot_ms=62 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1948 longest_ready_ms=1948
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.34,-1.14 accel_mg=16,-8,974 changes_ypr=15 changes_accel=158
+HOST ESP_RESET trial=1 2026-09-07T13:58:10.0604581-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=54 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=956 longest_ready_ms=956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=20,-8,969 changes_ypr=10 changes_accel=83
+RUN boot_ms=2010 state=READY bytes=3819 frames=201 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=1956 longest_ready_ms=1956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.37,-1.13 accel_mg=16,-4,970 changes_ypr=15 changes_accel=162
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2956 longest_ready_ms=2956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.37,-1.16 accel_mg=16,-4,974 changes_ypr=20 changes_accel=250
+HOST ESP_RESET trial=2 2026-09-07T13:58:14.2040015-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=54 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=956 longest_ready_ms=956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.36,-1.13 accel_mg=16,-4,974 changes_ypr=3 changes_accel=81
+RUN boot_ms=2010 state=READY bytes=3819 frames=201 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=1956 longest_ready_ms=1956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=16,-4,974 changes_ypr=9 changes_accel=157
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2956 longest_ready_ms=2956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.36,-1.16 accel_mg=20,-8,973 changes_ypr=14 changes_accel=228
+HOST ESP_RESET trial=3 2026-09-07T13:58:18.3285836-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=57 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=4 first_frame_boot_ms=17 first_ready_boot_ms=57 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=953 longest_ready_ms=953
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.36,-1.14 accel_mg=20,-8,973 changes_ypr=5 changes_accel=76
+RUN boot_ms=2010 state=READY bytes=3800 frames=200 new=100 window_ms=1000 age_ms=6 first_frame_boot_ms=17 first_ready_boot_ms=57 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1953 longest_ready_ms=1953
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.36,-1.15 accel_mg=20,-4,973 changes_ypr=10 changes_accel=154
+RUN boot_ms=3010 state=READY bytes=5700 frames=300 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=17 first_ready_boot_ms=57 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2953 longest_ready_ms=2953
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.35,-1.16 accel_mg=20,-8,973 changes_ypr=16 changes_accel=234
+HOST ESP_RESET trial=4 2026-09-07T13:58:22.4529772-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=55 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=7 first_frame_boot_ms=15 first_ready_boot_ms=55 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=955 longest_ready_ms=955
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.36,-1.16 accel_mg=20,-8,973 changes_ypr=5 changes_accel=81
+RUN boot_ms=2010 state=READY bytes=3812 frames=200 new=100 window_ms=1000 age_ms=9 first_frame_boot_ms=15 first_ready_boot_ms=55 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1955 longest_ready_ms=1955
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.17 accel_mg=20,-4,973 changes_ypr=10 changes_accel=161
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=101 window_ms=1000 age_ms=1 first_frame_boot_ms=15 first_ready_boot_ms=55 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2955 longest_ready_ms=2955
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.36,-1.16 accel_mg=20,-8,973 changes_ypr=21 changes_accel=240
+HOST ESP_RESET trial=5 2026-09-07T13:58:26.5785120-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=60 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=20 first_ready_boot_ms=60 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=950 longest_ready_ms=950
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.01,-0.34,-1.15 accel_mg=20,-8,973 changes_ypr=8 changes_accel=73
+RUN boot_ms=2010 state=READY bytes=3800 frames=200 new=100 window_ms=1000 age_ms=4 first_frame_boot_ms=20 first_ready_boot_ms=60 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1950 longest_ready_ms=1950
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.15 accel_mg=20,-8,969 changes_ypr=19 changes_accel=156
+RUN boot_ms=3010 state=READY bytes=5700 frames=300 new=100 window_ms=1000 age_ms=6 first_frame_boot_ms=20 first_ready_boot_ms=60 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2950 longest_ready_ms=2950
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=20,-4,973 changes_ypr=27 changes_accel=238
+HOST ESP_RESET trial=6 2026-09-07T13:58:30.7166153-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=56 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=6 first_frame_boot_ms=16 first_ready_boot_ms=56 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=954 longest_ready_ms=954
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=-0.01,-0.34,-1.15 accel_mg=20,-4,973 changes_ypr=16 changes_accel=81
+RUN boot_ms=2010 state=READY bytes=3800 frames=200 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=16 first_ready_boot_ms=56 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1954 longest_ready_ms=1954
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=-0.01,-0.34,-1.13 accel_mg=16,-4,974 changes_ypr=20 changes_accel=162
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=16 first_ready_boot_ms=56 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=2954 longest_ready_ms=2954
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.34,-1.13 accel_mg=20,-8,973 changes_ypr=25 changes_accel=247
+HOST ESP_RESET trial=7 2026-09-07T13:58:34.8413211-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=53 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=13 first_ready_boot_ms=53 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=957 longest_ready_ms=957
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.34,-1.14 accel_mg=20,-4,973 changes_ypr=3 changes_accel=79
+RUN boot_ms=2010 state=READY bytes=3819 frames=201 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=13 first_ready_boot_ms=53 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1957 longest_ready_ms=1957
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=20,-4,973 changes_ypr=7 changes_accel=157
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=13 first_ready_boot_ms=53 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=2957 longest_ready_ms=2957
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.34,-1.13 accel_mg=16,-4,970 changes_ypr=10 changes_accel=243
+HOST ESP_RESET trial=8 2026-09-07T13:58:38.9636144-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=53 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1912 frames=100 new=100 window_ms=1000 age_ms=9 first_frame_boot_ms=13 first_ready_boot_ms=53 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=957 longest_ready_ms=957
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.16 accel_mg=20,-8,973 changes_ypr=6 changes_accel=80
+RUN boot_ms=2010 state=READY bytes=3819 frames=201 new=101 window_ms=1000 age_ms=1 first_frame_boot_ms=13 first_ready_boot_ms=53 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=1957 longest_ready_ms=1957
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.17 accel_mg=20,-4,973 changes_ypr=22 changes_accel=143
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=100 window_ms=1000 age_ms=3 first_frame_boot_ms=13 first_ready_boot_ms=53 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2957 longest_ready_ms=2957
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=-0.01,-0.36,-1.17 accel_mg=24,-8,973 changes_ypr=25 changes_accel=225
+HOST ESP_RESET trial=9 2026-09-07T13:58:43.1061222-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=54 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=956 longest_ready_ms=956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.35,-1.15 accel_mg=20,-4,973 changes_ypr=4 changes_accel=70
+RUN boot_ms=2010 state=READY bytes=3819 frames=201 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=10 ready_ms=1956 longest_ready_ms=1956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.34,-1.14 accel_mg=20,-8,969 changes_ypr=10 changes_accel=152
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2956 longest_ready_ms=2956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.35,-1.13 accel_mg=20,-4,973 changes_ypr=14 changes_accel=230
+HOST ESP_RESET trial=10 2026-09-07T13:58:47.2424536-05:00
+MAKER_IMU_RVC_CONTINUOUS V1 | UART1 RX21 TX=none | 115200 8N1
+AUTO LISTEN: IMU 5V may stay connected. No arming or 35s cutoff.
+READY requires 5 sequential checksum-valid frames, <=100ms apart; STALE after >500ms without a valid frame.
+s=snapshot, ?=help. No software reset/power control. Motor outputs held LOW.
+boot_ms is ESP uptime, not measured IMU power-on time. Index discontinuities are not exact lost-frame counts.
+UART_CHECK ok=1 rx=21 tx=-1 buffer=8192 listening_boot_ms=10
+EVENT READY boot_ms=54 acquisition=1
+RUN boot_ms=1010 state=READY bytes=1900 frames=100 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=956 longest_ready_ms=956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.34,-1.13 accel_mg=20,-8,973 changes_ypr=6 changes_accel=76
+RUN boot_ms=2010 state=READY bytes=3819 frames=201 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=1956 longest_ready_ms=1956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.35,-1.15 accel_mg=16,-8,970 changes_ypr=11 changes_accel=156
+RUN boot_ms=3010 state=READY bytes=5719 frames=301 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=2956 longest_ready_ms=2956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.15 accel_mg=20,-8,973 changes_ypr=20 changes_accel=239
+RUN boot_ms=4010 state=READY bytes=7619 frames=401 new=100 window_ms=1000 age_ms=3 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=3956 longest_ready_ms=3956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=20,-8,973 changes_ypr=25 changes_accel=318
+RUN boot_ms=5010 state=READY bytes=9519 frames=501 new=100 window_ms=1000 age_ms=5 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=4956 longest_ready_ms=4956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.35,-1.13 accel_mg=24,-8,973 changes_ypr=29 changes_accel=409
+RUN boot_ms=6010 state=READY bytes=11419 frames=601 new=100 window_ms=1000 age_ms=7 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=5956 longest_ready_ms=5956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.35,-1.16 accel_mg=20,-8,973 changes_ypr=36 changes_accel=496
+RUN boot_ms=7010 state=READY bytes=13331 frames=701 new=100 window_ms=1000 age_ms=9 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=6956 longest_ready_ms=6956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=20,-8,973 changes_ypr=39 changes_accel=579
+RUN boot_ms=8010 state=READY bytes=15238 frames=802 new=101 window_ms=1000 age_ms=1 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=7956 longest_ready_ms=7956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.14 accel_mg=20,-4,977 changes_ypr=43 changes_accel=663
+RUN boot_ms=9010 state=READY bytes=17138 frames=902 new=100 window_ms=1000 age_ms=3 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=8956 longest_ready_ms=8956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.35,-1.15 accel_mg=16,-4,974 changes_ypr=47 changes_accel=744
+RUN boot_ms=10010 state=READY bytes=19038 frames=1002 new=100 window_ms=1000 age_ms=5 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=9956 longest_ready_ms=9956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.15 accel_mg=20,-8,973 changes_ypr=52 changes_accel=822
+RUN boot_ms=11010 state=READY bytes=20938 frames=1102 new=100 window_ms=1000 age_ms=7 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=10956 longest_ready_ms=10956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.14 accel_mg=20,-8,969 changes_ypr=56 changes_accel=899
+RUN boot_ms=12010 state=READY bytes=22844 frames=1202 new=100 window_ms=1000 age_ms=9 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=11956 longest_ready_ms=11956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.14 accel_mg=24,-8,969 changes_ypr=58 changes_accel=975
+RUN boot_ms=13010 state=READY bytes=24757 frames=1303 new=101 window_ms=1000 age_ms=1 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=12956 longest_ready_ms=12956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.15 accel_mg=20,-4,973 changes_ypr=64 changes_accel=1052
+RUN boot_ms=14010 state=READY bytes=26657 frames=1403 new=100 window_ms=1000 age_ms=2 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=13956 longest_ready_ms=13956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.14 accel_mg=20,-8,973 changes_ypr=68 changes_accel=1132
+RUN boot_ms=15010 state=READY bytes=28557 frames=1503 new=100 window_ms=1000 age_ms=4 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=14956 longest_ready_ms=14956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.15 accel_mg=20,-8,977 changes_ypr=71 changes_accel=1219
+RUN boot_ms=16010 state=READY bytes=30457 frames=1603 new=100 window_ms=1000 age_ms=6 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=15956 longest_ready_ms=15956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.36,-1.16 accel_mg=16,-8,974 changes_ypr=75 changes_accel=1296
+RUN boot_ms=17010 state=READY bytes=32357 frames=1703 new=100 window_ms=1000 age_ms=8 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=16956 longest_ready_ms=16956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.14 accel_mg=20,-4,969 changes_ypr=80 changes_accel=1389
+RUN boot_ms=18010 state=READY bytes=34276 frames=1804 new=101 window_ms=1000 age_ms=0 first_frame_boot_ms=14 first_ready_boot_ms=54 acquisitions=1 pauses=0 max_gap_ms=11 ready_ms=17956 longest_ready_ms=17956
+COUNTS bad_checksum=0 discontinuities=0 repeats=0 post_first_ready_bad=0 post_first_ready_discontinuities=0
+UART_EVENTS total/post_first_ready fifo,buffer,frame,parity,break= 0/0 0/0 0/0 0/0 0/0
+VALUE ypr_deg=0.00,-0.37,-1.13 accel_mg=20,-4,973 changes_ypr=81 changes_accel=1473

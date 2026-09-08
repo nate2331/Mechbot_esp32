@@ -1,0 +1,7 @@
+{
+  "operator_confirmation": "Wheels are powered and raised; user requested automatic tuning",
+  "normal_wiring": "Previously confirmed restored M2/E2 FL, M3/E3 FR, M1/E1 RL, M0/E0 RR",
+  "battery_voltage": null,
+  "bridge_ownership": "Maintenance mode stops serial/gamepad sender; service stays active",
+  "script_sha256": "eb385257c32f5dbb90d826cfae4d00f9e4a99d246665edd40d96fbf0db8a76cb"
+}

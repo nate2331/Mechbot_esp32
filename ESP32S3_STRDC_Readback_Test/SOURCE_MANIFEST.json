@@ -1,0 +1,194 @@
+{
+  "repository": "https://github.com/STRDC/strdc-sdk",
+  "commit": "2582838df20642f1d2568244daa56e1be1206bf0",
+  "hash_note": "SHA256 over Windows checkout/local bytes, including checkout line endings.",
+  "files": [
+    {
+      "upstream_path": "modules/STRDC_BNO08X/src/BNO08X.cpp",
+      "local_path": "src/vendor/BNO08X.cpp",
+      "upstream_checkout_sha256": "58635b03ab928af99d46a9090c62e1c3256b3af4e054dd71b4a0dc57339d1d89",
+      "local_sha256": "58635b03ab928af99d46a9090c62e1c3256b3af4e054dd71b4a0dc57339d1d89",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "modules/STRDC_BNO08X/src/BNO08X.h",
+      "local_path": "src/vendor/BNO08X.h",
+      "upstream_checkout_sha256": "871a3e104e21bb417d852e08ffa340a1f59b030d38b9214bed5726cea8fe9fc3",
+      "local_sha256": "871a3e104e21bb417d852e08ffa340a1f59b030d38b9214bed5726cea8fe9fc3",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/gpio.c",
+      "local_path": "src/vendor/gpio.c",
+      "upstream_checkout_sha256": "e865b4fc5b2775808d87cd02bf4dc74360c9cb7f065e907b633ed2f68919c48f",
+      "local_sha256": "e865b4fc5b2775808d87cd02bf4dc74360c9cb7f065e907b633ed2f68919c48f",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/gpio.h",
+      "local_path": "src/vendor/gpio.h",
+      "upstream_checkout_sha256": "d600ffb044c0c964305d09f4a65fa7036fc1115c2e6336625de9f6c2dc57a066",
+      "local_sha256": "d600ffb044c0c964305d09f4a65fa7036fc1115c2e6336625de9f6c2dc57a066",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/i2c_master.cpp",
+      "local_path": "src/vendor/i2c_master.cpp",
+      "upstream_checkout_sha256": "442272429c746ca42572ae4ef77716f6043be395dda1b54e071ec17a7ed6dfbe",
+      "local_sha256": "442272429c746ca42572ae4ef77716f6043be395dda1b54e071ec17a7ed6dfbe",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/i2c_master.h",
+      "local_path": "src/vendor/i2c_master.h",
+      "upstream_checkout_sha256": "20d52cf2ebb34efa59d203643335e0b42d14469c984a9258a3c169c6d88bee4f",
+      "local_sha256": "20d52cf2ebb34efa59d203643335e0b42d14469c984a9258a3c169c6d88bee4f",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/interrupt.c",
+      "local_path": "src/vendor/interrupt.c",
+      "upstream_checkout_sha256": "e594f401b5526cd24498b804548a2c26b78578b823846694f8944b521bcbdfe1",
+      "local_sha256": "e594f401b5526cd24498b804548a2c26b78578b823846694f8944b521bcbdfe1",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/interrupt.h",
+      "local_path": "src/vendor/interrupt.h",
+      "upstream_checkout_sha256": "93934437a34a50fe7a6f1f2ae6651fbf9ee416a3d5a6228e858456db21e8e3d0",
+      "local_sha256": "93934437a34a50fe7a6f1f2ae6651fbf9ee416a3d5a6228e858456db21e8e3d0",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/serial_master.cpp",
+      "local_path": "src/vendor/serial_master.cpp",
+      "upstream_checkout_sha256": "350514fac136fd0399aba752a27c61a8ee688712da63f55df1d842adaf44d568",
+      "local_sha256": "350514fac136fd0399aba752a27c61a8ee688712da63f55df1d842adaf44d568",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/serial_master.h",
+      "local_path": "src/vendor/serial_master.h",
+      "upstream_checkout_sha256": "3886627448740e4994525253b91176efac78f5cf27b91ce5bface68dfcd21a9d",
+      "local_sha256": "3886627448740e4994525253b91176efac78f5cf27b91ce5bface68dfcd21a9d",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/spi_master.cpp",
+      "local_path": "src/vendor/spi_master.cpp",
+      "upstream_checkout_sha256": "64061cbacce73558540c8195851049b0feccb8ecd435b1e4761519ca5bb9a44b",
+      "local_sha256": "64061cbacce73558540c8195851049b0feccb8ecd435b1e4761519ca5bb9a44b",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/spi_master.h",
+      "local_path": "src/vendor/spi_master.h",
+      "upstream_checkout_sha256": "acd33a6e403a31ad5f9384218093f2822e279884450deae63bfde84eb3bd1716",
+      "local_sha256": "acd33a6e403a31ad5f9384218093f2822e279884450deae63bfde84eb3bd1716",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/timer.c",
+      "local_path": "src/vendor/timer.c",
+      "upstream_checkout_sha256": "83649bd9a8e57e9abfad697241bf24bb6da474c0ae7fbc4f279c0756981f3608",
+      "local_sha256": "83649bd9a8e57e9abfad697241bf24bb6da474c0ae7fbc4f279c0756981f3608",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "middleware/STRDC_Drivers/src/timer.h",
+      "local_path": "src/vendor/timer.h",
+      "upstream_checkout_sha256": "62f7f3f7d66540cd5241b129deb0668b4b60cd3441659a5d4ac6bdec9042371d",
+      "local_sha256": "62f7f3f7d66540cd5241b129deb0668b4b60cd3441659a5d4ac6bdec9042371d",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_gpio.c",
+      "local_path": "src/vendor/hal_gpio.cpp",
+      "upstream_checkout_sha256": "f583758ac7f4ed2aae34aa337682ab0937a466a0dea2f0e1e97e627fea95a741",
+      "local_sha256": "916d21fb0320334552862a28f17b962e5470dd656a8a597243ef903e63bd575b",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_gpio.h",
+      "local_path": "src/vendor/hal_gpio.h",
+      "upstream_checkout_sha256": "1da6fefb7abc85d6e5baa52a21252cb2f9304e5eb09710ba14fa71fb4908c0ed",
+      "local_sha256": "7d3f074c14efb34389cddcd9db1878f38c26ebe47794248808830f96bd57cea0",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_i2c_master.cpp",
+      "local_path": "src/vendor/hal_i2c_master.cpp",
+      "upstream_checkout_sha256": "bc2cbc320b272f3a081f1898996b06047e74ff46894e4acf42d17d7eb9ae0dab",
+      "local_sha256": "68e9b4a6b481fd718726b288166c12ffa3303f3613ce134d8c1eba9ce0ee489a",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_i2c_master.h",
+      "local_path": "src/vendor/hal_i2c_master.h",
+      "upstream_checkout_sha256": "9f4ba981862463096bc7b210c5ce45b98b6099c2d4eb3e7e413c2b6df473ff6e",
+      "local_sha256": "6381b9238a39fd318964e2f38e3e9e7b4eb759a88ed45703a49b0591cfa9d1bd",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_interrupt.c",
+      "local_path": "src/vendor/hal_interrupt.cpp",
+      "upstream_checkout_sha256": "032be63e7f0bf7fab35433ddffa1d8b96ac8caac3d35577fec7947ba2f3e74bd",
+      "local_sha256": "4981ad48fed4049ab73ae3ab93b8c4e81192c28a843f9a23efcd84f9d1e57cb9",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_interrupt.h",
+      "local_path": "src/vendor/hal_interrupt.h",
+      "upstream_checkout_sha256": "902defae58aedfde0679b28f7c8356f6d453d2d5dc843668fcf2f4545136f355",
+      "local_sha256": "6466de9416cb5970c7f0e5273fe79e3fc7623be5fb6489025c6228ae3a8c5ee1",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_serial_master.cpp",
+      "local_path": "src/vendor/hal_serial_master.cpp",
+      "upstream_checkout_sha256": "9fe554f8cd3e3b217ef4002852af68f9e83e7c53fde01e9d6164e7ff9e3ddbaf",
+      "local_sha256": "ac9f51e24c3697414ba99d9eaf75bf7100f50f03197a2db331203befa1b560df",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_serial_master.h",
+      "local_path": "src/vendor/hal_serial_master.h",
+      "upstream_checkout_sha256": "5cf101caeb5d49bd904eb8bbeeb9f6718743e29b1982499550836b90032485a1",
+      "local_sha256": "d2c6659a15b943e6dc0c1930877748f86c890efd4b0d7f047a7c2fea9ce84c41",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_spi_master.cpp",
+      "local_path": "src/vendor/hal_spi_master.cpp",
+      "upstream_checkout_sha256": "a89e85eb318d18289444aa6fd465ae7ec6b4d67e30e65bd8aa5b052fb5b79e55",
+      "local_sha256": "63e4627521e4af9c8b8c2e0c7874849a583fff424378f6f5af916f22786d382f",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_spi_master.h",
+      "local_path": "src/vendor/hal_spi_master.h",
+      "upstream_checkout_sha256": "e9f2d20f7937f92854e3fe8d4976ad6406a5d7aff88c3f417a0a0c290b0e1d3d",
+      "local_sha256": "071791eb16876bb6d4fdff1c7876840582e4d27442b6853c4162b0e8d5b79442",
+      "identical_to_checkout": false
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_timer.c",
+      "local_path": "src/vendor/hal_timer.cpp",
+      "upstream_checkout_sha256": "0a462ce3c5ce27cd1a989ee6bdaf172c2bca397cb58d2b6bb5ccca13ff27bb5d",
+      "local_sha256": "0a462ce3c5ce27cd1a989ee6bdaf172c2bca397cb58d2b6bb5ccca13ff27bb5d",
+      "identical_to_checkout": true
+    },
+    {
+      "upstream_path": "hal/teensyduino/src/hal_timer.h",
+      "local_path": "src/vendor/hal_timer.h",
+      "upstream_checkout_sha256": "e0b78d8c63372f48f3e2fe1cb24f5f6e5ebd7a126ba86b9eb7090d05528c6477",
+      "local_sha256": "e0b78d8c63372f48f3e2fe1cb24f5f6e5ebd7a126ba86b9eb7090d05528c6477",
+      "identical_to_checkout": true
+    }
+  ],
+  "harness": {
+    "local_path": "ESP32S3_STRDC_Readback_Test.ino",
+    "origin": "Original diagnostic harness, not a vendor example",
+    "local_sha256": "159320b50dde6f54ff771dbde0c30adeaee6da9c812d1314cf8865acc8cf3031"
+  }
+}

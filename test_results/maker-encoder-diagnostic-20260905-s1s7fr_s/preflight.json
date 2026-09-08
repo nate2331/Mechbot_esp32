@@ -1,0 +1,117 @@
+{
+  "serial_connected": true,
+  "gamepad_connected": false,
+  "deadman": false,
+  "updated": 1788570953.8784192,
+  "serial_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "last_line": "I 1775616 -0.010193 -0.007263 0.000549 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 0.000000 3",
+  "encoders": [
+    15903,
+    18752,
+    36765,
+    37803
+  ],
+  "encoder_updated": 1788570953.8671129,
+  "imu": "I 1775616 -0.010193 -0.007263 0.000549 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 0.000000 3",
+  "imu_valid": true,
+  "imu_updated": 1788570953.8784192,
+  "navigation": "N 1775420 0.001247 0.000000 0.000000 0.0000 0 0 1",
+  "health": "H 1775420 IMU 1 1775391 3 1",
+  "help_identity": "Maker mapping: FL=M2 FR=M3 RL=M1 RR=M0; all encoders forward-positive",
+  "wheel_diagnostics": {
+    "FL": {
+      "pwm": 0.0,
+      "a_edges": 7973,
+      "b_edges": 7982,
+      "invalid_transitions": 0,
+      "updated": 1788570953.8445313
+    },
+    "FR": {
+      "pwm": 0.0,
+      "a_edges": 9430,
+      "b_edges": 9416,
+      "invalid_transitions": 0,
+      "updated": 1788570953.8556905
+    },
+    "RL": {
+      "pwm": 0.0,
+      "a_edges": 18488,
+      "b_edges": 18393,
+      "invalid_transitions": 1,
+      "updated": 1788570953.855823
+    },
+    "RR": {
+      "pwm": 0.0,
+      "a_edges": 18922,
+      "b_edges": 18911,
+      "invalid_transitions": 0,
+      "updated": 1788570953.8558807
+    }
+  },
+  "maintenance": false,
+  "board": {
+    "id": "maker",
+    "name": "Maker ESP32 Pro",
+    "firmware": "ESP32_MAKER_MECANUM_IMU_V1",
+    "fqbn": "esp32:esp32:esp32",
+    "sketch": "Maker_Mechbot",
+    "encoder_wheels": [
+      "FL",
+      "FR",
+      "RL",
+      "RR"
+    ],
+    "diagnostics": true,
+    "baseline": {
+      "pwm-fl": 177,
+      "pwm-fr": 177,
+      "pwm-rl": 177,
+      "pwm-rr": 177
+    },
+    "baseline_label": "Maker starting settings \u00b7 177 on every wheel",
+    "baseline_note": "Used in raised-wheel tests; not a matched-speed or floor-validated trim.",
+    "counts_per_revolution": {
+      "FL": 2468.8,
+      "FR": 2467.9,
+      "RL": 2473.5,
+      "RR": 2469.8
+    },
+    "calibration_source": "2026-09-03 ten-turn measurements; see HARDWARE_BASELINE.md",
+    "closed_loop": false,
+    "identity_source": "maker-help"
+  },
+  "rearm_required": true,
+  "calibration_active": false,
+  "recent_lines": [
+    "D FL PWM 0.0 A 7973 B 7982 INVALID 0",
+    "D FR PWM 0.0 A 9430 B 9416 INVALID 0",
+    "D RL PWM 0.0 A 18488 B 18393 INVALID 1",
+    "D RR PWM 0.0 A 18922 B 18911 INVALID 0",
+    "T 1774608 15903 18752 36765 37803",
+    "I 1774609 -0.010193 -0.007324 0.000549 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 0.000000 3",
+    "N 1774620 0.001248 0.000000 0.000000 0.0000 0 0 1",
+    "H 1774620 IMU 1 1774603 3 1",
+    "T 1774808 15903 18752 36765 37803",
+    "I 1774808 -0.010193 -0.007324 0.000549 0.999939 0.000000 0.000000 0.000000 -0.027344 0.003906 0.000000 3",
+    "N 1774819 0.001248 0.000000 0.000000 0.0000 0 0 1",
+    "H 1774819 IMU 1 1774793 3 1",
+    "T 1775008 15903 18752 36765 37803",
+    "I 1775008 -0.010254 -0.007324 0.000549 0.999939 0.000000 0.000000 0.000000 0.019531 0.003906 0.000000 3",
+    "N 1775019 0.001249 0.000000 0.000000 0.0000 0 0 1",
+    "H 1775019 IMU 1 1774992 3 1",
+    "T 1775208 15903 18752 36765 37803",
+    "I 1775208 -0.010254 -0.007263 0.000549 0.999939 0.000000 0.000000 0.000000 0.011719 -0.003906 0.000000 3",
+    "N 1775220 0.001248 0.000000 0.000000 0.0000 0 0 1",
+    "H 1775220 IMU 1 1775192 3 1",
+    "T 1775408 15903 18752 36765 37803",
+    "I 1775408 -0.010132 -0.007324 0.000549 0.999939 0.000000 0.000000 0.000000 0.019531 -0.003906 0.000000 3",
+    "N 1775420 0.001247 0.000000 0.000000 0.0000 0 0 1",
+    "H 1775420 IMU 1 1775391 3 1",
+    "D FL PWM 0.0 A 7973 B 7982 INVALID 0",
+    "D FR PWM 0.0 A 9430 B 9416 INVALID 0",
+    "D RL PWM 0.0 A 18488 B 18393 INVALID 1",
+    "D RR PWM 0.0 A 18922 B 18911 INVALID 0",
+    "T 1775616 15903 18752 36765 37803",
+    "I 1775616 -0.010193 -0.007263 0.000549 0.999939 0.000000 0.000000 0.000000 0.011719 0.003906 0.000000 3"
+  ]
+}

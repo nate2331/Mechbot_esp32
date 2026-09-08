@@ -1,0 +1,3 @@
+#pragma once
+#define ESP_ARDUINO_VERSION_MAJOR 3
+#define ESP_ARDUINO_VERSION_STR "HOST-STUB-3.x"

@@ -1,0 +1,8 @@
+cycle=0 HAL.open=-1 sh2_open=0 product_ids=-2 allocated=1
+cycle=1 HAL.open=0 sh2_open=0 product_ids=-2 allocated=1
+cycle=2 HAL.open=-1 sh2_open=0 product_ids=-2 allocated=1
+cycle=3 HAL.open=0 sh2_open=0 product_ids=-2 allocated=1
+cycle=4 HAL.open=-1 sh2_open=0 product_ids=-2 allocated=1
+cycle=5 HAL.open=0 sh2_open=0 product_ids=-2 allocated=1
+PASS: HAL.open error ignored; guarded close releases real SHTP slot after failed initialization; six retries work.
+PASS: unclosed first session makes second sh2_open fail (-1) before HAL.open. No unsafe close attempted after overwritten global state. reads=1400 opens=7 closes=6

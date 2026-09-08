@@ -1,0 +1,48 @@
+diff --git a/BNO08x_Accelerometer.ino b/ESP32S3_STRDC_Accel_Test.ino
+index 0164352..aec52f3 100644
+--- a/BNO08x_Accelerometer.ino
++++ b/ESP32S3_STRDC_Accel_Test.ino
+@@ -40,8 +40,8 @@
+  * INCLUDES
+  *************************************/
+ 
+-#include "interrupt.h"
+-#include "BNO08X.h"
++#include "src/vendor/interrupt.h"
++#include "src/vendor/BNO08X.h"
+ 
+ /*************************************
+  * DEFINITIONS
+@@ -50,8 +50,8 @@
+ bno08x_t bno;
+ 
+ // Select desired peripheral, initialization, pinout, interrupt will be configured automatically
+-//#define USE_I2C
+-#define USE_SPI
++#define USE_I2C
++//#define USE_SPI
+ //#define USE_UART
+ 
+ // Select desired data gathering behavior
+@@ -59,7 +59,7 @@ bno08x_t bno;
+ //#define USE_POLL
+ 
+ // Pin Definition
+-#define LED 3
++#define LED 47 // Unconnected GPIO; no external LED needed for this test.
+ 
+ #ifdef USE_SPI
+ // Pin definitions for SPI
+@@ -70,9 +70,9 @@ bno08x_t bno;
+ 
+ #ifdef USE_I2C
+ // Pin definitions for I2C
+-#define BNO_PIN_INT 17
+-#define BNO_PIN_RST 16
+-#define BNO_PIN_WAKE 15
++#define BNO_PIN_INT 6
++#define BNO_PIN_RST 4
++#define BNO_PIN_WAKE 5
+ #endif
+ 
+ #ifdef USE_UART
