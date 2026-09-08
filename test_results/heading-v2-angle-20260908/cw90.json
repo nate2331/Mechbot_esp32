@@ -1,0 +1,872 @@
+[
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7176.615225685,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.5809413489996587,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7176.616110306,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.5800567279993629,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7176.616704306,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.579462727999271,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7176.628884982,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.5672820519994275,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:38.5809266Z",
+    "navigation": "N 476159 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 476159 0 READY -141.52 -0.28 0.56 -12 -8 1004 0 0 0 0 2.469990",
+      "host_time": 7177.068484273,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 476159,
+      "frame_age_ms": 0,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.28,
+        0.56
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -12,
+        -8,
+        1004
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.12768276099996,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.623262477,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.29953544099953433,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.624150066,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.29864785199970356,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.624803856,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.29799406199981604,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.636952607,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.28584531099932065,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:39.2841218Z",
+    "navigation": "N 476959 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 476959 4 READY -141.52 -0.28 0.56 -12 -8 1001 0 0 0 0 2.469990",
+      "host_time": 7177.869400552,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 476959,
+      "frame_age_ms": 4,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.28,
+        0.56
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -12,
+        -8,
+        1001
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.053397365999444446,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.623262477,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.9756129240004157,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.624150066,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.9747253350005849,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.624803856,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.9740715450006974,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7177.636952607,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.961922794000202,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:40.0056816Z",
+    "navigation": "N 477559 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 477559 5 READY -141.52 -0.30 0.58 -12 -4 1005 0 0 0 0 2.469990",
+      "host_time": 7178.469035072,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 477559,
+      "frame_age_ms": 5,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.3,
+        0.58
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -12,
+        -4,
+        1005
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.12984032900021703,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7178.664264124,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.6687184450001951,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7178.710664215,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.6223183539996171,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7178.710958689,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.6220238799996878,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7178.711251028,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.6217315409994626,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:40.6952156Z",
+    "navigation": "N 478359 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 478359 7 READY -141.52 -0.29 0.57 -8 -4 1005 0 0 0 0 2.469990",
+      "host_time": 7179.267342286,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 478359,
+      "frame_age_ms": 7,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.29,
+        0.57
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -4,
+        1005
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.06564028299999336,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7179.631497561,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.3842027969994888,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7179.632419524,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.38328083399937896,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7179.633168209,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.3825321489994167,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7179.645646694,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.37005366399989725,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:41.3721669Z",
+    "navigation": "N 478959 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 478959 8 READY -141.52 -0.29 0.56 -8 -4 1005 0 0 0 0 2.469990",
+      "host_time": 7179.86547694,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 478959,
+      "frame_age_ms": 8,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.29,
+        0.56
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -4,
+        1005
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.15022341799976857,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.637437943,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.05922492399986368,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.638228294,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.05843457299943111,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.638956823,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.05770604400004231,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.651122501,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.045540365999841015,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:42.0711153Z",
+    "navigation": "N 479759 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 479759 9 READY -141.52 -0.28 0.54 -8 -4 1000 0 0 0 0 2.469990",
+      "host_time": 7180.665213353,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 479759,
+      "frame_age_ms": 9,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.28,
+        0.54
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -4,
+        1000
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.03144951400008722,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.637437943,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.765610542000104,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.638228294,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.7648201909996715,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.638956823,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.7640916620002827,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7180.651122501,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.7519259840000814,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:42.7533267Z",
+    "navigation": "N 480359 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 480359 10 READY -141.52 -0.28 0.55 -8 -8 1001 0 0 0 0 2.469990",
+      "host_time": 7181.270798717,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 480359,
+      "frame_age_ms": 10,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.28,
+        0.55
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -8,
+        1001
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.13224976800029253,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7181.643221562,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.43584629199995106,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7181.644175452,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.43489240199960477,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7181.656401961,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.42266589300015767,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7181.657111064,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.42195678999996744,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:43.4502874Z",
+    "navigation": "N 481159 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 481159 2 READY -141.52 -0.28 0.55 -8 -8 1001 0 0 0 0 2.469990",
+      "host_time": 7182.061844711,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 481159,
+      "frame_age_ms": 2,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.28,
+        0.55
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -8,
+        1001
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.01722314299968275,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.648169887,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.12696886899993842,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.648989612,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.12614914400000998,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.649582831,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.12555592500029888,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.661652312,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.1134864440000456,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:44.1637996Z",
+    "navigation": "N 481759 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 481759 3 READY -141.52 -0.27 0.55 -8 -4 1005 0 0 0 0 2.469990",
+      "host_time": 7182.675172133,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 481759,
+      "frame_age_ms": 3,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.27,
+        0.55
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -4,
+        1005
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.09996662300000025,
+      "fresh": true
+    }
+  },
+  {
+    "diagnostics": {
+      "FL": {
+        "raw": "D FL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.648169887,
+        "type": "diagnostic",
+        "wheel": "FL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.8380238929994448,
+        "fresh": true
+      },
+      "FR": {
+        "raw": "D FR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.648989612,
+        "type": "diagnostic",
+        "wheel": "FR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.8372041679995164,
+        "fresh": true
+      },
+      "RL": {
+        "raw": "D RL PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.649582831,
+        "type": "diagnostic",
+        "wheel": "RL",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.8366109489998053,
+        "fresh": true
+      },
+      "RR": {
+        "raw": "D RR PWM 0.0 A 0 B 0 INVALID 0",
+        "host_time": 7182.661652312,
+        "type": "diagnostic",
+        "wheel": "RR",
+        "pwm": 0.0,
+        "a_edges": 0,
+        "b_edges": 0,
+        "invalid_transitions": 0,
+        "age_s": 0.824541467999552,
+        "fresh": true
+      }
+    },
+    "received_utc": "2026-09-08T23:16:44.8841798Z",
+    "navigation": "N 482559 0.000000 0.000000 0.000000 0.0000 0 0 0",
+    "imu": {
+      "raw": "IR2 482559 4 READY -141.52 -0.27 0.55 -8 -4 1000 0 0 0 0 2.469990",
+      "host_time": 7183.463455575,
+      "type": "imu",
+      "transport": "uart-rvc",
+      "device_ms": 482559,
+      "frame_age_ms": 4,
+      "valid": true,
+      "reason": "ready",
+      "yaw_rad": 2.46999,
+      "ypr_deg": [
+        -141.52,
+        -0.27,
+        0.55
+      ],
+      "heading_convention": "ccw-positive",
+      "raw_acceleration_mg": [
+        -8,
+        -4,
+        1000
+      ],
+      "quaternion": null,
+      "gyro": null,
+      "acceleration": null,
+      "status": null,
+      "heading_accepted": false,
+      "control_ready": false,
+      "bad_checksum": 0,
+      "discontinuities": 0,
+      "uart_errors": 0,
+      "age_s": 0.02273820499976864,
+      "fresh": true
+    }
+  }
+]
