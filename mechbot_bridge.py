@@ -20,9 +20,11 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import serial
+from mechbot_pwm_feedback import measure, recommend, heading_result
 from mechbot_profiles import MAKER_HELP_IDENTITY, MAKER_RVC_HELP_IDENTITY, MAKER_RVC_V2_HELP_IDENTITY, profile_for_firmware, require_profile
 from mechbot_operations import OperationsService
 from mechbot_telemetry import RVC_BANNERS, RVC_HELP_READY, parse_event
+from mechbot_rvc_trial_guard import RvcTrialGuard
 from mechbot_http import handle_get, handle_post, read_json_body, validate_origin
 
 SEND_HZ = 20.0
@@ -83,6 +85,9 @@ class Bridge:
         self._responses = []
         self.telemetry = {"serial_connected": False, "gamepad_connected": False,
                           "deadman": False, "last_line": None, "updated": None}
+        self._heading_configuring = False
+        self._powered_samples = None
+        self._powered_started = 0.0
         self.running = True
         self.maintenance = False
         self.firmware_job = {"state": "idle", "started": None, "finished": None,
@@ -148,7 +153,7 @@ class Bridge:
                         test_limits={"magnitude_min": MIN_TEST_MAGNITUDE,
                                      "magnitude_max": MAX_TEST_MAGNITUDE,
                                      "duration_min_ms": 500,
-                                     "duration_max_ms": 3000}))
+                                     "duration_max_ms": 5000}))
 
     def export_tuning(self, format):
         """Read-only snapshot; rates are pulse averages, not steady wheel speeds."""
@@ -204,6 +209,8 @@ class Bridge:
             raise ValueError("safety confirmation required")
         with self.lock:
             board = self._require_board()
+            if workflow == 'imu' and board.get('firmware') != 'ESP32_MAKER_MECANUM_RVC_V2':
+                raise RuntimeError('Heading comparison requires the installed RVC V2 firmware')
             if self.maintenance or self.firmware_job["state"] in ("starting", "running"):
                 raise RuntimeError("firmware maintenance is active")
             if self._restore_pending:
@@ -269,6 +276,9 @@ class Bridge:
         current = {key: int(round(test.get("settings", {}).get(
             key, self.tuning_session.get("live_settings", {}).get(
                 key, self.board_profile()["baseline"][key])))) for key in PWM_KEYS}
+        if self.board_profile()["id"] == "maker":
+            return recommend(current, test.get("encoder_measurement", {}), step,
+                             test.get("heading_enabled", False), quality)
         if self.tuning_session.get("workflow") == "bench":
             return {"kind": "hold",
                     "summary": "Use each wheel's response to check repeatability, then adjust PWM or test output manually and repeat the identical setup.",
@@ -420,6 +430,8 @@ class Bridge:
             recommendation = test["recommendation"]
             if recommendation.get("kind") != "pwm-vector":
                 raise ValueError("this result does not contain a PWM change")
+            if any(int(round(self.tuning_session.get("live_settings", {}).get(key, -1))) != int(round(test.get("settings", {}).get(key, -2))) for key in PWM_KEYS):
+                raise ValueError("PWM changed since this run; repeat before applying its recommendation")
             self.apply_tuning_settings(
                 recommendation["suggested_settings"], "recommendation", test_id)
             test["recommendation_applied"] = True
@@ -473,6 +485,8 @@ class Bridge:
                 ("ended-live" if keep_live else "restored"))
             self._persist_session()
             self.calibration["active"] = False
+            if self.tuning_session.get('workflow') == 'imu':
+                self.write('IMU REVOKE')
             return self.tuning_status()
 
     def find_port(self):
@@ -615,8 +629,8 @@ class Bridge:
         if direction not in CALIBRATION_DIRECTIONS:
             raise ValueError("invalid calibration direction")
         if (not isinstance(duration_ms, int) or isinstance(duration_ms, bool) or
-                not 500 <= duration_ms <= 3000):
-            raise ValueError("duration_ms must be an integer from 500 to 3000")
+                not 500 <= duration_ms <= 5000):
+            raise ValueError("duration_ms must be an integer from 500 to 5000")
         if (isinstance(magnitude, bool) or not isinstance(magnitude, (int, float)) or
                 not math.isfinite(magnitude) or
                 not MIN_TEST_MAGNITUDE <= magnitude <= MAX_TEST_MAGNITUDE):
@@ -625,6 +639,8 @@ class Bridge:
         with self.lock:
             if not self.calibration["active"]:
                 raise RuntimeError("calibration mode is not active")
+            if self._heading_configuring:
+                raise RuntimeError("heading settings are still being confirmed")
             if self.calibration["running"]:
                 raise RuntimeError("a calibration pulse is already running")
             if not self.serial:
@@ -639,6 +655,10 @@ class Bridge:
             encoder_updated = self.telemetry.get("encoder_updated")
             if encoder_updated is None or time.time() - encoder_updated > 1.0:
                 raise RuntimeError("encoder telemetry is unavailable or stale")
+            if self.tuning_session.get("workflow") == "imu" and self.tuning_session.get("live_settings", {}).get("heading-enabled"):
+                event = parse_event(self.telemetry.get("imu", ""), time.time())
+                if not event or not event.get("valid") or not event.get("heading_accepted"):
+                    raise RuntimeError("Heading acceptance is unavailable; Apply heading settings must confirm it before a run")
             before = list(self.telemetry.get("encoders", []))
             if len(before) != 4:
                 raise RuntimeError("encoder telemetry is unavailable")
@@ -652,6 +672,66 @@ class Bridge:
                          args=(direction, duration_ms, magnitude), daemon=True).start()
         return self.calibration_status()
 
+    def set_trial_heading(self, enabled, kp, limit, deadband, confirmation=None):
+        if type(enabled) is not bool:
+            raise ValueError('enabled must be boolean')
+        values = {'heading-kp': (kp, 0, 5), 'heading-max': (limit, 0, 1),
+                  'heading-deadband-deg': (deadband, 0, 30)}
+        for key, (value, low, high) in values.items():
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not low <= value <= high:
+                raise ValueError(f'invalid {key}')
+        with self.lock:
+            self._require_session_board()
+            if not self.tuning_session.get('active') or self.tuning_session.get('workflow') != 'imu':
+                raise RuntimeError('start a heading tuning session first')
+            if self._heading_configuring or self.calibration['running'] or self.maintenance or self._restore_pending:
+                raise RuntimeError('stop the current test first')
+            if self.board_profile().get('firmware') != 'ESP32_MAKER_MECANUM_RVC_V2':
+                raise RuntimeError('RVC V2 required')
+            if enabled:
+                if confirmation != 'HEADING_MEASURED':
+                    raise ValueError('confirm the heading reference before enabling correction')
+                event = parse_event(self.telemetry.get('imu', ''), time.time())
+                if not event or not event.get('valid') or not 0 <= time.time()-(self.telemetry.get('imu_updated') or 0) <= .5:
+                    raise RuntimeError('fresh IMU required')
+            self.write('V 0 0 0'); self.write('X'); self.write('F 0')
+            self.write('IMU REVOKE')
+            for key, (value, _, _) in values.items():
+                self.write(f'CFG SET {key} {value}')
+                self.tuning_session['live_settings'][key] = value
+            self.write(f'CFG SET heading-enabled {int(enabled)}')
+            self.tuning_session['live_settings']['heading-enabled'] = 0
+            self._heading_configuring = True
+        try:
+            # Let configuration finish before accepting heading. Never hold the
+            # receive lock while waiting for firmware acknowledgement/telemetry.
+            time.sleep(.35)
+            if enabled:
+                lines = self.command('IMU ACCEPT', wait=.35)
+                if 'OK IMU ACCEPT SESSION_ONLY' not in lines:
+                    raise RuntimeError('Firmware did not accept heading; no motion started')
+                deadline = time.monotonic() + 1.2
+                while True:
+                    with self.lock:
+                        event = parse_event(self.telemetry.get('imu', ''), time.time())
+                        accepted = (event and event.get('valid') and event.get('heading_accepted') and
+                                    0 <= time.time()-(self.telemetry.get('imu_updated') or 0) <= .5)
+                    if accepted: break
+                    if time.monotonic() >= deadline:
+                        raise RuntimeError('Heading acceptance was lost after configuration; no motion started')
+                    time.sleep(.05)
+            with self.lock:
+                self.tuning_session['live_settings']['heading-enabled'] = int(enabled)
+                self._persist_session()
+                return self.tuning_status()
+        except Exception:
+            self.write('CFG SET heading-enabled 0')
+            self.write('IMU REVOKE')
+            with self.lock: self._persist_session()
+            raise
+        finally:
+            with self.lock: self._heading_configuring = False
+
     def _run_calibration_pulse(self, direction, duration_ms, magnitude):
         motion = tuple(value * magnitude for value in CALIBRATION_DIRECTIONS[direction])
         started = time.monotonic()
@@ -659,12 +739,29 @@ class Bridge:
         error = None
         after = list(self.calibration["before"] or [0, 0, 0, 0])
         board_id = self.board_profile()["id"]
+        heading_trial = self.tuning_session.get('active') and self.tuning_session.get('workflow') == 'imu'
+        heading_on = bool(self.tuning_session.get('live_settings', {}).get('heading-enabled', 0))
+        guard = RvcTrialGuard(heading_enabled=heading_on, heading_accepted=heading_on,
+                              require_clean_encoders=False) if heading_trial and heading_on else None
+        heading_samples = []
+        with self.lock:
+            self._powered_samples = []
+            self._powered_started = started
         try:
             while time.monotonic() < deadline and not self.calibration_abort.is_set():
                 if self.board_profile()["id"] != board_id:
                     raise RuntimeError("controller changed during test")
                 if time.time() - (self.telemetry.get("encoder_updated") or 0) > 1:
                     raise RuntimeError("encoder telemetry became stale during test")
+                if self.tuning_session.get("active"):
+                    snapshot = self.snapshot()
+                    snapshot['calibration_active'] = False
+                    heading_samples.append({'time': time.time(), 'imu': snapshot.get('imu'),
+                                            'imu_updated': snapshot.get('imu_updated'),
+                                            'navigation': snapshot.get('navigation'),
+                                            'wheel_diagnostics': snapshot.get('wheel_diagnostics')})
+                    if guard:
+                        guard.check(snapshot, time.time())
                 self.write("V %.3f %.3f %.3f" % motion)
                 with self.lock:
                     current = list(self.telemetry.get("encoders", [0, 0, 0, 0]))
@@ -677,8 +774,11 @@ class Bridge:
         except Exception as exc:
             error = str(exc)
         finally:
+            actual_elapsed_ms = min(duration_ms, max(0, int((time.monotonic() - started) * 1000)))
             # Capture powered response before STOP; exclude the coast-down wait.
             with self.lock:
+                powered_samples = self._powered_samples or []
+                self._powered_samples = None
                 after = list(self.telemetry.get("encoders", after))
             self.stop()
         aborted = self.calibration_abort.is_set()
@@ -687,9 +787,11 @@ class Bridge:
             before = self.calibration["before"] or [0, 0, 0, 0]
             deltas = [after[i] - before[i] for i in range(4)]
             phase = "aborted" if aborted else ("error" if error else "complete")
-            self.calibration.update(running=False, phase=phase, elapsed_ms=duration_ms,
+            self.calibration.update(running=False, phase=phase, elapsed_ms=actual_elapsed_ms,
                                     after=after, deltas=deltas, live_deltas=deltas,
-                                    error=error, aborted=aborted)
+                                    error=error, aborted=aborted,
+                                    heading_samples=heading_samples,
+                                    heading_enabled=heading_on)
             if self.tuning_session.get("active") and not error and not aborted:
                 live = dict(self.tuning_session.get("live_settings", {}))
                 settings = {key: int(round(live.get(key, self.board_profile()["baseline"][key])))
@@ -727,6 +829,11 @@ class Bridge:
                     "id": len(self.tuning_session["tests"]) + 1,
                     "timestamp": time.time(), "command": direction,
                     "duration_ms": duration_ms, "magnitude": magnitude,
+                    "heading_enabled": heading_on, "heading_samples": heading_samples,
+                    "heading_settings": {key: live.get(key) for key in ALLOWED_SETTINGS if key.startswith('heading-')},
+                    "heading_measurement": heading_result(heading_samples),
+                    "powered_encoder_samples": powered_samples,
+                    "encoder_measurement": measure(powered_samples, self.board_profile().get("counts_per_revolution", {}), self._wheel_commands(direction)),
                     "deltas": deltas, "encoder_rates": rates,
                     "actual_duty": actual_duty, "comparison": comparison,
                     "settings": settings, "observation": None, "heading": None,
@@ -805,9 +912,18 @@ class Bridge:
             if parts[:1] in (["READY"], ["WARN"], ["FAULT"], ["ERR"]):
                 print(line, flush=True)
             try:
-                if parts[:1] == ["T"] and len(parts) == 6:
+                if (len(parts) == 9 and parts[0:2] == ['PWM_CONFIG', 'HZ'] and
+                        parts[3] == 'BITS' and parts[5] == 'SCALE' and parts[7:] == ['CLOCK', 'APB']):
+                    hz, bits, scale = int(parts[2]), int(parts[4]), int(parts[6])
+                    if 0 < hz <= 100000 and 1 <= bits <= 20 and scale > 0:
+                        self.telemetry['pwm_config'] = dict(hz=hz, bits=bits, scale=scale, clock='APB', updated=now)
+                elif parts[:1] == ["T"] and len(parts) == 6:
                     self.telemetry["encoders"] = [int(x) for x in parts[2:6]]
                     self.telemetry["encoder_updated"] = now
+                    if self._powered_samples is not None:
+                        self._powered_samples.append(dict(ms=int(parts[1]),
+                            elapsed=time.monotonic()-self._powered_started,
+                            counts=list(self.telemetry["encoders"])))
                 elif parts[:1] in (["IR1"], ["IR2"]):
                     event = parse_event(line, now)
                     self.telemetry['imu'] = line
@@ -1071,6 +1187,9 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path == "/api/tuning/settings":
                 result = self.bridge.apply_tuning_settings(
                     data.get("settings"), data.get("source", "manual"))
+            elif self.path == '/api/tuning/heading':
+                result = self.bridge.set_trial_heading(data.get('enabled'), data.get('kp'),
+                    data.get('limit'), data.get('deadband'), data.get('confirmation'))
             elif self.path == "/api/tuning/recommendation":
                 result = self.bridge.apply_recommendation(data.get("test_id"))
             elif self.path == "/api/tuning/baseline": result = self.bridge.apply_baseline()

@@ -67,8 +67,8 @@
       <article class="panel workflow">
         <p class="eyebrow">AFTER MOTOR BALANCE</p>
         <h2>Heading-hold tuning</h2>
-        <p>Once open-loop PWM is repeatable, use fresh IMU yaw to tune heading correction. Motor tests keep heading correction disabled.</p>
-        <button class="secondary" disabled>Balance PWM first</button>
+        <p>Compare correction off and on with your installed RVC V2 firmware. Choose duration, adjust heading settings, and record the path yourself.</p>
+        <button id="openHeadingTuning" data-workflow="imu" class="secondary">Open heading comparison</button>
       </article>
       <article class="panel workflow future">
         <p class="eyebrow">NEXT CONTROL MILESTONE</p>
@@ -90,24 +90,39 @@
       </div>
     </section>
 
+    <section class="control-model panel" aria-labelledby="controlModelTitle">
+      <div>
+        <p class="eyebrow">KEEP THESE CONTROLS SEPARATE</p>
+        <h2 id="controlModelTitle">Wheel balance, then heading hold</h2>
+        <p class="panel-copy">Wheel PWM is the saved baseline for matching the four wheels. Heading hold is a temporary left/right adjustment layered on that baseline only while the robot is turning away from its target heading.</p>
+      </div>
+      <div class="control-model-status">
+        <strong id="headingLayerState">Heading hold: checking…</strong>
+        <small id="headingLayerDetail">Load settings to see the active correction limit.</small>
+      </div>
+    </section>
+
     <details class="panel diagnostics">
       <summary>Diagnostics &amp; maintenance</summary>
       <div class="workspace">
         <article>
-          <h2>Live configuration</h2>
+          <h2>1. Saved wheel-balance baseline</h2>
+          <p class="panel-copy">Use these four values for wheel matching. Tune on the floor with heading hold off, then save the proven baseline.</p>
           <div class="motor-grid">
             <label>Front left PWM<input id="pwm-fl" type="number" min="0" max="255"></label>
             <label>Front right PWM<input id="pwm-fr" type="number" min="0" max="255"></label>
             <label>Rear left PWM<input id="pwm-rl" type="number" min="0" max="255"></label>
             <label>Rear right PWM<input id="pwm-rr" type="number" min="0" max="255"></label>
           </div>
+          <h2 class="control-section-title">2. Optional heading-hold overlay</h2>
+          <p class="panel-copy">This does not replace the wheel baseline. It adds a limited correction only when the IMU sees heading error.</p>
           <div class="tuning-grid">
             <label>Heading Kp<input id="heading-kp" type="number" step=".05"></label>
             <label>Max correction<input id="heading-max" type="number" step=".01"></label>
             <label>Deadband °<input id="heading-deadband-deg" type="number" step=".1"></label>
             <label>Heading sign<select id="heading-sign"><option value="1">+1</option><option value="-1">−1</option></select></label>
           </div>
-          <label class="toggle"><input id="heading-enabled" type="checkbox">Heading correction enabled</label>
+          <label class="toggle"><input id="heading-enabled" type="checkbox">Enable heading-hold overlay</label>
           <div class="form-actions">
             <button id="apply">Apply live</button>
             <button id="save" class="secondary">Save to ESP32</button>

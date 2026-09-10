@@ -20,7 +20,7 @@ let workflow = null;
 let baselinePrevious = null;
 let selectedDirection = 'forward';
 let testMagnitude = 0.45;
-let testDuration = 1000;
+let testDuration = 5000;
 let runToken = 0;
 const dismissedRecommendations = new Set();
 
@@ -77,6 +77,7 @@ function renderBoard() {
       if (!diagnostic || Date.now() / 1000 - diagnostic.updated > 3) return `${wheel}: unavailable / stale`;
       return `${wheel}: PWM ${diagnostic.pwm} · A ${diagnostic.a_edges} · B ${diagnostic.b_edges} · invalid ${diagnostic.invalid_transitions}`;
     }).join('\n') : 'Per-wheel diagnostics are available on Maker firmware.';
+  renderControlModel();
   document.querySelectorAll('[data-workflow]').forEach(button => { button.disabled = !known; });
   for (const id of ['apply', 'save']) $(id).disabled = !known || Boolean(session.active) || Boolean(status.maintenance);
 }
@@ -101,6 +102,18 @@ function cfg(lines = []) {
   return output;
 }
 
+function renderControlModel() {
+  const enabled = $('heading-enabled').checked;
+  const limit = Number($('heading-max').value);
+  const state = $('headingLayerState');
+  const detail = $('headingLayerDetail');
+  state.textContent = enabled ? 'Heading hold: ON (dynamic overlay)' : 'Heading hold: OFF (baseline only)';
+  detail.textContent = enabled && Number.isFinite(limit)
+    ? `It may adjust left and right wheel commands by up to ${(limit * 100).toFixed(0)}% of the drive command. Your saved wheel PWM remains the baseline.`
+    : 'Tune and save wheel balance first. Turn this on only for a controlled heading comparison.';
+  state.className = enabled ? 'enabled' : 'disabled';
+}
+
 async function loadSettings() {
   try {
     const values = cfg((await request('/api/settings')).lines);
@@ -108,6 +121,7 @@ async function loadSettings() {
       if (id === 'heading-enabled') $(id).checked = values[id] === '1';
       else if (values[id] != null) $(id).value = values[id];
     }
+    renderControlModel();
     $('message').textContent = 'Loaded from ESP32';
   } catch (error) {
     $('message').textContent = error.message;
@@ -134,6 +148,10 @@ async function refresh() {
     $('serialState').textContent = status.serial_connected ? 'Connected' : 'Disconnected';
     $('firmware').textContent = status.firmware || (status.board?.identity_source === 'maker-help'
       ? 'Maker identified · firmware version not reported' : status.serial_port) || 'No serial device';
+    const pwmConfig = status.pwm_config;
+    $('firmware').textContent += status.serial_connected && pwmConfig && Date.now()/1000-pwmConfig.updated < 3
+      ? ` · PWM ${pwmConfig.hz} Hz (${pwmConfig.bits}-bit ${pwmConfig.clock})`
+      : ' · PWM frequency unconfirmed';
     card('serialState', status.serial_connected ? 'good' : 'bad');
     $('encoderState').textContent = encoderFresh ? 'Telemetry fresh' : 'Unavailable / stale';
     card('encoderState', encoderFresh ? 'good' : 'warn');
@@ -192,17 +210,17 @@ function renderNext() {
 function workflowCopy() {
   if (workflow === 'bench') return {
     title: 'Encoder response check',
-    copy: 'With every wheel clear of the floor, change PWM or test output and compare each encoder with its own prior rate.',
+    copy: 'Compare calibrated wheel RPM using steady powered samples. Run for five seconds, review the suggested PWM reductions, and apply them yourself.',
     warning: 'All four wheels must be securely off the floor. Pulse totals include startup and are not steady-speed measurements.',
   };
   if (workflow === 'imu') return {
-    title: 'Heading-ready PWM tuning',
-    copy: 'First establish repeatable open-loop PWM. Tests temporarily disable heading correction so it cannot hide motor imbalance.',
-    warning: 'Use a clear floor area. If IMU telemetry is stale, finish PWM balance before attempting heading-gain tuning.',
+    title: 'Heading hold comparison',
+    copy: 'Run a baseline with correction off, then enable heading hold and repeat. Adjust gain, correction limit, and deadband here.',
+    warning: 'Use a clear floor area. Keep the stop control within reach. Fresh RVC V2 heading is required for these runs.',
   };
   return {
     title: 'Guided floor PWM tuning',
-    copy: 'Run repeatable moves, report what the chassis actually did, and A/B test small reversible PWM changes.',
+    copy: 'Run repeatable moves and review encoder-based PWM suggestions. Record floor behavior to assess traction and heading separately.',
     warning: 'Use a clear, consistent floor and stay within immediate reach of power. Begin with low test output.',
   };
 }
@@ -220,17 +238,23 @@ function configureFooter({ primaryText, primaryAction, primaryDisabled = false,
 }
 
 function openSession(nextWorkflow) {
+  if (nextWorkflow === 'imu') {
+    testDuration = 5000;
+    testMagnitude = 1.0;
+  }
   workflow = nextWorkflow || session.workflow || 'floor';
   $('sessionModal').hidden = false;
   renderSession();
 }
 
 function renderSession() {
-  workflow = session.workflow || workflow || 'floor';
+  workflow = session.active ? session.workflow : (workflow || 'floor');
   $('modalTitle').textContent = workflowCopy().title;
   $('sessionMessage').textContent = session.active
     ? `${(session.tests || []).length} test(s) stored · changes are live, not saved`
     : 'Not started';
+  if (session.calibration?.error) $('sessionMessage').textContent =
+    `Stopped after ${(session.calibration.elapsed_ms / 1000).toFixed(2)} s: ${session.calibration.error}`;
 
   if (!session.active) return renderPreparation();
   if (session.calibration?.running) return renderRunning(session.calibration);
@@ -337,13 +361,23 @@ function renderWorkbench() {
         </label>
         <label>Duration
           <select id="testDuration">
-            ${[[750, '0.75 s'], [1000, '1.0 s'], [1500, '1.5 s'], [2000, '2.0 s'], [3000, '3.0 s']]
+            ${[[750, '0.75 s'], [1000, '1.0 s'], [1500, '1.5 s'], [2000, '2.0 s'], [3000, '3.0 s'], [5000, '5.0 s']]
               .map(([value, label]) => `<option value="${value}" ${testDuration === value ? 'selected' : ''}>${label}</option>`).join('')}
           </select>
         </label>
         <div class="duty-preview"><span>Approx. duty this test</span><strong id="dutyPreview">—</strong></div>
       </div>
-      <div class="cal-warning subtle">Heading correction is disabled during every motor test. The controller is disconnected while the session owns the motors.</div>
+      ${workflow === 'imu' ? `<section class="heading-controls"><h3>Heading hold</h3>
+        <label class="check-row"><input id="trialHeadingEnabled" type="checkbox" ${live['heading-enabled'] ? 'checked' : ''}>Enable correction for the next run</label>
+        <div class="test-options">
+          <label>Gain<input id="trialHeadingKp" type="number" min="0" max="5" step="0.05" value="${Number(live['heading-kp'] ?? .7)}"></label>
+          <label>Correction limit<input id="trialHeadingLimit" type="number" min="0" max="1" step="0.05" value="${Number(live['heading-max'] ?? .3)}"></label>
+          <label>Deadband (degrees)<input id="trialHeadingDeadband" type="number" min="0" max="30" step="0.5" value="${Number(live['heading-deadband-deg'] ?? 1.5)}"></label>
+        </div>
+        <label class="check-row"><input id="trialHeadingConfirmed" type="checkbox">I have checked the mounted sensor's heading direction and accept it for this trial.</label>
+        <button id="applyTrialHeading" class="secondary">Apply heading settings</button>
+        <p>Applied: correction ${live['heading-enabled'] ? 'ON' : 'OFF'}. Changes stop motors first. Correction-on stops if heading is lost; correction-off records IMU data without depending on it. Encoder errors are recorded for review.</p>
+      </section>` : '<div class="cal-warning subtle">Heading correction starts disabled. The controller is disconnected while the session owns the motors.</div>'}
       <button id="runTest" class="run-test">3-second countdown · run ${DIRECTION_LABELS[selectedDirection]}</button>
     </section>
 
@@ -374,7 +408,7 @@ function renderHistory(tests) {
       return `<div class="history-row">
         <span>#${test.id}${best ? ' · BEST' : ''}</span>
         <strong>${DIRECTION_LABELS[test.command]}</strong>
-        <span>${Math.round((test.magnitude || 1) * 100)}% · ${test.score}/5</span>
+        <span>${Math.round((test.magnitude || 1) * 100)}% · ${test.duration_ms / 1000}s · hold ${test.heading_enabled ? 'ON' : 'OFF'} · ${test.score}/5</span>
         <span>${rates} ticks/s</span>
         <span>${PWM_KEYS.map(key => pwmValue(test.settings, key)).join(' / ')}</span>
         <button class="secondary" data-restore-test="${test.id}">Use #${test.id} PWM</button>
@@ -471,6 +505,19 @@ function bindWorkbench() {
     button.onclick = () => restoreTestPwm(Number(button.dataset.restoreTest));
   });
   $('runTest').onclick = runTest;
+  if ($('applyTrialHeading')) $('applyTrialHeading').onclick = async () => {
+    try {
+      session = await post('/api/tuning/heading', {
+        enabled: $('trialHeadingEnabled').checked,
+        kp: Number($('trialHeadingKp').value),
+        limit: Number($('trialHeadingLimit').value),
+        deadband: Number($('trialHeadingDeadband').value),
+        confirmation: $('trialHeadingConfirmed').checked ? 'HEADING_MEASURED' : null,
+      });
+      renderWorkbench();
+      $('sessionMessage').textContent = 'Heading settings sent. Run checks verify live sensor and mode before motion.';
+    } catch (error) { $('sessionMessage').textContent = error.message; }
+  };
   $('finishSave').onclick = () => endSession(true, true);
 }
 
@@ -590,7 +637,7 @@ function renderObservation(test) {
   $('sessionProgress').style.width = '68%';
   const magnitude = Math.round(Number(test.magnitude || 1) * 100);
   const chassisQuestions = workflow === 'bench' ? `
-    <div class="cal-warning subtle">Wheels-up tests cannot reveal chassis heading or path error. Score wheel response quality, then change one PWM or output value and repeat.</div>` : `
+    <div class="cal-warning subtle">Wheels-up tests cannot reveal chassis heading or path error. Score wheel response quality, then review the encoder-based recommendation and repeat.</div>` : `
     <fieldset><legend>Did the robot’s nose rotate? <small>Left = counterclockwise viewed from above</small></legend>
       ${radioCards('heading', [['straight', 'No rotation'], ['yaw-left', 'Nose turned left'], ['yaw-right', 'Nose turned right'], ['unsure', 'Not sure']], 'straight')}
     </fieldset>
@@ -603,11 +650,12 @@ function renderObservation(test) {
     <div class="rear-feedback">
       ${encoderWheels().map(name => `<div class="rate-card">
         <span>${name} encoder</span>
-        <strong>${Math.abs(Number(test.encoder_rates?.[name] || 0)).toFixed(1)} <small>ticks/s</small></strong>
+        <strong>${test.encoder_measurement?.valid ? Number(test.encoder_measurement.rpm[name]).toFixed(1) : Math.abs(Number(test.encoder_rates?.[name] || 0)).toFixed(1)} <small>${test.encoder_measurement?.valid ? "steady RPM" : "pulse ticks/s"}</small></strong>
         <em>${rearComparison(test, name)}</em>
       </div>`).join('')}
     </div>
-    <p class="sensor-caveat">Compare each wheel with its own earlier run at the same output and duration. These rates include startup.</p>
+    <p class="sensor-caveat">${test.encoder_measurement ? test.encoder_measurement.reason : "Legacy pulse rates include startup; repeat to collect steady RPM."}</p>
+    <p class="sensor-caveat">${test.heading_measurement?.summary || "No recorded heading measurement for this run."}</p>
     <div class="actual-duty">${PWM_KEYS.map(key => `<div><span>${PWM_META[key].short} duty</span><strong>${test.actual_duty?.[key] ?? '—'}</strong><small>cap ${pwmValue(test.settings, key)}</small></div>`).join('')}</div>
 
     ${chassisQuestions}
@@ -675,7 +723,7 @@ function renderRecommendation(test) {
     </div>
     ${scoreComparison}
     <div class="repeat-card"><strong>Required comparison</strong><p>Repeat <b>${DIRECTION_LABELS[test.command]}</b> at <b>${Math.round(Number(test.magnitude || 1) * 100)}%</b> for <b>${(test.duration_ms / 1000).toFixed(2).replace(/0+$/, '').replace(/\.$/, '')} s</b>. Changing the setup makes the A/B result ambiguous.</p></div>
-    <div class="cal-warning subtle">This is an open-loop trim based on your chassis observation. It is not a rear-encoder speed ratio or closed-loop PID.</div>`;
+    <div class="cal-warning subtle">${recommendation.source === "encoders" ? "Encoder RPM determines this trim. Apply it, then repeat at the same output and direction. No automatic motor run or continuous PID." : "This trim is based on chassis observations."}</div>`;
 
   const skip = () => {
     dismissedRecommendations.add(test.id);
@@ -842,6 +890,11 @@ $('updateFirmware').onclick = async () => {
     catch (error) { $('firmwareLog').textContent = error.message; }
   }
 };
+
+['heading-enabled', 'heading-max'].forEach(id => {
+  $(id).addEventListener('input', renderControlModel);
+  $(id).addEventListener('change', renderControlModel);
+});
 
 loadSettings();
 refresh();

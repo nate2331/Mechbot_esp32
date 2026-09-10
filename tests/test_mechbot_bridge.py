@@ -28,6 +28,9 @@ class FakeSerial:
         if self.bridge and command == "CFG GET":
             for key, value in self.settings.items():
                 self.bridge.parse_line(f"CFG {key} {value}")
+        elif self.bridge and command == "IMU ACCEPT":
+            self.bridge.parse_line("OK IMU ACCEPT SESSION_ONLY")
+            self.bridge.parse_line("IR2 1200 0 READY 0 0 0 0 0 1000 1 0 0 0 0")
         elif command.startswith("CFG SET"):
             _, _, key, value = command.split()
             self.settings[key] = float(value)
@@ -55,6 +58,50 @@ class CalibrationSafetyTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.bridge.start_calibration("yes")
 
+    def test_pwm_configuration_is_reported_from_firmware(self):
+        self.bridge.parse_line('PWM_CONFIG HZ 248 BITS 9 SCALE 2 CLOCK APB')
+        config = self.bridge.snapshot()['pwm_config']
+        self.assertEqual((config['hz'], config['bits'], config['scale']), (248,9,2))
+        self.bridge.parse_line('PWM_CONFIG HZ bad BITS 9 SCALE 2 CLOCK APB')
+        self.assertEqual(self.bridge.snapshot()['pwm_config'], config)
+
+    def test_heading_off_baseline_does_not_require_imu(self):
+        self.bridge.telemetry.update(firmware='ESP32_MAKER_MECANUM_RVC_V2', imu_updated=None)
+        self.bridge.start_tuning('imu', 'AREA_CLEAR')
+        self.bridge.start_calibration_pulse('forward', 500)
+        deadline = time.time()+2
+        while self.bridge.calibration_status()['running'] and time.time()<deadline:
+            time.sleep(.02)
+        result=self.bridge.calibration_status()
+        self.assertIsNone(result['error'])
+        self.assertEqual(result['phase'], 'complete')
+        self.assertIn('V 0.450 0.000 0.000', self.bridge.serial.commands)
+
+    def test_heading_settings_require_confirmation_and_stop_before_enable(self):
+        self.bridge.telemetry.update(firmware='ESP32_MAKER_MECANUM_RVC_V2',
+            imu='IR2 1000 0 READY 0 0 0 0 0 1000 0 0 0 0 0', imu_updated=time.time())
+        self.bridge.start_tuning('imu', 'AREA_CLEAR')
+        self.bridge.serial.commands.clear()
+        with self.assertRaises(ValueError):
+            self.bridge.set_trial_heading(True,.7,.3,1.5)
+        self.assertEqual(self.bridge.serial.commands, [])
+        self.bridge.set_trial_heading(True,.7,.3,1.5,'HEADING_MEASURED')
+        self.assertEqual(self.bridge.serial.commands[:4], ['V 0 0 0','X','F 0','IMU REVOKE'])
+        self.assertEqual(self.bridge.serial.commands[-1], 'IMU ACCEPT')
+        self.bridge.end_tuning()
+        self.assertEqual(self.bridge.serial.commands[-1], 'IMU REVOKE')
+
+    def test_heading_rejected_ack_leaves_mode_off(self):
+        self.bridge.telemetry.update(firmware='ESP32_MAKER_MECANUM_RVC_V2',
+            imu='IR2 1000 0 READY 0 0 0 0 0 1000 0 0 0 0 0', imu_updated=time.time())
+        self.bridge.start_tuning('imu', 'AREA_CLEAR')
+        self.bridge.command = lambda *args, **kwargs: ['ERR IMU ACCEPT requires qualified fresh RVC']
+        with self.assertRaisesRegex(RuntimeError, 'did not accept'):
+            self.bridge.set_trial_heading(True,.7,.3,1.5,'HEADING_MEASURED')
+        self.assertEqual(self.bridge.tuning_session['live_settings']['heading-enabled'],0)
+        self.assertFalse(self.bridge._heading_configuring)
+        self.assertEqual(self.bridge.serial.commands[-2:],['CFG SET heading-enabled 0','IMU REVOKE'])
+
     def test_bench_tuning_requires_wheels_up_confirmation(self):
         with self.assertRaises(ValueError):
             self.bridge.start_tuning("bench", "AREA_CLEAR")
@@ -72,6 +119,9 @@ class CalibrationSafetyTest(unittest.TestCase):
         self.bridge.start_calibration("WHEELS_UP")
         with self.assertRaises(ValueError):
             self.bridge.start_calibration_pulse("forward", 400)
+        with self.assertRaises(ValueError):
+            self.bridge.start_calibration_pulse("forward", 5001)
+        self.assertEqual(self.bridge.tuning_status()['test_limits']['duration_max_ms'], 5000)
         with self.assertRaises(ValueError):
             self.bridge.start_calibration_pulse("diagonal", 500)
 
@@ -106,7 +156,7 @@ class CalibrationSafetyTest(unittest.TestCase):
 
     def test_emergency_stop_aborts_active_pulse(self):
         self.bridge.start_calibration("WHEELS_UP")
-        self.bridge.start_calibration_pulse("forward", 3000)
+        self.bridge.start_calibration_pulse("forward", 5000)
         time.sleep(0.08)
         self.bridge.emergency_stop()
         deadline = time.time() + 1
@@ -114,6 +164,7 @@ class CalibrationSafetyTest(unittest.TestCase):
             time.sleep(0.02)
         self.assertFalse(self.bridge.calibration_status()["running"])
         self.assertEqual(self.bridge.calibration_status()["phase"], "aborted")
+        self.assertLess(self.bridge.calibration_status()['elapsed_ms'], 1000)
         self.assertEqual(self.bridge.serial.commands[-1], "X")
 
     def test_assisted_session_persists_test_and_observation(self):
